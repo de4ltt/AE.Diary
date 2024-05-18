@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name" translatable="false">DeathNote</string>
+    <string name="diary_settings">Diary settings</string>
+    <string name="app_language">App language</string>
+    <string name="group_list">Group list</string>
+    <string name="subjects">Subjects</string>
+    <string name="timetable">Timetable</string>
+    <string name="add">Add</string>
+    <string name="save">Save</string>
+    <string name="style">Styles</string>
+    <string name="to_be_or_not_to_be">To be or not to be</string>
+    <string name="the_best_in_the_app">Your doom</string>
+    <string name="sorry_for_change">Sorry for another change</string>
+    <string name="language_pardon">I beg deine Entschuldigung for кринж</string>
+    <string name="styles_cringe">Just ruin everything.</string>
+</resources>
