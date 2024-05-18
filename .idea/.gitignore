@@ -1,3 +1,18 @@
 # Default ignored files
 /shelf/
 /workspace.xml
+*.apk
+*.ap_
+*.dex
+bin/
+gen/
+out/
+build/
+local.properties
+proguard/
+*.log
+captures/
+*.iml
+.idea/workspace.xml
+*.jks
+gen-external-apklibs
