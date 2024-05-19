@@ -10,8 +10,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.deathnote.presentation.model.Student
 import com.example.deathnote.presentation.navigation.AppDestination
 import com.example.deathnote.presentation.ui.cross_screen_ui.SettingsTopBar
+import com.example.deathnote.presentation.ui.screen.settings.composable.students_screen_ui.StudentBar
 import com.example.deathnote.presentation.ui.screen.settings.destinations.SettingsScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -28,7 +30,6 @@ fun StudentsScreen(
 
     BackHandler {
         navigator.popBackStack()
-        return@BackHandler
     }
 
     Column(
@@ -41,15 +42,21 @@ fun StudentsScreen(
         SettingsTopBar(
             destination = AppDestination.SettingsTopBarDestinations.GROUP_LIST,
             onIconClick = {
-                navigator.popBackStack(SettingsScreenDestination, inclusive = true)
+                navigator.popBackStack()
             }
         )
 
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
+            item {
+                StudentBar(index = 1, student = Student(1, "Никита", "Болошко", "Сергеевич", 0))
+            }
 
+            item {
+                StudentBar(index = 2, student = Student(1, "Никита", "Болошко", "Сергеевич", 0))
+            }
         }
     }
 }

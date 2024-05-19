@@ -1,4 +1,4 @@
-package com.example.deathnote.presentation.ui.screen.settings.composable.students_screen_ui
+package com.example.deathnote.presentation.ui.screen.settings.composable.subjects_screen_ui
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.LinearEasing
@@ -37,14 +37,16 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
 import com.example.deathnote.R
-import com.example.deathnote.presentation.model.Student
+import com.example.deathnote.presentation.model.Subject
+import com.example.deathnote.presentation.model.SubjectType
 import com.example.deathnote.presentation.model.getShortName
 
 @Composable
-fun StudentBar(
+fun SubjectBar(
     index: Int,
-    student: Student,
+    subject: Subject,
     roundedCornerShape: RoundedCornerShape = RoundedCornerShape(12.dp)
 ) {
 
@@ -120,7 +122,12 @@ fun StudentBar(
                         ) {
                             Text(
                                 modifier = Modifier.fillMaxWidth(0.7f),
-                                text = "${stringResource(id = R.string.to_delete)}\n${student.getShortName()}",
+                                text = "${stringResource(id = R.string.to_delete)}\n${subject.getShortName()} (${
+                                    if (subject.subjectType == SubjectType.LECTURE) stringResource(
+                                        id = R.string.lk
+                                    )
+                                    else stringResource(id = R.string.pr)
+                                })",
                                 fontSize = 16.sp,
                                 lineHeight = 18.sp,
                                 fontFamily = FontFamily(Font(R.font.inter_regular)),
@@ -213,7 +220,12 @@ fun StudentBar(
                         ) {
                             Text(
                                 modifier = Modifier.fillMaxWidth(0.7f),
-                                text = "${student.surname}\n${student.name} ${student.patronymic ?: ""}",
+                                text = "${subject.name} (${
+                                    if (subject.subjectType == SubjectType.LECTURE) stringResource(
+                                        id = R.string.lk
+                                    )
+                                    else stringResource(id = R.string.pr)
+                                })",
                                 fontSize = 16.sp,
                                 lineHeight = 18.sp,
                                 fontFamily = FontFamily(Font(R.font.inter_regular)),

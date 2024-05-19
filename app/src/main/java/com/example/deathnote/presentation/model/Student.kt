@@ -1,7 +1,7 @@
 package com.example.deathnote.presentation.model
 
 data class Student(
-    val studentId: Int,
+    val studentId: Int?,
     val name: String,
     val surname: String,
     val patronymic: String?,
@@ -10,5 +10,5 @@ data class Student(
 
 fun Student.getShortName() =
     "${this.surname} ${this.name[0]}.${
-        if (patronymic != null) "$patronymic." else ""
+        if (patronymic != null) "${patronymic[0]}." else ""
     }"

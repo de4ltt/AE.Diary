@@ -35,9 +35,8 @@ fun SettingsScreen(
         horizontal = 25.dp
     )
 ) {
-
     BackHandler {
-        return@BackHandler
+
     }
 
     Column(
@@ -50,7 +49,7 @@ fun SettingsScreen(
         SettingsTopBar(
             destination = AppDestination.SettingsTopBarDestinations.SETTINGS,
             onIconClick = {
-                navigator.popBackStack(SettingsScreenDestination, inclusive = true)
+
             }
         )
 

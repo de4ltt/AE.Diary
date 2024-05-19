@@ -54,7 +54,8 @@ fun SettingsOptionPane(
     onClick: () -> Unit = { },
     @DrawableRes icon: Int,
     @StringRes title: Int,
-    @StringRes subtitle: Int
+    @StringRes subtitle: Int,
+    roundedCornerShape: RoundedCornerShape = RoundedCornerShape(12.dp)
 ) {
 
     val interactionSrc = remember { MutableInteractionSource() }
@@ -89,12 +90,12 @@ fun SettingsOptionPane(
             .scale(paneScale)
             .shadow(
                 elevation = 4.dp,
-                shape = RoundedCornerShape(12.dp),
+                shape = roundedCornerShape,
                 ambientColor = MaterialTheme.colorScheme.surfaceTint
             )
             .background(
                 brush = gradient,
-                shape = RoundedCornerShape(12.dp)
+                shape = roundedCornerShape
             )
             .clickable(
                 indication = null,

@@ -22,7 +22,8 @@ private val LightOddColorScheme = lightColorScheme(
     secondaryContainer = LightRed,
     surfaceTint = LightGray,
     onPrimary = Black,
-    onSecondary = SemiLightGray
+    onSecondary = SemiLightGray,
+    inversePrimary = White
 )
 
 private val LightEvenColorScheme = lightColorScheme(
@@ -32,7 +33,8 @@ private val LightEvenColorScheme = lightColorScheme(
     secondaryContainer = LightRed,
     surfaceTint = LightGray,
     onPrimary = Black,
-    onSecondary = SemiLightGray
+    onSecondary = SemiLightGray,
+    inversePrimary = White
 )
 
 @Composable
