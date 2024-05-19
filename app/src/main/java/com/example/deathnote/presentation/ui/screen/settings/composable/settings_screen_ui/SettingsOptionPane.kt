@@ -4,6 +4,7 @@ import android.view.MotionEvent
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -33,6 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
@@ -58,6 +60,11 @@ fun SettingsOptionPane(
     val interactionSrc = remember { MutableInteractionSource() }
     val isPressed by interactionSrc.collectIsPressedAsState()
 
+    val paneScale by animateFloatAsState(
+        targetValue = if (isPressed) 0.97f else 1f,
+        label = "paneScale"
+    )
+
     val color by animateColorAsState(
         targetValue = if (isPressed) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceTint,
         label = "gradient_color",
@@ -79,6 +86,7 @@ fun SettingsOptionPane(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
+            .scale(paneScale)
             .shadow(
                 elevation = 4.dp,
                 shape = RoundedCornerShape(12.dp),
@@ -88,7 +96,7 @@ fun SettingsOptionPane(
                 brush = gradient,
                 shape = RoundedCornerShape(12.dp)
             )
-            .clickable (
+            .clickable(
                 indication = null,
                 interactionSource = interactionSrc,
                 onClick = onClick

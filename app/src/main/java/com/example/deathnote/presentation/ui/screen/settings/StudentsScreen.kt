@@ -27,6 +27,7 @@ fun StudentsScreen(
 ) {
 
     BackHandler {
+        navigator.popBackStack()
         return@BackHandler
     }
 
@@ -38,7 +39,7 @@ fun StudentsScreen(
     ) {
 
         SettingsTopBar(
-            destination = AppDestination.SettingsTopBarDestinations.SETTINGS,
+            destination = AppDestination.SettingsTopBarDestinations.GROUP_LIST,
             onIconClick = {
                 navigator.popBackStack(SettingsScreenDestination, inclusive = true)
             }
