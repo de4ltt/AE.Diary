@@ -18,9 +18,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -33,21 +31,17 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.ui.zIndex
 import com.example.deathnote.R
 import com.example.deathnote.presentation.model.Subject
 import com.example.deathnote.presentation.model.SubjectType
 import com.example.deathnote.presentation.model.getShortName
+import com.example.deathnote.presentation.ui.theme.util.DeathNoteTheme
 
 @Composable
 fun SubjectBar(
     index: Int,
-    subject: Subject,
-    roundedCornerShape: RoundedCornerShape = RoundedCornerShape(12.dp)
+    subject: Subject
 ) {
 
     var isDeleteMode by remember {
@@ -59,10 +53,10 @@ fun SubjectBar(
             .wrapContentSize()
             .shadow(
                 elevation = 4.dp,
-                shape = roundedCornerShape,
-                ambientColor = MaterialTheme.colorScheme.surfaceTint
+                shape = DeathNoteTheme.shapes.rounded12,
+                ambientColor = DeathNoteTheme.colors.regularBackground
             )
-            .background(MaterialTheme.colorScheme.surfaceTint)
+            .background(DeathNoteTheme.colors.regular)
     ) {
         Crossfade(
             targetState = isDeleteMode,
@@ -97,14 +91,14 @@ fun SubjectBar(
                                 .fillMaxHeight()
                                 .width(28.dp)
                                 .background(
-                                    color = MaterialTheme.colorScheme.secondary
+                                    color = DeathNoteTheme.colors.secondary
                                 ),
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
                                 painter = painterResource(id = R.drawable.church),
                                 contentDescription = "church",
-                                tint = MaterialTheme.colorScheme.inversePrimary,
+                                tint = DeathNoteTheme.colors.regular,
                                 modifier = Modifier.size(18.dp)
                             )
                         }
@@ -114,24 +108,22 @@ fun SubjectBar(
                             modifier = Modifier
                                 .fillMaxSize()
                                 .background(
-                                    color = MaterialTheme.colorScheme.secondaryContainer
+                                    color = DeathNoteTheme.colors.secondaryBackground
                                 )
                                 .padding(horizontal = 15.dp),
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(
-                                modifier = Modifier.fillMaxWidth(0.7f),
+                                modifier = Modifier.weight(1f).padding(end = 10.dp),
                                 text = "${stringResource(id = R.string.to_delete)}\n${subject.getShortName()} (${
                                     if (subject.subjectType == SubjectType.LECTURE) stringResource(
                                         id = R.string.lk
                                     )
                                     else stringResource(id = R.string.pr)
                                 })",
-                                fontSize = 16.sp,
-                                lineHeight = 18.sp,
-                                fontFamily = FontFamily(Font(R.font.inter_regular)),
-                                color = MaterialTheme.colorScheme.inversePrimary
+                                style = DeathNoteTheme.typography.itemCardTitle,
+                                color = DeathNoteTheme.colors.regular
                             )
 
                             Row(
@@ -144,7 +136,7 @@ fun SubjectBar(
                                 Icon(
                                     painter = painterResource(id = R.drawable.disagree),
                                     contentDescription = "disagree",
-                                    tint = MaterialTheme.colorScheme.inversePrimary,
+                                    tint = DeathNoteTheme.colors.regular,
                                     modifier = Modifier
                                         .size(30.dp)
                                         .pointerInput(Unit) {
@@ -157,7 +149,7 @@ fun SubjectBar(
                                 Icon(
                                     painter = painterResource(id = R.drawable.agree),
                                     contentDescription = "agree",
-                                    tint = MaterialTheme.colorScheme.inversePrimary,
+                                    tint = DeathNoteTheme.colors.regular,
                                     modifier = Modifier
                                         .size(23.dp)
                                         .pointerInput(Unit) {
@@ -195,15 +187,14 @@ fun SubjectBar(
                                 .fillMaxHeight()
                                 .width(28.dp)
                                 .background(
-                                    color = MaterialTheme.colorScheme.primary
+                                    color = DeathNoteTheme.colors.primary
                                 ),
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
                                 text = "$index",
-                                fontSize = 18.sp,
-                                fontFamily = FontFamily(Font(R.font.inter_bold)),
-                                color = MaterialTheme.colorScheme.inversePrimary
+                                style = DeathNoteTheme.typography.itemCardIndex,
+                                color = DeathNoteTheme.colors.regular
                             )
                         }
 
@@ -212,30 +203,28 @@ fun SubjectBar(
                             modifier = Modifier
                                 .fillMaxSize()
                                 .background(
-                                    color = MaterialTheme.colorScheme.inversePrimary
+                                    color = DeathNoteTheme.colors.regular
                                 )
                                 .padding(horizontal = 15.dp),
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(
-                                modifier = Modifier.fillMaxWidth(0.7f),
+                                modifier = Modifier.weight(1f).padding(end = 10.dp),
                                 text = "${subject.name} (${
                                     if (subject.subjectType == SubjectType.LECTURE) stringResource(
                                         id = R.string.lk
                                     )
                                     else stringResource(id = R.string.pr)
                                 })",
-                                fontSize = 16.sp,
-                                lineHeight = 18.sp,
-                                fontFamily = FontFamily(Font(R.font.inter_regular)),
-                                color = MaterialTheme.colorScheme.onPrimary
+                                style = DeathNoteTheme.typography.itemCardTitle,
+                                color = DeathNoteTheme.colors.inverse
                             )
 
                             Icon(
                                 painter = painterResource(id = R.drawable.pencil),
                                 contentDescription = "edit_pencil",
-                                tint = MaterialTheme.colorScheme.primary,
+                                tint = DeathNoteTheme.colors.primary,
                                 modifier = Modifier
                                     .pointerInput(Unit) {
                                         detectTapGestures {

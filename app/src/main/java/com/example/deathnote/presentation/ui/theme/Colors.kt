@@ -14,6 +14,7 @@ val LightGray = Color(243, 243, 243, 255)
 
 val Red = Color(209, 0, 0, 255)
 val DarkRed = Color(129, 0, 0, 255)
-val LightRed = Color(255, 106, 106, 255)
+val DarkRedBackground = Color(255, 106, 106, 255)
+val LightRed = Color(255, 165, 165, 255)
 
 val White = Color(255, 255, 255, 255)

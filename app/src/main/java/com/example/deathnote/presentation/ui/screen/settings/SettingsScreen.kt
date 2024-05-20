@@ -1,5 +1,6 @@
 package com.example.deathnote.presentation.ui.screen.settings
 
+import android.content.Context
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -7,7 +8,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -16,7 +16,6 @@ import com.example.deathnote.presentation.navigation.AppDestination
 import com.example.deathnote.presentation.ui.cross_screen_ui.SettingsTopBar
 import com.example.deathnote.presentation.ui.screen.settings.composable.settings_screen_ui.SettingsOptionPane
 import com.example.deathnote.presentation.ui.screen.settings.destinations.LanguageScreenDestination
-import com.example.deathnote.presentation.ui.screen.settings.destinations.SettingsScreenDestination
 import com.example.deathnote.presentation.ui.screen.settings.destinations.StudentsScreenDestination
 import com.example.deathnote.presentation.ui.screen.settings.destinations.StyleScreenDestination
 import com.example.deathnote.presentation.ui.screen.settings.destinations.SubjectsScreenDestination
@@ -33,7 +32,8 @@ fun SettingsScreen(
     paddingValues: PaddingValues = PaddingValues(
         vertical = 50.dp,
         horizontal = 25.dp
-    )
+    ),
+    context: Context
 ) {
     BackHandler {
 

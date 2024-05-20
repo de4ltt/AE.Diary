@@ -1,28 +1,24 @@
-package com.example.deathnote.presentation.ui.screen.settings.composable.settings_screen_ui
+package com.example.deathnote.presentation.ui.screen.settings.composable.language_screen_ui
 
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsDraggedAsState
 import androidx.compose.foundation.interaction.collectIsPressedAsState
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,42 +27,49 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.deathnote.presentation.model.Language
 import com.example.deathnote.presentation.ui.theme.util.DeathNoteTheme
 
 @Composable
-fun SettingsOptionPane(
-    onClick: () -> Unit = { },
-    @DrawableRes icon: Int,
-    @StringRes title: Int,
-    @StringRes subtitle: Int
+fun LanguageBar(
+    onClick: () -> Unit,
+    language: Language,
+    isChosen: Boolean
 ) {
 
     val interactionSource = remember { MutableInteractionSource() }
-    val isPressed by interactionSource.collectIsPressedAsState()
+    val isPressed =
+        (interactionSource.collectIsPressedAsState().value || interactionSource.collectIsDraggedAsState().value)
 
     val paneScale by animateFloatAsState(
         targetValue = if (isPressed) 0.97f else 1f,
         label = "paneScale"
     )
 
-    val color by animateColorAsState(
-        targetValue = if (isPressed) DeathNoteTheme.colors.primaryBackground else DeathNoteTheme.colors.regularBackground,
-        label = "gradient_color",
-        animationSpec = tween(150)
-    )
+    val text by remember { mutableIntStateOf(language.title) }
 
-    val gradient = Brush.linearGradient(
-            colors = listOf(
-                DeathNoteTheme.colors.regularBackground,
-                DeathNoteTheme.colors.regularBackground,
-                color
-            ),
-            start = Offset.Zero,
-            end = Offset.Infinite
-        )
+    val brush = Brush.linearGradient(
+        colors = listOf(
+            animateColorAsState(
+                targetValue = if (isChosen) language.dominantColors[0] else DeathNoteTheme.colors.regular,
+                animationSpec = tween(100)
+            ).value,
+            animateColorAsState(
+                targetValue = if (isChosen) language.dominantColors[1] else DeathNoteTheme.colors.regular,
+                animationSpec = tween(500)
+            ).value,
+            animateColorAsState(
+                targetValue = if (isChosen) language.dominantColors[2] else DeathNoteTheme.colors.regular,
+                animationSpec = tween(1000)
+            ).value
+        ),
+        start = Offset.Zero,
+        end = Offset.Infinite
+    )
 
 
     Row(
@@ -80,7 +83,7 @@ fun SettingsOptionPane(
                 ambientColor = DeathNoteTheme.colors.regularBackground
             )
             .background(
-                brush = gradient,
+                brush = brush,
                 shape = DeathNoteTheme.shapes.rounded12
             )
             .clickable(
@@ -90,41 +93,22 @@ fun SettingsOptionPane(
             ),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Box(
+
+        Image(
+            painter = painterResource(id = language.icon),
+            contentScale = ContentScale.FillBounds,
+            contentDescription = "icon",
             modifier = Modifier
                 .padding(15.dp)
-                .size(60.dp)
+                .size(40.dp)
                 .clip(CircleShape)
-                .background(DeathNoteTheme.colors.primaryBackground),
-            contentAlignment = Alignment.Center
-        ) {
-            Icon(
-                painter = painterResource(id = icon),
-                contentDescription = "icon",
-                modifier = Modifier
-                    .size(30.dp),
-                tint = DeathNoteTheme.colors.primary
-            )
-        }
+        )
 
-        Column(
-            modifier = Modifier
-                .wrapContentSize()
-                .padding(end = 15.dp),
-            verticalArrangement = Arrangement.spacedBy(0.dp)
-        ) {
-            Text(
-                text = stringResource(id = title),
-                style = DeathNoteTheme.typography.settingsScreenItemTitle,
-                color = DeathNoteTheme.colors.inverse
-            )
-
-            Text(
-                text = stringResource(id = subtitle),
-                style = DeathNoteTheme.typography.settingsScreenItemSubtitle,
-                color = DeathNoteTheme.colors.lightInverse
-            )
-        }
+        Text(
+            text = stringResource(id = text),
+            style = DeathNoteTheme.typography.settingsScreenItemTitle,
+            color = DeathNoteTheme.colors.inverse
+        )
 
     }
 }
