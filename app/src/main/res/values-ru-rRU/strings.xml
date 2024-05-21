@@ -16,8 +16,4 @@
     <string name="to_delete">УДАЛИТЬ</string>
     <string name="pr">ПР</string>
     <string name="lk">ЛК</string>
-    <string name="russian">РУССКИЙ</string>
-    <string name="english">АНГЛИЙСКИЙ</string>
-    <string name="ukrainian">УКРАИНСКИЙ</string>
-    <string name="kazakh">КАЗАХСКИЙ</string>
 </resources>

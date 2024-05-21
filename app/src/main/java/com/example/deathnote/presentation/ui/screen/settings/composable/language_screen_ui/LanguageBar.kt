@@ -18,7 +18,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,8 +48,6 @@ fun LanguageBar(
         targetValue = if (isPressed) 0.97f else 1f,
         label = "paneScale"
     )
-
-    val text by remember { mutableIntStateOf(language.title) }
 
     val brush = Brush.linearGradient(
         colors = listOf(
@@ -105,7 +102,7 @@ fun LanguageBar(
         )
 
         Text(
-            text = stringResource(id = text),
+            text = stringResource(id = language.title),
             style = DeathNoteTheme.typography.settingsScreenItemTitle,
             color = DeathNoteTheme.colors.inverse
         )

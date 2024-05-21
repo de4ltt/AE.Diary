@@ -16,8 +16,10 @@
     <string name="to_delete">DELETE</string>
     <string name="pr">PRA</string>
     <string name="lk">LEC</string>
-    <string name="russian">RUSSIAN</string>
-    <string name="english">ENGLISH</string>
-    <string name="ukrainian">UKRAINIAN</string>
-    <string name="kazakh">KAZAKH</string>
+    <string name="russian" translatable="false">РУССКИЙ</string>
+    <string name="english" translatable="false">ENGLISH</string>
+    <string name="ukrainian" translatable="false">УКРАЇНСЬКА</string>
+    <string name="kazakh" translatable="false">ҚАЗАҚША</string>
+    <string name="japanese" translatable="false">日本語</string>
+    <string name="polish" translatable="false">POLSKI</string>
 </resources>

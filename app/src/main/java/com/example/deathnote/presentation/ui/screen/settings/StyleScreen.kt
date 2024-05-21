@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.deathnote.presentation.navigation.AppDestination
 import com.example.deathnote.presentation.ui.cross_screen_ui.SettingsTopBar
-import com.example.deathnote.presentation.ui.screen.settings.destinations.SettingsScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
@@ -28,7 +27,6 @@ fun StyleScreen(
 
     BackHandler {
         navigator.popBackStack()
-        return@BackHandler
     }
 
     Column(
@@ -39,15 +37,15 @@ fun StyleScreen(
     ) {
 
         SettingsTopBar(
-            destination = AppDestination.SettingsTopBarDestinations.GROUP_LIST,
+            destination = AppDestination.SettingsTopBarDestinations.STYLE,
             onIconClick = {
-                navigator.popBackStack(SettingsScreenDestination, inclusive = true)
+                navigator.popBackStack()
             }
         )
 
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
 
         }

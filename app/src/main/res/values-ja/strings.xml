@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="diary_settings">日記の設定</string>
+    <string name="app_language">アプリの言語</string>
+    <string name="group_list">グループリスト</string>
+    <string name="subjects">科目</string>
+    <string name="timetable">時間割</string>
+    <string name="add">追加する</string>
+    <string name="save">保存する</string>
+    <string name="style">スタイル</string>
+    <string name="to_be_or_not_to_be">追加はできない、除籍する</string>
+    <string name="the_best_in_the_app">あなたの破滅</string>
+    <string name="sorry_for_change">ごめんなさい、5分後に変わります</string>
+    <string name="language_pardon">パードンを求める、クリンジのために</string>
+    <string name="styles_cringe">さあ、すべてを台無しにしよう。</string>
+    <string name="to_delete">削除する</string>
+    <string name="pr">PR</string>
+    <string name="lk">LK</string>
+</resources>
