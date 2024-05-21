@@ -1,6 +1,5 @@
 package com.example.deathnote.presentation.ui.screen.settings
 
-import android.content.Context
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -32,8 +31,7 @@ fun SettingsScreen(
     paddingValues: PaddingValues = PaddingValues(
         vertical = 50.dp,
         horizontal = 25.dp
-    ),
-    context: Context
+    )
 ) {
     BackHandler {
 

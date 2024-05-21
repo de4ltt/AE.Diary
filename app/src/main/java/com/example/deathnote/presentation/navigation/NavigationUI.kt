@@ -27,7 +27,7 @@ fun NavigationUI(
         navController = navHostController
     ) {
         composable(SettingsScreenDestination) {
-            SettingsScreen(navigator = destinationsNavigator, context = context)
+            SettingsScreen(navigator = destinationsNavigator)
         }
         composable(StudentsScreenDestination) {
             StudentsScreen(navigator = destinationsNavigator)

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="diary_settings">Журналдың параметрлері</string>
+    <string name="app_language">Қолданбаның тілі</string>
+    <string name="group_list">Топтың тізімі</string>
+    <string name="subjects">Пәндер</string>
+    <string name="timetable">Кесте</string>
+    <string name="add">Қосу</string>
+    <string name="save">Сақтау</string>
+    <string name="style">Стильдер</string>
+    <string name="to_be_or_not_to_be">Қосу мүмкін емес, жойу</string>
+    <string name="the_best_in_the_app">Сіздің өліміңіз</string>
+    <string name="sorry_for_change">Кешіріңіз, 5 минут ішінде өзгеремін</string>
+    <string name="language_pardon">Cringe үшін кешірім сұраймын</string>
+    <string name="styles_cringe">Келесі, барлығын бұзу.</string>
+    <string name="to_delete">ЖОЮ</string>
+    <string name="pr">ПР</string>
+    <string name="lk">ЛК</string>
+    <string name="russian">ОРЫС</string>
+    <string name="english">АҒЫЛШЫН</string>
+    <string name="ukrainian">УКРАИН</string>
+    <string name="kazakh">ҚАЗАҚША</string>
+</resources>

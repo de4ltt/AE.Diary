@@ -96,7 +96,7 @@ fun LanguageBar(
 
         Image(
             painter = painterResource(id = language.icon),
-            contentScale = ContentScale.FillBounds,
+            contentScale = ContentScale.FillHeight,
             contentDescription = "icon",
             modifier = Modifier
                 .padding(15.dp)

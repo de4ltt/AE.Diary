@@ -20,6 +20,14 @@ enum class Language(
             Color(186, 210, 255, 255)
         )
     ),
+    KAZAKH(
+        R.string.kazakh, "kk",R.drawable.kazakhstan,
+        listOf(
+            Color(255,255,255, 255),
+            Color(255, 243, 187, 255),
+            Color(157, 227, 255, 255)
+        )
+    ),
     RUSSIAN(
         R.string.russian, "ru", R.drawable.russia,
         listOf(
