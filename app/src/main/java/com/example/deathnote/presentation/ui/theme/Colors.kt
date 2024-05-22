@@ -3,7 +3,7 @@ package com.example.deathnote.presentation.ui.theme
 import androidx.compose.ui.graphics.Color
 
 val LightYellow = Color(242, 236, 212, 255)
-val DarkYellow = Color(151, 90, 0, 255)
+val DarkYellow = Color(189, 104, 0, 255)
 val SemiDarkYellow = Color(209, 125, 0, 255)
 
 val Black = Color(0, 0, 0, 255)

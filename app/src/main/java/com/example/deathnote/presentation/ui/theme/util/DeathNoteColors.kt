@@ -8,6 +8,7 @@ import com.example.deathnote.presentation.ui.theme.DarkYellow
 import com.example.deathnote.presentation.ui.theme.LightGray
 import com.example.deathnote.presentation.ui.theme.LightYellow
 import com.example.deathnote.presentation.ui.theme.SemiLightGray
+import com.example.deathnote.presentation.ui.theme.SexyGray
 import com.example.deathnote.presentation.ui.theme.White
 
 data class DeathNoteColors(
@@ -16,6 +17,7 @@ data class DeathNoteColors(
     val secondary: Color = DarkRed,
     val secondaryBackground: Color = DarkRedBackground,
     val inverse: Color = Black,
+    val inverseBackground: Color = SexyGray,
     val lightInverse: Color = SemiLightGray,
     val regular: Color = White,
     val regularBackground: Color = LightGray

@@ -22,4 +22,5 @@
     <string name="kazakh" translatable="false">ҚАЗАҚША</string>
     <string name="japanese" translatable="false">日本語</string>
     <string name="polish" translatable="false">POLSKI</string>
+    <string name="is_dark_theme" translatable="false">Dark mode</string>
 </resources>
