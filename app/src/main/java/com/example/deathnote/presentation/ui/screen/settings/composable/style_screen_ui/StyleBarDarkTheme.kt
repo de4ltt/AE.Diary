@@ -18,6 +18,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.deathnote.R
+import com.example.deathnote.presentation.ui.theme.isDarkMode
 import com.example.deathnote.presentation.ui.theme.util.DeathNoteTheme
 
 @Composable
@@ -25,7 +26,7 @@ fun StyleBarDarkTheme(
     onChange: () -> Unit
 ) {
     var isChecked by remember {
-        mutableStateOf(false)
+        mutableStateOf(isDarkMode())
     }
 
     Row(

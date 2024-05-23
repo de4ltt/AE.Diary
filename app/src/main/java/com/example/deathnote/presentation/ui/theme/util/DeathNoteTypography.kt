@@ -2,6 +2,7 @@ package com.example.deathnote.presentation.ui.theme.util
 
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.sp
+import com.example.deathnote.presentation.ui.theme.util.font_family.InterFontFamily
 
 data class DeathNoteTypography(
 

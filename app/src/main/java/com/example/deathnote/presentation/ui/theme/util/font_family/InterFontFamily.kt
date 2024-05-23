@@ -1,4 +1,4 @@
-package com.example.deathnote.presentation.ui.theme.util
+package com.example.deathnote.presentation.ui.theme.util.font_family
 
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily

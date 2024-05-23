@@ -12,9 +12,13 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.example.deathnote.activity.util.loadLanguagePreference
+import com.example.deathnote.activity.util.loadSchemePreference
+import com.example.deathnote.activity.util.saveSchemePreference
 import com.example.deathnote.activity.util.setLocale
+import com.example.deathnote.presentation.model.ColorScheme
 import com.example.deathnote.presentation.navigation.NavigationUI
 import com.example.deathnote.presentation.ui.theme.DeathNoteTheme
+import com.example.deathnote.presentation.ui.theme.setColorScheme
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.ramcosta.composedestinations.animations.rememberAnimatedNavHostEngine
 
@@ -29,6 +33,10 @@ class MainActivity : ComponentActivity() {
 
         loadLanguagePreference(this)?.let {
             setLocale(this, it)
+        }
+
+        loadSchemePreference(this)?.let {
+            setColorScheme(ColorScheme.valueOf(it))
         }
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -53,13 +61,11 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    fun changeLanguage(language: String) {
+    fun changeLanguage(language: String) =
         setLocale(this, language)
-        /*recreate()*/
-    }
 
-    fun getCurrentLanguage(): String? =
-        loadLanguagePreference(this)
+    fun changeScheme(colorScheme: ColorScheme) =
+        saveSchemePreference(this, colorScheme)
 }
 
 private fun Window.hideSystemUi(extraAction: (WindowInsetsControllerCompat.() -> Unit)? = null) {

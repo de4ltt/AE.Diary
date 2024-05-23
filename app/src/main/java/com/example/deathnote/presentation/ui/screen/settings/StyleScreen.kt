@@ -5,18 +5,22 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.deathnote.R
 import com.example.deathnote.presentation.navigation.AppDestination
 import com.example.deathnote.presentation.ui.cross_screen_ui.SettingsTopBar
+import com.example.deathnote.presentation.ui.screen.settings.composable.style_screen_ui.ColorStyleBar
 import com.example.deathnote.presentation.ui.screen.settings.composable.style_screen_ui.StyleBarDarkTheme
+import com.example.deathnote.presentation.ui.theme.switchDarkMode
+import com.example.deathnote.presentation.ui.theme.util.DeathNoteTheme
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
@@ -29,6 +33,8 @@ fun StyleScreen(
         horizontal = 25.dp
     )
 ) {
+
+    val context = LocalContext.current
 
     BackHandler {
         navigator.popBackStack()
@@ -53,16 +59,22 @@ fun StyleScreen(
             verticalArrangement = Arrangement.spacedBy(15.dp)
         ) {
             StyleBarDarkTheme(
-                onChange = {}
+                onChange = {
+                    switchDarkMode(context)
+                }
             )
 
             LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
+                columns = GridCells.Fixed(2)
             ) {
-
+                items(5) {
+                    ColorStyleBar(
+                        color = DeathNoteTheme.colors.primary,
+                        colorName = stringResource(id = R.string.primary),
+                        onClick = { /*TODO*/ },
+                        onChange = { /*TODO*/ }
+                    )
+                }
             }
         }
     }
