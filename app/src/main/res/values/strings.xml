@@ -25,4 +25,9 @@
     <string name="is_dark_theme" translatable="false">Dark mode</string>
     <string name="color">Color</string>
     <string name="primary">primary</string>
+    <string name="is_on">applied</string>
+    <string name="is_off">is off</string>
+    <string name="week_type">Week type</string>
+    <string name="even">even</string>
+    <string name="odd">odd</string>
 </resources>

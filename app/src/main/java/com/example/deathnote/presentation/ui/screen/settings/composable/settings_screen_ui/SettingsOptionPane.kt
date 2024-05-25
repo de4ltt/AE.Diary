@@ -77,7 +77,8 @@ fun SettingsOptionPane(
             .shadow(
                 elevation = 4.dp,
                 shape = DeathNoteTheme.shapes.rounded12,
-                ambientColor = DeathNoteTheme.colors.regularBackground
+                ambientColor = DeathNoteTheme.colors.regularBackground,
+                clip = false
             )
             .background(
                 brush = gradient,

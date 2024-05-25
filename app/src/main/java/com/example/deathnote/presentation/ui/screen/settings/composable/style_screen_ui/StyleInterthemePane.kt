@@ -1,70 +1,68 @@
 package com.example.deathnote.presentation.ui.screen.settings.composable.style_screen_ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import com.example.deathnote.R
-import com.example.deathnote.presentation.ui.theme.isDarkMode
 import com.example.deathnote.presentation.ui.theme.util.DeathNoteTheme
 
 @Composable
-fun StyleBarDarkTheme(
-    onChange: () -> Unit
+fun StyleInterthemePane(
+    onClick: () -> Unit,
+    definingState: Boolean,
+    settingValue: Int = R.string.is_dark_theme,
+    isOnValue: Int = R.string.is_on,
+    isOffValue: Int = R.string.is_off
 ) {
-    var isChecked by remember {
-        mutableStateOf(isDarkMode())
-    }
-
-    Row(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
             .shadow(
-                elevation = 4.dp,
+                elevation = 2.dp,
                 shape = DeathNoteTheme.shapes.rounded12,
                 ambientColor = DeathNoteTheme.colors.regularBackground
             )
             .background(
-                color = DeathNoteTheme.colors.inverseBackground,
-                shape = DeathNoteTheme.shapes.rounded12
-            ),
-        verticalAlignment = Alignment.CenterVertically
+                color = DeathNoteTheme.colors.inverseBackground
+            )
+            .clip(DeathNoteTheme.shapes.rounded12)
+            .pointerInput(Unit) {
+                detectTapGestures {
+                    onClick()
+                }
+            }
     ) {
-        Row(
+        Column(
             modifier = Modifier
-                .padding(horizontal = 20.dp, vertical = 25.dp)
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+                .padding(10.dp),
+            verticalArrangement = Arrangement.spacedBy(30.dp)
         ) {
             Text(
-                text = stringResource(id = R.string.is_dark_theme),
+                text = stringResource(id = settingValue),
                 style = DeathNoteTheme.typography.settingsScreenItemTitle,
                 color = DeathNoteTheme.colors.regular
             )
 
-            StyleBarSwitch(
-                checked = isChecked,
-                onCheckedChange = {
-                    isChecked = it
-                    onChange()
-                }
+            Text(
+                text = stringResource(id = if (definingState) isOnValue else isOffValue),
+                color = DeathNoteTheme.colors.lightInverse,
+                style = DeathNoteTheme.typography.itemCardTitle,
+                fontStyle = FontStyle.Italic
             )
-
         }
     }
 }

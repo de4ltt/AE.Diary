@@ -50,7 +50,6 @@ fun ColorStyleBar(
         modifier = Modifier
             .fillMaxWidth()
             .aspectRatio(1f / 1f)
-            .padding(5.dp)
             .shadow(
                 elevation = 2.dp,
                 shape = DeathNoteTheme.shapes.rounded12,
@@ -117,6 +116,7 @@ fun ColorStyleBar(
 
                 Text(
                     text = colorName,
+                    color = DeathNoteTheme.colors.lightInverse,
                     style = DeathNoteTheme.typography.itemCardTitle,
                     fontStyle = FontStyle.Italic
                 )
