@@ -29,8 +29,9 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 fun SettingsScreen(
     navigator: DestinationsNavigator,
     paddingValues: PaddingValues = PaddingValues(
-        vertical = 50.dp,
-        horizontal = 25.dp
+        top = 50.dp,
+        start = 25.dp,
+        end = 25.dp
     )
 ) {
     BackHandler {

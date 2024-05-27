@@ -10,14 +10,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.deathnote.presentation.model.Student
 import com.example.deathnote.presentation.model.Subject
 import com.example.deathnote.presentation.model.SubjectType
 import com.example.deathnote.presentation.navigation.AppDestination
 import com.example.deathnote.presentation.ui.cross_screen_ui.SettingsTopBar
-import com.example.deathnote.presentation.ui.screen.settings.composable.students_screen_ui.StudentBar
 import com.example.deathnote.presentation.ui.screen.settings.composable.subjects_screen_ui.SubjectBar
-import com.example.deathnote.presentation.ui.screen.settings.destinations.SettingsScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
@@ -26,8 +23,9 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 fun SubjectsScreen(
     navigator: DestinationsNavigator,
     paddingValues: PaddingValues = PaddingValues(
-        vertical = 50.dp,
-        horizontal = 25.dp
+        top = 50.dp,
+        start = 25.dp,
+        end = 25.dp
     )
 ) {
 

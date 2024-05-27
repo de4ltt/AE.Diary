@@ -31,8 +31,9 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 fun StyleScreen(
     navigator: DestinationsNavigator,
     paddingValues: PaddingValues = PaddingValues(
-        vertical = 50.dp,
-        horizontal = 25.dp
+        top = 50.dp,
+        start = 25.dp,
+        end = 25.dp
     )
 ) {
 
@@ -69,14 +70,14 @@ fun StyleScreen(
             ) {
                 item {
                     StyleInterthemePane(
-                        onClick = { switchDarkMode(context) },
+                        onClick = { /*TODO*/ },
                         definingState = isDarkMode()
                     )
                 }
 
                 item {
                     StyleInterthemePane(
-                        onClick = { /*TODO*/ },
+                        onClick = { switchDarkMode(context) },
                         definingState = true,
                         settingValue = R.string.week_type,
                         isOnValue = R.string.even,

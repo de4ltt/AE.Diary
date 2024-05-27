@@ -37,8 +37,7 @@ fun LanguageScreen(
     paddingValues: PaddingValues = PaddingValues(
         top = 50.dp,
         start = 25.dp,
-        end = 25.dp,
-        bottom = 0.dp
+        end = 25.dp
     )
 ) {
 

@@ -14,7 +14,6 @@ import com.example.deathnote.presentation.model.Student
 import com.example.deathnote.presentation.navigation.AppDestination
 import com.example.deathnote.presentation.ui.cross_screen_ui.SettingsTopBar
 import com.example.deathnote.presentation.ui.screen.settings.composable.students_screen_ui.StudentBar
-import com.example.deathnote.presentation.ui.screen.settings.destinations.SettingsScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
@@ -23,8 +22,9 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 fun StudentsScreen(
     navigator: DestinationsNavigator,
     paddingValues: PaddingValues = PaddingValues(
-        vertical = 50.dp,
-        horizontal = 25.dp
+        top = 50.dp,
+        start = 25.dp,
+        end = 25.dp
     )
 ) {
 

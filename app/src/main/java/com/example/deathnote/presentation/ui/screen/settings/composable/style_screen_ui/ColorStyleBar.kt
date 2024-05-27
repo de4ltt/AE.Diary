@@ -48,13 +48,13 @@ fun ColorStyleBar(
 
     Row(
         modifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(1f / 1f)
             .shadow(
                 elevation = 2.dp,
                 shape = DeathNoteTheme.shapes.rounded12,
                 ambientColor = DeathNoteTheme.colors.regularBackground
             )
+            .fillMaxWidth()
+            .aspectRatio(1f / 1f)
             .clip(DeathNoteTheme.shapes.rounded12)
             .pointerInput(Unit) {
                 detectTapGestures {
