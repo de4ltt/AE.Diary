@@ -25,6 +25,7 @@ import com.example.deathnote.presentation.ui.theme.switchDarkMode
 import com.example.deathnote.presentation.ui.theme.util.DeathNoteTheme
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import androidx.compose.foundation.layout.Spacer
 
 @Destination
 @Composable
@@ -92,6 +93,10 @@ fun StyleScreen(
                         onClick = { /*TODO*/ },
                         onChange = { /*TODO*/ }
                     )
+                }
+
+                item {
+                    Spacer(modifier = Modifier.height(15.dp))
                 }
             }
         }
