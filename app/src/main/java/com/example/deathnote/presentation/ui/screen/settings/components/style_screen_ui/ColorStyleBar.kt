@@ -1,4 +1,4 @@
-package com.example.deathnote.presentation.ui.screen.settings.composable.style_screen_ui
+package com.example.deathnote.presentation.ui.screen.settings.components.style_screen_ui
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.animateColorAsState
@@ -19,7 +19,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
@@ -30,6 +32,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.example.deathnote.R
+import com.example.deathnote.presentation.ui.theme.isDarkMode
 import com.example.deathnote.presentation.ui.theme.util.DeathNoteTheme
 
 @OptIn(ExperimentalStdlibApi::class)
@@ -41,9 +44,29 @@ fun ColorStyleBar(
     onChange: (Color) -> Unit
 ) {
 
+    val colorBrightens: Float = if (isDarkMode()) 0.5f else 0f
+
     val cardSelectionColor by animateColorAsState(
         targetValue = color,
         label = "card_sel_color"
+    )
+
+    val textSelectionColor by animateColorAsState(
+        targetValue = color.copy(
+            red = color.red * 0.7f,
+            blue = color.blue * 0.7f,
+            green = color.green * 0.7f
+        ),
+        label = "card_text_color"
+    )
+
+    val borderSelectionColor by animateColorAsState(
+        targetValue = color.copy(
+            red = color.red * 0.9f,
+            blue = color.blue * 0.9f,
+            green = color.green * 0.9f
+        ),
+        label = "border_color"
     )
 
     Row(
@@ -67,7 +90,7 @@ fun ColorStyleBar(
                 .fillMaxHeight()
                 .weight(0.8f)
                 .background(
-                    color = DeathNoteTheme.colors.regular
+                    color = DeathNoteTheme.colors.regularBackground
                 )
         ) {
             Column(
@@ -101,7 +124,7 @@ fun ColorStyleBar(
                                     style = SpanStyle(
                                         fontSize = DeathNoteTheme.typography.settingsScreenItemTitle.fontSize,
                                         fontFamily = DeathNoteTheme.typography.settingsScreenItemTitle.fontFamily,
-                                        color = cardSelectionColor
+                                        color = textSelectionColor
                                     )
                                 ) {
                                     append("${
@@ -130,6 +153,13 @@ fun ColorStyleBar(
                 .background(
                     color = cardSelectionColor
                 )
+                .drawBehind {
+                    drawLine(
+                        start = Offset.Zero,
+                        end = Offset(0f, Float.MAX_VALUE),
+                        color = borderSelectionColor
+                    )
+                }
         )
     }
 }

@@ -6,13 +6,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.example.deathnote.activity.MainActivity
-import com.example.deathnote.presentation.model.ColorScheme
+import com.example.deathnote.presentation.model.ColorPresentation
 import com.example.deathnote.presentation.ui.theme.util.DeathNoteColors
 import com.example.deathnote.presentation.ui.theme.util.ExtendedTheme
 import com.example.deathnote.presentation.ui.theme.util.color_schemes.UserColorScheme
 
 private var colorScheme by
-    mutableStateOf(UserColorScheme.LightOddColorScheme)
+mutableStateOf(UserColorScheme.LightOddColorScheme)
 
 @Composable
 fun DeathNoteTheme(
@@ -26,43 +26,56 @@ fun DeathNoteTheme(
 
 fun applyColorScheme(
     colors: DeathNoteColors,
-    scheme: ColorScheme
+    scheme: ColorPresentation.ColorMode
 ) {
     when (scheme) {
-        ColorScheme.EVEN_LIGHT -> UserColorScheme.LightEvenColorScheme = colors
-        ColorScheme.ODD_LIGHT -> UserColorScheme.LightOddColorScheme = colors
-        ColorScheme.EVEN_DARK -> TODO()
-        ColorScheme.ODD_DARK -> TODO()
+        ColorPresentation.ColorMode.EVEN_LIGHT -> UserColorScheme.LightEvenColorScheme = colors
+        ColorPresentation.ColorMode.ODD_LIGHT -> UserColorScheme.LightOddColorScheme = colors
+        ColorPresentation.ColorMode.EVEN_DARK -> UserColorScheme.DarkEvenColorScheme
+        ColorPresentation.ColorMode.ODD_DARK -> UserColorScheme.DarkOddColorScheme
     }
 }
 
-fun getColorSchemeType(): ColorScheme = when (colorScheme) {
-    UserColorScheme.LightOddColorScheme -> ColorScheme.ODD_LIGHT
-    else -> ColorScheme.EVEN_LIGHT
+fun getColorSchemeType(): ColorPresentation.ColorMode = when (colorScheme) {
+    UserColorScheme.LightOddColorScheme -> ColorPresentation.ColorMode.ODD_LIGHT
+    UserColorScheme.LightEvenColorScheme -> ColorPresentation.ColorMode.EVEN_LIGHT
+    UserColorScheme.DarkEvenColorScheme -> ColorPresentation.ColorMode.EVEN_DARK
+    else -> ColorPresentation.ColorMode.ODD_DARK
 }
 
 fun setColorScheme(
-    scheme: ColorScheme
+    scheme: ColorPresentation.ColorMode
 ) {
-    colorScheme = when(scheme) {
-        ColorScheme.EVEN_LIGHT -> UserColorScheme.LightEvenColorScheme
-        ColorScheme.EVEN_DARK -> TODO()
-        ColorScheme.ODD_LIGHT -> UserColorScheme.LightOddColorScheme
-        ColorScheme.ODD_DARK -> TODO()
+    colorScheme = when (scheme) {
+        ColorPresentation.ColorMode.EVEN_LIGHT -> UserColorScheme.LightEvenColorScheme
+        ColorPresentation.ColorMode.EVEN_DARK -> UserColorScheme.DarkEvenColorScheme
+        ColorPresentation.ColorMode.ODD_LIGHT -> UserColorScheme.LightOddColorScheme
+        ColorPresentation.ColorMode.ODD_DARK -> UserColorScheme.DarkOddColorScheme
     }
 }
 
+fun switchWeekTypeScheme(
+    context: Context
+) {
+    colorScheme = when (getColorSchemeType()) {
+        ColorPresentation.ColorMode.EVEN_LIGHT -> UserColorScheme.LightOddColorScheme
+        ColorPresentation.ColorMode.EVEN_DARK -> UserColorScheme.DarkOddColorScheme
+        ColorPresentation.ColorMode.ODD_LIGHT -> UserColorScheme.LightEvenColorScheme
+        ColorPresentation.ColorMode.ODD_DARK -> UserColorScheme.DarkEvenColorScheme
+    }
+    (context as MainActivity).changeScheme(getColorSchemeType())
+}
 fun switchDarkMode(
     context: Context
 ) {
     colorScheme = when (getColorSchemeType()) {
-        ColorScheme.EVEN_LIGHT -> UserColorScheme.LightOddColorScheme
-        ColorScheme.EVEN_DARK -> TODO()
-        ColorScheme.ODD_LIGHT -> UserColorScheme.LightEvenColorScheme
-        ColorScheme.ODD_DARK -> TODO()
+        ColorPresentation.ColorMode.EVEN_LIGHT -> UserColorScheme.DarkEvenColorScheme
+        ColorPresentation.ColorMode.EVEN_DARK -> UserColorScheme.LightEvenColorScheme
+        ColorPresentation.ColorMode.ODD_LIGHT -> UserColorScheme.DarkOddColorScheme
+        ColorPresentation.ColorMode.ODD_DARK -> UserColorScheme.LightOddColorScheme
     }
     (context as MainActivity).changeScheme(getColorSchemeType())
 }
 
 fun isDarkMode(): Boolean =
-    getColorSchemeType() == ColorScheme.EVEN_LIGHT
+    getColorSchemeType() == ColorPresentation.ColorMode.EVEN_DARK || getColorSchemeType() == ColorPresentation.ColorMode.ODD_DARK

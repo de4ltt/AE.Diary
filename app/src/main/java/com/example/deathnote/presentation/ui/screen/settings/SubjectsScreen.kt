@@ -1,9 +1,11 @@
 package com.example.deathnote.presentation.ui.screen.settings
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -14,7 +16,8 @@ import com.example.deathnote.presentation.model.Subject
 import com.example.deathnote.presentation.model.SubjectType
 import com.example.deathnote.presentation.navigation.AppDestination
 import com.example.deathnote.presentation.ui.cross_screen_ui.SettingsTopBar
-import com.example.deathnote.presentation.ui.screen.settings.composable.subjects_screen_ui.SubjectBar
+import com.example.deathnote.presentation.ui.screen.settings.components.subjects_screen_ui.SubjectBar
+import com.example.deathnote.presentation.ui.theme.util.DeathNoteTheme
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
@@ -35,6 +38,7 @@ fun SubjectsScreen(
 
     Column(
         modifier = Modifier
+            .background(color = DeathNoteTheme.colors.baseBackground)
             .padding(paddingValues)
             .fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(40.dp)
@@ -57,6 +61,10 @@ fun SubjectsScreen(
 
             item {
                 SubjectBar(index = 2, subject = Subject(2,"Теория вероятностей и математическая статистика", SubjectType.PRACTICE))
+            }
+
+            item {
+                Spacer(modifier = Modifier.padding(bottom = 10.dp))
             }
         }
     }

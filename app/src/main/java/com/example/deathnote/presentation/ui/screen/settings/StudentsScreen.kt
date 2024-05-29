@@ -1,9 +1,11 @@
 package com.example.deathnote.presentation.ui.screen.settings
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -13,7 +15,8 @@ import androidx.compose.ui.unit.dp
 import com.example.deathnote.presentation.model.Student
 import com.example.deathnote.presentation.navigation.AppDestination
 import com.example.deathnote.presentation.ui.cross_screen_ui.SettingsTopBar
-import com.example.deathnote.presentation.ui.screen.settings.composable.students_screen_ui.StudentBar
+import com.example.deathnote.presentation.ui.screen.settings.components.students_screen_ui.StudentBar
+import com.example.deathnote.presentation.ui.theme.util.DeathNoteTheme
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
@@ -34,6 +37,7 @@ fun StudentsScreen(
 
     Column(
         modifier = Modifier
+            .background(color = DeathNoteTheme.colors.baseBackground)
             .padding(paddingValues)
             .fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(40.dp)
@@ -56,6 +60,10 @@ fun StudentsScreen(
 
             item {
                 StudentBar(index = 2, student = Student(1, "Никита", "Болошко", "Сергеевич", 0))
+            }
+
+            item {
+                Spacer(modifier = Modifier.padding(bottom = 10.dp))
             }
         }
     }

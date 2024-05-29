@@ -5,9 +5,11 @@ import android.content.Context
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -25,7 +27,8 @@ import com.example.deathnote.activity.util.loadLanguagePreference
 import com.example.deathnote.presentation.model.Language
 import com.example.deathnote.presentation.navigation.AppDestination
 import com.example.deathnote.presentation.ui.cross_screen_ui.SettingsTopBar
-import com.example.deathnote.presentation.ui.screen.settings.composable.language_screen_ui.LanguageBar
+import com.example.deathnote.presentation.ui.screen.settings.components.language_screen_ui.LanguageBar
+import com.example.deathnote.presentation.ui.theme.util.DeathNoteTheme
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
@@ -43,7 +46,6 @@ fun LanguageScreen(
 
     val context: Context = LocalContext.current
 
-    //TODO: перенести во ViewModel
     var curSelectedOption by remember { mutableStateOf(loadLanguagePreference(context)) }
 
     val languages = Language.entries.toList()
@@ -54,6 +56,7 @@ fun LanguageScreen(
 
     Column(
         modifier = Modifier
+            .background(color = DeathNoteTheme.colors.baseBackground)
             .padding(paddingValues)
             .fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(40.dp)
@@ -90,6 +93,10 @@ fun LanguageScreen(
                         }
                     }
                 )
+            }
+
+            item {
+                Spacer(modifier = Modifier.padding(bottom = 10.dp))
             }
         }
     }

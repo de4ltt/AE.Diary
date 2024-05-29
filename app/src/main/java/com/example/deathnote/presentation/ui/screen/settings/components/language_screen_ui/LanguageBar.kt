@@ -1,4 +1,4 @@
-package com.example.deathnote.presentation.ui.screen.settings.composable.language_screen_ui
+package com.example.deathnote.presentation.ui.screen.settings.components.language_screen_ui
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
@@ -31,6 +31,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.deathnote.presentation.model.Language
+import com.example.deathnote.presentation.ui.theme.Black
 import com.example.deathnote.presentation.ui.theme.util.DeathNoteTheme
 
 @Composable
@@ -52,20 +53,25 @@ fun LanguageBar(
     val brush = Brush.linearGradient(
         colors = listOf(
             animateColorAsState(
-                targetValue = if (isChosen) language.dominantColors[0] else DeathNoteTheme.colors.regular,
+                targetValue = if (isChosen) language.dominantColors[0] else DeathNoteTheme.colors.regularBackground,
                 animationSpec = tween(100)
             ).value,
             animateColorAsState(
-                targetValue = if (isChosen) language.dominantColors[1] else DeathNoteTheme.colors.regular,
+                targetValue = if (isChosen) language.dominantColors[1] else DeathNoteTheme.colors.regularBackground,
                 animationSpec = tween(500)
             ).value,
             animateColorAsState(
-                targetValue = if (isChosen) language.dominantColors[2] else DeathNoteTheme.colors.regular,
+                targetValue = if (isChosen) language.dominantColors[2] else DeathNoteTheme.colors.regularBackground,
                 animationSpec = tween(1000)
             ).value
         ),
         start = Offset.Zero,
         end = Offset.Infinite
+    )
+
+    val textColor by animateColorAsState(
+        targetValue = if (isChosen) Black else DeathNoteTheme.colors.inverse,
+        label = "text_color"
     )
 
 
@@ -104,7 +110,7 @@ fun LanguageBar(
         Text(
             text = stringResource(id = language.title),
             style = DeathNoteTheme.typography.settingsScreenItemTitle,
-            color = DeathNoteTheme.colors.inverse
+            color = textColor
         )
 
     }

@@ -22,6 +22,12 @@ data class DeathNoteTypography(
         fontFamily = InterFontFamily.Regular
     ),
 
+    val timeTableCard: TextStyle = TextStyle(
+        fontSize = 20.sp,
+        lineHeight = 18.sp,
+        fontFamily = InterFontFamily.Bold
+    ),
+
     val settingsScreenItemTitle: TextStyle = TextStyle(
         fontFamily = InterFontFamily.Bold,
         fontSize = 16.sp,
@@ -32,5 +38,11 @@ data class DeathNoteTypography(
         fontFamily = InterFontFamily.Semibold,
         fontSize = 13.sp,
         lineHeight = 13.sp
+    ),
+
+    val subjectCardTimetableTitle: TextStyle = TextStyle(
+        fontFamily = InterFontFamily.Semibold,
+        fontSize = 20.sp,
+        lineHeight = 23.sp
     )
 )

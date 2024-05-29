@@ -1,4 +1,4 @@
-package com.example.deathnote.presentation.ui.screen.settings.composable.settings_screen_ui
+package com.example.deathnote.presentation.ui.screen.settings.components.settings_screen_ui
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes

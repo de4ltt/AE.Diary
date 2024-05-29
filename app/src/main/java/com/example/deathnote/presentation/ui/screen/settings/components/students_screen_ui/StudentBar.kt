@@ -1,4 +1,4 @@
-package com.example.deathnote.presentation.ui.screen.settings.composable.subjects_screen_ui
+package com.example.deathnote.presentation.ui.screen.settings.components.students_screen_ui
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.LinearEasing
@@ -33,15 +33,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.deathnote.R
-import com.example.deathnote.presentation.model.Subject
-import com.example.deathnote.presentation.model.SubjectType
-import com.example.deathnote.presentation.model.getShortName
+import com.example.deathnote.presentation.model.Student
+import com.example.deathnote.presentation.model.util.getShortName
 import com.example.deathnote.presentation.ui.theme.util.DeathNoteTheme
 
 @Composable
-fun SubjectBar(
+fun StudentBar(
     index: Int,
-    subject: Subject
+    student: Student
 ) {
 
     var isDeleteMode by remember {
@@ -56,7 +55,7 @@ fun SubjectBar(
                 shape = DeathNoteTheme.shapes.rounded12,
                 ambientColor = DeathNoteTheme.colors.regularBackground
             )
-            .background(DeathNoteTheme.colors.regular)
+            .background(DeathNoteTheme.colors.regularBackground)
     ) {
         Crossfade(
             targetState = isDeleteMode,
@@ -76,15 +75,6 @@ fun SubjectBar(
                                 max = 80.dp
                             )
                             .wrapContentHeight()
-                            .pointerInput(Unit) {
-                                detectTapGestures(
-                                    onLongPress = {
-                                        isDeleteMode = true
-                                    }
-                                )
-                            },
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Box(
                             modifier = Modifier
@@ -116,12 +106,7 @@ fun SubjectBar(
                         ) {
                             Text(
                                 modifier = Modifier.weight(1f).padding(end = 10.dp),
-                                text = "${stringResource(id = R.string.to_delete)}\n${subject.getShortName()} (${
-                                    if (subject.subjectType == SubjectType.LECTURE) stringResource(
-                                        id = R.string.lk
-                                    )
-                                    else stringResource(id = R.string.pr)
-                                })",
+                                text = "${stringResource(id = R.string.to_delete)}\n${student.getShortName()}",
                                 style = DeathNoteTheme.typography.itemCardTitle,
                                 color = DeathNoteTheme.colors.regular
                             )
@@ -178,16 +163,15 @@ fun SubjectBar(
                                         isDeleteMode = true
                                     }
                                 )
-                            },
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
+                            }
                     ) {
                         Box(
                             modifier = Modifier
                                 .fillMaxHeight()
                                 .width(28.dp)
                                 .background(
-                                    color = DeathNoteTheme.colors.primary
+                                    color = DeathNoteTheme.colors.primary,
+                                    shape = DeathNoteTheme.shapes.rounded12_left
                                 ),
                             contentAlignment = Alignment.Center
                         ) {
@@ -203,7 +187,7 @@ fun SubjectBar(
                             modifier = Modifier
                                 .fillMaxSize()
                                 .background(
-                                    color = DeathNoteTheme.colors.regular
+                                    color = DeathNoteTheme.colors.regularBackground
                                 )
                                 .padding(horizontal = 15.dp),
                             horizontalArrangement = Arrangement.SpaceBetween,
@@ -211,12 +195,7 @@ fun SubjectBar(
                         ) {
                             Text(
                                 modifier = Modifier.weight(1f).padding(end = 10.dp),
-                                text = "${subject.name} (${
-                                    if (subject.subjectType == SubjectType.LECTURE) stringResource(
-                                        id = R.string.lk
-                                    )
-                                    else stringResource(id = R.string.pr)
-                                })",
+                                text = "${student.surname}\n${student.name} ${student.patronymic ?: ""}",
                                 style = DeathNoteTheme.typography.itemCardTitle,
                                 color = DeathNoteTheme.colors.inverse
                             )

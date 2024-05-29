@@ -1,21 +1,19 @@
 package com.example.deathnote.activity
 
-import android.app.Activity
 import android.os.Bundle
-import android.view.Window
-import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.ui.Alignment
 import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import com.example.deathnote.activity.util.hideSystemUi
 import com.example.deathnote.activity.util.loadLanguagePreference
 import com.example.deathnote.activity.util.loadSchemePreference
 import com.example.deathnote.activity.util.saveSchemePreference
+import com.example.deathnote.activity.util.setDisplayCutoutMode
 import com.example.deathnote.activity.util.setLocale
-import com.example.deathnote.presentation.model.ColorScheme
+import com.example.deathnote.presentation.model.ColorPresentation
 import com.example.deathnote.presentation.navigation.NavigationUI
 import com.example.deathnote.presentation.ui.theme.DeathNoteTheme
 import com.example.deathnote.presentation.ui.theme.setColorScheme
@@ -36,7 +34,7 @@ class MainActivity : ComponentActivity() {
         }
 
         loadSchemePreference(this)?.let {
-            setColorScheme(ColorScheme.valueOf(it))
+            setColorScheme(ColorPresentation.ColorMode.valueOf(it))
         }
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -64,19 +62,9 @@ class MainActivity : ComponentActivity() {
     fun changeLanguage(language: String) =
         setLocale(this, language)
 
-    fun changeScheme(colorScheme: ColorScheme) =
-        saveSchemePreference(this, colorScheme)
+    fun changeScheme(colorMode: ColorPresentation.ColorMode) =
+        saveSchemePreference(this, colorMode)
 }
 
-private fun Window.hideSystemUi(extraAction: (WindowInsetsControllerCompat.() -> Unit)? = null) {
-    WindowInsetsControllerCompat(this, this.decorView).let { controller ->
-        controller.hide(WindowInsetsCompat.Type.systemBars())
-        extraAction?.invoke(controller)
-    }
-}
 
-internal fun Activity.setDisplayCutoutMode() {
-    window.attributes.layoutInDisplayCutoutMode =
-        WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
-}
 

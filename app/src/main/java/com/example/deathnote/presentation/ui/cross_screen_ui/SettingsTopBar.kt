@@ -1,5 +1,6 @@
 package com.example.deathnote.presentation.ui.cross_screen_ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -26,7 +27,8 @@ fun SettingsTopBar(
 
     Column(
         modifier = Modifier
-            .wrapContentSize(),
+            .wrapContentSize()
+            .background(color = DeathNoteTheme.colors.baseBackground),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
 

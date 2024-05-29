@@ -30,4 +30,20 @@
     <string name="week_type">Week type</string>
     <string name="even">even</string>
     <string name="odd">odd</string>
+    <string name="primary_background">primary background</string>
+    <string name="secondary_background">secondary background</string>
+    <string name="secondary">secondary</string>
+    <string name="inverse">inverse</string>
+    <string name="inverse_background">inverse background</string>
+    <string name="light_inverse">light inverse</string>
+    <string name="regular">regular</string>
+    <string name="regular_background">regular background</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="lecture">LECTURE</string>
+    <string name="practice">PRACTICE</string>
 </resources>

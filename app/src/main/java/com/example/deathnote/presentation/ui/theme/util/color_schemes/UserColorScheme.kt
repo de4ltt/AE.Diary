@@ -12,4 +12,12 @@ object UserColorScheme {
     var LightEvenColorScheme by mutableStateOf(
         DefaultColorScheme.LightEvenColorScheme
     )
+
+    var DarkOddColorScheme by mutableStateOf(
+        DefaultColorScheme.DarkOddColorScheme
+    )
+
+    var DarkEvenColorScheme by mutableStateOf(
+        DefaultColorScheme.DarkEvenColorScheme
+    )
 }

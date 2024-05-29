@@ -20,5 +20,6 @@ data class DeathNoteColors(
     val inverseBackground: Color = SexyGray,
     val lightInverse: Color = SemiLightGray,
     val regular: Color = White,
-    val regularBackground: Color = LightGray
+    val regularBackground: Color = LightGray,
+    val baseBackground: Color = White
 )

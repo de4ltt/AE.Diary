@@ -1,9 +1,11 @@
 package com.example.deathnote.presentation.ui.screen.settings
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -13,12 +15,13 @@ import androidx.compose.ui.unit.dp
 import com.example.deathnote.R
 import com.example.deathnote.presentation.navigation.AppDestination
 import com.example.deathnote.presentation.ui.cross_screen_ui.SettingsTopBar
-import com.example.deathnote.presentation.ui.screen.settings.composable.settings_screen_ui.SettingsOptionPane
+import com.example.deathnote.presentation.ui.screen.settings.components.settings_screen_ui.SettingsOptionPane
 import com.example.deathnote.presentation.ui.screen.settings.destinations.LanguageScreenDestination
 import com.example.deathnote.presentation.ui.screen.settings.destinations.StudentsScreenDestination
 import com.example.deathnote.presentation.ui.screen.settings.destinations.StyleScreenDestination
 import com.example.deathnote.presentation.ui.screen.settings.destinations.SubjectsScreenDestination
 import com.example.deathnote.presentation.ui.screen.settings.destinations.TimetableScreenDestination
+import com.example.deathnote.presentation.ui.theme.util.DeathNoteTheme
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -40,6 +43,7 @@ fun SettingsScreen(
 
     Column(
         modifier = Modifier
+            .background(color = DeathNoteTheme.colors.baseBackground)
             .padding(paddingValues)
             .fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(40.dp)
@@ -109,6 +113,10 @@ fun SettingsScreen(
                         navigator.navigate(StyleScreenDestination, onlyIfResumed = true)
                     }
                 )
+            }
+
+            item {
+                Spacer(modifier = Modifier.padding(bottom = 10.dp))
             }
         }
     }

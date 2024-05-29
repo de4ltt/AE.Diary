@@ -1,5 +1,6 @@
-package com.example.deathnote.presentation.ui.screen.settings.composable.style_screen_ui
+package com.example.deathnote.presentation.ui.screen.settings.components.style_screen_ui
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
@@ -51,11 +52,13 @@ fun StyleInterthemePane(
                 .padding(10.dp),
             verticalArrangement = Arrangement.spacedBy(30.dp)
         ) {
-            Text(
-                text = stringResource(id = settingValue),
-                style = DeathNoteTheme.typography.settingsScreenItemTitle,
-                color = DeathNoteTheme.colors.regular
-            )
+            Crossfade(targetState = settingValue, label="style_text") {
+                Text(
+                    text = stringResource(id = it),
+                    style = DeathNoteTheme.typography.settingsScreenItemTitle,
+                    color = DeathNoteTheme.colors.regular
+                )
+            }
 
             Text(
                 text = stringResource(id = if (definingState) isOnValue else isOffValue),
