@@ -86,6 +86,11 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    val pager_version = "0.32.0"
+
+    implementation("com.google.accompanist:accompanist-pager:$pager_version")
+    implementation("com.google.accompanist:accompanist-pager-indicators:$pager_version")
+
     //Room
     val room_version = "2.6.1"
 

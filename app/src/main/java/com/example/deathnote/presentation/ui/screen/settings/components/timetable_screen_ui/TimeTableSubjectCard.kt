@@ -1,7 +1,7 @@
 package com.example.deathnote.presentation.ui.screen.settings.components.timetable_screen_ui
 
-import androidx.compose.animation.Crossfade
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -38,7 +38,7 @@ fun TimeTableSubjectCard(
     subjectScheduled: SubjectScheduled?
 ) {
 
-    Crossfade(
+    Box(
         modifier = Modifier
             .padding(horizontal = 15.dp)
             .fillMaxWidth()
@@ -53,10 +53,11 @@ fun TimeTableSubjectCard(
             .background(
                 color = DeathNoteTheme.colors.regularBackground
             )
-            .animateContentSize(),
-        targetState = subjectScheduled
+            .animateContentSize(
+                animationSpec = tween(25)
+            )
     ) {
-        if (it != null) {
+        if (subjectScheduled != null) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -71,7 +72,7 @@ fun TimeTableSubjectCard(
                     text = buildAnnotatedString {
                         withStyle(
                             style = SpanStyle(
-                                color = if (it.subject.subjectType == SubjectType.LECTURE)
+                                color = if (subjectScheduled.subject.subjectType == SubjectType.LECTURE)
                                     DeathNoteTheme.colors.secondary.adjust(
                                         if (isDarkMode()) 1.8f else 1f
                                     )
@@ -81,7 +82,7 @@ fun TimeTableSubjectCard(
                             )
                         ) {
                             append(
-                                if (it.subject.subjectType == SubjectType.LECTURE)
+                                if (subjectScheduled.subject.subjectType == SubjectType.LECTURE)
                                 stringResource(id = R.string.lecture)
                                 else stringResource(id = R.string.practice)
                             )
@@ -93,7 +94,7 @@ fun TimeTableSubjectCard(
                             )
                         ) {
                             append(
-                                " // " + it.subjectTerm.getTime()
+                                " // " + subjectScheduled.subjectTerm.getTime()
                             )
                         }
                     },
@@ -103,7 +104,7 @@ fun TimeTableSubjectCard(
 
                 Text(
                     modifier = Modifier.padding(top = 7.dp, bottom = 3.dp),
-                    text = it.subject.name,
+                    text = subjectScheduled.subject.name,
                     style = DeathNoteTheme.typography.subjectCardTimetableTitle,
                     color = DeathNoteTheme.colors.inverse
                 )

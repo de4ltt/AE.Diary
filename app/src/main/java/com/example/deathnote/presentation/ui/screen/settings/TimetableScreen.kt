@@ -16,6 +16,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.drawscope.scale
@@ -35,7 +36,6 @@ import com.example.deathnote.presentation.ui.screen.settings.components.timetabl
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import kotlin.math.absoluteValue
 
 @OptIn(ExperimentalFoundationApi::class)
 @Destination
@@ -74,7 +74,7 @@ fun TimetableScreen(
             timetableID = 1,
             daySubjects = DaySubjects(
                 subject1 = SubjectScheduled(
-                    Subject(0, "Боже, название этого предмета ну нереально длинное. Посмотрим как справится интерфейс", SubjectType.LECTURE),
+                    Subject(0, "Боже, название этого предмета ну нереально длинное. Посмотрим на расчленение кавказских детей в TikTok'е", SubjectType.LECTURE),
                     subjectTerm = SubjectTerm("11:10", "12:30")
                 ),
                 subject2 = SubjectScheduled(
@@ -110,15 +110,16 @@ fun TimetableScreen(
         }
 
         HorizontalPager(
-            state = pagerState
+            state = pagerState,
+            beyondBoundsPageCount = 1,
+            verticalAlignment = Alignment.Top
         ) { page ->
             Card(
                 Modifier
                     .padding(horizontal = 25.dp)
                     .wrapContentSize()
                     .drawWithContent {
-                        val pageOffset =
-                            ((pagerState.currentPage - page) + pagerState.currentPageOffsetFraction).absoluteValue
+                        val pageOffset = pagerState.currentPageOffsetFraction
 
                         val scale = lerp(
                             start = 0.8f,
@@ -139,7 +140,7 @@ fun TimetableScreen(
                 ),
                 shape = DeathNoteTheme.shapes.rounded12
             ) {
-                TimetableCard(timetable = timetables[pagerState.currentPage])
+                TimetableCard(timetable = timetables[page])
             }
         }
     }
