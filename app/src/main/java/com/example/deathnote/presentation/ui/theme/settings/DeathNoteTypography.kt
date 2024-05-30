@@ -1,8 +1,8 @@
-package com.example.deathnote.presentation.ui.theme.util
+package com.example.deathnote.presentation.ui.theme.settings
 
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.sp
-import com.example.deathnote.presentation.ui.theme.util.font_family.InterFontFamily
+import com.example.deathnote.presentation.ui.theme.settings.font_family.InterFontFamily
 
 data class DeathNoteTypography(
 
@@ -42,7 +42,7 @@ data class DeathNoteTypography(
 
     val subjectCardTimetableTitle: TextStyle = TextStyle(
         fontFamily = InterFontFamily.Semibold,
-        fontSize = 20.sp,
-        lineHeight = 23.sp
+        fontSize = 19.sp,
+        lineHeight = 20.sp
     )
 )

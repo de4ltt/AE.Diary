@@ -1,4 +1,4 @@
-package com.example.deathnote.presentation.ui.theme.util
+package com.example.deathnote.presentation.ui.theme.settings
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider

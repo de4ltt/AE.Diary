@@ -32,7 +32,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.deathnote.presentation.model.Language
 import com.example.deathnote.presentation.ui.theme.Black
-import com.example.deathnote.presentation.ui.theme.util.DeathNoteTheme
+import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 
 @Composable
 fun LanguageBar(

@@ -21,7 +21,7 @@ import com.example.deathnote.presentation.ui.screen.settings.destinations.Studen
 import com.example.deathnote.presentation.ui.screen.settings.destinations.StyleScreenDestination
 import com.example.deathnote.presentation.ui.screen.settings.destinations.SubjectsScreenDestination
 import com.example.deathnote.presentation.ui.screen.settings.destinations.TimetableScreenDestination
-import com.example.deathnote.presentation.ui.theme.util.DeathNoteTheme
+import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator

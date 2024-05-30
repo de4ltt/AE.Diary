@@ -17,7 +17,7 @@ import com.example.deathnote.presentation.model.SubjectType
 import com.example.deathnote.presentation.navigation.AppDestination
 import com.example.deathnote.presentation.ui.cross_screen_ui.SettingsTopBar
 import com.example.deathnote.presentation.ui.screen.settings.components.subjects_screen_ui.SubjectBar
-import com.example.deathnote.presentation.ui.theme.util.DeathNoteTheme
+import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 

@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import com.example.deathnote.R
 import com.example.deathnote.presentation.model.ColorPresentation
-import com.example.deathnote.presentation.ui.theme.util.DeathNoteTheme
+import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 
 @Composable
 fun ColorPresentation.ColorType.get(): Pair<Color, Int> =
@@ -12,6 +12,11 @@ fun ColorPresentation.ColorType.get(): Pair<Color, Int> =
         ColorPresentation.ColorType.PRIMARY -> Pair(
             DeathNoteTheme.colors.primary,
             R.string.primary
+        )
+
+        ColorPresentation.ColorType.PRIMARY_DEFAULT -> Pair(
+            DeathNoteTheme.colors.primaryDefault,
+            R.string.primary_default
         )
 
         ColorPresentation.ColorType.PRIMARY_BACKGROUND -> Pair(
@@ -52,5 +57,15 @@ fun ColorPresentation.ColorType.get(): Pair<Color, Int> =
         ColorPresentation.ColorType.LIGHT_INVERSE -> Pair(
             DeathNoteTheme.colors.lightInverse,
             R.string.light_inverse
+        )
+
+        ColorPresentation.ColorType.TERTIARY -> Pair(
+            DeathNoteTheme.colors.tertiary,
+            R.string.tertiary
+        )
+
+        ColorPresentation.ColorType.BASE_BACKGROUND -> Pair(
+            DeathNoteTheme.colors.baseBackground,
+            R.string.base_background
         )
     }

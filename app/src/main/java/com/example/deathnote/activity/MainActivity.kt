@@ -16,7 +16,7 @@ import com.example.deathnote.activity.util.setLocale
 import com.example.deathnote.presentation.model.ColorPresentation
 import com.example.deathnote.presentation.navigation.NavigationUI
 import com.example.deathnote.presentation.ui.theme.DeathNoteTheme
-import com.example.deathnote.presentation.ui.theme.setColorScheme
+import com.example.deathnote.presentation.ui.theme.util.setColorScheme
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.ramcosta.composedestinations.animations.rememberAnimatedNavHostEngine
 

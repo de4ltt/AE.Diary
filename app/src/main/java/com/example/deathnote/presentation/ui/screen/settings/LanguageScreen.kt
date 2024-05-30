@@ -28,7 +28,7 @@ import com.example.deathnote.presentation.model.Language
 import com.example.deathnote.presentation.navigation.AppDestination
 import com.example.deathnote.presentation.ui.cross_screen_ui.SettingsTopBar
 import com.example.deathnote.presentation.ui.screen.settings.components.language_screen_ui.LanguageBar
-import com.example.deathnote.presentation.ui.theme.util.DeathNoteTheme
+import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 

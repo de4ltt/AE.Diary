@@ -1,4 +1,4 @@
-package com.example.deathnote.presentation.ui.theme.util.color_schemes
+package com.example.deathnote.presentation.ui.theme.settings.color_schemes
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

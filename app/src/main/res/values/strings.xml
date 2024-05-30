@@ -25,11 +25,11 @@
     <string name="is_dark_theme" translatable="false">Dark mode</string>
     <string name="color">Color</string>
     <string name="primary">primary</string>
-    <string name="is_on">applied</string>
-    <string name="is_off">is off</string>
+    <string name="is_on">applied </string>
+    <string name="is_off">is off </string>
     <string name="week_type">Week type</string>
-    <string name="even">even</string>
-    <string name="odd">odd</string>
+    <string name="even">even </string>
+    <string name="odd">odd </string>
     <string name="primary_background">primary background</string>
     <string name="secondary_background">secondary background</string>
     <string name="secondary">secondary</string>
@@ -46,4 +46,8 @@
     <string name="saturday">Saturday</string>
     <string name="lecture">LECTURE</string>
     <string name="practice">PRACTICE</string>
+    <string name="base_background">base background</string>
+    <string name="tertiary">tertiary</string>
+    <string name="primary_default">primary default</string>
+    <string name="redo">restore defaults</string>
 </resources>

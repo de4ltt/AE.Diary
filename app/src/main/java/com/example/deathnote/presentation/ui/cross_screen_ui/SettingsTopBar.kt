@@ -1,5 +1,6 @@
 package com.example.deathnote.presentation.ui.cross_screen_ui
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
@@ -17,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.example.deathnote.presentation.navigation.AppDestination
 import com.example.deathnote.presentation.navigation.getSettingsTopBarIcon
 import com.example.deathnote.presentation.navigation.getSettingsTopBarLabel
-import com.example.deathnote.presentation.ui.theme.util.DeathNoteTheme
+import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 
 @Composable
 fun SettingsTopBar(
@@ -28,7 +29,7 @@ fun SettingsTopBar(
     Column(
         modifier = Modifier
             .wrapContentSize()
-            .background(color = DeathNoteTheme.colors.baseBackground),
+            .background(color = animateColorAsState(targetValue = DeathNoteTheme.colors.baseBackground).value),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
 
@@ -42,13 +43,13 @@ fun SettingsTopBar(
                         onIconClick()
                     }
                 },
-            tint = DeathNoteTheme.colors.inverse
+            tint = animateColorAsState(targetValue = DeathNoteTheme.colors.inverse).value
         )
 
         Text(
             text = stringResource(id = destination.getSettingsTopBarLabel()),
             style = DeathNoteTheme.typography.topBar,
-            color = DeathNoteTheme.colors.inverse
+            color = animateColorAsState(targetValue = DeathNoteTheme.colors.inverse).value
         )
     }
 }

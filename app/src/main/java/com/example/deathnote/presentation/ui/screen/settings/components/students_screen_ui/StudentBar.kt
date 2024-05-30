@@ -35,7 +35,7 @@ import androidx.compose.ui.unit.dp
 import com.example.deathnote.R
 import com.example.deathnote.presentation.model.Student
 import com.example.deathnote.presentation.model.util.getShortName
-import com.example.deathnote.presentation.ui.theme.util.DeathNoteTheme
+import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 
 @Composable
 fun StudentBar(

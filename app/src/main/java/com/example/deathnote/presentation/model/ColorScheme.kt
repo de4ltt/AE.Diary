@@ -13,13 +13,16 @@ sealed class ColorPresentation {
 
     enum class ColorType {
         PRIMARY,
+        PRIMARY_DEFAULT,
         PRIMARY_BACKGROUND,
         SECONDARY,
         SECONDARY_BACKGROUND,
+        TERTIARY,
         REGULAR,
         REGULAR_BACKGROUND,
         INVERSE,
         INVERSE_BACKGROUND,
-        LIGHT_INVERSE
+        LIGHT_INVERSE,
+        BASE_BACKGROUND
     }
 }
