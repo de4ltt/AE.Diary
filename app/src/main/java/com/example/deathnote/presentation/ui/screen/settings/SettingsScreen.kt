@@ -1,6 +1,7 @@
 package com.example.deathnote.presentation.ui.screen.settings
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,7 +10,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.deathnote.R
 import com.example.deathnote.presentation.navigation.AppDestination
@@ -17,15 +20,15 @@ import com.example.deathnote.presentation.ui.cross_screen_ui.SettingsTopBar
 import com.example.deathnote.presentation.ui.screen.settings.components.settings_screen_ui.SettingsOptionPane
 import com.example.deathnote.presentation.ui.screen.settings.destinations.LanguageScreenDestination
 import com.example.deathnote.presentation.ui.screen.settings.destinations.StudentsScreenDestination
-import com.example.deathnote.presentation.ui.screen.settings.destinations.StyleScreenDestination
 import com.example.deathnote.presentation.ui.screen.settings.destinations.SubjectsScreenDestination
 import com.example.deathnote.presentation.ui.screen.settings.destinations.TimetableScreenDestination
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
+import com.example.deathnote.presentation.ui.theme.util.isDarkMode
+import com.example.deathnote.presentation.ui.theme.util.switchDarkMode
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
-@RootNavGraph(start = true)
 @Destination
 @Composable
 fun SettingsScreen(
@@ -37,12 +40,16 @@ fun SettingsScreen(
     )
 ) {
     BackHandler {
-
+        navigator.popBackStack()
     }
+
+    val context = LocalContext.current
+
+    val backgroundColor by animateColorAsState(targetValue = DeathNoteTheme.colors.baseBackground)
 
     Column(
         modifier = Modifier
-            .background(color = DeathNoteTheme.colors.baseBackground)
+            .background(color = backgroundColor)
             .padding(paddingValues)
             .fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(40.dp)
@@ -51,7 +58,7 @@ fun SettingsScreen(
         SettingsTopBar(
             destination = AppDestination.SettingsTopBarDestinations.SETTINGS,
             onIconClick = {
-
+                navigator.popBackStack()
             }
         )
 
@@ -60,6 +67,20 @@ fun SettingsScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp),
             contentPadding = PaddingValues(bottom = 10.dp)
         ) {
+
+            item {
+                SettingsOptionPane(
+                    icon = R.drawable.moon,
+                    color = DeathNoteTheme.colors.inverseBackground,
+                    isDarkThemePane = true,
+                    title = if (isDarkMode()) R.string.light_theme else R.string.dark_theme,
+                    subtitle = if (isDarkMode()) R.string.dark_theme_subtitle else R.string.light_theme_subtitle,
+                    onClick = {
+                        switchDarkMode(context)
+                    }
+                )
+            }
+
             item {
                 SettingsOptionPane(
                     icon = R.drawable.students,
@@ -100,17 +121,6 @@ fun SettingsScreen(
                     subtitle = R.string.language_pardon,
                     onClick = {
                         navigator.navigate(LanguageScreenDestination, onlyIfResumed = true)
-                    }
-                )
-            }
-
-            item {
-                SettingsOptionPane(
-                    icon = R.drawable.brush,
-                    title = R.string.style,
-                    subtitle = R.string.styles_cringe,
-                    onClick = {
-                        navigator.navigate(StyleScreenDestination, onlyIfResumed = true)
                     }
                 )
             }
