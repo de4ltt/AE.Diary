@@ -31,14 +31,19 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.deathnote.presentation.ui.theme.SemiLightGray
+import com.example.deathnote.presentation.ui.theme.SoftGray
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 
 @Composable
 fun SettingsOptionPane(
     onClick: () -> Unit = { },
+    color: Color = DeathNoteTheme.colors.regularBackground,
+    isDarkThemePane: Boolean = false,
     @DrawableRes icon: Int,
     @StringRes title: Int,
     @StringRes subtitle: Int
@@ -52,22 +57,7 @@ fun SettingsOptionPane(
         label = "paneScale"
     )
 
-    val color by animateColorAsState(
-        targetValue = if (isPressed) DeathNoteTheme.colors.primaryBackground else DeathNoteTheme.colors.regularBackground,
-        label = "gradient_color",
-        animationSpec = tween(150)
-    )
-
-    val gradient = Brush.linearGradient(
-            colors = listOf(
-                DeathNoteTheme.colors.regularBackground,
-                DeathNoteTheme.colors.regularBackground,
-                color
-            ),
-            start = Offset.Zero,
-            end = Offset.Infinite
-        )
-
+    val backgroundColor by animateColorAsState(targetValue = DeathNoteTheme.colors.primaryBackground)
 
     Row(
         modifier = Modifier
@@ -81,7 +71,7 @@ fun SettingsOptionPane(
                 clip = false
             )
             .background(
-                brush = gradient,
+                color = color,
                 shape = DeathNoteTheme.shapes.rounded12
             )
             .clickable(
@@ -96,7 +86,7 @@ fun SettingsOptionPane(
                 .padding(15.dp)
                 .size(60.dp)
                 .clip(CircleShape)
-                .background(DeathNoteTheme.colors.primaryBackground),
+                .background(backgroundColor),
             contentAlignment = Alignment.Center
         ) {
             Icon(
@@ -117,13 +107,13 @@ fun SettingsOptionPane(
             Text(
                 text = stringResource(id = title),
                 style = DeathNoteTheme.typography.settingsScreenItemTitle,
-                color = DeathNoteTheme.colors.inverse
+                color = if (isDarkThemePane) SoftGray else DeathNoteTheme.colors.inverse
             )
 
             Text(
                 text = stringResource(id = subtitle),
                 style = DeathNoteTheme.typography.settingsScreenItemSubtitle,
-                color = DeathNoteTheme.colors.lightInverse
+                color = if (isDarkThemePane) SemiLightGray else DeathNoteTheme.colors.lightInverse
             )
         }
 

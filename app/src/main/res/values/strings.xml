@@ -50,4 +50,12 @@
     <string name="tertiary">tertiary</string>
     <string name="primary_default">primary default</string>
     <string name="redo">restore defaults</string>
+    <string name="light_theme">Light theme</string>
+    <string name="dark_theme">Dark theme</string>
+    <string name="dark_theme_subtitle">The Hell for the martyrs</string>
+    <string name="light_theme_subtitle">The Heaven for the martyrs</string>
+    <string name="diary_bar">diary</string>
+    <string name="list_bar">certificates</string>
+    <string name="stats_bar">stats</string>
+    <string name="settings_bar">settings</string>
 </resources>
