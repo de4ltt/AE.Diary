@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -52,7 +51,8 @@ fun StudentsScreen(
 
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(10.dp)
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+            contentPadding = PaddingValues(bottom = 10.dp)
         ) {
             item {
                 StudentBar(index = 1, student = Student(1, "Никита", "Болошко", "Сергеевич", 0))
@@ -60,10 +60,6 @@ fun StudentsScreen(
 
             item {
                 StudentBar(index = 2, student = Student(1, "Никита", "Болошко", "Сергеевич", 0))
-            }
-
-            item {
-                Spacer(modifier = Modifier.padding(bottom = 10.dp))
             }
         }
     }

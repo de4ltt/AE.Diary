@@ -6,7 +6,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -74,7 +73,8 @@ fun StyleScreen(
                 .fillMaxHeight(),
             columns = GridCells.Fixed(2),
             horizontalArrangement = Arrangement.spacedBy(5.dp),
-            verticalArrangement = Arrangement.spacedBy(5.dp)
+            verticalArrangement = Arrangement.spacedBy(5.dp),
+            contentPadding = PaddingValues(bottom = 10.dp)
         ) {
             item {
                 StyleInterthemePane(
@@ -108,10 +108,6 @@ fun StyleScreen(
                 RedoPane(
                     onClick = { /*TODO*/ }
                 )
-            }
-
-            items(2) {
-                Spacer(modifier = Modifier.padding(bottom = 10.dp))
             }
 
         }

@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -53,7 +52,8 @@ fun SubjectsScreen(
 
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(10.dp)
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+            contentPadding = PaddingValues(bottom = 10.dp)
         ) {
             item {
                 SubjectBar(index = 1, subject = Subject(1, "Математический анализ", SubjectType.LECTURE))
@@ -61,10 +61,6 @@ fun SubjectsScreen(
 
             item {
                 SubjectBar(index = 2, subject = Subject(2,"Теория вероятностей и математическая статистика", SubjectType.PRACTICE))
-            }
-
-            item {
-                Spacer(modifier = Modifier.padding(bottom = 10.dp))
             }
         }
     }

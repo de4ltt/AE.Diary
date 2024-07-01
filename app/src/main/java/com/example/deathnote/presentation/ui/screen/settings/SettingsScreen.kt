@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -58,7 +57,8 @@ fun SettingsScreen(
 
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            contentPadding = PaddingValues(bottom = 10.dp)
         ) {
             item {
                 SettingsOptionPane(
@@ -113,10 +113,6 @@ fun SettingsScreen(
                         navigator.navigate(StyleScreenDestination, onlyIfResumed = true)
                     }
                 )
-            }
-
-            item {
-                Spacer(modifier = Modifier.padding(bottom = 10.dp))
             }
         }
     }

@@ -36,6 +36,7 @@ import com.example.deathnote.presentation.ui.screen.settings.components.timetabl
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import kotlin.math.absoluteValue
 
 @OptIn(ExperimentalFoundationApi::class)
 @Destination
@@ -119,7 +120,7 @@ fun TimetableScreen(
                     .padding(horizontal = 25.dp)
                     .wrapContentSize()
                     .drawWithContent {
-                        val pageOffset = pagerState.currentPageOffsetFraction
+                        val pageOffset = ((pagerState.currentPage - page) + pagerState.currentPageOffsetFraction).absoluteValue
 
                         val scale = lerp(
                             start = 0.8f,
