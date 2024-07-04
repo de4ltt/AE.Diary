@@ -1,4 +1,4 @@
-package com.example.deathnote.presentation.ui.screen.settings.components.main_screen_ui
+package com.example.deathnote.presentation.ui.screen.main_screen.main_screen_ui
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
