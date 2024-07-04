@@ -33,23 +33,28 @@ fun SettingsTopBar(
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
 
-        Icon(
-            painter = painterResource(id = destination.getSettingsTopBarIcon()),
-            contentDescription = "arrow_left",
-            modifier = Modifier
-                .size(40.dp)
-                .pointerInput(Unit) {
-                    detectTapGestures {
-                        onIconClick()
-                    }
-                },
-            tint = animateColorAsState(targetValue = DeathNoteTheme.colors.inverse).value
-        )
+        destination.getSettingsTopBarIcon()?.let {
+            Icon(
+                painter = painterResource(id = it),
+                contentDescription = "arrow_left",
+                modifier = Modifier
+                    .size(40.dp)
+                    .pointerInput(Unit) {
+                        detectTapGestures {
+                            onIconClick()
+                        }
+                    },
+                tint = animateColorAsState(targetValue = DeathNoteTheme.colors.inverse).value
+            )
+        }
 
-        Text(
-            text = stringResource(id = destination.getSettingsTopBarLabel()),
-            style = DeathNoteTheme.typography.topBar,
-            color = animateColorAsState(targetValue = DeathNoteTheme.colors.inverse).value
-        )
+        destination.getSettingsTopBarLabel()?.let {
+            Text(
+                text = stringResource(id = it),
+                style = DeathNoteTheme.typography.topBar,
+                color = animateColorAsState(targetValue = DeathNoteTheme.colors.inverse).value
+            )
+        }
+
     }
 }

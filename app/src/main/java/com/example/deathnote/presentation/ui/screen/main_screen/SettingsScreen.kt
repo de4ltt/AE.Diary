@@ -1,4 +1,4 @@
-package com.example.deathnote.presentation.ui.screen.settings
+package com.example.deathnote.presentation.ui.screen.main_screen
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.animateColorAsState
@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.example.deathnote.R
 import com.example.deathnote.presentation.navigation.AppDestination
 import com.example.deathnote.presentation.ui.cross_screen_ui.SettingsTopBar
-import com.example.deathnote.presentation.ui.screen.settings.components.settings_screen_ui.SettingsOptionPane
+import com.example.deathnote.presentation.ui.screen.main_screen.settings_screen_ui.SettingsOptionPane
 import com.example.deathnote.presentation.ui.screen.settings.destinations.LanguageScreenDestination
 import com.example.deathnote.presentation.ui.screen.settings.destinations.StudentsScreenDestination
 import com.example.deathnote.presentation.ui.screen.settings.destinations.SubjectsScreenDestination
@@ -26,7 +26,6 @@ import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 import com.example.deathnote.presentation.ui.theme.util.isDarkMode
 import com.example.deathnote.presentation.ui.theme.util.switchDarkMode
 import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @Destination

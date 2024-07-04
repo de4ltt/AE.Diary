@@ -1,4 +1,4 @@
-package com.example.deathnote.presentation.ui.screen.settings.components.settings_screen_ui
+package com.example.deathnote.presentation.ui.screen.main_screen.settings_screen_ui
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -42,7 +42,7 @@ import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 @Composable
 fun SettingsOptionPane(
     onClick: () -> Unit = { },
-    color: Color = DeathNoteTheme.colors.regularBackground,
+    color: Color = animateColorAsState(targetValue = DeathNoteTheme.colors.regularBackground).value ,
     isDarkThemePane: Boolean = false,
     @DrawableRes icon: Int,
     @StringRes title: Int,
