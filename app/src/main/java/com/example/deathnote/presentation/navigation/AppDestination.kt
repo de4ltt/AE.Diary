@@ -3,13 +3,13 @@ package com.example.deathnote.presentation.navigation
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.example.deathnote.R
-import com.example.deathnote.presentation.ui.screen.settings.destinations.CertificatesScreenDestination
-import com.example.deathnote.presentation.ui.screen.settings.destinations.LanguageScreenDestination
-import com.example.deathnote.presentation.ui.screen.settings.destinations.SettingsScreenDestination
-import com.example.deathnote.presentation.ui.screen.settings.destinations.StudentsScreenDestination
-import com.example.deathnote.presentation.ui.screen.settings.destinations.StyleScreenDestination
-import com.example.deathnote.presentation.ui.screen.settings.destinations.SubjectsScreenDestination
-import com.example.deathnote.presentation.ui.screen.settings.destinations.TimetableScreenDestination
+import com.example.deathnote.presentation.ui.screen.destinations.CertificatesScreenDestination
+import com.example.deathnote.presentation.ui.screen.destinations.LanguageScreenDestination
+import com.example.deathnote.presentation.ui.screen.destinations.SettingsScreenDestination
+import com.example.deathnote.presentation.ui.screen.destinations.StudentsScreenDestination
+import com.example.deathnote.presentation.ui.screen.destinations.StyleScreenDestination
+import com.example.deathnote.presentation.ui.screen.destinations.SubjectsScreenDestination
+import com.example.deathnote.presentation.ui.screen.destinations.TimetableScreenDestination
 import com.ramcosta.composedestinations.spec.DirectionDestinationSpec
 
 sealed interface AppDestination {

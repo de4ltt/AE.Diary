@@ -3,27 +3,29 @@ package com.example.deathnote.presentation.navigation
 import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import com.example.deathnote.presentation.ui.screen.NavGraphs
+import com.example.deathnote.presentation.ui.screen.destinations.CertificatesScreenDestination
+import com.example.deathnote.presentation.ui.screen.destinations.LanguageScreenDestination
+import com.example.deathnote.presentation.ui.screen.destinations.MainScreenDestination
+import com.example.deathnote.presentation.ui.screen.destinations.SettingsScreenDestination
+import com.example.deathnote.presentation.ui.screen.destinations.StudentsScreenDestination
+import com.example.deathnote.presentation.ui.screen.destinations.SubjectsScreenDestination
+import com.example.deathnote.presentation.ui.screen.destinations.TimetableScreenDestination
 import com.example.deathnote.presentation.ui.screen.main_screen.CertificatesScreen
-import com.example.deathnote.presentation.ui.screen.settings.LanguageScreen
 import com.example.deathnote.presentation.ui.screen.main_screen.MainScreen
-import com.example.deathnote.presentation.ui.screen.settings.NavGraphs
 import com.example.deathnote.presentation.ui.screen.main_screen.SettingsScreen
+import com.example.deathnote.presentation.ui.screen.settings.LanguageScreen
 import com.example.deathnote.presentation.ui.screen.settings.StudentsScreen
 import com.example.deathnote.presentation.ui.screen.settings.SubjectsScreen
 import com.example.deathnote.presentation.ui.screen.settings.TimetableScreen
-import com.example.deathnote.presentation.ui.screen.settings.destinations.CertificatesScreenDestination
-import com.example.deathnote.presentation.ui.screen.settings.destinations.LanguageScreenDestination
-import com.example.deathnote.presentation.ui.screen.settings.destinations.MainScreenDestination
-import com.example.deathnote.presentation.ui.screen.settings.destinations.SettingsScreenDestination
-import com.example.deathnote.presentation.ui.screen.settings.destinations.StudentsScreenDestination
-import com.example.deathnote.presentation.ui.screen.settings.destinations.SubjectsScreenDestination
-import com.example.deathnote.presentation.ui.screen.settings.destinations.TimetableScreenDestination
+import com.example.deathnote.presentation.viewmodel.StudentViewModel
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.manualcomposablecalls.composable
 import com.ramcosta.composedestinations.spec.NavHostEngine
 
 @Composable
 fun NavigationUI(
+    studentViewModel: StudentViewModel,
     navHostEngine: NavHostEngine,
     navHostController: NavHostController,
     context: Context
@@ -47,7 +49,10 @@ fun NavigationUI(
             TimetableScreen(navigator = destinationsNavigator)
         }
         composable(StudentsScreenDestination) {
-            StudentsScreen(navigator = destinationsNavigator)
+            StudentsScreen(
+                navigator = destinationsNavigator,
+                studentViewModel = studentViewModel
+            )
         }
         composable(LanguageScreenDestination) {
             LanguageScreen(navigator = destinationsNavigator)

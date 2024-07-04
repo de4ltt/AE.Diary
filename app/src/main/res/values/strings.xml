@@ -65,4 +65,5 @@
     <string name="start_date">Start date</string>
     <string name="end_date">End date</string>
     <string name="name_sur_pat">Full name</string>
+    <string name="sunday">Sunday</string>
 </resources>

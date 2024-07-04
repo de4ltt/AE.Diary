@@ -1,4 +1,4 @@
-package com.example.deathnote.presentation.ui.screen.main_screen.main_screen_ui
+package com.example.deathnote.presentation.ui.screen.main_screen.components.main_screen_ui
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -12,12 +12,10 @@ import androidx.compose.ui.unit.sp
 import com.example.deathnote.R
 import com.example.deathnote.presentation.model.Subject
 import com.example.deathnote.presentation.model.SubjectType
-import com.example.deathnote.presentation.ui.theme.DarkRed
 import com.example.deathnote.presentation.ui.theme.DarkRedBackground
 import com.example.deathnote.presentation.ui.theme.DarkYellow
 import com.example.deathnote.presentation.ui.theme.LightGray
 import com.example.deathnote.presentation.ui.theme.SemiLightGray
-import com.example.deathnote.presentation.ui.theme.util.adjust
 
 @Composable
 fun CurrentSubject() {

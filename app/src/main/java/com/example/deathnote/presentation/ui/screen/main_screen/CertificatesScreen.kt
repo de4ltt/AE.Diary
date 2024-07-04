@@ -30,7 +30,7 @@ import com.example.deathnote.presentation.navigation.AppDestination
 import com.example.deathnote.presentation.ui.cross_screen_ui.BottomBarTextField
 import com.example.deathnote.presentation.ui.cross_screen_ui.BottomBarWithTextFields
 import com.example.deathnote.presentation.ui.cross_screen_ui.DarkTopBar
-import com.example.deathnote.presentation.ui.screen.main_screen.certificates_screen_ui.CertificatePane
+import com.example.deathnote.presentation.ui.screen.main_screen.components.certificates_screen_ui.CertificatePane
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator

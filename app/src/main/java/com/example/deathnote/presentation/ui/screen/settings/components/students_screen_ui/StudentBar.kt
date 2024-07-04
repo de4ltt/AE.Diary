@@ -21,10 +21,6 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -34,18 +30,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.deathnote.R
 import com.example.deathnote.presentation.model.Student
+import com.example.deathnote.presentation.model.event.StudentUIEvent
+import com.example.deathnote.presentation.model.state.StudentUIState
 import com.example.deathnote.presentation.model.util.getShortName
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 
 @Composable
 fun StudentBar(
     index: Int,
-    student: Student
+    student: Student,
+    studentUIState: StudentUIState,
+    onEvent: (StudentUIEvent) -> Unit
 ) {
-
-    var isDeleteMode by remember {
-        mutableStateOf(false)
-    }
 
     Row(
         modifier = Modifier
@@ -58,7 +54,7 @@ fun StudentBar(
             .background(DeathNoteTheme.colors.regularBackground)
     ) {
         Crossfade(
-            targetState = isDeleteMode,
+            targetState = studentUIState.isStudentBarDeleteMode,
             label = "bar",
             animationSpec = tween(
                 durationMillis = 220,
@@ -126,7 +122,7 @@ fun StudentBar(
                                         .size(30.dp)
                                         .pointerInput(Unit) {
                                             detectTapGestures {
-                                                isDeleteMode = false
+                                                onEvent(StudentUIEvent.ChangeDeleteModeState(false))
                                             }
                                         }
                                 )
@@ -160,7 +156,7 @@ fun StudentBar(
                             .pointerInput(Unit) {
                                 detectTapGestures(
                                     onLongPress = {
-                                        isDeleteMode = true
+                                        onEvent(StudentUIEvent.ChangeDeleteModeState(true))
                                     }
                                 )
                             }
@@ -195,7 +191,7 @@ fun StudentBar(
                         ) {
                             Text(
                                 modifier = Modifier.weight(1f).padding(end = 10.dp),
-                                text = "${student.surname}\n${student.name} ${student.patronymic ?: ""}",
+                                text = "${student.surname}\n${student.name} ${student.patronymic}",
                                 style = DeathNoteTheme.typography.itemCardTitle,
                                 color = DeathNoteTheme.colors.inverse
                             )

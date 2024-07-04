@@ -1,6 +1,5 @@
-package com.example.deathnote.presentation.ui.screen.main_screen.main_screen_ui
+package com.example.deathnote.presentation.ui.screen.main_screen.components.main_screen_ui
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -10,8 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -21,9 +18,7 @@ import com.example.deathnote.presentation.ui.theme.LightGray
 import com.example.deathnote.presentation.ui.theme.SemiLightGray
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 import kotlinx.coroutines.delay
-import java.time.LocalDateTime
 import java.time.LocalTime
-import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeFormatter.ofPattern
 
 @Composable

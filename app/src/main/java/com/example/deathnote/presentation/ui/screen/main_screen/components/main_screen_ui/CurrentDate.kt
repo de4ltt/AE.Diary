@@ -1,6 +1,5 @@
-package com.example.deathnote.presentation.ui.screen.main_screen.main_screen_ui
+package com.example.deathnote.presentation.ui.screen.main_screen.components.main_screen_ui
 
-import androidx.compose.foundation.DefaultMarqueeIterations
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.material.Text
@@ -16,16 +15,13 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.sp
-import com.example.deathnote.presentation.ui.theme.DarkRed
 import com.example.deathnote.presentation.ui.theme.DarkRedBackground
 import com.example.deathnote.presentation.ui.theme.DarkYellow
 import com.example.deathnote.presentation.ui.theme.LightGray
-import com.example.deathnote.presentation.ui.theme.LightYellow
 import com.example.deathnote.presentation.ui.theme.util.adjust
 import com.example.deathnote.presentation.ui.theme.util.isEvenWeek
 import kotlinx.coroutines.delay
 import java.time.LocalDateTime
-import java.time.LocalTime
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
