@@ -81,4 +81,5 @@
     <string name="enter_student">Choose the student</string>
     <string name="enter_start_date">Start date</string>
     <string name="enter_end_date">End date</string>
+    <string name="edit_subject">Edit subject</string>
 </resources>

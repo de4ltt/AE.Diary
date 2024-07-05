@@ -15,6 +15,7 @@ sealed class SubjectUIEvent {
     data class ChangeSubjectType(val type: String): SubjectUIEvent()
 
     data class ChangeDialogState(val state: Boolean) : SubjectUIEvent()
+    data class ChangeDialogTitle(@StringRes val title: Int): SubjectUIEvent()
     data class ChangeDialogContent(
         val subject: Subject,
         @StringRes val title: Int,

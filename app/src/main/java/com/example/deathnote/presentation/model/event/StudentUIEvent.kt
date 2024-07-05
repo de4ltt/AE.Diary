@@ -1,7 +1,6 @@
 package com.example.deathnote.presentation.model.event
 
 import androidx.annotation.StringRes
-import androidx.compose.runtime.Composable
 import com.example.deathnote.presentation.model.Student
 
 sealed class StudentUIEvent {
@@ -16,11 +15,12 @@ sealed class StudentUIEvent {
     data class ChangeStudentSurname(val surname: String): StudentUIEvent()
     data class ChangeStudentPatronymic(val patronymic: String): StudentUIEvent()
 
-    data class ChangeDialogState(val state: Boolean) : StudentUIEvent()
+    data class ChangeDialogState(val state: Boolean): StudentUIEvent()
+    data class ChangeDialogTitle(@StringRes val title: Int): StudentUIEvent()
     data class ChangeDialogContent(
         val student: Student,
-        @StringRes val title: Int,
         val onAcceptRequest: () -> Unit,
+        @StringRes val title: Int,
         val onDismissRequest: () -> Unit,
         val refuseButtonTitle: Int? = null,
         val acceptButtonTitle: Int? = null

@@ -1,6 +1,5 @@
 package com.example.deathnote.presentation.ui.screen.settings.components.students_screen_ui
 
-import android.util.Log
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
@@ -108,7 +107,9 @@ fun StudentBar(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(
-                                modifier = Modifier.weight(1f).padding(end = 10.dp),
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .padding(end = 10.dp),
                                 text = "${stringResource(id = R.string.to_delete)}\n${student.getShortName()}",
                                 style = DeathNoteTheme.typography.itemCardTitle,
                                 color = DeathNoteTheme.colors.regular
@@ -198,7 +199,9 @@ fun StudentBar(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(
-                                modifier = Modifier.weight(1f).padding(end = 10.dp),
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .padding(end = 10.dp),
                                 text = "${student.surname}\n${student.name} ${student.patronymic}",
                                 style = DeathNoteTheme.typography.itemCardTitle,
                                 color = DeathNoteTheme.colors.inverse
@@ -211,6 +214,11 @@ fun StudentBar(
                                 modifier = Modifier
                                     .pointerInput(Unit) {
                                         detectTapGestures {
+                                            onEvent(
+                                                StudentUIEvent.ChangeDialogTitle(
+                                                    title = R.string.edit_student
+                                                )
+                                            )
                                             onEvent(StudentUIEvent.SelectStudent(student))
                                             onEvent(StudentUIEvent.ChangeDialogState(true))
                                         }

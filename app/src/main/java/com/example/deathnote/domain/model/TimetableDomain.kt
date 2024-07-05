@@ -1,6 +1,6 @@
-package com.example.deathnote.presentation.model
+package com.example.deathnote.domain.model
 
-data class Timetable(
+data class TimetableDomain(
     val dayOfWeek: String = "O_1",
     val subjectId: Int? = null,
     val startTime: String? = null,

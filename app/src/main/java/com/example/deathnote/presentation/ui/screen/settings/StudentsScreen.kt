@@ -17,13 +17,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.deathnote.R
 import com.example.deathnote.presentation.model.Student
 import com.example.deathnote.presentation.model.event.StudentUIEvent
-import com.example.deathnote.presentation.model.event.SubjectUIEvent
 import com.example.deathnote.presentation.model.state.StudentDialogState
 import com.example.deathnote.presentation.navigation.AppDestination
 import com.example.deathnote.presentation.ui.cross_screen_ui.SettingsBottomButton
 import com.example.deathnote.presentation.ui.cross_screen_ui.SettingsTopBar
-import com.example.deathnote.presentation.ui.screen.settings.components.students_screen_ui.StudentTitledDialog
 import com.example.deathnote.presentation.ui.screen.settings.components.students_screen_ui.StudentBar
+import com.example.deathnote.presentation.ui.screen.settings.components.students_screen_ui.StudentTitledDialog
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 import com.example.deathnote.presentation.viewmodel.StudentViewModel
 import com.ramcosta.composedestinations.annotation.Destination
@@ -81,28 +80,28 @@ fun StudentsScreen(
         SettingsBottomButton(
             title = R.string.add_student,
             onClickAction = {
-                studentViewModel.run {
-                    StudentUIEvent.IdleStudent
-                    StudentUIEvent.ChangeDialogContent(
-                        student = studentDialogState.student,
-                        title = R.string.add_student,
-                        onAcceptRequest = {
-                            studentViewModel.onEvent(
-                                StudentUIEvent.UpsertStudent(studentDialogState.student)
-                            )
-                            onEvent(
-                                StudentUIEvent.ChangeDialogState(false)
-                            )
-                        },
-                        onDismissRequest = {
-                            studentViewModel.onEvent(
-                                StudentUIEvent.ChangeDialogState(false)
-                            )
-                        }
+                studentViewModel.apply {
+                    onEvent(StudentUIEvent.IdleStudent)
+                    onEvent(
+                        StudentUIEvent.ChangeDialogContent(
+                            student = Student(),
+                            title = R.string.add_student,
+                            onAcceptRequest = {
+                                studentViewModel.onEvent(
+                                    StudentUIEvent.UpsertStudent(studentDialogState.student)
+                                )
+                                onEvent(
+                                    StudentUIEvent.ChangeDialogState(false)
+                                )
+                            },
+                            onDismissRequest = {
+                                studentViewModel.onEvent(
+                                    StudentUIEvent.ChangeDialogState(false)
+                                )
+                            }
+                        )
                     )
-                    studentViewModel.onEvent(
-                        StudentUIEvent.ChangeDialogState(true)
-                    )
+                    onEvent(StudentUIEvent.ChangeDialogState(true))
                 }
 
             }

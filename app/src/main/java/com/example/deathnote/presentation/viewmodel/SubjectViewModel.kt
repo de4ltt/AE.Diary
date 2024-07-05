@@ -31,29 +31,48 @@ class SubjectViewModel @Inject constructor(
     fun onEvent(event: SubjectUIEvent) {
         when (event) {
             is SubjectUIEvent.ChangeDialogContent ->
-                _subjectDialogState.value = _subjectDialogState.value.copy()
+                viewModelScope.launch(Dispatchers.IO) {
+                    _subjectDialogState.value = _subjectDialogState.value.copy()
+                }
+
+            is SubjectUIEvent.ChangeDialogTitle ->
+                viewModelScope.launch(Dispatchers.IO) {
+                    _subjectDialogState.value =
+                        _subjectDialogState.value.copy(title = event.title)
+                }
 
             is SubjectUIEvent.ChangeDialogState ->
-                _subjectDialogState.value =
-                    _subjectDialogState.value.copy(isShown = event.state)
+                viewModelScope.launch(Dispatchers.IO) {
+                    _subjectDialogState.value =
+                        _subjectDialogState.value.copy(isShown = event.state)
+                }
 
             is SubjectUIEvent.ChangeSubjectName ->
-                _subjectDialogState.value =
-                    _subjectDialogState.value.copy(
-                        subject = subjectDialogState.value.subject.copy(name = event.name)
-                    )
+                viewModelScope.launch(Dispatchers.IO) {
+                    _subjectDialogState.value =
+                        _subjectDialogState.value.copy(
+                            subject = subjectDialogState.value.subject.copy(name = event.name)
+                        )
+                }
 
-            SubjectUIEvent.IdleSubject -> _subjectDialogState.value =
-                _subjectDialogState.value.copy(subject = Subject())
+            SubjectUIEvent.IdleSubject ->
+                viewModelScope.launch(Dispatchers.IO) {
+                    _subjectDialogState.value =
+                        _subjectDialogState.value.copy(subject = Subject())
+                }
 
             is SubjectUIEvent.ChangeSubjectType ->
-                _subjectDialogState.value =
-                    _subjectDialogState.value.copy(
-                        subject = subjectDialogState.value.subject.copy(type = event.type)
-                    )
+                viewModelScope.launch(Dispatchers.IO) {
+                    _subjectDialogState.value =
+                        _subjectDialogState.value.copy(
+                            subject = subjectDialogState.value.subject.copy(type = event.type)
+                        )
+                }
 
             is SubjectUIEvent.SelectSubject ->
-                _subjectDialogState.value = _subjectDialogState.value.copy(subject = event.subject)
+                viewModelScope.launch(Dispatchers.IO) {
+                    _subjectDialogState.value = _subjectDialogState.value.copy(subject = event.subject)
+                }
 
             is SubjectUIEvent.DeleteSubject -> deleteSubject(event.subject)
             is SubjectUIEvent.GetSubjectById -> getSubjectById(event.id)

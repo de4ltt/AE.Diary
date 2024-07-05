@@ -1,8 +1,5 @@
 package com.example.deathnote.presentation.viewmodel
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.deathnote.domain.use_case.student.util.StudentUseCases
@@ -46,43 +43,66 @@ class StudentViewModel @Inject constructor(
 
 
             is StudentUIEvent.ChangeDialogContent -> {
-                _studentDialogState.value = _studentDialogState.value.copy(
-                    student = event.student,
-                    title = event.title,
-                    onAcceptRequest = event.onAcceptRequest,
-                    onDismissRequest = event.onDismissRequest,
-                    refuseButtonTitle = event.refuseButtonTitle,
-                    acceptButtonTitle = event.acceptButtonTitle
-                )
+                viewModelScope.launch(Dispatchers.IO) {
+                    _studentDialogState.value = _studentDialogState.value.copy(
+                        student = event.student,
+                        title = event.title,
+                        onAcceptRequest = event.onAcceptRequest,
+                        onDismissRequest = event.onDismissRequest,
+                        refuseButtonTitle = event.refuseButtonTitle,
+                        acceptButtonTitle = event.acceptButtonTitle
+                    )
+                }
             }
 
             is StudentUIEvent.SelectStudent ->
-                _studentDialogState.value =
-                    _studentDialogState.value.copy(student = event.student)
+                viewModelScope.launch(Dispatchers.IO) {
+                    _studentDialogState.value =
+                        _studentDialogState.value.copy(student = event.student)
+                }
 
-            StudentUIEvent.IdleStudent -> _studentDialogState.value =
-                _studentDialogState.value.copy(student = Student())
+            StudentUIEvent.IdleStudent -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    _studentDialogState.value =
+                        _studentDialogState.value.copy(student = Student())
+                }
+            }
 
             is StudentUIEvent.ChangeDialogState ->
-                _studentDialogState.value = _studentDialogState.value.copy(isShown = event.state)
+                viewModelScope.launch(Dispatchers.IO) {
+                    _studentDialogState.value =
+                        _studentDialogState.value.copy(isShown = event.state)
+                }
 
             is StudentUIEvent.ChangeStudentName ->
-                _studentDialogState.value =
-                    _studentDialogState.value.copy(
-                        student = studentDialogState.value.student.copy(name = event.name)
-                    )
+                viewModelScope.launch(Dispatchers.IO) {
+                    _studentDialogState.value =
+                        _studentDialogState.value.copy(
+                            student = studentDialogState.value.student.copy(name = event.name)
+                        )
+                }
 
             is StudentUIEvent.ChangeStudentSurname ->
-                _studentDialogState.value =
-                    _studentDialogState.value.copy(
-                        student = studentDialogState.value.student.copy(surname = event.surname)
-                    )
+                viewModelScope.launch(Dispatchers.IO) {
+                    _studentDialogState.value =
+                        _studentDialogState.value.copy(
+                            student = studentDialogState.value.student.copy(surname = event.surname)
+                        )
+                }
+
 
             is StudentUIEvent.ChangeStudentPatronymic ->
-                _studentDialogState.value =
-                    _studentDialogState.value.copy(
-                        student = _studentDialogState.value.student.copy(patronymic = event.patronymic)
-                    )
+                viewModelScope.launch(Dispatchers.IO) {
+                    _studentDialogState.value =
+                        _studentDialogState.value.copy(
+                            student = _studentDialogState.value.student.copy(patronymic = event.patronymic)
+                        )
+                }
+
+            is StudentUIEvent.ChangeDialogTitle ->
+                viewModelScope.launch(Dispatchers.IO) {
+                    _studentDialogState.value = _studentDialogState.value.copy(title = event.title)
+                }
         }
     }
 

@@ -1,0 +1,10 @@
+package com.example.deathnote.domain.use_case.timetable.util
+
+import com.example.deathnote.domain.use_case.timetable.GetAllTimetablesUseCase
+import com.example.deathnote.domain.use_case.timetable.UpsertTimetableUseCase
+import javax.inject.Inject
+
+data class TimetableUseCasesImpl @Inject constructor(
+    override val GetAllTimetablesUseCase: GetAllTimetablesUseCase,
+    override val UpsertTimetableUseCase: UpsertTimetableUseCase
+): TimetableUseCases

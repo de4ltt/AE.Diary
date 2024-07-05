@@ -13,12 +13,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.deathnote.presentation.model.Timetable
+import com.example.deathnote.presentation.model.TimetableOld
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 
 @Composable
 fun TimetableCard(
-    timetable: Timetable
+    timetable: TimetableOld
 ) {
     Column(
         modifier = Modifier

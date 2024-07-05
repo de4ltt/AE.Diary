@@ -15,12 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.deathnote.R
-import com.example.deathnote.presentation.model.Student
 import com.example.deathnote.presentation.model.Subject
-import com.example.deathnote.presentation.model.SubjectType
-import com.example.deathnote.presentation.model.event.StudentUIEvent
 import com.example.deathnote.presentation.model.event.SubjectUIEvent
-import com.example.deathnote.presentation.model.state.SubjectDialogState
 import com.example.deathnote.presentation.navigation.AppDestination
 import com.example.deathnote.presentation.ui.cross_screen_ui.SettingsBottomButton
 import com.example.deathnote.presentation.ui.cross_screen_ui.SettingsTopBar
@@ -83,10 +79,10 @@ fun SubjectsScreen(
         SettingsBottomButton(
             title = R.string.add_subject,
             onClickAction = {
-                subjectViewModel.run {
-                    SubjectUIEvent.IdleSubject
-                    SubjectUIEvent.ChangeDialogContent(
-                        subject = subjectDialogState.subject,
+                subjectViewModel.apply {
+                    onEvent(SubjectUIEvent.IdleSubject)
+                    onEvent(SubjectUIEvent.ChangeDialogContent(
+                        subject = Subject(),
                         title = R.string.add_subject,
                         onAcceptRequest = {
                             onEvent(
@@ -101,7 +97,7 @@ fun SubjectsScreen(
                                 SubjectUIEvent.ChangeDialogState(false)
                             )
                         }
-                    )
+                    ))
                     onEvent(
                         SubjectUIEvent.ChangeDialogState(true)
                     )

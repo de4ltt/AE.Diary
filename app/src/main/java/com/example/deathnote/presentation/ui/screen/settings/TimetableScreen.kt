@@ -27,8 +27,7 @@ import com.example.deathnote.presentation.model.DaySubjects
 import com.example.deathnote.presentation.model.Subject
 import com.example.deathnote.presentation.model.SubjectScheduled
 import com.example.deathnote.presentation.model.SubjectTerm
-import com.example.deathnote.presentation.model.SubjectType
-import com.example.deathnote.presentation.model.Timetable
+import com.example.deathnote.presentation.model.TimetableOld
 import com.example.deathnote.presentation.model.WeekType
 import com.example.deathnote.presentation.navigation.AppDestination
 import com.example.deathnote.presentation.ui.cross_screen_ui.SettingsTopBar
@@ -58,8 +57,8 @@ fun TimetableScreen(
         pageCount = { 2 }
     )
 
-    val timetables: List<Timetable> = listOf(
-        Timetable(
+    val timetables: List<TimetableOld> = listOf(
+        TimetableOld(
             timetableID = 1,
             daySubjects = DaySubjects(
                 subject1 = SubjectScheduled(
@@ -71,7 +70,7 @@ fun TimetableScreen(
             weekType = WeekType.ODD
         ),
 
-        Timetable(
+        TimetableOld(
             timetableID = 1,
             daySubjects = DaySubjects(
                 subject1 = SubjectScheduled(
