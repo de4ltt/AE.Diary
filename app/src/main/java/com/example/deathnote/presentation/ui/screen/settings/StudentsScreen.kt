@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -18,12 +17,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.deathnote.R
 import com.example.deathnote.presentation.model.Student
 import com.example.deathnote.presentation.model.event.StudentUIEvent
+import com.example.deathnote.presentation.model.event.SubjectUIEvent
 import com.example.deathnote.presentation.model.state.StudentDialogState
-import com.example.deathnote.presentation.model.state.StudentUIState
 import com.example.deathnote.presentation.navigation.AppDestination
 import com.example.deathnote.presentation.ui.cross_screen_ui.SettingsBottomButton
 import com.example.deathnote.presentation.ui.cross_screen_ui.SettingsTopBar
-import com.example.deathnote.presentation.ui.cross_screen_ui.StudentTitledDialog
+import com.example.deathnote.presentation.ui.screen.settings.components.students_screen_ui.StudentTitledDialog
 import com.example.deathnote.presentation.ui.screen.settings.components.students_screen_ui.StudentBar
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 import com.example.deathnote.presentation.viewmodel.StudentViewModel
@@ -48,7 +47,6 @@ fun StudentsScreen(
     }
 
     val allStudents: List<Student> by studentViewModel.allStudents.collectAsStateWithLifecycle()
-    val studentUIState: StudentUIState by studentViewModel.studentUIState.collectAsStateWithLifecycle()
     val studentDialogState: StudentDialogState by studentViewModel.studentDialogState.collectAsStateWithLifecycle()
 
     Column(
@@ -75,7 +73,6 @@ fun StudentsScreen(
                 StudentBar(
                     index = index + 1,
                     student = student,
-                    studentUIState = studentUIState,
                     onEvent = studentViewModel::onEvent
                 )
             }
@@ -85,13 +82,16 @@ fun StudentsScreen(
             title = R.string.add_student,
             onClickAction = {
                 studentViewModel.run {
-                    StudentUIEvent.SelectStudent(Student())
+                    StudentUIEvent.IdleStudent
                     StudentUIEvent.ChangeDialogContent(
                         student = studentDialogState.student,
                         title = R.string.add_student,
                         onAcceptRequest = {
                             studentViewModel.onEvent(
                                 StudentUIEvent.UpsertStudent(studentDialogState.student)
+                            )
+                            onEvent(
+                                StudentUIEvent.ChangeDialogState(false)
                             )
                         },
                         onDismissRequest = {

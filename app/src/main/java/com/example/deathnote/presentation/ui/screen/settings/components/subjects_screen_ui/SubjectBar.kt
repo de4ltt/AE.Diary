@@ -35,13 +35,15 @@ import androidx.compose.ui.unit.dp
 import com.example.deathnote.R
 import com.example.deathnote.presentation.model.Subject
 import com.example.deathnote.presentation.model.SubjectType
+import com.example.deathnote.presentation.model.event.SubjectUIEvent
 import com.example.deathnote.presentation.model.util.getShortName
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 
 @Composable
 fun SubjectBar(
     index: Int,
-    subject: Subject
+    subject: Subject,
+    onEvent: (SubjectUIEvent) -> Unit
 ) {
 
     var isDeleteMode by remember {
@@ -117,7 +119,7 @@ fun SubjectBar(
                             Text(
                                 modifier = Modifier.weight(1f).padding(end = 10.dp),
                                 text = "${stringResource(id = R.string.to_delete)}\n${subject.getShortName()} (${
-                                    if (subject.subjectType == SubjectType.LECTURE) stringResource(
+                                    if (subject.type == "lk") stringResource(
                                         id = R.string.lk
                                     )
                                     else stringResource(id = R.string.pr)
@@ -154,7 +156,8 @@ fun SubjectBar(
                                         .size(23.dp)
                                         .pointerInput(Unit) {
                                             detectTapGestures {
-                                                //TODO
+                                                onEvent(SubjectUIEvent.DeleteSubject(subject))
+                                                onEvent(SubjectUIEvent.SelectSubject(Subject()))
                                             }
                                         }
                                 )
@@ -212,7 +215,7 @@ fun SubjectBar(
                             Text(
                                 modifier = Modifier.weight(1f).padding(end = 10.dp),
                                 text = "${subject.name} (${
-                                    if (subject.subjectType == SubjectType.LECTURE) stringResource(
+                                    if (subject.type == "lk") stringResource(
                                         id = R.string.lk
                                     )
                                     else stringResource(id = R.string.pr)
@@ -228,7 +231,8 @@ fun SubjectBar(
                                 modifier = Modifier
                                     .pointerInput(Unit) {
                                         detectTapGestures {
-                                            //TODO
+                                            onEvent(SubjectUIEvent.SelectSubject(subject))
+                                            onEvent(SubjectUIEvent.ChangeDialogState(true))
                                         }
                                     }
                             )

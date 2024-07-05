@@ -11,7 +11,6 @@ import com.example.deathnote.presentation.mapper.toPresentation
 import com.example.deathnote.presentation.model.Student
 import com.example.deathnote.presentation.model.event.StudentUIEvent
 import com.example.deathnote.presentation.model.state.StudentDialogState
-import com.example.deathnote.presentation.model.state.StudentUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,10 +26,6 @@ class StudentViewModel @Inject constructor(
 
     private val _allStudents: MutableStateFlow<List<Student>> = MutableStateFlow(emptyList())
     val allStudents: StateFlow<List<Student>> = _allStudents.asStateFlow()
-
-    private val _studentUIState: MutableStateFlow<StudentUIState> =
-        MutableStateFlow(StudentUIState())
-    val studentUIState: StateFlow<StudentUIState> = _studentUIState.asStateFlow()
 
     private val _studentDialogState: MutableStateFlow<StudentDialogState> =
         MutableStateFlow(StudentDialogState())
@@ -64,6 +59,9 @@ class StudentViewModel @Inject constructor(
             is StudentUIEvent.SelectStudent ->
                 _studentDialogState.value =
                     _studentDialogState.value.copy(student = event.student)
+
+            StudentUIEvent.IdleStudent -> _studentDialogState.value =
+                _studentDialogState.value.copy(student = Student())
 
             is StudentUIEvent.ChangeDialogState ->
                 _studentDialogState.value = _studentDialogState.value.copy(isShown = event.state)

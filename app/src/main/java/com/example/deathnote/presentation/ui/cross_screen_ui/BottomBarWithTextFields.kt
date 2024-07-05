@@ -34,6 +34,7 @@ fun BottomBarWithTextFields(
 ) {
 
     ModalBottomSheet(
+        dragHandle = {},
         onDismissRequest = onDismissRequest,
         containerColor = DeathNoteTheme.colors.regularBackground,
         content = {
@@ -48,7 +49,7 @@ fun BottomBarWithTextFields(
                 verticalArrangement = Arrangement.spacedBy(25.dp)
             ) {
                 Text(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().padding(top = 35.dp),
                     textAlign = TextAlign.Center,
                     text = stringResource(id = title),
                     style = DeathNoteTheme.typography.bottomSheetTitle,

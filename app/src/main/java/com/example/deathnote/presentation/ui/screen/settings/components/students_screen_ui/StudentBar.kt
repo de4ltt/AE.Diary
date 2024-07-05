@@ -36,7 +36,6 @@ import androidx.compose.ui.unit.dp
 import com.example.deathnote.R
 import com.example.deathnote.presentation.model.Student
 import com.example.deathnote.presentation.model.event.StudentUIEvent
-import com.example.deathnote.presentation.model.state.StudentUIState
 import com.example.deathnote.presentation.model.util.getShortName
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 
@@ -44,7 +43,6 @@ import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 fun StudentBar(
     index: Int,
     student: Student,
-    studentUIState: StudentUIState,
     onEvent: (StudentUIEvent) -> Unit
 ) {
 

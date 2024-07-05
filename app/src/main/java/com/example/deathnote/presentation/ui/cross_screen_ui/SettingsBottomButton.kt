@@ -17,7 +17,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.deathnote.R
+import com.example.deathnote.presentation.ui.theme.SexyGray
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
+import com.example.deathnote.presentation.ui.theme.util.isDarkMode
 
 @Composable
 fun SettingsBottomButton(
@@ -34,7 +36,8 @@ fun SettingsBottomButton(
                 shape = DeathNoteTheme.shapes.rounded12
             )
             .background(
-                color = if (isActive) DeathNoteTheme.colors.primaryDefault else DeathNoteTheme.colors.primaryBackground
+                color = if (isActive) DeathNoteTheme.colors.primaryDefault else
+                    if (isDarkMode()) DeathNoteTheme.colors.baseBackground else SexyGray
             )
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },

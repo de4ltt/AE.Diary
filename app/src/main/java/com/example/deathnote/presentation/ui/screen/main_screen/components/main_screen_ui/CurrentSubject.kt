@@ -20,7 +20,7 @@ import com.example.deathnote.presentation.ui.theme.SemiLightGray
 @Composable
 fun CurrentSubject() {
     val subject = Subject(
-        1, "Математический анализ", SubjectType.LECTURE
+        1, "Математический анализ"
     )
 
     Text(
@@ -36,14 +36,14 @@ fun CurrentSubject() {
         text = buildAnnotatedString {
             withStyle(
                 style = SpanStyle(
-                    color = if (subject.subjectType == SubjectType.LECTURE) DarkRedBackground
+                    color = if (subject.type == "pr") DarkRedBackground
                     else DarkYellow,
                     fontSize = 19.sp,
                     fontWeight = FontWeight.Bold
                 )
             ) {
                 append(stringResource(
-                    id = if (subject.subjectType == SubjectType.LECTURE) R.string.lecture
+                    id = if (subject.type == "lk") R.string.lecture
                     else R.string.practice
                 ))
             }

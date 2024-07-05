@@ -35,12 +35,15 @@ import androidx.compose.ui.unit.sp
 import com.example.deathnote.R
 import com.example.deathnote.presentation.ui.theme.SoftGray
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
+import com.example.deathnote.presentation.ui.theme.util.adjust
+import com.example.deathnote.presentation.ui.theme.util.isDarkMode
 
 @Composable
 fun BottomBarTextField(
     @StringRes title: Int,
     onValueChange: (String) -> Unit,
-    @DrawableRes icon: Int? = null,
+    icon: @Composable () -> Unit = {},
+    @StringRes innerTitle: Int,
     value: String,
     isDatePicker: Boolean = false,
     isCentered: Boolean = true,
@@ -89,23 +92,16 @@ fun BottomBarTextField(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(15.dp),
                 content = {
-                    icon?.let {
-                        Icon(
-                            painter = painterResource(id = it),
-                            contentDescription = "icon",
-                            modifier = Modifier.padding(start = 15.dp).size(20.dp),
-                            tint = DeathNoteTheme.colors.primary
-                        )
-                    }
+                    icon()
 
                     if (!isDatePicker) {
                         Box() {
                             if (value.isEmpty()) {
                                 Text(
-                                    color = SoftGray,
+                                    color = SoftGray.adjust(if (isDarkMode()) 0.6f else 1f),
                                     fontSize = 15.sp,
                                     textAlign = TextAlign.Start,
-                                    text = stringResource(id = R.string.name_sur_pat)
+                                    text = stringResource(id = innerTitle)
                                 )
                             }
                             textField()

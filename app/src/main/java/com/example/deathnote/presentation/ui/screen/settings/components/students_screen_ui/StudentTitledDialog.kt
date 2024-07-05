@@ -1,24 +1,11 @@
-package com.example.deathnote.presentation.ui.cross_screen_ui
+package com.example.deathnote.presentation.ui.screen.settings.components.students_screen_ui
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
 import com.example.deathnote.R
 import com.example.deathnote.presentation.model.event.StudentUIEvent
 import com.example.deathnote.presentation.model.state.StudentDialogState
-import com.example.deathnote.presentation.ui.theme.SexyGray
-import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
-import com.example.deathnote.presentation.ui.theme.util.isDarkMode
+import com.example.deathnote.presentation.ui.cross_screen_ui.BottomBarTextField
+import com.example.deathnote.presentation.ui.cross_screen_ui.BottomBarWithTextFields
 import com.example.deathnote.presentation.ui.util.Validator
 
 @Composable
@@ -47,7 +34,8 @@ fun StudentTitledDialog(
                             onEvent(StudentUIEvent.ChangeStudentName(it.capitalize()))
                         },
                         value = student.name,
-                        isCentered = false
+                        isCentered = false,
+                        innerTitle = R.string.enter_name
                     )
 
                     BottomBarTextField(
@@ -56,7 +44,8 @@ fun StudentTitledDialog(
                             onEvent(StudentUIEvent.ChangeStudentSurname(it.capitalize()))
                         },
                         value = student.surname,
-                        isCentered = false
+                        isCentered = false,
+                        innerTitle = R.string.enter_surname
                     )
 
                     BottomBarTextField(
@@ -65,7 +54,8 @@ fun StudentTitledDialog(
                             onEvent(StudentUIEvent.ChangeStudentPatronymic(it.capitalize()))
                         },
                         value = student.patronymic,
-                        isCentered = false
+                        isCentered = false,
+                        innerTitle = R.string.enter_patronymic
                     )
 
                 }

@@ -72,4 +72,13 @@
     <string name="name">Name</string>
     <string name="surname">Surname</string>
     <string name="patronymic">Patronymic</string>
+    <string name="add_subject">Add subject</string>
+    <string name="subject_name">Subject name</string>
+    <string name="enter_name">Enter name</string>
+    <string name="enter_surname">Enter surname</string>
+    <string name="enter_patronymic">Enter patronymic</string>
+    <string name="enter_callname">Enter title</string>
+    <string name="enter_student">Choose the student</string>
+    <string name="enter_start_date">Start date</string>
+    <string name="enter_end_date">End date</string>
 </resources>

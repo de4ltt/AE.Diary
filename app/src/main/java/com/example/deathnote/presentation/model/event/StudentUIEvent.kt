@@ -10,6 +10,7 @@ sealed class StudentUIEvent {
     data class DeleteStudent(val student: Student): StudentUIEvent()
     data class UpsertStudent(val student: Student): StudentUIEvent()
 
+    data object IdleStudent: StudentUIEvent()
     data class SelectStudent(val student: Student): StudentUIEvent()
     data class ChangeStudentName(val name: String): StudentUIEvent()
     data class ChangeStudentSurname(val surname: String): StudentUIEvent()

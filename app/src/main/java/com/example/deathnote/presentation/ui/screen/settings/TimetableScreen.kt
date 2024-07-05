@@ -63,7 +63,7 @@ fun TimetableScreen(
             timetableID = 1,
             daySubjects = DaySubjects(
                 subject1 = SubjectScheduled(
-                    Subject(0, "Математический анализ", SubjectType.LECTURE),
+                    Subject(0, "Математический анализ", ),
                     subjectTerm = SubjectTerm("11:10", "12:30")
                 )
             ),
@@ -75,15 +75,15 @@ fun TimetableScreen(
             timetableID = 1,
             daySubjects = DaySubjects(
                 subject1 = SubjectScheduled(
-                    Subject(0, "Боже, название этого предмета ну нереально длинное. Посмотрим на расчленение кавказских детей в TikTok'е", SubjectType.LECTURE),
+                    Subject(0, "Боже, название этого предмета ну нереально длинное. Посмотрим на расчленение кавказских детей в TikTok'е",),
                     subjectTerm = SubjectTerm("11:10", "12:30")
                 ),
                 subject2 = SubjectScheduled(
-                    Subject(0, "Аппаратно-программные средства WEB", SubjectType.PRACTICE),
+                    Subject(0, "Аппаратно-программные средства WEB"),
                     subjectTerm = SubjectTerm("12:40", "14:00")
                 ),
                 subject3 = SubjectScheduled(
-                    Subject(0, "Теория вероятностей и математическая статистика", SubjectType.PRACTICE),
+                    Subject(0, "Теория вероятностей и математическая статистика"),
                     subjectTerm = SubjectTerm("12:40", "14:00")
                 )
             ),

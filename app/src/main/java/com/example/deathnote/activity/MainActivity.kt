@@ -20,6 +20,7 @@ import com.example.deathnote.presentation.navigation.NavigationUI
 import com.example.deathnote.presentation.ui.theme.DeathNoteTheme
 import com.example.deathnote.presentation.ui.theme.util.setColorScheme
 import com.example.deathnote.presentation.viewmodel.StudentViewModel
+import com.example.deathnote.presentation.viewmodel.SubjectViewModel
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.ramcosta.composedestinations.animations.rememberAnimatedNavHostEngine
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,6 +36,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         val studentViewModel: StudentViewModel by viewModels()
+        val subjectViewModel: SubjectViewModel by viewModels()
 
         loadLanguagePreference(this)?.let {
             setLocale(this, it)
@@ -61,7 +63,8 @@ class MainActivity : ComponentActivity() {
                     navHostEngine = navHostEngine,
                     navHostController = navHostController,
                     context = this,
-                    studentViewModel = studentViewModel
+                    studentViewModel = studentViewModel,
+                    subjectViewModel = subjectViewModel
                 )
             }
         }

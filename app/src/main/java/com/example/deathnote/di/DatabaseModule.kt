@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.example.deathnote.data.repository.database.DiaryDatabase
 import com.example.deathnote.data.repository.database.dao.StudentsDAO
+import com.example.deathnote.data.repository.database.dao.SubjectsDAO
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,5 +30,7 @@ object DatabaseModule {
     fun provideStudentDao(database: DiaryDatabase): StudentsDAO =
         database.studentDAO()
 
-
+    @Provides
+    fun provideSubjectDao(database: DiaryDatabase): SubjectsDAO =
+        database.subjectDAO()
 }

@@ -72,7 +72,7 @@ fun TimeTableSubjectCard(
                     text = buildAnnotatedString {
                         withStyle(
                             style = SpanStyle(
-                                color = if (subjectScheduled.subject.subjectType == SubjectType.LECTURE)
+                                color = if (subjectScheduled.subject.type == "lk")
                                     DeathNoteTheme.colors.secondary.adjust(
                                         if (isDarkMode()) 1.8f else 1f
                                     )
@@ -82,7 +82,7 @@ fun TimeTableSubjectCard(
                             )
                         ) {
                             append(
-                                if (subjectScheduled.subject.subjectType == SubjectType.LECTURE)
+                                if (subjectScheduled.subject.type == "lk")
                                 stringResource(id = R.string.lecture)
                                 else stringResource(id = R.string.practice)
                             )

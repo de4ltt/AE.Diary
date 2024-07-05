@@ -19,6 +19,7 @@ import com.example.deathnote.presentation.ui.screen.settings.StudentsScreen
 import com.example.deathnote.presentation.ui.screen.settings.SubjectsScreen
 import com.example.deathnote.presentation.ui.screen.settings.TimetableScreen
 import com.example.deathnote.presentation.viewmodel.StudentViewModel
+import com.example.deathnote.presentation.viewmodel.SubjectViewModel
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.manualcomposablecalls.composable
 import com.ramcosta.composedestinations.spec.NavHostEngine
@@ -26,6 +27,7 @@ import com.ramcosta.composedestinations.spec.NavHostEngine
 @Composable
 fun NavigationUI(
     studentViewModel: StudentViewModel,
+    subjectViewModel: SubjectViewModel,
     navHostEngine: NavHostEngine,
     navHostController: NavHostController,
     context: Context
@@ -43,7 +45,10 @@ fun NavigationUI(
             SettingsScreen(navigator = destinationsNavigator)
         }
         composable(SubjectsScreenDestination) {
-            SubjectsScreen(navigator = destinationsNavigator)
+            SubjectsScreen(
+                navigator = destinationsNavigator,
+                subjectViewModel = subjectViewModel
+            )
         }
         composable(TimetableScreenDestination) {
             TimetableScreen(navigator = destinationsNavigator)

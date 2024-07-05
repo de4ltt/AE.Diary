@@ -161,7 +161,8 @@ fun CertificatesScreen(
                             title = R.string.student,
                             onValueChange = { studentName = it },
                             value = studentName,
-                            isCentered = false
+                            isCentered = false,
+                            innerTitle = R.string.enter_student
                         )
 
                         LazyVerticalGrid(
@@ -178,7 +179,8 @@ fun CertificatesScreen(
                                     value = start,
                                     previousDate = start,
                                     isDatePicker = true,
-                                    isStartDate = true
+                                    isStartDate = true,
+                                    innerTitle = R.string.enter_start_date
                                 )
                             }
 
@@ -188,7 +190,8 @@ fun CertificatesScreen(
                                     onValueChange = { end = it },
                                     previousDate = start,
                                     value = end,
-                                    isDatePicker = true
+                                    isDatePicker = true,
+                                    innerTitle = R.string.enter_end_date
                                 )
                             }
 

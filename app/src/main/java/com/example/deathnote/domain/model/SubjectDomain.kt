@@ -1,6 +1,6 @@
-package com.example.deathnote.presentation.model
+package com.example.deathnote.domain.model
 
-data class Subject(
+data class SubjectDomain(
     val id: Int? = null,
     val name: String = "",
     val type : String = "lk"
