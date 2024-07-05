@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.ui.Alignment
 import androidx.core.view.WindowCompat
@@ -21,7 +22,9 @@ import com.example.deathnote.presentation.ui.theme.util.setColorScheme
 import com.example.deathnote.presentation.viewmodel.StudentViewModel
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.ramcosta.composedestinations.animations.rememberAnimatedNavHostEngine
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     @OptIn(

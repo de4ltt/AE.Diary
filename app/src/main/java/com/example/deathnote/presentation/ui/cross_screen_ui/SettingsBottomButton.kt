@@ -21,24 +21,27 @@ import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 
 @Composable
 fun SettingsBottomButton(
+    isActive: Boolean = true,
     @StringRes title: Int,
     onClickAction: () -> Unit
 ) {
 
     Box(
         modifier = Modifier
-            .height(50.dp)
             .fillMaxWidth()
+            .height(50.dp)
             .clip(
                 shape = DeathNoteTheme.shapes.rounded12
             )
             .background(
-                color = DeathNoteTheme.colors.primaryDefault
+                color = if (isActive) DeathNoteTheme.colors.primaryDefault else DeathNoteTheme.colors.primaryBackground
             )
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,
-                onClick = onClickAction
+                onClick = {
+                    if (isActive) onClickAction()
+                }
             ),
         contentAlignment = Alignment.Center,
         content = {

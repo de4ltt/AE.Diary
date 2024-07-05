@@ -114,6 +114,6 @@ dependencies {
     ksp("io.github.raamcosta.compose-destinations:ksp:$destinations_version")
 
     //Hilt
-    implementation("com.google.dagger:hilt-android:2.44")
-    ksp("com.google.dagger:hilt-android-compiler:2.44")
+    implementation("com.google.dagger:hilt-android:2.51.1")
+    ksp("com.google.dagger:hilt-android-compiler:2.51.1")
 }

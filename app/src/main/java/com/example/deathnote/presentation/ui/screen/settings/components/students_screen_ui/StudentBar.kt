@@ -1,5 +1,6 @@
 package com.example.deathnote.presentation.ui.screen.settings.components.students_screen_ui
 
+import android.util.Log
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
@@ -21,6 +22,10 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -43,6 +48,10 @@ fun StudentBar(
     onEvent: (StudentUIEvent) -> Unit
 ) {
 
+    var isDeleteMode by remember {
+        mutableStateOf(false)
+    }
+
     Row(
         modifier = Modifier
             .wrapContentSize()
@@ -54,7 +63,7 @@ fun StudentBar(
             .background(DeathNoteTheme.colors.regularBackground)
     ) {
         Crossfade(
-            targetState = studentUIState.isStudentBarDeleteMode,
+            targetState = isDeleteMode,
             label = "bar",
             animationSpec = tween(
                 durationMillis = 220,
@@ -122,7 +131,7 @@ fun StudentBar(
                                         .size(30.dp)
                                         .pointerInput(Unit) {
                                             detectTapGestures {
-                                                onEvent(StudentUIEvent.ChangeDeleteModeState(false))
+                                                isDeleteMode = false
                                             }
                                         }
                                 )
@@ -135,7 +144,8 @@ fun StudentBar(
                                         .size(23.dp)
                                         .pointerInput(Unit) {
                                             detectTapGestures {
-                                                //TODO
+                                                onEvent(StudentUIEvent.DeleteStudent(student))
+                                                isDeleteMode = false
                                             }
                                         }
                                 )
@@ -156,7 +166,7 @@ fun StudentBar(
                             .pointerInput(Unit) {
                                 detectTapGestures(
                                     onLongPress = {
-                                        onEvent(StudentUIEvent.ChangeDeleteModeState(true))
+                                        isDeleteMode = true
                                     }
                                 )
                             }
@@ -203,7 +213,8 @@ fun StudentBar(
                                 modifier = Modifier
                                     .pointerInput(Unit) {
                                         detectTapGestures {
-                                            //TODO
+                                            onEvent(StudentUIEvent.SelectStudent(student))
+                                            onEvent(StudentUIEvent.ChangeDialogState(true))
                                         }
                                     }
                             )

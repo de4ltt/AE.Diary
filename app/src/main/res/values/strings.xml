@@ -66,4 +66,10 @@
     <string name="end_date">End date</string>
     <string name="name_sur_pat">Full name</string>
     <string name="sunday">Sunday</string>
+    <string name="add_student">Add student</string>
+    <string name="delete_student">Delete student</string>
+    <string name="edit_student">Edit student</string>
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="patronymic">Patronymic</string>
 </resources>

@@ -30,6 +30,7 @@ import com.example.deathnote.presentation.ui.theme.util.isDarkMode
 
 @Composable
 fun DismissAcceptButton(
+    isActive: Boolean = true,
     onDismissRequest: () -> Unit,
     onAcceptRequest: () -> Unit
 ) {
@@ -68,7 +69,8 @@ fun DismissAcceptButton(
 
         SettingsBottomButton(
             title = R.string.ready,
-            onClickAction = onAcceptRequest
+            onClickAction = onAcceptRequest,
+            isActive = isActive
         )
 
     }

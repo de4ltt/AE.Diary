@@ -1,5 +1,6 @@
 package com.example.deathnote.presentation.ui.cross_screen_ui
 
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,7 +29,8 @@ fun BottomBarWithTextFields(
     content: @Composable () -> Unit,
     @StringRes title: Int,
     onAcceptRequest: () -> Unit,
-    onDismissRequest: () -> Unit
+    onDismissRequest: () -> Unit,
+    isActive: Boolean = true
 ) {
 
     ModalBottomSheet(
@@ -56,6 +58,7 @@ fun BottomBarWithTextFields(
                 content()
 
                 DismissAcceptButton(
+                    isActive = isActive,
                     onAcceptRequest = onAcceptRequest,
                     onDismissRequest = onDismissRequest
                 )

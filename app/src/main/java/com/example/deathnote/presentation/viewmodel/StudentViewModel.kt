@@ -10,6 +10,7 @@ import com.example.deathnote.presentation.mapper.toDomain
 import com.example.deathnote.presentation.mapper.toPresentation
 import com.example.deathnote.presentation.model.Student
 import com.example.deathnote.presentation.model.event.StudentUIEvent
+import com.example.deathnote.presentation.model.state.StudentDialogState
 import com.example.deathnote.presentation.model.state.StudentUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -27,19 +28,63 @@ class StudentViewModel @Inject constructor(
     private val _allStudents: MutableStateFlow<List<Student>> = MutableStateFlow(emptyList())
     val allStudents: StateFlow<List<Student>> = _allStudents.asStateFlow()
 
-    var studentUIState: StudentUIState by mutableStateOf(StudentUIState())
-    private set
+    private val _studentUIState: MutableStateFlow<StudentUIState> =
+        MutableStateFlow(StudentUIState())
+    val studentUIState: StateFlow<StudentUIState> = _studentUIState.asStateFlow()
+
+    private val _studentDialogState: MutableStateFlow<StudentDialogState> =
+        MutableStateFlow(StudentDialogState())
+    val studentDialogState: StateFlow<StudentDialogState> = _studentDialogState.asStateFlow()
+
 
     fun onEvent(event: StudentUIEvent) {
         when (event) {
+
             is StudentUIEvent.DeleteStudent ->
                 deleteStudent(event.student)
+
             is StudentUIEvent.GetStudentById ->
                 getStudentById(event.id)
+
             is StudentUIEvent.UpsertStudent ->
                 upsertStudent(event.student)
-            is StudentUIEvent.ChangeDeleteModeState ->
-                studentUIState = studentUIState.copy(isStudentBarDeleteMode = event.state)
+
+
+            is StudentUIEvent.ChangeDialogContent -> {
+                _studentDialogState.value = _studentDialogState.value.copy(
+                    student = event.student,
+                    title = event.title,
+                    onAcceptRequest = event.onAcceptRequest,
+                    onDismissRequest = event.onDismissRequest,
+                    refuseButtonTitle = event.refuseButtonTitle,
+                    acceptButtonTitle = event.acceptButtonTitle
+                )
+            }
+
+            is StudentUIEvent.SelectStudent ->
+                _studentDialogState.value =
+                    _studentDialogState.value.copy(student = event.student)
+
+            is StudentUIEvent.ChangeDialogState ->
+                _studentDialogState.value = _studentDialogState.value.copy(isShown = event.state)
+
+            is StudentUIEvent.ChangeStudentName ->
+                _studentDialogState.value =
+                    _studentDialogState.value.copy(
+                        student = studentDialogState.value.student.copy(name = event.name)
+                    )
+
+            is StudentUIEvent.ChangeStudentSurname ->
+                _studentDialogState.value =
+                    _studentDialogState.value.copy(
+                        student = studentDialogState.value.student.copy(surname = event.surname)
+                    )
+
+            is StudentUIEvent.ChangeStudentPatronymic ->
+                _studentDialogState.value =
+                    _studentDialogState.value.copy(
+                        student = _studentDialogState.value.student.copy(patronymic = event.patronymic)
+                    )
         }
     }
 

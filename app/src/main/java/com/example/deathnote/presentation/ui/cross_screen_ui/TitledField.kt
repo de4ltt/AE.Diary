@@ -40,7 +40,6 @@ fun TitledField(
     squared: Boolean = false
 ) {
     Column {
-
         if (showTitle)
             Text(
                 text = stringResource(id = title),
