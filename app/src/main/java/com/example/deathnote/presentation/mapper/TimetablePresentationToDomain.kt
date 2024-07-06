@@ -4,6 +4,7 @@ import com.example.deathnote.domain.model.TimetableDomain
 import com.example.deathnote.presentation.model.Timetable
 
 fun Timetable.toDomain() = TimetableDomain(
+    id = id,
     dayOfWeek = dayOfWeek,
     subjectId = subjectId,
     startTime = startTime,

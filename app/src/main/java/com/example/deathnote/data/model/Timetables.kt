@@ -5,7 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Timetables(
-    @PrimaryKey(autoGenerate = false)
+    @PrimaryKey(autoGenerate = true)
+    val id: Int? = null,
     val dayOfWeek: String = "O_1",
     val subjectId: Int? = null,
     val startTime: String? = null,

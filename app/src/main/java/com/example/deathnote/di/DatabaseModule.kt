@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.example.deathnote.data.repository.database.DiaryDatabase
 import com.example.deathnote.data.repository.database.dao.StudentsDAO
 import com.example.deathnote.data.repository.database.dao.SubjectsDAO
+import com.example.deathnote.data.repository.database.dao.TimetablesDAO
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,7 +24,7 @@ object DatabaseModule {
             context,
             DiaryDatabase::class.java,
             "diary_database"
-        ).build()
+        ).fallbackToDestructiveMigration().build()
     }
 
     @Provides
@@ -33,4 +34,8 @@ object DatabaseModule {
     @Provides
     fun provideSubjectDao(database: DiaryDatabase): SubjectsDAO =
         database.subjectDAO()
+
+    @Provides
+    fun provideTimetableDao(database: DiaryDatabase): TimetablesDAO =
+        database.timetableDAO()
 }

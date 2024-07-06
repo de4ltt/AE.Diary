@@ -1,5 +1,6 @@
 package com.example.deathnote.presentation.ui.screen.settings
 
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -16,6 +17,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,6 +35,7 @@ import com.example.deathnote.presentation.viewmodel.SubjectViewModel
 import com.example.deathnote.presentation.viewmodel.TimetableViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import kotlinx.coroutines.delay
 import kotlin.math.absoluteValue
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -55,15 +58,15 @@ fun TimetableScreen(
 
     val allTimetables by timetableViewModel.allTimetables.collectAsStateWithLifecycle()
     val timetableState by timetableViewModel.timetableState.collectAsStateWithLifecycle()
+    val dayTimetables by timetableViewModel.dayTimetables.collectAsStateWithLifecycle()
 
-    val dayTimetables: Map<String, List<Timetable>> = allTimetables.groupBy {
-        it.dayOfWeek
-    }.filter { dayTimetable ->
-        dayTimetable.key[0] == timetableState.weekType[0]
+    LaunchedEffect(key1 = true) {
+        Log.d("TAG", "List size: ${dayTimetables.size}")
+        delay(1000)
     }
 
     val pagerState = rememberPagerState(
-        pageCount = { 6 },
+        pageCount = { 1 },
     )
 
     Column(
@@ -119,8 +122,13 @@ fun TimetableScreen(
                 shape = DeathNoteTheme.shapes.rounded12
             ) {
                 TimetableCard(
-                    dayOfWeek = dayTimetables.keys.elementAt(page),
-                    timetable = dayTimetables[dayTimetables.keys.elementAt(page)] ?: listOf(Timetable()),
+                    dayOfWeek = /*timetableState.weekType[0] + "_${page + 1}"*/"O_1",
+                    timetable = /*dayTimetables["${timetableState.weekType[0]}_${page + 1}"] ?: */listOf(
+                        Timetable(1, "O_1", 1, "9:00", "10:00"),
+                        Timetable(2, "O_1", 1, "9:00", "10:00"),
+                        Timetable(3, "O_1", 1, "9:00", "10:00"),
+                        Timetable(4, "O_1", 1, "9:00", "10:00")
+                    ),
                     getSubjectById = subjectViewModel::getSubjectById
                 )
             }

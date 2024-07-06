@@ -6,8 +6,9 @@ import com.example.deathnote.data.repository.database.dao.TimetablesDAO
 import com.example.deathnote.domain.model.TimetableDomain
 import com.example.deathnote.domain.repository.TimetableRepository
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class TimetableRepositoryImpl(
+class TimetableRepositoryImpl @Inject constructor(
     private val timetableDao: TimetablesDAO
 ): TimetableRepository {
 

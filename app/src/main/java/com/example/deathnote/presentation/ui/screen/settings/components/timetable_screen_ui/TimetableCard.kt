@@ -13,18 +13,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.deathnote.presentation.model.DayOfWeek
 import com.example.deathnote.presentation.model.Subject
 import com.example.deathnote.presentation.model.Timetable
 import com.example.deathnote.presentation.model.util.toFormatDayOfWeek
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
-import kotlin.reflect.KFunction1
 
 @Composable
 fun TimetableCard(
     dayOfWeek: String,
-    timetable: List<Timetable>,
-    getSubjectById: KFunction1<Int?, Subject?>
+    timetable: List<Timetable?>,
+    getSubjectById: (Int?) -> Subject?
 ) {
     Column(
         modifier = Modifier
@@ -46,10 +44,22 @@ fun TimetableCard(
                 .wrapContentSize(),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            TimeTableSubjectCard(subjectScheduled = getSubjectById(timetable[0].subjectId))
-            TimeTableSubjectCard(subjectScheduled = getSubjectById(timetable[1].subjectId))
-            TimeTableSubjectCard(subjectScheduled = getSubjectById(timetable[2].subjectId))
-            TimeTableSubjectCard(subjectScheduled = getSubjectById(timetable[3].subjectId))
+            TimeTableSubjectCard(
+                classTime = Pair(timetable[0]?.startTime, timetable[0]?.endTime),
+                subjectScheduled = getSubjectById(timetable[0]?.subjectId)
+            )
+            TimeTableSubjectCard(
+                classTime = Pair(timetable[1]?.startTime, timetable[1]?.endTime),
+                subjectScheduled = getSubjectById(timetable[1]?.subjectId)
+            )
+            TimeTableSubjectCard(
+                classTime = Pair(timetable[2]?.startTime, timetable[2]?.endTime),
+                subjectScheduled = getSubjectById(timetable[2]?.subjectId)
+            )
+            TimeTableSubjectCard(
+                classTime = Pair(timetable[3]?.startTime, timetable[3]?.endTime),
+                subjectScheduled = getSubjectById(timetable[3]?.subjectId)
+            )
         }
     }
 }

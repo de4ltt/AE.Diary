@@ -36,7 +36,7 @@ import com.example.deathnote.presentation.ui.theme.util.isDarkMode
 
 @Composable
 fun TimeTableSubjectCard(
-    classTime: Pair<String, String>,
+    classTime: Pair<String?, String?>,
     subjectScheduled: Subject?
 ) {
 
@@ -60,60 +60,60 @@ fun TimeTableSubjectCard(
             )
     ) {
         if (subjectScheduled != null) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        top = 8.dp,
-                        start = 15.dp,
-                        end = 15.dp,
-                        bottom = 10.dp
-                    )
-            ) {
-                Text(
-                    text = buildAnnotatedString {
-                        withStyle(
-                            style = SpanStyle(
-                                color = if (subjectScheduled.type == "lk")
-                                    DeathNoteTheme.colors.secondary.adjust(
-                                        if (isDarkMode()) 1.8f else 1f
+            subjectScheduled.apply {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            top = 8.dp,
+                            start = 15.dp,
+                            end = 15.dp,
+                            bottom = 10.dp
+                        )
+                ) {
+                    Text(
+                        text = buildAnnotatedString {
+                            withStyle(
+                                style = SpanStyle(
+                                    color = if (type == "lk")
+                                        DeathNoteTheme.colors.secondary.adjust(
+                                            if (isDarkMode()) 1.8f else 1f
+                                        )
+                                    else DeathNoteTheme.colors.primaryDefault.adjust(
+                                        if (isDarkMode()) 1.4f else 1f
                                     )
-                                else DeathNoteTheme.colors.primaryDefault.adjust(
-                                    if (isDarkMode()) 1.4f else 1f
                                 )
-                            )
-                        ) {
-                            append(
-                                if (subjectScheduled.type == "lk")
-                                stringResource(id = R.string.lecture)
-                                else stringResource(id = R.string.practice)
-                            )
-                        }
+                            ) {
+                                append(
+                                    if (type == "lk")
+                                        stringResource(id = R.string.lecture)
+                                    else stringResource(id = R.string.practice)
+                                )
+                            }
 
-                        withStyle(
-                            style = SpanStyle(
-                                color = DeathNoteTheme.colors.inverse
-                            )
-                        ) {
-                            append(
-                                " // " + classTime.first + " - " + classTime.second
-                            )
-                        }
-                    },
-                    fontSize = DeathNoteTheme.typography.settingsScreenItemSubtitle.fontSize,
-                    lineHeight = 13.sp
-                )
+                            withStyle(
+                                style = SpanStyle(
+                                    color = DeathNoteTheme.colors.inverse
+                                )
+                            ) {
+                                append(
+                                    " // " + classTime.first + " - " + classTime.second
+                                )
+                            }
+                        },
+                        fontSize = DeathNoteTheme.typography.settingsScreenItemSubtitle.fontSize,
+                        lineHeight = 13.sp
+                    )
 
-                Text(
-                    modifier = Modifier.padding(top = 7.dp, bottom = 3.dp),
-                    text = subjectScheduled.name,
-                    style = DeathNoteTheme.typography.subjectCardTimetableTitle,
-                    color = DeathNoteTheme.colors.inverse
-                )
+                    Text(
+                        modifier = Modifier.padding(top = 7.dp, bottom = 3.dp),
+                        text = subjectScheduled.name,
+                        style = DeathNoteTheme.typography.subjectCardTimetableTitle,
+                        color = DeathNoteTheme.colors.inverse
+                    )
+                }
             }
-        }
-
-        else {
+        } else {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()

@@ -10,6 +10,7 @@ import com.example.deathnote.presentation.model.event.SubjectUIEvent
 import com.example.deathnote.presentation.model.state.SubjectDialogState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -28,7 +29,7 @@ class SubjectViewModel @Inject constructor(
         MutableStateFlow(SubjectDialogState())
     val subjectDialogState: StateFlow<SubjectDialogState> = _subjectDialogState.asStateFlow()
 
-    private val retrievedSubject: MutableStateFlow<Subject?> = MutableStateFlow(null)
+
 
     fun onEvent(event: SubjectUIEvent) {
         when (event) {
@@ -83,14 +84,17 @@ class SubjectViewModel @Inject constructor(
         }
     }
 
+    private val retrievedSubject: MutableStateFlow<Subject?> = MutableStateFlow(null)
+
     fun getSubjectById(id: Int?): Subject? {
         retrieveSubjectById(id)
+
         return retrievedSubject.value
     }
 
     private fun retrieveSubjectById(id: Int?) =
         viewModelScope.launch(Dispatchers.IO) {
-            if (id == null) null else
+            retrievedSubject.value = if (id == null) null else
                 subjectUseCases.GetSubjectByIdUseCase(id).toPresentation()
         }
 
