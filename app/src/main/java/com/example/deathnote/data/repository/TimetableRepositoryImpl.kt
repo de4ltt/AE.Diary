@@ -10,9 +10,14 @@ import kotlinx.coroutines.flow.Flow
 class TimetableRepositoryImpl(
     private val timetableDao: TimetablesDAO
 ): TimetableRepository {
+
     override suspend fun getAllTimetables(): Flow<List<TimetableDomain>> =
         timetableDao.getAllTimetables().toDomain()
 
     override suspend fun upsertTimetable(timetable: TimetableDomain) =
         timetableDao.upsertTimetable(timetable.toEntity())
+
+    override suspend fun deleteTimetable(timetable: TimetableDomain) {
+        timetableDao.deleteTimetable(timetable.toEntity())
+    }
 }

@@ -26,6 +26,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.deathnote.R
+import com.example.deathnote.presentation.model.Subject
 import com.example.deathnote.presentation.model.SubjectScheduled
 import com.example.deathnote.presentation.model.SubjectType
 import com.example.deathnote.presentation.model.util.getTime
@@ -35,7 +36,8 @@ import com.example.deathnote.presentation.ui.theme.util.isDarkMode
 
 @Composable
 fun TimeTableSubjectCard(
-    subjectScheduled: SubjectScheduled?
+    classTime: Pair<String, String>,
+    subjectScheduled: Subject?
 ) {
 
     Box(
@@ -72,7 +74,7 @@ fun TimeTableSubjectCard(
                     text = buildAnnotatedString {
                         withStyle(
                             style = SpanStyle(
-                                color = if (subjectScheduled.subject.type == "lk")
+                                color = if (subjectScheduled.type == "lk")
                                     DeathNoteTheme.colors.secondary.adjust(
                                         if (isDarkMode()) 1.8f else 1f
                                     )
@@ -82,7 +84,7 @@ fun TimeTableSubjectCard(
                             )
                         ) {
                             append(
-                                if (subjectScheduled.subject.type == "lk")
+                                if (subjectScheduled.type == "lk")
                                 stringResource(id = R.string.lecture)
                                 else stringResource(id = R.string.practice)
                             )
@@ -94,7 +96,7 @@ fun TimeTableSubjectCard(
                             )
                         ) {
                             append(
-                                " // " + subjectScheduled.subjectTerm.getTime()
+                                " // " + classTime.first + " - " + classTime.second
                             )
                         }
                     },
@@ -104,7 +106,7 @@ fun TimeTableSubjectCard(
 
                 Text(
                     modifier = Modifier.padding(top = 7.dp, bottom = 3.dp),
-                    text = subjectScheduled.subject.name,
+                    text = subjectScheduled.name,
                     style = DeathNoteTheme.typography.subjectCardTimetableTitle,
                     color = DeathNoteTheme.colors.inverse
                 )

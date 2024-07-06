@@ -13,12 +13,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.deathnote.presentation.model.TimetableOld
+import com.example.deathnote.presentation.model.DayOfWeek
+import com.example.deathnote.presentation.model.Subject
+import com.example.deathnote.presentation.model.Timetable
+import com.example.deathnote.presentation.model.util.toFormatDayOfWeek
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
+import kotlin.reflect.KFunction1
 
 @Composable
 fun TimetableCard(
-    timetable: TimetableOld
+    dayOfWeek: String,
+    timetable: List<Timetable>,
+    getSubjectById: KFunction1<Int?, Subject?>
 ) {
     Column(
         modifier = Modifier
@@ -30,7 +36,7 @@ fun TimetableCard(
     ) {
         Text(
             textAlign = TextAlign.Center,
-            text = stringResource(id = timetable.dayOfWeek.title).uppercase(),
+            text = stringResource(id = dayOfWeek.toFormatDayOfWeek()).uppercase(),
             style = DeathNoteTheme.typography.timeTableCard,
             color = DeathNoteTheme.colors.inverse
         )
@@ -40,10 +46,10 @@ fun TimetableCard(
                 .wrapContentSize(),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            TimeTableSubjectCard(subjectScheduled = timetable.daySubjects.subject1)
-            TimeTableSubjectCard(subjectScheduled = timetable.daySubjects.subject2)
-            TimeTableSubjectCard(subjectScheduled = timetable.daySubjects.subject3)
-            TimeTableSubjectCard(subjectScheduled = timetable.daySubjects.subject4)
+            TimeTableSubjectCard(subjectScheduled = getSubjectById(timetable[0].subjectId))
+            TimeTableSubjectCard(subjectScheduled = getSubjectById(timetable[1].subjectId))
+            TimeTableSubjectCard(subjectScheduled = getSubjectById(timetable[2].subjectId))
+            TimeTableSubjectCard(subjectScheduled = getSubjectById(timetable[3].subjectId))
         }
     }
 }

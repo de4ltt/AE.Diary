@@ -28,6 +28,8 @@ class SubjectViewModel @Inject constructor(
         MutableStateFlow(SubjectDialogState())
     val subjectDialogState: StateFlow<SubjectDialogState> = _subjectDialogState.asStateFlow()
 
+    private val retrievedSubject: MutableStateFlow<Subject?> = MutableStateFlow(null)
+
     fun onEvent(event: SubjectUIEvent) {
         when (event) {
             is SubjectUIEvent.ChangeDialogContent ->
@@ -71,18 +73,25 @@ class SubjectViewModel @Inject constructor(
 
             is SubjectUIEvent.SelectSubject ->
                 viewModelScope.launch(Dispatchers.IO) {
-                    _subjectDialogState.value = _subjectDialogState.value.copy(subject = event.subject)
+                    _subjectDialogState.value =
+                        _subjectDialogState.value.copy(subject = event.subject)
                 }
 
             is SubjectUIEvent.DeleteSubject -> deleteSubject(event.subject)
-            is SubjectUIEvent.GetSubjectById -> getSubjectById(event.id)
+
             is SubjectUIEvent.UpsertSubject -> upsertSubject(event.subject)
         }
     }
 
-    private fun getSubjectById(id: Int) =
+    fun getSubjectById(id: Int?): Subject? {
+        retrieveSubjectById(id)
+        return retrievedSubject.value
+    }
+
+    private fun retrieveSubjectById(id: Int?) =
         viewModelScope.launch(Dispatchers.IO) {
-            subjectUseCases.GetSubjectByIdUseCase(id)
+            if (id == null) null else
+                subjectUseCases.GetSubjectByIdUseCase(id).toPresentation()
         }
 
     private fun deleteSubject(subject: Subject) =

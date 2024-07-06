@@ -5,7 +5,6 @@ import com.example.deathnote.presentation.model.Subject
 
 sealed class SubjectUIEvent {
 
-    data class GetSubjectById(val id: Int): SubjectUIEvent()
     data class UpsertSubject(val subject: Subject): SubjectUIEvent()
     data class DeleteSubject(val subject: Subject): SubjectUIEvent()
 

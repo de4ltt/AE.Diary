@@ -7,6 +7,7 @@ class GetAllTimetablesUseCase @Inject constructor(
     private val timetableRepository: TimetableRepository
 ) {
 
-    suspend operator fun invoke() = timetableRepository.getAllTimetables()
+    suspend operator fun invoke() =
+        timetableRepository.getAllTimetables()
 
 }
