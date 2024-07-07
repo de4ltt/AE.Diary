@@ -14,6 +14,7 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,8 +29,6 @@ class SubjectViewModel @Inject constructor(
     private val _subjectDialogState: MutableStateFlow<SubjectDialogState> =
         MutableStateFlow(SubjectDialogState())
     val subjectDialogState: StateFlow<SubjectDialogState> = _subjectDialogState.asStateFlow()
-
-
 
     fun onEvent(event: SubjectUIEvent) {
         when (event) {
@@ -84,19 +83,9 @@ class SubjectViewModel @Inject constructor(
         }
     }
 
-    private val retrievedSubject: MutableStateFlow<Subject?> = MutableStateFlow(null)
-
-    fun getSubjectById(id: Int?): Subject? {
-        retrieveSubjectById(id)
-
-        return retrievedSubject.value
-    }
-
-    private fun retrieveSubjectById(id: Int?) =
-        viewModelScope.launch(Dispatchers.IO) {
-            retrievedSubject.value = if (id == null) null else
-                subjectUseCases.GetSubjectByIdUseCase(id).toPresentation()
-        }
+    fun getSubjectById(id: Int?): Subject? =
+        if (id != null) _allSubjects.value.filter { it.id == id }[0]
+        else null
 
     private fun deleteSubject(subject: Subject) =
         viewModelScope.launch(Dispatchers.IO) {

@@ -3,6 +3,8 @@ package com.example.deathnote.presentation.ui.screen.settings.components.timetab
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,6 +39,7 @@ import com.example.deathnote.presentation.ui.theme.util.isDarkMode
 
 @Composable
 fun TimeTableSubjectCard(
+    onClick: () -> Unit = {},
     classTime: Pair<String?, String?>,
     subjectScheduled: Subject?
 ) {
@@ -58,6 +62,12 @@ fun TimeTableSubjectCard(
             .animateContentSize(
                 animationSpec = tween(25)
             )
+            .clickable(
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() },
+                onClick = onClick
+            )
+            .animateContentSize()
     ) {
         if (subjectScheduled != null) {
             subjectScheduled.apply {

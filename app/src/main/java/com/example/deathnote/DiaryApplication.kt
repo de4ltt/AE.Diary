@@ -19,6 +19,7 @@ class DiaryApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
         db = Room.databaseBuilder(
             applicationContext,
             DiaryDatabase::class.java,

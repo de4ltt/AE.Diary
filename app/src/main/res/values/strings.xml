@@ -82,4 +82,8 @@
     <string name="enter_start_date">Start date</string>
     <string name="enter_end_date">End date</string>
     <string name="edit_subject">Edit subject</string>
+    <string name="odd_week">Odd week</string>
+    <string name="even_week">Even week</string>
+    <string name="choose_subject">Choose the subject</string>
+    <string name="subject">Subject</string>
 </resources>

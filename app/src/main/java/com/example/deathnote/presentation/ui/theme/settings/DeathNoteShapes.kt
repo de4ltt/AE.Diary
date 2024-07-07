@@ -11,6 +11,11 @@ data class DeathNoteShapes(
         bottomStart = 12.dp
     ),
 
+    val rounded20_top: RoundedCornerShape = RoundedCornerShape(
+        topStart = 20.dp,
+        topEnd = 20.dp
+    ),
+
     val rounded_bot_strt: RoundedCornerShape = RoundedCornerShape(
         bottomStart = 50.dp
     ),

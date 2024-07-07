@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface TimetablesDAO {
 
-    @Query("SELECT * FROM Timetables")
+    @Query("SELECT * FROM timetables")
     fun getAllTimetables(): Flow<List<Timetables>>
 
     @Upsert

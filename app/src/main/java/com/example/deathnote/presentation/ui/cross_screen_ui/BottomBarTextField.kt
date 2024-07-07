@@ -41,10 +41,12 @@ import com.example.deathnote.presentation.ui.theme.util.isDarkMode
 @Composable
 fun BottomBarTextField(
     @StringRes title: Int,
-    onValueChange: (String) -> Unit,
+    onValueChange: (String) -> Unit = {},
+    onClick: () -> Unit = {},
     icon: @Composable () -> Unit = {},
     @StringRes innerTitle: Int,
     value: String,
+    isActive: Boolean = true,
     isDatePicker: Boolean = false,
     isCentered: Boolean = true,
     isStartDate: Boolean = false,
@@ -72,13 +74,18 @@ fun BottomBarTextField(
                 )
                 .background(
                     color = DeathNoteTheme.colors.baseBackground
+                )
+                .clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null,
+                    onClick = onClick
                 ),
             value = value,
             onValueChange = {
                 onValueChange(it)
             },
             maxLines = 1,
-            enabled = !isDatePicker,
+            enabled = !isDatePicker && isActive,
             textStyle = TextStyle(
                 color = DeathNoteTheme.colors.inverse,
                 fontSize = 15.sp,

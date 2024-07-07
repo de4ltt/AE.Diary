@@ -8,6 +8,7 @@ import com.example.deathnote.presentation.mapper.toDomain
 import com.example.deathnote.presentation.mapper.toPresentation
 import com.example.deathnote.presentation.model.Timetable
 import com.example.deathnote.presentation.model.event.TimetableUIEvent
+import com.example.deathnote.presentation.model.state.TimetableDialogState
 import com.example.deathnote.presentation.model.state.TimetableState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -28,45 +29,71 @@ class TimetableViewModel @Inject constructor(
         MutableStateFlow(TimetableState())
     val timetableState = _timetableState.asStateFlow()
 
-    private val _dayTimetables: MutableStateFlow<Map<String, List<Timetable>>> = MutableStateFlow(emptyMap())
-    val dayTimetables = _dayTimetables.asStateFlow()
+    private val _timetableDialogState: MutableStateFlow<TimetableDialogState> =
+        MutableStateFlow(TimetableDialogState())
+    val timetableDialogState = _timetableDialogState.asStateFlow()
 
     fun onEvent(event: TimetableUIEvent) {
         when (event) {
-            TimetableUIEvent.ChangeWeekType ->
-                viewModelScope.launch(Dispatchers.IO) {
-                    _timetableState.value = _timetableState.value.copy(
-                        weekType = if (_timetableState.value.weekType == "Odd") "Even" else "Odd"
-                    )
-                }
+            TimetableUIEvent.ChangeWeekType -> viewModelScope.launch(Dispatchers.IO) {
+                _timetableState.value = _timetableState.value.copy(
+                    weekType = if (timetableState.value.weekType == "Odd") "Even" else "Odd"
+                )
+            }
 
             is TimetableUIEvent.UpsertTimetable -> upsertTimetable(event.timetable)
             is TimetableUIEvent.DeleteTimetable -> deleteTimetable(event.timetable)
+
+            is TimetableUIEvent.ChangeDialogDayOfWeek -> viewModelScope.launch(Dispatchers.IO) {
+                _timetableDialogState.value = _timetableDialogState.value.copy(
+                    selectedDay = event.dayOfWeek
+                )
+            }
+
+            is TimetableUIEvent.ChangeDialogEndTime -> viewModelScope.launch(Dispatchers.IO) {
+                _timetableDialogState.value = _timetableDialogState.value.copy(
+                    endTime = event.endTime
+                )
+            }
+
+            is TimetableUIEvent.ChangeDialogStartTime -> viewModelScope.launch(Dispatchers.IO) {
+                _timetableDialogState.value = _timetableDialogState.value.copy(
+                    startTime = event.startTime
+                )
+            }
+
+            is TimetableUIEvent.ChangeDialogSubject -> viewModelScope.launch(Dispatchers.IO) {
+                _timetableDialogState.value = _timetableDialogState.value.copy(
+                    subject = event.subject
+                )
+            }
+
+            is TimetableUIEvent.ChangeDialogState -> viewModelScope.launch(Dispatchers.IO) {
+                _timetableDialogState.value = _timetableDialogState.value.copy(
+                    isShown = event.isShown
+                )
+            }
+
+            is TimetableUIEvent.ChangeDialogSubjectPickerState -> viewModelScope.launch(Dispatchers.IO) {
+                _timetableDialogState.value = _timetableDialogState.value.copy(
+                    isSubjectPickerShown = event.isShown
+                )
+            }
         }
     }
 
-    private fun upsertTimetable(timetable: Timetable) =
-        viewModelScope.launch(Dispatchers.IO) {
-            timetableUseCases.UpsertTimetableUseCase(timetable.toDomain())
-        }
+    private fun upsertTimetable(timetable: Timetable) = viewModelScope.launch(Dispatchers.IO) {
+        timetableUseCases.UpsertTimetableUseCase(timetable.toDomain())
+    }
 
-    private fun deleteTimetable(timetable: Timetable) =
-        viewModelScope.launch(Dispatchers.IO) {
-            timetableUseCases.DeleteTimetableUseCase(timetable.toDomain())
-        }
+    private fun deleteTimetable(timetable: Timetable) = viewModelScope.launch(Dispatchers.IO) {
+        timetableUseCases.DeleteTimetableUseCase(timetable.toDomain())
+    }
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
             timetableUseCases.GetAllTimetablesUseCase().collect {
                 _allTimetables.value = it.toPresentation()
-            }
-        }
-
-        viewModelScope.launch(Dispatchers.IO) {
-            _dayTimetables.value = _allTimetables.value.groupBy {
-                it.dayOfWeek
-            }.filter {
-                it.key[0] == timetableState.value.weekType[0]
             }
         }
     }
