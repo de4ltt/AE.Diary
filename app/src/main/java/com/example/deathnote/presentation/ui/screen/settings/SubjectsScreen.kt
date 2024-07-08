@@ -18,6 +18,7 @@ import com.example.deathnote.R
 import com.example.deathnote.presentation.model.Subject
 import com.example.deathnote.presentation.model.event.SubjectUIEvent
 import com.example.deathnote.presentation.navigation.AppDestination
+import com.example.deathnote.presentation.ui.cross_screen_ui.NothingHere
 import com.example.deathnote.presentation.ui.cross_screen_ui.SettingsBottomButton
 import com.example.deathnote.presentation.ui.cross_screen_ui.SettingsTopBar
 import com.example.deathnote.presentation.ui.screen.settings.components.subjects_screen_ui.SubjectBar
@@ -62,19 +63,22 @@ fun SubjectsScreen(
             }
         )
 
-        LazyColumn(
-            modifier = Modifier.weight(1f),
-            verticalArrangement = Arrangement.spacedBy(10.dp),
-            contentPadding = PaddingValues(bottom = 10.dp)
-        ) {
-            itemsIndexed(allSubjects) { index, subject ->
-                SubjectBar(
-                    index + 1,
-                    subject,
-                    onEvent = subjectViewModel::onEvent
-                )
+        if (allSubjects.isEmpty())
+            NothingHere()
+        else
+            LazyColumn(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(10.dp),
+                contentPadding = PaddingValues(bottom = 10.dp)
+            ) {
+                itemsIndexed(allSubjects) { index, subject ->
+                    SubjectBar(
+                        index + 1,
+                        subject,
+                        onEvent = subjectViewModel::onEvent
+                    )
+                }
             }
-        }
 
         SettingsBottomButton(
             title = R.string.add_subject,

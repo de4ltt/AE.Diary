@@ -91,4 +91,19 @@
     <string name="cancel">Cancel</string>
     <string name="start_time">Start time</string>
     <string name="end_time">End time</string>
+    <string name="select_student">Select student</string>
+    <string name="january">January</string>
+    <string name="february">February</string>
+    <string name="march">March</string>
+    <string name="april">April</string>
+    <string name="may">May</string>
+    <string name="june">June</string>
+    <string name="july">July</string>
+    <string name="august">August</string>
+    <string name="september">September</string>
+    <string name="december">December</string>
+    <string name="november">November</string>
+    <string name="october">October</string>
+    <string name="choose_student">Choose the student</string>
+    <string name="nothing_here">Nothing is here</string>
 </resources>

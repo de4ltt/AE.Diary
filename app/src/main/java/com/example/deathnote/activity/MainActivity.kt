@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.ui.Alignment
 import androidx.core.view.WindowCompat
@@ -19,6 +18,7 @@ import com.example.deathnote.presentation.model.util.ColorPresentation
 import com.example.deathnote.presentation.navigation.NavigationUI
 import com.example.deathnote.presentation.ui.theme.DeathNoteTheme
 import com.example.deathnote.presentation.ui.theme.util.setColorScheme
+import com.example.deathnote.presentation.viewmodel.CertificateViewModel
 import com.example.deathnote.presentation.viewmodel.StudentViewModel
 import com.example.deathnote.presentation.viewmodel.SubjectViewModel
 import com.example.deathnote.presentation.viewmodel.TimetableViewModel
@@ -39,6 +39,7 @@ class MainActivity : ComponentActivity() {
         val studentViewModel: StudentViewModel by viewModels()
         val subjectViewModel: SubjectViewModel by viewModels()
         val timetableViewModel: TimetableViewModel by viewModels()
+        val certificateViewModel: CertificateViewModel by viewModels()
 
         loadLanguagePreference(this)?.let {
             setLocale(this, it)
@@ -64,10 +65,10 @@ class MainActivity : ComponentActivity() {
                 NavigationUI(
                     navHostEngine = navHostEngine,
                     navHostController = navHostController,
-                    context = this,
                     studentViewModel = studentViewModel,
                     subjectViewModel = subjectViewModel,
-                    timetableViewModel = timetableViewModel
+                    timetableViewModel = timetableViewModel,
+                    certificateViewModel = certificateViewModel
                 )
             }
         }

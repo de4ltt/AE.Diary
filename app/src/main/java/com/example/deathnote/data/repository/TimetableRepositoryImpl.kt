@@ -22,4 +22,6 @@ class TimetableRepositoryImpl @Inject constructor(
     override suspend fun deleteTimetable(timetable: TimetableDomain) {
         timetableDao.deleteTimetable(timetable.toEntity())
     }
+    override suspend fun deleteTimetablesBySubjectId(id: Int) =
+        timetableDao.deleteTimetablesBySubjectId(id)
 }

@@ -9,12 +9,14 @@ import com.example.deathnote.presentation.mapper.toPresentation
 import com.example.deathnote.presentation.model.Certificate
 import com.example.deathnote.presentation.model.event.CertificateUIEvent
 import com.example.deathnote.presentation.model.state.CertificateUIState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class CertificateViewModel @Inject constructor(
     private val certificateUseCases: CertificateUseCases
 ) : ViewModel() {
@@ -50,6 +52,13 @@ class CertificateViewModel @Inject constructor(
             viewModelScope.launch(Dispatchers.IO) {
                 _certificateUIState.value = _certificateUIState.value.copy(
                     student = event.student
+                )
+            }
+
+        is CertificateUIEvent.ChangeStudentSheetState ->
+            viewModelScope.launch(Dispatchers.IO) {
+                _certificateUIState.value = _certificateUIState.value.copy(
+                    isSelectStudentSheetShown = event.state
                 )
             }
 

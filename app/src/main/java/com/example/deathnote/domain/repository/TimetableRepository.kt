@@ -8,4 +8,5 @@ interface TimetableRepository {
     suspend fun getAllTimetables(): Flow<List<TimetableDomain>>
     suspend fun upsertTimetable(timetable: TimetableDomain)
     suspend fun deleteTimetable(timetable: TimetableDomain)
+    suspend fun deleteTimetablesBySubjectId(id: Int)
 }

@@ -7,6 +7,7 @@ import com.example.deathnote.presentation.model.state.StudentDialogState
 import com.example.deathnote.presentation.ui.cross_screen_ui.BottomBarTextField
 import com.example.deathnote.presentation.ui.cross_screen_ui.BottomBarWithTextFields
 import com.example.deathnote.presentation.ui.util.Validator
+import java.util.Locale
 
 @Composable
 fun StudentTitledDialog(
@@ -19,19 +20,26 @@ fun StudentTitledDialog(
         if (isShown)
             BottomBarWithTextFields(
                 title = title,
-                onAcceptRequest = { onEvent(StudentUIEvent.UpsertStudent(student)) },
+                onAcceptRequest = {
+                    onEvent(StudentUIEvent.UpsertStudent(student))
+                    onEvent(StudentUIEvent.ChangeDialogState(false))
+                },
                 onDismissRequest = { onEvent(StudentUIEvent.ChangeDialogState(false)) },
                 isActive = Validator.run {
                     validateNameSurname(student.name) &&
-                    validateNameSurname(student.surname) &&
-                    validatePatronymic(student.patronymic)
+                            validateNameSurname(student.surname) &&
+                            validatePatronymic(student.patronymic)
                 },
                 content = {
 
                     BottomBarTextField(
                         title = R.string.name,
                         onValueChange = {
-                            onEvent(StudentUIEvent.ChangeStudentName(it.capitalize()))
+                            onEvent(StudentUIEvent.ChangeStudentName(it.replaceFirstChar {
+                                if (it.isLowerCase()) it.titlecase(
+                                    Locale.getDefault()
+                                ) else it.toString()
+                            }))
                         },
                         value = student.name,
                         isCentered = false,
@@ -41,7 +49,11 @@ fun StudentTitledDialog(
                     BottomBarTextField(
                         title = R.string.surname,
                         onValueChange = {
-                            onEvent(StudentUIEvent.ChangeStudentSurname(it.capitalize()))
+                            onEvent(StudentUIEvent.ChangeStudentSurname(it.replaceFirstChar {
+                                if (it.isLowerCase()) it.titlecase(
+                                    Locale.getDefault()
+                                ) else it.toString()
+                            }))
                         },
                         value = student.surname,
                         isCentered = false,
@@ -51,7 +63,11 @@ fun StudentTitledDialog(
                     BottomBarTextField(
                         title = R.string.patronymic,
                         onValueChange = {
-                            onEvent(StudentUIEvent.ChangeStudentPatronymic(it.capitalize()))
+                            onEvent(StudentUIEvent.ChangeStudentPatronymic(it.replaceFirstChar {
+                                if (it.isLowerCase()) it.titlecase(
+                                    Locale.getDefault()
+                                ) else it.toString()
+                            }))
                         },
                         value = student.patronymic,
                         isCentered = false,

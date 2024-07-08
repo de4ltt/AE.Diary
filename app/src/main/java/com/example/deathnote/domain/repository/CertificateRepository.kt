@@ -10,4 +10,6 @@ interface CertificateRepository {
     suspend fun addCertificate(certificate: CertificateDomain)
 
     suspend fun deleteCertificate(certificate: CertificateDomain)
+
+    suspend fun deleteCertificatesByStudentId(id: Int)
 }

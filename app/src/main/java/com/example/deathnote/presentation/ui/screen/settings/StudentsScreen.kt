@@ -19,6 +19,7 @@ import com.example.deathnote.presentation.model.Student
 import com.example.deathnote.presentation.model.event.StudentUIEvent
 import com.example.deathnote.presentation.model.state.StudentDialogState
 import com.example.deathnote.presentation.navigation.AppDestination
+import com.example.deathnote.presentation.ui.cross_screen_ui.NothingHere
 import com.example.deathnote.presentation.ui.cross_screen_ui.SettingsBottomButton
 import com.example.deathnote.presentation.ui.cross_screen_ui.SettingsTopBar
 import com.example.deathnote.presentation.ui.screen.settings.components.students_screen_ui.StudentBar
@@ -63,19 +64,22 @@ fun StudentsScreen(
             }
         )
 
-        LazyColumn(
-            modifier = Modifier.weight(1f),
-            verticalArrangement = Arrangement.spacedBy(10.dp),
-            contentPadding = PaddingValues(bottom = 10.dp)
-        ) {
-            itemsIndexed(allStudents) { index, student ->
-                StudentBar(
-                    index = index + 1,
-                    student = student,
-                    onEvent = studentViewModel::onEvent
-                )
+        if (allStudents.isEmpty())
+            NothingHere()
+        else
+            LazyColumn(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(10.dp),
+                contentPadding = PaddingValues(bottom = 10.dp)
+            ) {
+                itemsIndexed(allStudents) { index, student ->
+                    StudentBar(
+                        index = index + 1,
+                        student = student,
+                        onEvent = studentViewModel::onEvent
+                    )
+                }
             }
-        }
 
         SettingsBottomButton(
             title = R.string.add_student,

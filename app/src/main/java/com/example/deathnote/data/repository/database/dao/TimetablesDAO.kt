@@ -18,4 +18,7 @@ interface TimetablesDAO {
 
     @Delete
     fun deleteTimetable(timetable: Timetables)
+
+    @Query("DELETE FROM timetables WHERE subjectId=:id")
+    fun deleteTimetablesBySubjectId(id: Int)
 }

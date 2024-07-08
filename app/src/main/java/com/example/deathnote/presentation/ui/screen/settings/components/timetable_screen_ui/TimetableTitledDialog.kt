@@ -1,5 +1,6 @@
 package com.example.deathnote.presentation.ui.screen.settings.components.timetable_screen_ui
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -22,11 +23,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.deathnote.R
-import com.example.deathnote.presentation.model.util.DayOfWeek
 import com.example.deathnote.presentation.model.Subject
 import com.example.deathnote.presentation.model.Timetable
 import com.example.deathnote.presentation.model.event.TimetableUIEvent
 import com.example.deathnote.presentation.model.state.TimetableDialogState
+import com.example.deathnote.presentation.model.util.DayOfWeek
 import com.example.deathnote.presentation.ui.cross_screen_ui.BottomBarTextField
 import com.example.deathnote.presentation.ui.cross_screen_ui.BottomBarWithTextFields
 import com.example.deathnote.presentation.ui.theme.Black
@@ -35,6 +36,7 @@ import com.example.deathnote.presentation.ui.theme.DarkYellow
 import com.example.deathnote.presentation.ui.theme.White
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 
+@SuppressLint("SuspiciousIndentation")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TimetableTitledDialog(
@@ -219,7 +221,7 @@ fun TimetableTitledDialog(
                         selectorColor = DeathNoteTheme.colors.primary,
                         timeSelectorSelectedContainerColor = DeathNoteTheme.colors.primary,
                         timeSelectorUnselectedContainerColor = DeathNoteTheme.colors.primaryBackground,
-                        timeSelectorSelectedContentColor = White
+                        timeSelectorSelectedContentColor = White,
                     ),
                     state = timePickerState
                 )

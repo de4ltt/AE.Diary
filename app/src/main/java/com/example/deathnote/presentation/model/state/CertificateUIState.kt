@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter
 
 data class CertificateUIState(
     val isBottomSheetShown: Boolean = false,
+    val isSelectStudentSheetShown: Boolean = false,
     val student: Student = Student(),
     val start: String = LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")),
     val end: String = LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))

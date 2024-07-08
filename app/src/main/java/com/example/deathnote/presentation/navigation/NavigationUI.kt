@@ -1,6 +1,5 @@
 package com.example.deathnote.presentation.navigation
 
-import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import com.example.deathnote.presentation.ui.screen.NavGraphs
@@ -18,6 +17,7 @@ import com.example.deathnote.presentation.ui.screen.settings.LanguageScreen
 import com.example.deathnote.presentation.ui.screen.settings.StudentsScreen
 import com.example.deathnote.presentation.ui.screen.settings.SubjectsScreen
 import com.example.deathnote.presentation.ui.screen.settings.TimetableScreen
+import com.example.deathnote.presentation.viewmodel.CertificateViewModel
 import com.example.deathnote.presentation.viewmodel.StudentViewModel
 import com.example.deathnote.presentation.viewmodel.SubjectViewModel
 import com.example.deathnote.presentation.viewmodel.TimetableViewModel
@@ -29,10 +29,10 @@ import com.ramcosta.composedestinations.spec.NavHostEngine
 fun NavigationUI(
     studentViewModel: StudentViewModel,
     subjectViewModel: SubjectViewModel,
+    certificateViewModel: CertificateViewModel,
     timetableViewModel: TimetableViewModel,
     navHostEngine: NavHostEngine,
-    navHostController: NavHostController,
-    context: Context
+    navHostController: NavHostController
 ) {
 
     DestinationsNavHost(
@@ -69,7 +69,11 @@ fun NavigationUI(
             LanguageScreen(navigator = destinationsNavigator)
         }
         composable(CertificatesScreenDestination) {
-            CertificatesScreen(navigator = destinationsNavigator)
+            CertificatesScreen(
+                studentViewModel = studentViewModel,
+                certificateViewModel = certificateViewModel,
+                navigator = destinationsNavigator
+            )
         }
     }
 }

@@ -10,6 +10,8 @@ sealed class CertificateUIEvent{
     data class ChangeEndDate(val endDate: String): CertificateUIEvent()
     data class ChangeDialogState(val state: Boolean): CertificateUIEvent()
 
+    data class ChangeStudentSheetState(val state: Boolean): CertificateUIEvent()
+
     data class AddCertificate(val certificate: Certificate): CertificateUIEvent()
     data class DeleteCertificate(val certificate: Certificate): CertificateUIEvent()
 }

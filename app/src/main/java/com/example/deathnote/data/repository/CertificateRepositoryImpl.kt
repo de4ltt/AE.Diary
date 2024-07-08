@@ -22,4 +22,7 @@ class CertificateRepositoryImpl @Inject constructor(
     override suspend fun deleteCertificate(certificate: CertificateDomain) =
         certificateDao.deleteCertificate(certificate.toEntity())
 
+    override suspend fun deleteCertificatesByStudentId(id: Int) =
+        certificateDao.deleteCertificatesByStudentId(id)
+
 }
