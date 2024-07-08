@@ -4,10 +4,12 @@ import com.example.deathnote.data.model.DataEntity
 import com.example.deathnote.data.model.Students
 import com.example.deathnote.data.model.Subjects
 import com.example.deathnote.data.model.Timetables
+import com.example.deathnote.domain.model.CertificateDomain
 import com.example.deathnote.domain.model.DomainModel
 import com.example.deathnote.domain.model.StudentDomain
 import com.example.deathnote.domain.model.SubjectDomain
 import com.example.deathnote.domain.model.TimetableDomain
+import com.example.deathnote.presentation.model.Certificate
 import com.example.deathnote.presentation.model.PresentationModel
 import com.example.deathnote.presentation.model.Student
 import com.example.deathnote.presentation.model.Subject
@@ -34,6 +36,13 @@ fun <T: DomainModel, V: PresentationModel> T.toPresentation(): V = when (this) {
         subjectId = subjectId,
         startTime = startTime,
         endTime = endTime
+    )
+
+    is CertificateDomain -> Certificate(
+        id = id,
+        studentId = studentId,
+        start = start,
+        end = end
     )
 
     else -> throw IllegalArgumentException(

@@ -36,9 +36,6 @@ class StudentViewModel @Inject constructor(
             is StudentUIEvent.DeleteStudent ->
                 deleteStudent(event.student)
 
-            is StudentUIEvent.GetStudentById ->
-                getStudentById(event.id)
-
             is StudentUIEvent.UpsertStudent ->
                 upsertStudent(event.student)
 
@@ -117,10 +114,8 @@ class StudentViewModel @Inject constructor(
             studentUseCases.DeleteStudentUseCase(student.toDomain())
         }
 
-    private fun getStudentById(id: Int) =
-        viewModelScope.launch(Dispatchers.IO) {
-            studentUseCases.GetStudentById(id)
-        }
+    fun getStudentById(id: Int) =
+        _allStudents.value.filter { it.id == id }[0]
 
     init {
         viewModelScope.launch(Dispatchers.IO) {

@@ -19,74 +19,81 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
 import com.example.deathnote.presentation.model.Certificate
+import com.example.deathnote.presentation.model.Student
+import com.example.deathnote.presentation.model.event.CertificateUIEvent
+import com.example.deathnote.presentation.ui.cross_screen_ui.SwipeToDeleteContainer
 import com.example.deathnote.presentation.util.getNumberOfDays
 import com.example.deathnote.presentation.ui.theme.SexyGray
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
+import com.example.deathnote.presentation.util.getShortName
 
 
 @Composable
 fun CertificatePane(
     certificate: Certificate,
-    onClick: () -> Unit
+    student: Student,
+    onEvent: (CertificateUIEvent) -> Unit
 ) {
 
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
-            .shadow(
-                elevation = 4.dp,
-                shape = DeathNoteTheme.shapes.rounded12,
-                ambientColor = DeathNoteTheme.colors.regularBackground,
-                clip = false
-            )
-            .clip(
-                shape = DeathNoteTheme.shapes.rounded12
-            )
-            .background(
-                color = DeathNoteTheme.colors.regularBackground
-            )
-            .clickable(
-                onClick = onClick
-            ),
-        verticalAlignment = Alignment.CenterVertically
+    SwipeToDeleteContainer(
+        item = certificate,
+        onDelete = { onEvent(CertificateUIEvent.DeleteCertificate(certificate)) }
     ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .shadow(
+                    elevation = 4.dp,
+                    shape = DeathNoteTheme.shapes.rounded12,
+                    ambientColor = DeathNoteTheme.colors.regularBackground,
+                    clip = false
+                )
+                .clip(
+                    shape = DeathNoteTheme.shapes.rounded12
+                )
+                .background(
+                    color = DeathNoteTheme.colors.regularBackground
+                ),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
 
-        certificate.apply {
+            certificate.apply {
 
-            Box(
-                modifier = Modifier
-                    .padding(15.dp)
-                    .height(65.dp)
-                    .aspectRatio(1f)
-                    .clip(
-                        shape = CircleShape
+                Box(
+                    modifier = Modifier
+                        .padding(15.dp)
+                        .height(65.dp)
+                        .aspectRatio(1f)
+                        .clip(
+                            shape = CircleShape
+                        )
+                        .background(
+                            color = DeathNoteTheme.colors.primaryBackground
+                        ),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "${getNumberOfDays()}",
+                        style = DeathNoteTheme.typography.topBar,
+                        color = SexyGray
                     )
-                    .background(
-                        color = DeathNoteTheme.colors.primaryBackground
-                    ),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = "${getNumberOfDays()}",
-                    style = DeathNoteTheme.typography.topBar,
-                    color = SexyGray
-                )
-            }
+                }
 
-            Column {
+                Column {
 
-                Text(
-                    text = "Болошко Н.А.",
-                    style = DeathNoteTheme.typography.settingsScreenItemTitle,
-                    color = DeathNoteTheme.colors.inverse
-                )
+                    Text(
+                        text = student.getShortName(),
+                        style = DeathNoteTheme.typography.settingsScreenItemTitle,
+                        color = DeathNoteTheme.colors.inverse
+                    )
 
-                Text(
-                    text = "$start - $end",
-                    style = DeathNoteTheme.typography.settingsScreenItemSubtitle,
-                    color = DeathNoteTheme.colors.inverse
-                )
+                    Text(
+                        text = "$start - $end",
+                        style = DeathNoteTheme.typography.settingsScreenItemSubtitle,
+                        color = DeathNoteTheme.colors.inverse
+                    )
+                }
             }
         }
     }

@@ -24,14 +24,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.deathnote.R
 import com.example.deathnote.presentation.model.Certificate
+import com.example.deathnote.presentation.model.event.CertificateUIEvent
 import com.example.deathnote.presentation.navigation.AppDestination
 import com.example.deathnote.presentation.ui.cross_screen_ui.BottomBarTextField
 import com.example.deathnote.presentation.ui.cross_screen_ui.BottomBarWithTextFields
 import com.example.deathnote.presentation.ui.cross_screen_ui.DarkTopBar
 import com.example.deathnote.presentation.ui.screen.main_screen.components.certificates_screen_ui.CertificatePane
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
+import com.example.deathnote.presentation.viewmodel.CertificateViewModel
+import com.example.deathnote.presentation.viewmodel.StudentViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import java.time.LocalDate
@@ -41,6 +45,8 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun CertificatesScreen(
     navigator: DestinationsNavigator,
+    certificateViewModel: CertificateViewModel,
+    studentViewModel: StudentViewModel,
     paddingValues: PaddingValues = PaddingValues(
         start = 25.dp,
         end = 25.dp
@@ -51,155 +57,132 @@ fun CertificatesScreen(
         navigator.popBackStack()
     }
 
-    var studentName by remember {
-        mutableStateOf("")
-    }
-
-    var start by remember {
-        mutableStateOf(
-            LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
-        )
-    }
-
-    var end by remember {
-        mutableStateOf(
-            LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
-        )
-    }
-
-    if (
-        LocalDate.parse(start, DateTimeFormatter.ofPattern("dd.MM.yyyy")) >
-            LocalDate.parse(end, DateTimeFormatter.ofPattern("dd.MM.yyyy"))
-    ) {
-        end = start
-    }
-
-    var isBottomSheetShown by rememberSaveable {
-        mutableStateOf(false)
-    }
-
     val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
 
-    val certificates = listOf(
-        Certificate(1, "12.03.2024", "14.04.2024"),
-        Certificate(2, "12.03.2024", "14.04.2024"),
-        Certificate(3, "12.02.2024", "14.04.2024"),
-        Certificate(4, "12.01.2024", "14.04.2024")
-    ).groupBy {
-        LocalDate.parse(it.start, formatter).month + LocalDate.parse(
-            it.start,
-            formatter
-        ).year.toLong()
-    }
-
-    Column(
-        modifier = Modifier
-            .background(color = DeathNoteTheme.colors.baseBackground)
-            .fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(40.dp)
-    ) {
-
-        DarkTopBar(
-            destination = AppDestination.MainScreenMenusDestinations.CERTIFICATES,
-            onIconClick = {
-                isBottomSheetShown = true
-            }
-        )
-
-        LazyColumn(
-            contentPadding = paddingValues,
-            verticalArrangement = Arrangement.spacedBy(10.dp)
-        ) {
-            certificates.forEach { (_, items) ->
-                item {
-                    Text(
-                        text =  LocalDate.parse(items[0].start, formatter).month.toString()
-                                + " " + LocalDate.parse(items[0].start, formatter).year.toString(),
-                        style = DeathNoteTheme.typography.settingsScreenItemSubtitle,
-                        color = DeathNoteTheme.colors.inverse
-                    )
-                }
-
-                items(items) {
-                    CertificatePane(
-                        certificate = it,
-                        onClick = { }
-                    )
-                }
-
-                item {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(5.dp),
-                        contentAlignment = Alignment.Center,
-                        content = {
-                            Box(
-                                modifier = Modifier
-                                    .height(3.dp)
-                                    .fillMaxWidth(0.5f)
-                                    .background(
-                                        color = DeathNoteTheme.colors.regularBackground
-                                    )
-                            )
-                        }
-                    )
-                }
-            }
+    val allCertificates =
+        certificateViewModel.allCertificates.collectAsStateWithLifecycle().value.groupBy {
+            LocalDate.parse(it.start, formatter).month + LocalDate.parse(
+                it.start,
+                formatter
+            ).year.toLong()
         }
 
-        if (isBottomSheetShown) {
-            BottomBarWithTextFields(
-                title = R.string.add_certificate,
-                onAcceptRequest = { },
-                onDismissRequest = { isBottomSheetShown = !isBottomSheetShown },
-                content = {
-                    Column(
-                        verticalArrangement = Arrangement.spacedBy(15.dp)
-                    ) {
-                        BottomBarTextField(
-                            title = R.string.student,
-                            onValueChange = { studentName = it },
-                            value = studentName,
-                            isCentered = false,
-                            innerTitle = R.string.enter_student
-                        )
+    val certificatesUIState by certificateViewModel.certificateUIState.collectAsStateWithLifecycle()
 
-                        LazyVerticalGrid(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .wrapContentHeight(),
-                            columns = GridCells.Fixed(2),
-                            horizontalArrangement = Arrangement.spacedBy(15.dp)
-                        ) {
-                            item {
-                                BottomBarTextField(
-                                    title = R.string.start_date,
-                                    onValueChange = { start = it },
-                                    value = start,
-                                    previousDate = start,
-                                    isDatePicker = true,
-                                    isStartDate = true,
-                                    innerTitle = R.string.enter_start_date
-                                )
-                            }
+    certificatesUIState.apply {
+        Column(
+            modifier = Modifier
+                .background(color = DeathNoteTheme.colors.baseBackground)
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(40.dp)
+        ) {
 
-                            item {
-                                BottomBarTextField(
-                                    title = R.string.end_date,
-                                    onValueChange = { end = it },
-                                    previousDate = start,
-                                    value = end,
-                                    isDatePicker = true,
-                                    innerTitle = R.string.enter_end_date
-                                )
-                            }
-
-                        }
-                    }
-
+            DarkTopBar(
+                destination = AppDestination.MainScreenMenusDestinations.CERTIFICATES,
+                onIconClick = {
+                    certificateViewModel.onEvent(CertificateUIEvent.ChangeDialogState(true))
                 }
             )
+
+            LazyColumn(
+                contentPadding = paddingValues,
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                allCertificates.forEach { (_, items) ->
+                    item {
+                        Text(
+                            text = LocalDate.parse(items[0].start, formatter).month.toString()
+                                    + " " + LocalDate.parse(
+                                items[0].start,
+                                formatter
+                            ).year.toString(),
+                            style = DeathNoteTheme.typography.settingsScreenItemSubtitle,
+                            color = DeathNoteTheme.colors.inverse
+                        )
+                    }
+
+                    items(items) {
+                        CertificatePane(
+                            certificate = it,
+                            student = studentViewModel.,
+                            onEvent = certificateViewModel::onEvent
+                        )
+                    }
+
+                    item {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(5.dp),
+                            contentAlignment = Alignment.Center,
+                            content = {
+                                Box(
+                                    modifier = Modifier
+                                        .height(3.dp)
+                                        .fillMaxWidth(0.5f)
+                                        .background(
+                                            color = DeathNoteTheme.colors.regularBackground
+                                        )
+                                )
+                            }
+                        )
+                    }
+                }
+            }
+
+            if (isBottomSheetShown) {
+                BottomBarWithTextFields(
+                    title = R.string.add_certificate,
+                    onAcceptRequest = { },
+                    onDismissRequest = { isBottomSheetShown = !isBottomSheetShown },
+                    content = {
+                        Column(
+                            verticalArrangement = Arrangement.spacedBy(15.dp)
+                        ) {
+                            BottomBarTextField(
+                                title = R.string.student,
+                                onValueChange = { studentName = it },
+                                value = studentName,
+                                isCentered = false,
+                                innerTitle = R.string.enter_student
+                            )
+
+                            LazyVerticalGrid(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .wrapContentHeight(),
+                                columns = GridCells.Fixed(2),
+                                horizontalArrangement = Arrangement.spacedBy(15.dp)
+                            ) {
+                                item {
+                                    BottomBarTextField(
+                                        title = R.string.start_date,
+                                        onValueChange = { start = it },
+                                        value = start,
+                                        previousDate = start,
+                                        isDatePicker = true,
+                                        isStartDate = true,
+                                        innerTitle = R.string.enter_start_date
+                                    )
+                                }
+
+                                item {
+                                    BottomBarTextField(
+                                        title = R.string.end_date,
+                                        onValueChange = { end = it },
+                                        previousDate = start,
+                                        value = end,
+                                        isDatePicker = true,
+                                        innerTitle = R.string.enter_end_date
+                                    )
+                                }
+
+                            }
+                        }
+
+                    }
+                )
+            }
         }
     }
 }

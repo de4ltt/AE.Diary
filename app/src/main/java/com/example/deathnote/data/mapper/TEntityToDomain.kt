@@ -2,10 +2,12 @@
 
 package com.example.deathnote.data.mapper
 
+import com.example.deathnote.data.model.Certificates
 import com.example.deathnote.data.model.DataEntity
 import com.example.deathnote.data.model.Students
 import com.example.deathnote.data.model.Subjects
 import com.example.deathnote.data.model.Timetables
+import com.example.deathnote.domain.model.CertificateDomain
 import com.example.deathnote.domain.model.DomainModel
 import com.example.deathnote.domain.model.StudentDomain
 import com.example.deathnote.domain.model.SubjectDomain
@@ -32,6 +34,13 @@ fun <T: DataEntity, V: DomainModel> T.toDomain(): V = when (this) {
         subjectId = subjectId,
         startTime = startTime,
         endTime = endTime
+    )
+
+    is Certificates -> CertificateDomain(
+        id = id,
+        studentId = studentId,
+        start = start,
+        end = end
     )
 
     else -> throw IllegalArgumentException(
