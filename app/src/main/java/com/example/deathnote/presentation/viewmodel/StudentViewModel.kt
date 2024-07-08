@@ -114,8 +114,9 @@ class StudentViewModel @Inject constructor(
             studentUseCases.DeleteStudentUseCase(student.toDomain())
         }
 
-    fun getStudentById(id: Int) =
-        _allStudents.value.filter { it.id == id }[0]
+    fun getStudentById(id: Int?) =
+        if (id == null) null else
+            _allStudents.value.filter { it.id == id }[0]
 
     init {
         viewModelScope.launch(Dispatchers.IO) {

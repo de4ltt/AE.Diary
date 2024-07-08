@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.deathnote.R
 import com.example.deathnote.presentation.model.Certificate
+import com.example.deathnote.presentation.model.Student
 import com.example.deathnote.presentation.model.event.CertificateUIEvent
 import com.example.deathnote.presentation.navigation.AppDestination
 import com.example.deathnote.presentation.ui.cross_screen_ui.BottomBarTextField
@@ -104,7 +105,7 @@ fun CertificatesScreen(
                     items(items) {
                         CertificatePane(
                             certificate = it,
-                            student = studentViewModel.,
+                            student = studentViewModel.getStudentById(it.studentId) ?: Student(),
                             onEvent = certificateViewModel::onEvent
                         )
                     }
