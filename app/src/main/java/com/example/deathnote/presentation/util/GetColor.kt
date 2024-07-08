@@ -1,9 +1,9 @@
-package com.example.deathnote.presentation.model.util
+package com.example.deathnote.presentation.util
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import com.example.deathnote.R
-import com.example.deathnote.presentation.model.ColorPresentation
+import com.example.deathnote.presentation.model.util.ColorPresentation
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 
 @Composable

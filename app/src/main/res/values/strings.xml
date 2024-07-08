@@ -86,4 +86,9 @@
     <string name="even_week">Even week</string>
     <string name="choose_subject">Choose the subject</string>
     <string name="subject">Subject</string>
+    <string name="day_of_week">Day of week</string>
+    <string name="select_time">Select time</string>
+    <string name="cancel">Cancel</string>
+    <string name="start_time">Start time</string>
+    <string name="end_time">End time</string>
 </resources>

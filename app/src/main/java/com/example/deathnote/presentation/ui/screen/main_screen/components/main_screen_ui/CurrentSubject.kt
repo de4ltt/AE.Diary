@@ -11,7 +11,6 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.sp
 import com.example.deathnote.R
 import com.example.deathnote.presentation.model.Subject
-import com.example.deathnote.presentation.model.SubjectType
 import com.example.deathnote.presentation.ui.theme.DarkRedBackground
 import com.example.deathnote.presentation.ui.theme.DarkYellow
 import com.example.deathnote.presentation.ui.theme.LightGray

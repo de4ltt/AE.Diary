@@ -1,4 +1,4 @@
-package com.example.deathnote.presentation.model.util
+package com.example.deathnote.presentation.util
 
 import com.example.deathnote.presentation.model.Certificate
 import java.time.LocalDate

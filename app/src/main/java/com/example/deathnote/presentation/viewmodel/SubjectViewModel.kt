@@ -2,6 +2,7 @@ package com.example.deathnote.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.deathnote.domain.model.SubjectDomain
 import com.example.deathnote.domain.use_case.subject.util.SubjectUseCases
 import com.example.deathnote.presentation.mapper.toDomain
 import com.example.deathnote.presentation.mapper.toPresentation
@@ -10,11 +11,9 @@ import com.example.deathnote.presentation.model.event.SubjectUIEvent
 import com.example.deathnote.presentation.model.state.SubjectDialogState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -100,7 +99,7 @@ class SubjectViewModel @Inject constructor(
     init {
         viewModelScope.launch(Dispatchers.IO) {
             subjectUseCases.GetAllSubjectsUseCase().collect {
-                _allSubjects.value = it.toPresentation()
+                _allSubjects.value = it.toPresentation(SubjectDomain::toPresentation)
             }
         }
     }

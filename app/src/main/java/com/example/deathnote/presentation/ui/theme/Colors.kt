@@ -26,3 +26,5 @@ val White = Color(255, 255, 255, 255)
 val SoftGray = Color(199, 199, 199, 255)
 val DarkSoftGray = Color(63, 63, 63, 255)
 val DarkestSoftGray = Color(37, 37, 37, 255)
+
+val Transparent = Color(0,0,0,0)

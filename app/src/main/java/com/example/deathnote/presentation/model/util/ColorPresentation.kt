@@ -1,4 +1,4 @@
-package com.example.deathnote.presentation.model
+package com.example.deathnote.presentation.model.util
 
 sealed class ColorPresentation {
     enum class ColorMode(

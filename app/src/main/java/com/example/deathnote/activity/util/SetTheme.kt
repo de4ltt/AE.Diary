@@ -2,7 +2,7 @@ package com.example.deathnote.activity.util
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.example.deathnote.presentation.model.ColorPresentation
+import com.example.deathnote.presentation.model.util.ColorPresentation
 
 fun saveSchemePreference(context: Context, colorMode: ColorPresentation.ColorMode) {
     val sharedPreferences: SharedPreferences = context.getSharedPreferences("Theme", Context.MODE_PRIVATE)

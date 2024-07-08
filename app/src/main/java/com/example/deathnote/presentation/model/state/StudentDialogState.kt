@@ -1,7 +1,6 @@
 package com.example.deathnote.presentation.model.state
 
 import androidx.annotation.StringRes
-import androidx.compose.runtime.Composable
 import com.example.deathnote.R
 import com.example.deathnote.presentation.model.Student
 

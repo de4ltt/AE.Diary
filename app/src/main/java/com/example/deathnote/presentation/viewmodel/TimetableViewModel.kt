@@ -1,8 +1,8 @@
 package com.example.deathnote.presentation.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.deathnote.domain.model.TimetableDomain
 import com.example.deathnote.domain.use_case.timetable.util.TimetableUseCases
 import com.example.deathnote.presentation.mapper.toDomain
 import com.example.deathnote.presentation.mapper.toPresentation
@@ -15,6 +15,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 @HiltViewModel
@@ -51,15 +53,37 @@ class TimetableViewModel @Inject constructor(
             }
 
             is TimetableUIEvent.ChangeDialogEndTime -> viewModelScope.launch(Dispatchers.IO) {
-                _timetableDialogState.value = _timetableDialogState.value.copy(
-                    endTime = event.endTime
+                if (LocalTime.parse(
+                        _timetableDialogState.value.startTime,
+                        DateTimeFormatter.ofPattern("HH:mm")
+                    ) <=
+                    LocalTime.parse(
+                        event.endTime,
+                        DateTimeFormatter.ofPattern("HH:mm")
+                    )
                 )
+                    _timetableDialogState.value = _timetableDialogState.value.copy(
+                        endTime = event.endTime
+                    )
             }
 
             is TimetableUIEvent.ChangeDialogStartTime -> viewModelScope.launch(Dispatchers.IO) {
                 _timetableDialogState.value = _timetableDialogState.value.copy(
                     startTime = event.startTime
                 )
+
+                if (LocalTime.parse(
+                        event.startTime,
+                        DateTimeFormatter.ofPattern("HH:mm")
+                    ) >
+                    LocalTime.parse(
+                        _timetableDialogState.value.endTime,
+                        DateTimeFormatter.ofPattern("HH:mm")
+                    )
+                )
+                    _timetableDialogState.value = _timetableDialogState.value.copy(
+                        endTime = event.startTime
+                    )
             }
 
             is TimetableUIEvent.ChangeDialogSubject -> viewModelScope.launch(Dispatchers.IO) {
@@ -79,6 +103,27 @@ class TimetableViewModel @Inject constructor(
                     isSubjectPickerShown = event.isShown
                 )
             }
+
+            is TimetableUIEvent.ChangeSelectedWeekType ->
+                viewModelScope.launch(Dispatchers.IO) {
+                    _timetableDialogState.value = _timetableDialogState.value.copy(
+                        selectedWeekType = if (_timetableDialogState.value.selectedWeekType == "O") "E" else "O"
+                    )
+                }
+
+            is TimetableUIEvent.ChangeTimePickerState ->
+                viewModelScope.launch(Dispatchers.IO) {
+                    _timetableDialogState.value = _timetableDialogState.value.copy(
+                        isTimePickerShown = event.state
+                    )
+                }
+
+            is TimetableUIEvent.ChangePick ->
+                viewModelScope.launch(Dispatchers.IO) {
+                    _timetableDialogState.value = _timetableDialogState.value.copy(
+                        pick = event.pick
+                    )
+                }
         }
     }
 
@@ -93,7 +138,7 @@ class TimetableViewModel @Inject constructor(
     init {
         viewModelScope.launch(Dispatchers.IO) {
             timetableUseCases.GetAllTimetablesUseCase().collect {
-                _allTimetables.value = it.toPresentation()
+                _allTimetables.value = it.toPresentation(TimetableDomain::toPresentation)
             }
         }
     }

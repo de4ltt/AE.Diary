@@ -2,6 +2,7 @@ package com.example.deathnote.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.deathnote.domain.model.StudentDomain
 import com.example.deathnote.domain.use_case.student.util.StudentUseCases
 import com.example.deathnote.presentation.mapper.toDomain
 import com.example.deathnote.presentation.mapper.toPresentation
@@ -124,7 +125,7 @@ class StudentViewModel @Inject constructor(
     init {
         viewModelScope.launch(Dispatchers.IO) {
             studentUseCases.GetAllStudentsUseCase().collect {
-                _allStudents.value = it.toPresentation()
+                _allStudents.value = it.toPresentation(StudentDomain::toPresentation)
             }
         }
     }

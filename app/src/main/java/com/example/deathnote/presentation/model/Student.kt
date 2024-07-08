@@ -5,5 +5,5 @@ data class Student(
     val name: String = "",
     val surname: String = "",
     val patronymic: String = ""
-)
+): PresentationModel
 

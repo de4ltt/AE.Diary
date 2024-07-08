@@ -2,6 +2,8 @@ package com.example.deathnote.data.repository
 
 import com.example.deathnote.data.mapper.toDomain
 import com.example.deathnote.data.mapper.toEntity
+import com.example.deathnote.data.model.Students
+import com.example.deathnote.data.model.Subjects
 import com.example.deathnote.data.repository.database.dao.StudentsDAO
 import com.example.deathnote.domain.model.StudentDomain
 import com.example.deathnote.domain.repository.StudentRepository
@@ -12,7 +14,7 @@ class StudentRepositoryImpl @Inject constructor(
     private val studentDAO: StudentsDAO
 ): StudentRepository {
     override suspend fun getAllStudents(): Flow<List<StudentDomain>> =
-        studentDAO.getAllStudents().toDomain()
+        studentDAO.getAllStudents().toDomain(Students::toDomain)
 
     override suspend fun getStudentById(id: Int): StudentDomain =
         studentDAO.getStudentById(id).toDomain()

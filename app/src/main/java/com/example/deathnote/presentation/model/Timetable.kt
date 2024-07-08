@@ -6,4 +6,4 @@ data class Timetable(
     val subjectId: Int? = null,
     val startTime: String? = null,
     val endTime: String? = null
-)
+): PresentationModel

@@ -1,4 +1,4 @@
-package com.example.deathnote.presentation.model
+package com.example.deathnote.presentation.model.util
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes

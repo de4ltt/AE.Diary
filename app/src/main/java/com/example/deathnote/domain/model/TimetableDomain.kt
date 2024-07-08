@@ -6,4 +6,4 @@ data class TimetableDomain(
     val subjectId: Int? = null,
     val startTime: String? = null,
     val endTime: String? = null
-)
+): DomainModel

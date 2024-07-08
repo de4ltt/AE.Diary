@@ -10,9 +10,13 @@ sealed class TimetableUIEvent() {
     data class DeleteTimetable(val timetable: Timetable) : TimetableUIEvent()
 
     data class ChangeDialogSubject(val subject: Subject) : TimetableUIEvent()
-    data class ChangeDialogDayOfWeek(val dayOfWeek: String) : TimetableUIEvent()
+    data class ChangeDialogDayOfWeek(val dayOfWeek: Int) : TimetableUIEvent()
+    data object ChangeSelectedWeekType : TimetableUIEvent()
     data class ChangeDialogStartTime(val startTime: String) : TimetableUIEvent()
     data class ChangeDialogEndTime(val endTime: String) : TimetableUIEvent()
     data class ChangeDialogState(val isShown: Boolean) : TimetableUIEvent()
     data class ChangeDialogSubjectPickerState(val isShown: Boolean) : TimetableUIEvent()
+
+    data class ChangeTimePickerState(val state: Boolean): TimetableUIEvent()
+    data class ChangePick(val pick: String): TimetableUIEvent()
 }

@@ -1,6 +1,6 @@
 package com.example.deathnote.presentation.ui.theme.util
 
-import com.example.deathnote.presentation.model.ColorPresentation
+import com.example.deathnote.presentation.model.util.ColorPresentation
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteColors
 import com.example.deathnote.presentation.ui.theme.settings.color_schemes.DefaultColorScheme
 

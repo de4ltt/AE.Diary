@@ -2,7 +2,7 @@ package com.example.deathnote.presentation.ui.theme.util
 
 import android.content.Context
 import com.example.deathnote.activity.MainActivity
-import com.example.deathnote.presentation.model.ColorPresentation
+import com.example.deathnote.presentation.model.util.ColorPresentation
 import com.example.deathnote.presentation.ui.theme.settings.color_schemes.DefaultColorScheme
 import com.example.deathnote.presentation.ui.theme.settings.scheme
 

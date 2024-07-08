@@ -18,8 +18,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.deathnote.R
-import com.example.deathnote.presentation.model.ColorPresentation
-import com.example.deathnote.presentation.model.util.get
+import com.example.deathnote.presentation.model.util.ColorPresentation
+import com.example.deathnote.presentation.util.get
 import com.example.deathnote.presentation.navigation.AppDestination
 import com.example.deathnote.presentation.ui.cross_screen_ui.SettingsTopBar
 import com.example.deathnote.presentation.ui.screen.settings.components.style_screen_ui.ColorStylePane

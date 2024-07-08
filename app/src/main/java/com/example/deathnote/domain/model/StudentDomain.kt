@@ -5,4 +5,4 @@ data class StudentDomain(
     val name: String = "",
     val surname: String = "",
     val patronymic: String = ""
-)
+): DomainModel

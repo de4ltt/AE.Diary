@@ -9,4 +9,4 @@ data class Subjects(
     val id: Int? = null,
     val name: String = "",
     val type : String = "lk"
-)
+) : DataEntity

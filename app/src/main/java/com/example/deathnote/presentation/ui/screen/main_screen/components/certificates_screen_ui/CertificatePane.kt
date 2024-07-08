@@ -19,7 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
 import com.example.deathnote.presentation.model.Certificate
-import com.example.deathnote.presentation.model.util.getNumberOfDays
+import com.example.deathnote.presentation.util.getNumberOfDays
 import com.example.deathnote.presentation.ui.theme.SexyGray
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 

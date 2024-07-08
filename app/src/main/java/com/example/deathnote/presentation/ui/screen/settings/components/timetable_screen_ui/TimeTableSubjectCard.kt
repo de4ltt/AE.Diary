@@ -30,9 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.deathnote.R
 import com.example.deathnote.presentation.model.Subject
-import com.example.deathnote.presentation.model.SubjectScheduled
-import com.example.deathnote.presentation.model.SubjectType
-import com.example.deathnote.presentation.model.util.getTime
+import com.example.deathnote.presentation.ui.cross_screen_ui.SwipeToDeleteContainer
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 import com.example.deathnote.presentation.ui.theme.util.adjust
 import com.example.deathnote.presentation.ui.theme.util.isDarkMode
@@ -40,6 +38,7 @@ import com.example.deathnote.presentation.ui.theme.util.isDarkMode
 @Composable
 fun TimeTableSubjectCard(
     onClick: () -> Unit = {},
+    onDelete: () -> Unit = {},
     classTime: Pair<String?, String?>,
     subjectScheduled: Subject?
 ) {
@@ -71,56 +70,64 @@ fun TimeTableSubjectCard(
     ) {
         if (subjectScheduled != null) {
             subjectScheduled.apply {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            top = 8.dp,
-                            start = 15.dp,
-                            end = 15.dp,
-                            bottom = 10.dp
-                        )
+                SwipeToDeleteContainer(
+                    item = subjectScheduled,
+                    onDelete = onDelete
                 ) {
-                    Text(
-                        text = buildAnnotatedString {
-                            withStyle(
-                                style = SpanStyle(
-                                    color = if (type == "lk")
-                                        DeathNoteTheme.colors.secondary.adjust(
-                                            if (isDarkMode()) 1.8f else 1f
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(
+                                color = DeathNoteTheme.colors.regularBackground
+                            )
+                            .padding(
+                                top = 8.dp,
+                                start = 15.dp,
+                                end = 15.dp,
+                                bottom = 10.dp
+                            )
+                    ) {
+                        Text(
+                            text = buildAnnotatedString {
+                                withStyle(
+                                    style = SpanStyle(
+                                        color = if (type == "lk")
+                                            DeathNoteTheme.colors.secondary.adjust(
+                                                if (isDarkMode()) 1.8f else 1f
+                                            )
+                                        else DeathNoteTheme.colors.primaryDefault.adjust(
+                                            if (isDarkMode()) 1.4f else 1f
                                         )
-                                    else DeathNoteTheme.colors.primaryDefault.adjust(
-                                        if (isDarkMode()) 1.4f else 1f
                                     )
-                                )
-                            ) {
-                                append(
-                                    if (type == "lk")
-                                        stringResource(id = R.string.lecture)
-                                    else stringResource(id = R.string.practice)
-                                )
-                            }
+                                ) {
+                                    append(
+                                        if (type == "lk")
+                                            stringResource(id = R.string.lecture)
+                                        else stringResource(id = R.string.practice)
+                                    )
+                                }
 
-                            withStyle(
-                                style = SpanStyle(
-                                    color = DeathNoteTheme.colors.inverse
-                                )
-                            ) {
-                                append(
-                                    " // " + classTime.first + " - " + classTime.second
-                                )
-                            }
-                        },
-                        fontSize = DeathNoteTheme.typography.settingsScreenItemSubtitle.fontSize,
-                        lineHeight = 13.sp
-                    )
+                                withStyle(
+                                    style = SpanStyle(
+                                        color = DeathNoteTheme.colors.inverse
+                                    )
+                                ) {
+                                    append(
+                                        " // " + classTime.first + " - " + classTime.second
+                                    )
+                                }
+                            },
+                            fontSize = DeathNoteTheme.typography.settingsScreenItemSubtitle.fontSize,
+                            lineHeight = 13.sp
+                        )
 
-                    Text(
-                        modifier = Modifier.padding(top = 7.dp, bottom = 3.dp),
-                        text = subjectScheduled.name,
-                        style = DeathNoteTheme.typography.subjectCardTimetableTitle,
-                        color = DeathNoteTheme.colors.inverse
-                    )
+                        Text(
+                            modifier = Modifier.padding(top = 7.dp, bottom = 3.dp),
+                            text = subjectScheduled.name,
+                            style = DeathNoteTheme.typography.subjectCardTimetableTitle,
+                            color = DeathNoteTheme.colors.inverse
+                        )
+                    }
                 }
             }
         } else {

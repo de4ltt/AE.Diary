@@ -2,9 +2,6 @@ package com.example.deathnote.presentation.ui.screen.settings.components.timetab
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.FastOutLinearInEasing
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,7 +10,6 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.example.deathnote.presentation.model.Subject
 import com.example.deathnote.presentation.model.Timetable
 import com.example.deathnote.presentation.model.event.TimetableUIEvent
-import com.example.deathnote.presentation.model.util.toFormatDayOfWeek
+import com.example.deathnote.presentation.util.toFormatDayOfWeek
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 
 @Composable
@@ -63,9 +59,9 @@ fun TimetableCard(
                 itemsIndexed(it) { id, item ->
                     TimeTableSubjectCard(
                         classTime = Pair(item.startTime, item.endTime),
+                        onDelete = { onEvent(TimetableUIEvent.DeleteTimetable(item)) },
                         subjectScheduled = getSubjectById(item.subjectId)
                     )
-
                 }
 
                 if (it.size < 5)
@@ -73,7 +69,10 @@ fun TimetableCard(
                         TimeTableSubjectCard(
                             classTime = Pair(null, null),
                             subjectScheduled = getSubjectById(null),
-                            onClick = { onEvent(TimetableUIEvent.ChangeDialogState(true)) }
+                            onClick = {
+                                onEvent(TimetableUIEvent.ChangeDialogSubject(Subject()))
+                                onEvent(TimetableUIEvent.ChangeDialogState(true))
+                            }
                         )
                     }
             }

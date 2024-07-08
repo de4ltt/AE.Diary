@@ -11,4 +11,4 @@ data class Timetables(
     val subjectId: Int? = null,
     val startTime: String? = null,
     val endTime: String? = null
-)
+) : DataEntity

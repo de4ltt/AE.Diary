@@ -30,7 +30,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.example.deathnote.presentation.model.Language
+import com.example.deathnote.presentation.model.util.Language
 import com.example.deathnote.presentation.ui.theme.Black
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 

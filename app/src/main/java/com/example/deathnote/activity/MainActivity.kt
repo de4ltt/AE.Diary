@@ -15,7 +15,7 @@ import com.example.deathnote.activity.util.loadSchemePreference
 import com.example.deathnote.activity.util.saveSchemePreference
 import com.example.deathnote.activity.util.setDisplayCutoutMode
 import com.example.deathnote.activity.util.setLocale
-import com.example.deathnote.presentation.model.ColorPresentation
+import com.example.deathnote.presentation.model.util.ColorPresentation
 import com.example.deathnote.presentation.navigation.NavigationUI
 import com.example.deathnote.presentation.ui.theme.DeathNoteTheme
 import com.example.deathnote.presentation.ui.theme.util.setColorScheme
