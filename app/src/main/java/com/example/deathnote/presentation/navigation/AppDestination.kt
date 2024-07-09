@@ -4,6 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.example.deathnote.R
 import com.example.deathnote.presentation.ui.screen.destinations.CertificatesScreenDestination
+import com.example.deathnote.presentation.ui.screen.destinations.DiaryScreenDestination
 import com.example.deathnote.presentation.ui.screen.destinations.LanguageScreenDestination
 import com.example.deathnote.presentation.ui.screen.destinations.SettingsScreenDestination
 import com.example.deathnote.presentation.ui.screen.destinations.StudentsScreenDestination
@@ -35,7 +36,8 @@ sealed interface AppDestination {
         @DrawableRes val icon: Int
     ): AppDestination {
 
-        CERTIFICATES(CertificatesScreenDestination, R.string.certificates, R.drawable.plus)
+        CERTIFICATES(CertificatesScreenDestination, R.string.certificates, R.drawable.plus),
+        DIARY(DiaryScreenDestination, R.string.diary, R.drawable.clock)
 
     }
 }

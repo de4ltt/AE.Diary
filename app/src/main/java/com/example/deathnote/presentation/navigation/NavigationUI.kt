@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import com.example.deathnote.presentation.ui.screen.NavGraphs
 import com.example.deathnote.presentation.ui.screen.destinations.CertificatesScreenDestination
+import com.example.deathnote.presentation.ui.screen.destinations.DiaryScreenDestination
 import com.example.deathnote.presentation.ui.screen.destinations.LanguageScreenDestination
 import com.example.deathnote.presentation.ui.screen.destinations.MainScreenDestination
 import com.example.deathnote.presentation.ui.screen.destinations.SettingsScreenDestination
@@ -11,6 +12,7 @@ import com.example.deathnote.presentation.ui.screen.destinations.StudentsScreenD
 import com.example.deathnote.presentation.ui.screen.destinations.SubjectsScreenDestination
 import com.example.deathnote.presentation.ui.screen.destinations.TimetableScreenDestination
 import com.example.deathnote.presentation.ui.screen.main_screen.CertificatesScreen
+import com.example.deathnote.presentation.ui.screen.main_screen.DiaryScreen
 import com.example.deathnote.presentation.ui.screen.main_screen.MainScreen
 import com.example.deathnote.presentation.ui.screen.main_screen.SettingsScreen
 import com.example.deathnote.presentation.ui.screen.settings.LanguageScreen
@@ -72,6 +74,11 @@ fun NavigationUI(
             CertificatesScreen(
                 studentViewModel = studentViewModel,
                 certificateViewModel = certificateViewModel,
+                navigator = destinationsNavigator
+            )
+        }
+        composable(DiaryScreenDestination) {
+            DiaryScreen(
                 navigator = destinationsNavigator
             )
         }

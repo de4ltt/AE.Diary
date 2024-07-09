@@ -17,6 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.example.deathnote.R
 import com.example.deathnote.presentation.ui.screen.destinations.CertificatesScreenDestination
+import com.example.deathnote.presentation.ui.screen.destinations.DiaryScreenDestination
 import com.example.deathnote.presentation.ui.screen.destinations.SettingsScreenDestination
 import com.example.deathnote.presentation.ui.screen.main_screen.components.main_screen_ui.CurrentDate
 import com.example.deathnote.presentation.ui.screen.main_screen.components.main_screen_ui.CurrentSubject
@@ -86,7 +87,10 @@ fun MainScreen(
                     MainScreenPane(
                         topStartIcon = R.drawable.diary_tl,
                         middleEndIcon = R.drawable.diary_me,
-                        title = R.string.diary_bar
+                        title = R.string.diary_bar,
+                        onClick = {
+                            navigator.navigate(DiaryScreenDestination)
+                        }
                     )
                 }
 
