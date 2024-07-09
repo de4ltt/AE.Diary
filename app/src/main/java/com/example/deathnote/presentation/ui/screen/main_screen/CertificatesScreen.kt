@@ -1,6 +1,10 @@
 package com.example.deathnote.presentation.ui.screen.main_screen
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -16,6 +20,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,6 +45,7 @@ import com.example.deathnote.presentation.viewmodel.CertificateViewModel
 import com.example.deathnote.presentation.viewmodel.StudentViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import kotlinx.coroutines.CoroutineScope
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -61,13 +67,7 @@ fun CertificatesScreen(
 
     val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
 
-    val allCertificates =
-        certificateViewModel.allCertificates.collectAsStateWithLifecycle().value.groupBy {
-            LocalDate.parse(it.start, formatter).month + LocalDate.parse(
-                it.start,
-                formatter
-            ).year.toLong()
-        }
+    val orderedCertificates by certificateViewModel.orderedCertificates.collectAsStateWithLifecycle()
 
     val allStudents by studentViewModel.allStudents.collectAsStateWithLifecycle()
 
@@ -89,14 +89,14 @@ fun CertificatesScreen(
                 }
             )
 
-            if (allCertificates.isEmpty())
+            if (orderedCertificates.isEmpty())
                 NothingHere()
             else
                 LazyColumn(
                     contentPadding = paddingValues,
                     verticalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
-                    allCertificates.forEach { (_, items) ->
+                    orderedCertificates.forEach { (_, items) ->
                         item {
                             Text(
                                 text = stringResource(
@@ -114,32 +114,42 @@ fun CertificatesScreen(
                             )
                         }
 
-                        items(items) {
+                        items(
+                            items = items,
+                            key = { it.id!! }
+                        ) {
                             CertificatePane(
                                 certificate = it,
-                                student = studentViewModel.getStudentById(it.studentId)
-                                    ?: Student(),
+                                student = studentViewModel.getStudentById(it.studentId),
                                 onEvent = certificateViewModel::onEvent
                             )
                         }
 
                         item {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(5.dp),
-                                contentAlignment = Alignment.Center,
-                                content = {
-                                    Box(
-                                        modifier = Modifier
-                                            .height(3.dp)
-                                            .fillMaxWidth(0.5f)
-                                            .background(
-                                                color = DeathNoteTheme.colors.regularBackground
-                                            )
-                                    )
-                                }
-                            )
+                            AnimatedVisibility(
+                                visible = items.isNotEmpty(),
+                                exit = shrinkVertically(
+                                    animationSpec = tween(durationMillis = 500),
+                                    shrinkTowards = Alignment.Top
+                                ) + fadeOut()
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(5.dp),
+                                    contentAlignment = Alignment.Center,
+                                    content = {
+                                        Box(
+                                            modifier = Modifier
+                                                .height(3.dp)
+                                                .fillMaxWidth(0.5f)
+                                                .background(
+                                                    color = DeathNoteTheme.colors.regularBackground
+                                                )
+                                        )
+                                    }
+                                )
+                            }
                         }
                     }
                 }
@@ -147,6 +157,7 @@ fun CertificatesScreen(
             if (isBottomSheetShown) {
                 BottomBarWithTextFields(
                     title = R.string.add_certificate,
+                    isActive = student.name != "",
                     onAcceptRequest = {
                         certificateViewModel.onEvent(
                             CertificateUIEvent.AddCertificate(

@@ -16,7 +16,7 @@ class SubjectRepositoryImpl @Inject constructor(
     override suspend fun getAllSubjects(): Flow<List<SubjectDomain>> =
         subjectDao.getAllSubjects().toDomain(Subjects::toDomain)
 
-    override suspend fun getSubjectById(id: Int): SubjectDomain =
+    override suspend fun getSubjectById(id: Int): Flow<SubjectDomain> =
         subjectDao.getSubjectById(id).toDomain()
 
     override suspend fun upsertSubject(subject: SubjectDomain) =

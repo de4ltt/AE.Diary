@@ -7,7 +7,7 @@ interface StudentRepository {
 
     suspend fun getAllStudents(): Flow<List<StudentDomain>>
 
-    suspend fun getStudentById(id: Int): StudentDomain
+    suspend fun getStudentById(id: Int): Flow<StudentDomain>
 
     suspend fun upsertStudent(student: StudentDomain)
 

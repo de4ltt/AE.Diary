@@ -7,7 +7,7 @@ interface SubjectRepository {
 
     suspend fun getAllSubjects(): Flow<List<SubjectDomain>>
 
-    suspend fun getSubjectById(id: Int): SubjectDomain
+    suspend fun getSubjectById(id: Int): Flow<SubjectDomain>
 
     suspend fun upsertSubject(subject: SubjectDomain)
 

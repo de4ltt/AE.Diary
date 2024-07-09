@@ -7,5 +7,6 @@ class GetStudentById @Inject constructor(
     private val studentRepository: StudentRepository
 ) {
 
-    suspend operator fun invoke(id: Int) = studentRepository.getStudentById(id)
+    suspend operator fun invoke(id: Int) =
+        studentRepository.getStudentById(id)
 }

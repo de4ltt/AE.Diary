@@ -14,7 +14,7 @@ interface StudentsDAO {
     fun getAllStudents(): Flow<List<Students>>
 
     @Query("SELECT * FROM students WHERE id = :id")
-    fun getStudentById(id: Int): Students
+    fun getStudentById(id: Int): Flow<Students>
 
     @Upsert
     fun upsertStudent(student: Students)

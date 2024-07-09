@@ -14,6 +14,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,7 +25,10 @@ class CertificateViewModel @Inject constructor(
 
     private val _allCertificates: MutableStateFlow<List<Certificate>> =
         MutableStateFlow(emptyList())
-    val allCertificates = _allCertificates.asStateFlow()
+
+    private val _orderedCertificates: MutableStateFlow<Map<String, List<Certificate>>> =
+        MutableStateFlow(emptyMap())
+    val orderedCertificates = _orderedCertificates.asStateFlow()
 
     private val _certificateUIState: MutableStateFlow<CertificateUIState> =
         MutableStateFlow(CertificateUIState())
@@ -36,18 +41,21 @@ class CertificateViewModel @Inject constructor(
                     isBottomSheetShown = event.state
                 )
             }
+
         is CertificateUIEvent.ChangeEndDate ->
             viewModelScope.launch(Dispatchers.IO) {
                 _certificateUIState.value = _certificateUIState.value.copy(
                     end = event.endDate
                 )
             }
+
         is CertificateUIEvent.ChangeStartDate ->
             viewModelScope.launch(Dispatchers.IO) {
                 _certificateUIState.value = _certificateUIState.value.copy(
                     start = event.startDate
                 )
             }
+
         is CertificateUIEvent.ChangeStudent ->
             viewModelScope.launch(Dispatchers.IO) {
                 _certificateUIState.value = _certificateUIState.value.copy(
@@ -77,9 +85,18 @@ class CertificateViewModel @Inject constructor(
         }
 
     init {
+        val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+
         viewModelScope.launch(Dispatchers.IO) {
             certificateUseCases.GetAllCertificatesUseCase().collect {
                 _allCertificates.value = it.toPresentation(CertificateDomain::toPresentation)
+
+                _orderedCertificates.value = _allCertificates.value.groupBy { item ->
+                    (LocalDate.parse(item.start, formatter).month + LocalDate.parse(
+                        item.start,
+                        formatter
+                    ).year.toLong()).toString()
+                }
             }
         }
     }

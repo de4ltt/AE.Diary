@@ -16,7 +16,7 @@ class StudentRepositoryImpl @Inject constructor(
     override suspend fun getAllStudents(): Flow<List<StudentDomain>> =
         studentDAO.getAllStudents().toDomain(Students::toDomain)
 
-    override suspend fun getStudentById(id: Int): StudentDomain =
+    override suspend fun getStudentById(id: Int): Flow<StudentDomain> =
         studentDAO.getStudentById(id).toDomain()
 
     override suspend fun upsertStudent(student: StudentDomain) =

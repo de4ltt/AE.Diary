@@ -52,12 +52,15 @@ fun DatePickerWithDialog(
                 return utcTimeMillis >= LocalDate.parse(
                     previousDate,
                     DateTimeFormatter.ofPattern("dd.MM.yyyy")
-                ).toEpochDay() * 86400000
+                ).toEpochDay() * 86400000 && utcTimeMillis <= LocalDate.now().toEpochDay() * 86400000
             }
         }
-    } else {
-        DatePickerDefaults.AllDates
-    })
+    } else object : SelectableDates {
+            override fun isSelectableDate(utcTimeMillis: Long): Boolean {
+                return utcTimeMillis <= LocalDate.now().toEpochDay() * 86400000
+            }
+        }
+    )
 
     val dateMillis = datePickerState.selectedDateMillis
 

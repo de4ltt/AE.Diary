@@ -15,7 +15,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,7 +33,6 @@ class StudentViewModel @Inject constructor(
     private val _studentDialogState: MutableStateFlow<StudentDialogState> =
         MutableStateFlow(StudentDialogState())
     val studentDialogState: StateFlow<StudentDialogState> = _studentDialogState.asStateFlow()
-
 
     fun onEvent(event: StudentUIEvent) {
         when (event) {
@@ -120,9 +122,9 @@ class StudentViewModel @Inject constructor(
             }
         }
 
-    fun getStudentById(id: Int?) =
-        if (id == null) null else
-            _allStudents.value.filter { it.id == id }[0]
+    fun getStudentById(id: Int?) = if (id == null) Student()
+    else _allStudents.value.filter { it.id == id }[0]
+
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
