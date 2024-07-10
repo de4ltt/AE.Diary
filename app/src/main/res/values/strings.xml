@@ -107,4 +107,6 @@
     <string name="choose_student">Choose the student</string>
     <string name="nothing_here">Nothing is here</string>
     <string name="diary">DIARY</string>
+    <string name="absent">X</string>
+    <string name="absent_respectful">X</string>
 </resources>

@@ -3,10 +3,12 @@ package com.example.deathnote.data.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(
+    primaryKeys = [
+        "day", "subjectId"
+    ]
+)
 data class SubjectsDismissed(
-    @PrimaryKey
-    val id: Int? = null,
     val day: String,
-    val subjectId: String
+    val subjectId: Int? = null
 ): DataEntity

@@ -16,6 +16,9 @@ class TimetableRepositoryImpl @Inject constructor(
     override suspend fun getAllTimetables(): Flow<List<TimetableDomain>> =
         timetableDao.getAllTimetables().toDomain(Timetables::toDomain)
 
+    override suspend fun getTimetablesByDay(day: String): Flow<List<TimetableDomain>> =
+        timetableDao.getTimetablesByDay(day).toDomain(Timetables::toDomain)
+
     override suspend fun upsertTimetable(timetable: TimetableDomain) =
         timetableDao.upsertTimetable(timetable.toEntity())
 

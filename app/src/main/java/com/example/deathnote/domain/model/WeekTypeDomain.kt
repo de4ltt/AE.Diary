@@ -6,6 +6,5 @@ import androidx.room.PrimaryKey
 data class WeekTypeDomain(
     val id: Int,
     val type: String,
-    val start: String,
-    val end: String
+    val day: String
 ): DomainModel

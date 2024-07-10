@@ -9,6 +9,6 @@ class AddHolidayUseCase @Inject constructor(
 )  {
 
     suspend operator fun invoke(holiday: HolidayDomain) =
-        holidayRepository.upsertHoliday(holiday)
+        holidayRepository.addHoliday(holiday)
 
 }

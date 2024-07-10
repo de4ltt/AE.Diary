@@ -8,4 +8,5 @@ interface WeekTypeRepository {
     suspend fun getAllWeekTypes(): Flow<List<WeekTypeDomain>>
     suspend fun upsertWeekType(weekType: WeekTypeDomain)
     suspend fun deleteAllWeekType()
+    suspend fun getWeekTypeByDay(day: String): Flow<WeekTypeDomain>
 }

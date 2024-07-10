@@ -1,7 +1,8 @@
 package com.example.deathnote.presentation.model
 
 data class Absence(
-    val id: Int? = null,
     val studentId: Int? = null,
+    val subjectId: Int? = null,
+    val respectful: Boolean? = false,
     val date: String? = null,
 ): PresentationModel

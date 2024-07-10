@@ -56,13 +56,13 @@ fun <T: DataEntity, V: DomainModel> T.toDomain(): V = when (this) {
     )
 
     is Absences -> AbsenceDomain(
-        id = id,
+        respectful = respectful,
         studentId = studentId,
+        subjectId = subjectId,
         date = date
     )
 
     is SubjectsDismissed -> SubjectDismissedDomain(
-        id = id,
         day = day,
         subjectId = subjectId
     )
@@ -70,8 +70,7 @@ fun <T: DataEntity, V: DomainModel> T.toDomain(): V = when (this) {
     is WeekTypes -> WeekTypeDomain(
         id = id,
         type = type,
-        start = start,
-        end = end
+        day = day
     )
 
     else -> throw IllegalArgumentException(

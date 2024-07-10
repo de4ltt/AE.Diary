@@ -13,8 +13,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
+import com.example.deathnote.R
+import com.example.deathnote.presentation.model.Absence
 import com.example.deathnote.presentation.model.Student
 import com.example.deathnote.presentation.model.event.DiaryUIEvent
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
@@ -23,7 +26,8 @@ import com.example.deathnote.presentation.util.getShortName
 @Composable
 fun StudentCard(
     student: Student,
-    abscence: List<Absence>
+    isAbsent: Boolean = false,
+    isAbsRes: Boolean = false,
     onEvent: (DiaryUIEvent) -> Unit = {},
     titled: Boolean = false
 ) {
@@ -62,7 +66,7 @@ fun StudentCard(
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = "",
+                text = if (isAbsRes) stringResource(id = R.string.absent_respectful) else "",
                 style = DeathNoteTheme.typography.settingsScreenItemTitle,
                 color = DeathNoteTheme.colors.inverse,
                 fontStyle = FontStyle.Normal
@@ -79,7 +83,7 @@ fun StudentCard(
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = "H",
+                text = if (isAbsent) stringResource(id = R.string.absent) else ,
                 style = DeathNoteTheme.typography.settingsScreenItemTitle,
                 color = DeathNoteTheme.colors.inverse,
                 fontStyle = FontStyle.Normal

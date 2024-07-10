@@ -8,6 +8,5 @@ data class WeekTypes(
     @PrimaryKey
     val id: Int,
     val type: String,
-    val start: String,
-    val end: String
+    val day: String
 ): DataEntity

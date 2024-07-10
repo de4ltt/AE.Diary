@@ -21,4 +21,7 @@ interface TimetablesDAO {
 
     @Query("DELETE FROM timetables WHERE subjectId=:id")
     fun deleteTimetablesBySubjectId(id: Int)
+
+    @Query("SELECT * FROM timetables WHERE dayOfWeek=:day")
+    fun getTimetablesByDay(day: String): Flow<List<Timetables>>
 }

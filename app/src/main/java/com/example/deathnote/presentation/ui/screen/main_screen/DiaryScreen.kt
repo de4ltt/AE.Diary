@@ -44,6 +44,7 @@ import com.example.deathnote.presentation.ui.screen.main_screen.components.diary
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 import com.example.deathnote.presentation.util.toStringResMonth
 import com.example.deathnote.presentation.viewmodel.CertificateViewModel
+import com.example.deathnote.presentation.viewmodel.DiaryViewModel
 import com.example.deathnote.presentation.viewmodel.StudentViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -55,6 +56,7 @@ import java.time.format.DateTimeFormatter
 fun DiaryScreen(
     navigator: DestinationsNavigator,
     studentViewModel: StudentViewModel,
+    diaryViewModel: DiaryViewModel,
     paddingValues: PaddingValues = PaddingValues(
         horizontal = 25.dp
     )
@@ -65,6 +67,8 @@ fun DiaryScreen(
     }
 
     val allStudents by studentViewModel.allStudents.collectAsStateWithLifecycle()
+    val allDayAbsence by diaryViewModel.allDayAbsence.collectAsStateWithLifecycle()
+    val diaryUIState by diaryViewModel.diaryUIState.collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier
@@ -80,28 +84,24 @@ fun DiaryScreen(
             }
         )
 
-        ChangeSubject(
-            paddingValues = paddingValues,
-            "Теория вероятностей и математическая статистика",
-            {}, {}, {}
-        )
-        LazyColumn(
-            contentPadding = paddingValues,
-            verticalArrangement = Arrangement.spacedBy(10.dp)
-        ) {
-            item {
-                StudentCard(
-                    student = allStudents[0],
-                    titled = true
-                )
-            }
-
-            items(
-                allStudents.subList(1, allStudents.size)
+        diaryUIState.apply {
+            ChangeSubject(
+                paddingValues = paddingValues,
+                state = diaryUIState,
+                onEvent = diaryViewModel::onEvent
+            )
+            LazyColumn(
+                contentPadding = paddingValues,
+                verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                StudentCard(
-                    student = it
-                )
+                items(allStudents) {
+                    StudentCard(
+                        student = it,
+                        titled = allStudents.indexOf(it) == 0,
+                        studentAbsence = allDayAbsence,
+                        onEvent = diaryViewModel::onEvent
+                    )
+                }
             }
         }
     }

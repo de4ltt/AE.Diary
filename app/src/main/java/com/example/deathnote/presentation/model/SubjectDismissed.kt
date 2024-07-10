@@ -1,7 +1,8 @@
 package com.example.deathnote.presentation.model
 
+import java.time.LocalDate
+
 data class SubjectDismissed(
-    val id: Int? = null,
-    val day: String,
-    val subjectId: String
+    val day: String = LocalDate.now().toString(),
+    val subjectId: Int? = null
 ): PresentationModel

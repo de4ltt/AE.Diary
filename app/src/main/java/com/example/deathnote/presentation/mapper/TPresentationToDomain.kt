@@ -56,13 +56,13 @@ fun <T: PresentationModel, V: DomainModel> T.toDomain(): V = when (this) {
     )
 
     is Absence -> AbsenceDomain(
-        id = id,
+        respectful = respectful,
         studentId = studentId,
+        subjectId = subjectId,
         date = date
     )
 
     is SubjectDismissed -> SubjectDismissedDomain(
-        id = id,
         day = day,
         subjectId = subjectId
     )
@@ -70,8 +70,7 @@ fun <T: PresentationModel, V: DomainModel> T.toDomain(): V = when (this) {
     is WeekType -> WeekTypeDomain(
         id = id,
         type = type,
-        start = start,
-        end = end
+        day = day
     )
 
     else -> throw IllegalArgumentException(

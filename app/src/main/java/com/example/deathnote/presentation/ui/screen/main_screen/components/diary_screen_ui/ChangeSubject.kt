@@ -20,15 +20,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.deathnote.R
+import com.example.deathnote.presentation.model.event.DiaryUIEvent
+import com.example.deathnote.presentation.model.state.DiaryUIState
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 
 @Composable
 fun ChangeSubject(
     paddingValues: PaddingValues,
-    value: String,
-    onRightArrowClick: () -> Unit,
-    onLeftArrowClick: () -> Unit,
-    onSubjectClick: () -> Unit
+    state: DiaryUIState,
+    onEvent: (DiaryUIEvent) -> Unit
 ) {
     Row(
         modifier = Modifier
