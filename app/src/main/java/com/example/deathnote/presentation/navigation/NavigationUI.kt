@@ -79,6 +79,7 @@ fun NavigationUI(
         }
         composable(DiaryScreenDestination) {
             DiaryScreen(
+                studentViewModel = studentViewModel,
                 navigator = destinationsNavigator
             )
         }

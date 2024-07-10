@@ -2,20 +2,24 @@
 
 package com.example.deathnote.presentation.mapper
 
-import com.example.deathnote.data.model.DataEntity
-import com.example.deathnote.data.model.Students
-import com.example.deathnote.data.model.Subjects
-import com.example.deathnote.data.model.Timetables
+import com.example.deathnote.domain.model.AbsenceDomain
 import com.example.deathnote.domain.model.CertificateDomain
 import com.example.deathnote.domain.model.DomainModel
+import com.example.deathnote.domain.model.HolidayDomain
 import com.example.deathnote.domain.model.StudentDomain
+import com.example.deathnote.domain.model.SubjectDismissedDomain
 import com.example.deathnote.domain.model.SubjectDomain
 import com.example.deathnote.domain.model.TimetableDomain
+import com.example.deathnote.domain.model.WeekTypeDomain
+import com.example.deathnote.presentation.model.Absence
 import com.example.deathnote.presentation.model.Certificate
+import com.example.deathnote.presentation.model.Holiday
 import com.example.deathnote.presentation.model.PresentationModel
 import com.example.deathnote.presentation.model.Student
 import com.example.deathnote.presentation.model.Subject
+import com.example.deathnote.presentation.model.SubjectDismissed
 import com.example.deathnote.presentation.model.Timetable
+import com.example.deathnote.presentation.model.WeekType
 
 fun <T: PresentationModel, V: DomainModel> T.toDomain(): V = when (this) {
 
@@ -43,6 +47,29 @@ fun <T: PresentationModel, V: DomainModel> T.toDomain(): V = when (this) {
     is Certificate -> CertificateDomain(
         id = id,
         studentId = studentId,
+        start = start,
+        end = end
+    )
+
+    is Holiday -> HolidayDomain(
+        date = date
+    )
+
+    is Absence -> AbsenceDomain(
+        id = id,
+        studentId = studentId,
+        date = date
+    )
+
+    is SubjectDismissed -> SubjectDismissedDomain(
+        id = id,
+        day = day,
+        subjectId = subjectId
+    )
+
+    is WeekType -> WeekTypeDomain(
+        id = id,
+        type = type,
         start = start,
         end = end
     )

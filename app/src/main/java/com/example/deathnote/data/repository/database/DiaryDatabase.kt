@@ -6,10 +6,14 @@ import com.example.deathnote.data.model.Certificates
 import com.example.deathnote.data.model.Students
 import com.example.deathnote.data.model.Subjects
 import com.example.deathnote.data.model.Timetables
+import com.example.deathnote.data.repository.database.dao.AbsencesDAO
 import com.example.deathnote.data.repository.database.dao.CertificatesDAO
+import com.example.deathnote.data.repository.database.dao.HolidaysDAO
 import com.example.deathnote.data.repository.database.dao.StudentsDAO
 import com.example.deathnote.data.repository.database.dao.SubjectsDAO
+import com.example.deathnote.data.repository.database.dao.SubjectsDismissedDAO
 import com.example.deathnote.data.repository.database.dao.TimetablesDAO
+import com.example.deathnote.data.repository.database.dao.WeekTypesDAO
 
 @Database(
     entities = [
@@ -29,4 +33,13 @@ abstract class DiaryDatabase: RoomDatabase() {
     abstract fun timetableDAO(): TimetablesDAO
 
     abstract fun certificateDAO(): CertificatesDAO
+
+    abstract fun holidayDAO(): HolidaysDAO
+
+    abstract fun subjectDismissedDAO(): SubjectsDismissedDAO
+
+    abstract fun weekTypeDAO(): WeekTypesDAO
+
+    abstract fun absenceDAO(): AbsencesDAO
+
 }

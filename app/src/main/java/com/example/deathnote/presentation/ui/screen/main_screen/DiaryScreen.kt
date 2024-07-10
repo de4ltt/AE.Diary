@@ -24,6 +24,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.deathnote.R
@@ -38,6 +39,8 @@ import com.example.deathnote.presentation.ui.cross_screen_ui.NothingHere
 import com.example.deathnote.presentation.ui.screen.main_screen.components.certificates_screen_ui.CertificatePane
 import com.example.deathnote.presentation.ui.screen.main_screen.components.certificates_screen_ui.SelectStudentField
 import com.example.deathnote.presentation.ui.screen.main_screen.components.certificates_screen_ui.StudentSelectMenu
+import com.example.deathnote.presentation.ui.screen.main_screen.components.diary_screen_ui.ChangeSubject
+import com.example.deathnote.presentation.ui.screen.main_screen.components.diary_screen_ui.StudentCard
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 import com.example.deathnote.presentation.util.toStringResMonth
 import com.example.deathnote.presentation.viewmodel.CertificateViewModel
@@ -51,15 +54,17 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun DiaryScreen(
     navigator: DestinationsNavigator,
+    studentViewModel: StudentViewModel,
     paddingValues: PaddingValues = PaddingValues(
-        start = 25.dp,
-        end = 25.dp
+        horizontal = 25.dp
     )
 ) {
 
     BackHandler {
         navigator.popBackStack()
     }
+
+    val allStudents by studentViewModel.allStudents.collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier
@@ -75,14 +80,29 @@ fun DiaryScreen(
             }
         )
 
-        if (false)
-            NothingHere()
-        else
-            LazyColumn(
-                contentPadding = paddingValues,
-                verticalArrangement = Arrangement.spacedBy(10.dp)
-            ) {
-
+        ChangeSubject(
+            paddingValues = paddingValues,
+            "Теория вероятностей и математическая статистика",
+            {}, {}, {}
+        )
+        LazyColumn(
+            contentPadding = paddingValues,
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            item {
+                StudentCard(
+                    student = allStudents[0],
+                    titled = true
+                )
             }
+
+            items(
+                allStudents.subList(1, allStudents.size)
+            ) {
+                StudentCard(
+                    student = it
+                )
+            }
+        }
     }
 }
