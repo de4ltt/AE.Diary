@@ -21,4 +21,7 @@ class WeekTypeRepositoryImpl @Inject constructor(
 
     override suspend fun deleteAllWeekType() =
         weekTypesDAO.deleteAllWeekType()
+
+    override suspend fun getWeekTypeByDay(day: String): String =
+        weekTypesDAO.getWeekTypeByDay(day)
 }

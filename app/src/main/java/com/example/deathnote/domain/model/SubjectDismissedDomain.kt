@@ -5,5 +5,5 @@ import androidx.room.PrimaryKey
 
 data class SubjectDismissedDomain(
     val day: String,
-    val subjectId: Int? = null
+    val subjectId: Int
 ): DomainModel

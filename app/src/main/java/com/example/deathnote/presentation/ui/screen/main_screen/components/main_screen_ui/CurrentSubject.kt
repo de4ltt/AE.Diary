@@ -19,7 +19,7 @@ import com.example.deathnote.presentation.ui.theme.SemiLightGray
 @Composable
 fun CurrentSubject() {
     val subject = Subject(
-        1, "Математический анализ"
+        1, "DISCRETE PROGRAMMING"
     )
 
     Text(
@@ -35,7 +35,7 @@ fun CurrentSubject() {
         text = buildAnnotatedString {
             withStyle(
                 style = SpanStyle(
-                    color = if (subject.type == "pr") DarkRedBackground
+                    color = if (subject.type == "lk") DarkRedBackground
                     else DarkYellow,
                     fontSize = 19.sp,
                     fontWeight = FontWeight.Bold

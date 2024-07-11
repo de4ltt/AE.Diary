@@ -9,8 +9,8 @@ import androidx.room.PrimaryKey
     ]
 )
 data class Absences(
-    val studentId: Int? = null,
-    val subjectId: Int? = null,
-    val date: String? = null,
-    val respectful: Boolean? = false
+    val studentId: Int,
+    val subjectId: Int,
+    val date: String,
+    val respectful: Boolean = false
 ): DataEntity

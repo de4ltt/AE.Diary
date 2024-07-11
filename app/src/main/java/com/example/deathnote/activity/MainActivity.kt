@@ -19,6 +19,7 @@ import com.example.deathnote.presentation.navigation.NavigationUI
 import com.example.deathnote.presentation.ui.theme.DeathNoteTheme
 import com.example.deathnote.presentation.ui.theme.util.setColorScheme
 import com.example.deathnote.presentation.viewmodel.CertificateViewModel
+import com.example.deathnote.presentation.viewmodel.DiaryViewModel
 import com.example.deathnote.presentation.viewmodel.StudentViewModel
 import com.example.deathnote.presentation.viewmodel.SubjectViewModel
 import com.example.deathnote.presentation.viewmodel.TimetableViewModel
@@ -40,6 +41,7 @@ class MainActivity : ComponentActivity() {
         val subjectViewModel: SubjectViewModel by viewModels()
         val timetableViewModel: TimetableViewModel by viewModels()
         val certificateViewModel: CertificateViewModel by viewModels()
+        val diaryViewModel: DiaryViewModel by viewModels()
 
         loadLanguagePreference(this)?.let {
             setLocale(this, it)
@@ -68,7 +70,8 @@ class MainActivity : ComponentActivity() {
                     studentViewModel = studentViewModel,
                     subjectViewModel = subjectViewModel,
                     timetableViewModel = timetableViewModel,
-                    certificateViewModel = certificateViewModel
+                    certificateViewModel = certificateViewModel,
+                    diaryViewModel = diaryViewModel
                 )
             }
         }

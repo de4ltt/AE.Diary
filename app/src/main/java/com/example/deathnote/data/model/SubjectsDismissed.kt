@@ -1,5 +1,6 @@
 package com.example.deathnote.data.model
 
+import androidx.annotation.NonNull
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -10,5 +11,5 @@ import androidx.room.PrimaryKey
 )
 data class SubjectsDismissed(
     val day: String,
-    val subjectId: Int? = null
+    val subjectId: Int
 ): DataEntity

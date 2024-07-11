@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.deathnote.presentation.navigation.AppDestination
 import com.example.deathnote.presentation.ui.cross_screen_ui.DarkTopBar
+import com.example.deathnote.presentation.ui.screen.main_screen.components.diary_screen_ui.ChangeSubject
 import com.example.deathnote.presentation.ui.screen.main_screen.components.diary_screen_ui.StudentCard
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 import com.example.deathnote.presentation.viewmodel.DiaryViewModel
@@ -38,39 +39,46 @@ fun DiaryScreen(
     }
 
     val allStudents by studentViewModel.allStudents.collectAsStateWithLifecycle()
+    val allAbsence by diaryViewModel.allDayAbsence.collectAsStateWithLifecycle()
     val diaryUIState by diaryViewModel.diaryUIState.collectAsStateWithLifecycle()
+    val allDismissedSubjects by diaryViewModel.allDaySubjectsDismissed.collectAsStateWithLifecycle()
 
-    Column(
-        modifier = Modifier
-            .background(color = DeathNoteTheme.colors.baseBackground)
-            .fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(40.dp)
-    ) {
+    diaryUIState.apply {
 
-        DarkTopBar(
-            destination = AppDestination.MainScreenMenusDestinations.DIARY,
-            onIconClick = {
+        val isSubjectDismissed = allDismissedSubjects.any {
+            it.subjectId == curSubject.id && it.day == date
+        }
 
-            }
-        )
+        Column(
+            modifier = Modifier
+                .background(color = DeathNoteTheme.colors.baseBackground)
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(40.dp)
+        ) {
 
-        diaryUIState.apply {
-/*            ChangeSubject(
+            DarkTopBar(
+                destination = AppDestination.MainScreenMenusDestinations.DIARY,
+                onIconClick = {
+
+                }
+            )
+            ChangeSubject(
+                isSubjectDismissed = isSubjectDismissed,
                 paddingValues = paddingValues,
                 state = diaryUIState,
                 onEvent = diaryViewModel::onEvent
-            )*/
+            )
             LazyColumn(
                 contentPadding = paddingValues,
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                items(allStudents) {
+                items(allStudents) { student ->
                     StudentCard(
-                        student = it,
+                        student = student,
                         state = diaryUIState,
-                        titled = allStudents.indexOf(it) == 0,
-                        isAbsent = diaryViewModel.isStudentAbsent(it),
-                        isAbsRes = diaryViewModel.isStudentRespectfulAbs(it),
+                        titled = allStudents.indexOf(student) == 0,
+                        isAbsent = allAbsence.any { student.id == it.studentId && it.subjectId == curSubject.id && !it.respectful },
+                        isAbsRes = allAbsence.any { student.id == it.studentId && it.subjectId == curSubject.id && it.respectful },
                         onEvent = diaryViewModel::onEvent
                     )
                 }

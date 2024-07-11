@@ -19,4 +19,6 @@ interface WeekTypesDAO {
     @Query("DELETE FROM weektypes")
     fun deleteAllWeekType()
 
+    @Query("SELECT type FROM weektypes WHERE day = :day")
+    suspend fun getWeekTypeByDay(day: String): String
 }

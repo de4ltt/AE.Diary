@@ -13,7 +13,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,11 +34,12 @@ import com.example.deathnote.presentation.util.getShortName
 fun StudentCard(
     student: Student,
     state: DiaryUIState,
-    isAbsent: Boolean = false,
-    isAbsRes: Boolean = false,
+    isAbsent: Boolean,
+    isAbsRes: Boolean,
     onEvent: (DiaryUIEvent) -> Unit = {},
     titled: Boolean = false
 ) {
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -43,7 +47,11 @@ fun StudentCard(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        Column {
+        Column(
+            modifier = Modifier
+                .wrapContentHeight()
+                .weight(1f)
+        ) {
             if (titled)
                 Text(
                     text = stringResource(id = R.string.student),
@@ -54,7 +62,7 @@ fun StudentCard(
             Box(
                 modifier = Modifier
                     .height(50.dp)
-                    .weight(1f)
+                    .fillMaxWidth()
                     .clip(
                         shape = DeathNoteTheme.shapes.rounded12
                     )
@@ -135,20 +143,22 @@ fun StudentCard(
                         indication = null,
                         interactionSource = remember { MutableInteractionSource() },
                         onClick = {
-                            if (isAbsent) onEvent(
-                                DiaryUIEvent.SetDaySubjectStudentPresent(
-                                    student = student,
-                                    daySubject = state.curSubject,
-                                    date = state.date,
+                            if (isAbsent)
+                                onEvent(
+                                    DiaryUIEvent.SetDaySubjectStudentPresent(
+                                        student = student,
+                                        daySubject = state.curSubject,
+                                        date = state.date,
+                                    )
                                 )
-                            )
-                            else onEvent(
-                                DiaryUIEvent.SetDaySubjectStudentAbsent(
-                                    student = student,
-                                    daySubject = state.curSubject,
-                                    date = state.date,
+                            else
+                                onEvent(
+                                    DiaryUIEvent.SetDaySubjectStudentAbsent(
+                                        student = student,
+                                        daySubject = state.curSubject,
+                                        date = state.date,
+                                    )
                                 )
-                            )
                         }
                     ),
                 contentAlignment = Alignment.Center

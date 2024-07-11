@@ -4,5 +4,5 @@ import java.time.LocalDate
 
 data class SubjectDismissed(
     val day: String = LocalDate.now().toString(),
-    val subjectId: Int? = null
+    val subjectId: Int
 ): PresentationModel

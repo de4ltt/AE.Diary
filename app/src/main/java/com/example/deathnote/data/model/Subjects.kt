@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity
 data class Subjects(
     @PrimaryKey(autoGenerate = true)
-    val id: Int? = null,
+    val id: Int,
     val name: String = "",
     val type : String = "lk"
 ) : DataEntity

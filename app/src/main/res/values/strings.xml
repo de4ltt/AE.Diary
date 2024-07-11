@@ -109,4 +109,6 @@
     <string name="diary">DIARY</string>
     <string name="absent">X</string>
     <string name="absent_respectful">X</string>
+    <string name="res">R</string>
+    <string name="absence">A</string>
 </resources>

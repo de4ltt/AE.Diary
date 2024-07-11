@@ -2,10 +2,14 @@ package com.example.deathnote.data.repository.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.example.deathnote.data.model.Absences
 import com.example.deathnote.data.model.Certificates
+import com.example.deathnote.data.model.Holidays
 import com.example.deathnote.data.model.Students
 import com.example.deathnote.data.model.Subjects
+import com.example.deathnote.data.model.SubjectsDismissed
 import com.example.deathnote.data.model.Timetables
+import com.example.deathnote.data.model.WeekTypes
 import com.example.deathnote.data.repository.database.dao.AbsencesDAO
 import com.example.deathnote.data.repository.database.dao.CertificatesDAO
 import com.example.deathnote.data.repository.database.dao.HolidaysDAO
@@ -20,9 +24,13 @@ import com.example.deathnote.data.repository.database.dao.WeekTypesDAO
         Students::class,
         Subjects::class,
         Timetables::class,
-        Certificates::class
+        Certificates::class,
+        Holidays::class,
+        WeekTypes::class,
+        SubjectsDismissed::class,
+        Absences::class
     ],
-    version = 2
+    version = 1
 )
 abstract class DiaryDatabase: RoomDatabase() {
 
