@@ -34,6 +34,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.deathnote.R
 import com.example.deathnote.presentation.model.Subject
+import com.example.deathnote.presentation.model.event.DiaryUIEvent
 import com.example.deathnote.presentation.model.event.SubjectUIEvent
 import com.example.deathnote.presentation.util.getShortName
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
@@ -73,8 +74,7 @@ fun SubjectBar(
                         modifier = Modifier
                             .fillMaxWidth()
                             .heightIn(
-                                min = 60.dp,
-                                max = 80.dp
+                                min = 60.dp
                             )
                             .wrapContentHeight()
                             .pointerInput(Unit) {
@@ -107,7 +107,8 @@ fun SubjectBar(
 
                         Row(
                             modifier = Modifier
-                                .fillMaxSize()
+                                .fillMaxWidth()
+                                .wrapContentHeight()
                                 .background(
                                     color = DeathNoteTheme.colors.secondaryBackground
                                 )

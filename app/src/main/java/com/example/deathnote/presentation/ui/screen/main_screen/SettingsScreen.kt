@@ -11,10 +11,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.deathnote.R
+import com.example.deathnote.presentation.model.event.DiaryUIEvent
 import com.example.deathnote.presentation.navigation.AppDestination
 import com.example.deathnote.presentation.ui.cross_screen_ui.SettingsTopBar
 import com.example.deathnote.presentation.ui.screen.destinations.LanguageScreenDestination
@@ -22,15 +27,18 @@ import com.example.deathnote.presentation.ui.screen.destinations.StudentsScreenD
 import com.example.deathnote.presentation.ui.screen.destinations.SubjectsScreenDestination
 import com.example.deathnote.presentation.ui.screen.destinations.TimetableScreenDestination
 import com.example.deathnote.presentation.ui.screen.main_screen.components.settings_screen_ui.SettingsOptionPane
+import com.example.deathnote.presentation.ui.screen.main_screen.components.settings_screen_ui.SettingsScreenBottomSheet
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 import com.example.deathnote.presentation.ui.theme.util.isDarkMode
 import com.example.deathnote.presentation.ui.theme.util.switchDarkMode
+import com.example.deathnote.presentation.viewmodel.DiaryViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @Destination
 @Composable
 fun SettingsScreen(
+    diaryViewModel: DiaryViewModel,
     navigator: DestinationsNavigator,
     paddingValues: PaddingValues = PaddingValues(
         top = 50.dp,
@@ -41,6 +49,12 @@ fun SettingsScreen(
     BackHandler {
         navigator.popBackStack()
     }
+
+    var isBottomSheetOpen by remember {
+        mutableStateOf(false)
+    }
+
+    val diaryUIState by diaryViewModel.diaryUIState.collectAsStateWithLifecycle()
 
     val context = LocalContext.current
 
@@ -123,6 +137,22 @@ fun SettingsScreen(
                     }
                 )
             }
+
+            item {
+                SettingsOptionPane(
+                    icon = R.drawable.clock,
+                    title = R.string.semester_time,
+                    subtitle = R.string.we_need,
+                    onClick = {
+                        diaryViewModel.onEvent(DiaryUIEvent.ChangeSettingsScreenBottomSheetState)
+                    }
+                )
+            }
         }
     }
+
+    SettingsScreenBottomSheet(
+        state = diaryUIState,
+        onEvent = diaryViewModel::onEvent
+    )
 }

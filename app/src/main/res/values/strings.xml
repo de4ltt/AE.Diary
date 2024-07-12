@@ -111,4 +111,10 @@
     <string name="absent_respectful">X</string>
     <string name="res">R</string>
     <string name="absence">A</string>
+    <string name="semester_time">Semester weeks</string>
+    <string name="we_need">We really need to know</string>
+    <string name="choose_semester_period">Semester pediod</string>
+    <string name="first_week">First week type</string>
+    <string name="delete_semester_period">Delete semester?</string>
+    <string name="ok">Okay</string>
 </resources>

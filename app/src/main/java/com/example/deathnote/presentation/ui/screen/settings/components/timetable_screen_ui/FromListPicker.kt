@@ -55,33 +55,34 @@ fun <T> FromListPicker(
             color = DeathNoteTheme.colors.inverse
         )
 
-        Crossfade(targetState = value) {
-            Box(
-                modifier = Modifier
-                    .height(50.dp)
-                    .fillMaxWidth()
-                    .clip(
-                        shape = DeathNoteTheme.shapes.rounded12
-                    )
-                    .background(
-                        color = DeathNoteTheme.colors.baseBackground
-                    )
-                    .clickable(
-                        interactionSource = remember { MutableInteractionSource() },
-                        indication = null,
-                        onClick = {
-                            curListPosition++
-                            onEvent(list[(curListPosition) % list.size])
-                        }
-                    ),
-                contentAlignment = Alignment.Center
-            ) {
+
+        Box(
+            modifier = Modifier
+                .height(50.dp)
+                .fillMaxWidth()
+                .clip(
+                    shape = DeathNoteTheme.shapes.rounded12
+                )
+                .background(
+                    color = DeathNoteTheme.colors.baseBackground
+                )
+                .clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null,
+                    onClick = {
+                        curListPosition++
+                        onEvent(list[(curListPosition) % list.size])
+                    }
+                ),
+            contentAlignment = Alignment.Center
+        ) {
+            Crossfade(targetState = value) {
                 Text(
                     text = stringResource(id = it).uppercase(),
                     fontSize = 15.sp,
                     color = DeathNoteTheme.colors.inverse,
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(horizontal = 15.dp)
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 15.dp)
                 )
             }
         }

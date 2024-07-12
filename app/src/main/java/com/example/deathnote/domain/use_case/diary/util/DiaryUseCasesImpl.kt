@@ -12,7 +12,7 @@ import com.example.deathnote.domain.use_case.diary.DeleteStudentAbsenceUseCase
 import com.example.deathnote.domain.use_case.diary.GetAllDayAbsenceUseCase
 import com.example.deathnote.domain.use_case.diary.GetAllDaySubjectsDismissed
 import com.example.deathnote.domain.use_case.diary.GetAllHolidaysUseCase
-import com.example.deathnote.domain.use_case.diary.GetWeekTypeByDayUseCase
+import com.example.deathnote.domain.use_case.diary.GetWeekTypesUseCase
 import javax.inject.Inject
 
 data class DiaryUseCasesImpl @Inject constructor(
@@ -29,5 +29,5 @@ data class DiaryUseCasesImpl @Inject constructor(
     override val GetAllDayAbsenceUseCase: GetAllDayAbsenceUseCase,
     override val GetAllDaySubjectsDismissed: GetAllDaySubjectsDismissed,
     override val GetAllHolidaysUseCase: GetAllHolidaysUseCase,
-    override val GetWeekTypeByDayUseCase: GetWeekTypeByDayUseCase
-): DiaryUseCases
+    override val GetWeekTypesUseCase: GetWeekTypesUseCase,
+    ): DiaryUseCases

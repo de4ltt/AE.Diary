@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,10 +31,12 @@ import com.example.deathnote.presentation.ui.theme.DarkYellow
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 import com.example.deathnote.presentation.ui.util.Validator
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SubjectTitledDialog(
     state: SubjectDialogState,
-    onEvent: (SubjectUIEvent) -> Unit
+    onEvent: (SubjectUIEvent) -> Unit,
+    refreshSubjects: () -> Unit
 ) {
 
     state.apply {
@@ -85,6 +88,7 @@ fun SubjectTitledDialog(
                         },
                         onValueChange = {
                             onEvent(SubjectUIEvent.ChangeSubjectName(it.capitalize()))
+                            refreshSubjects()
                         },
                         value = subject.name,
                         isCentered = false,

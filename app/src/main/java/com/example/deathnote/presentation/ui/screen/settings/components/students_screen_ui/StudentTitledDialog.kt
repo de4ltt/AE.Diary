@@ -1,5 +1,6 @@
 package com.example.deathnote.presentation.ui.screen.settings.components.students_screen_ui
 
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import com.example.deathnote.R
 import com.example.deathnote.presentation.model.event.StudentUIEvent
@@ -9,6 +10,7 @@ import com.example.deathnote.presentation.ui.cross_screen_ui.BottomBarWithTextFi
 import com.example.deathnote.presentation.ui.util.Validator
 import java.util.Locale
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StudentTitledDialog(
     state: StudentDialogState,

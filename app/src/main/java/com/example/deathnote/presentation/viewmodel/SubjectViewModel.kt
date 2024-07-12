@@ -91,10 +91,7 @@ class SubjectViewModel @Inject constructor(
     private fun deleteSubject(subject: Subject) =
         viewModelScope.launch(Dispatchers.IO) {
             subjectUseCases.DeleteSubjectUseCase(subject.toDomain())
-
-            subject.id?.let {
-                timetableUseCases.DeleteTimetablesBySubjectIdUseCase(subject.id)
-            }
+            timetableUseCases.DeleteTimetablesBySubjectIdUseCase(subject.id)
         }
 
     private fun upsertSubject(subject: Subject) =

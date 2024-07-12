@@ -1,6 +1,7 @@
 package com.example.deathnote.presentation.ui.screen.main_screen
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,10 +10,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.deathnote.presentation.model.event.DiaryUIEvent
 import com.example.deathnote.presentation.navigation.AppDestination
 import com.example.deathnote.presentation.ui.cross_screen_ui.DarkTopBar
 import com.example.deathnote.presentation.ui.screen.main_screen.components.diary_screen_ui.ChangeSubject
@@ -42,6 +47,10 @@ fun DiaryScreen(
     val allAbsence by diaryViewModel.allDayAbsence.collectAsStateWithLifecycle()
     val diaryUIState by diaryViewModel.diaryUIState.collectAsStateWithLifecycle()
     val allDismissedSubjects by diaryViewModel.allDaySubjectsDismissed.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        diaryViewModel.onEvent(DiaryUIEvent.RefreshSubject)
+    }
 
     diaryUIState.apply {
 

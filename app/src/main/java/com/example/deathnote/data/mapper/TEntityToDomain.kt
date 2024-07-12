@@ -68,7 +68,6 @@ fun <T: DataEntity, V: DomainModel> T.toDomain(): V = when (this) {
     )
 
     is WeekTypes -> WeekTypeDomain(
-        id = id,
         type = type,
         day = day
     )

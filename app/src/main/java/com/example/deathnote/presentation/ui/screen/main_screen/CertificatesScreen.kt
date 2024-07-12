@@ -19,6 +19,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -49,6 +50,7 @@ import kotlinx.coroutines.CoroutineScope
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Destination
 @Composable
 fun CertificatesScreen(

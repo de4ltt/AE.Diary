@@ -7,6 +7,7 @@ import com.example.deathnote.domain.model.AbsenceDomain
 import com.example.deathnote.domain.model.HolidayDomain
 import com.example.deathnote.domain.model.SubjectDismissedDomain
 import com.example.deathnote.domain.model.SubjectDomain
+import com.example.deathnote.domain.model.WeekTypeDomain
 import com.example.deathnote.domain.use_case.diary.util.DiaryUseCases
 import com.example.deathnote.domain.use_case.subject.util.SubjectUseCases
 import com.example.deathnote.domain.use_case.timetable.util.TimetableUseCases
@@ -27,6 +28,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 @HiltViewModel
@@ -45,12 +48,16 @@ class DiaryViewModel @Inject constructor(
     private val _allDaySubjectsDismissed = MutableStateFlow<List<SubjectDismissed>>(emptyList())
     val allDaySubjectsDismissed = _allDaySubjectsDismissed.asStateFlow()
 
-    private val timetablesByDay = MutableStateFlow<List<Int>>(emptyList())
+    private val _timetablesByDay = MutableStateFlow<List<Int>>(emptyList())
+    val timetablesByDay = _timetablesByDay.asStateFlow()
 
     private val _allHolidays = MutableStateFlow<List<Holiday>>(emptyList())
 
     private val _diaryUIState = MutableStateFlow<DiaryUIState>(DiaryUIState())
     val diaryUIState = _diaryUIState.asStateFlow()
+
+    private val _allWeekTypes = MutableStateFlow<List<WeekType>>(emptyList())
+    val allWeekTypes = _allWeekTypes.asStateFlow()
 
     fun onEvent(event: DiaryUIEvent) = when (event) {
 
@@ -141,10 +148,99 @@ class DiaryViewModel @Inject constructor(
                 )
             }
         }
+
+        DiaryUIEvent.RefreshSubject ->
+            viewModelScope.launch(Dispatchers.IO) {
+                withContext(Dispatchers.Main) {
+                    _diaryUIState.value = _diaryUIState.value.copy(
+                        curSubject = _allDaySubjects.value[0]
+                    )
+                }
+            }
+
+        DiaryUIEvent.ChangeSettingsScreenBottomSheetState ->
+            viewModelScope.launch(Dispatchers.IO) {
+                _diaryUIState.value = _diaryUIState.value.copy(
+                    isSettingsBottomSheetOpen = !_diaryUIState.value.isSettingsBottomSheetOpen
+                )
+            }
+
+        is DiaryUIEvent.ChangeEndOfSemester ->
+            viewModelScope.launch(Dispatchers.IO) {
+                _diaryUIState.value = _diaryUIState.value.copy(
+                    endOfSemester = event.end
+                )
+            }
+
+        DiaryUIEvent.ChangeFirstWeekType ->
+            viewModelScope.launch(Dispatchers.IO) {
+                _diaryUIState.value = _diaryUIState.value.copy(
+                    firstWeekType = if (diaryUIState.value.firstWeekType == "O") "E" else "O"
+                )
+            }
+
+        is DiaryUIEvent.ChangeStartOfSemester ->
+            viewModelScope.launch(Dispatchers.IO) {
+                _diaryUIState.value = _diaryUIState.value.copy(
+                    startOfSemester = event.start
+                )
+            }
+
+        DiaryUIEvent.ChangeSetSemesterTime ->
+            viewModelScope.launch(Dispatchers.IO) {
+                _diaryUIState.value = _diaryUIState.value.copy(
+                    isTimeSet = !diaryUIState.value.isTimeSet
+                )
+            }
+
+        DiaryUIEvent.DeleteSemester -> {
+            deleteAllWeekType()
+            viewModelScope.launch(Dispatchers.IO) {
+                _diaryUIState.value = _diaryUIState.value.copy(
+                    isTimeSet = false,
+                    startOfSemester = LocalDate.now()
+                        .format(DateTimeFormatter.ofPattern("dd.MM.yyyy")),
+                    endOfSemester = LocalDate.now()
+                        .format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+                )
+            }
+        }
+
+        DiaryUIEvent.AddSemesterTime -> {
+            val pattern = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+            val start = LocalDate.parse(
+                diaryUIState.value.startOfSemester,
+                pattern
+            )
+            val end = LocalDate.parse(
+                diaryUIState.value.endOfSemester,
+                pattern
+            )
+
+            var curWeekType = diaryUIState.value.firstWeekType
+            var curDate = start
+
+            viewModelScope.launch(Dispatchers.IO) {
+                while (curDate <= end) {
+                    if (curDate.dayOfWeek.value == 1)
+                        curWeekType = if (curWeekType == "O") "E" else "O"
+                    addWeekType(
+                        WeekType(
+                            type = curWeekType,
+                            day = curDate.format(pattern)
+                        )
+                    )
+
+                    curDate = curDate.plusDays(1)
+                }
+            }
+        }
     }
 
-    fun getWeekType(day: String) =
-        "O"
+    private fun getWeekType(day: String) =
+        if (allWeekTypes.value.isEmpty()) "O" else
+            _allWeekTypes.value.first { it.day == day }.type
+
 
     fun isItHoliday(day: String) =
         _allHolidays.value.any { it.date == day }
@@ -203,19 +299,24 @@ class DiaryViewModel @Inject constructor(
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            diaryUseCases.GetAllHolidaysUseCase().collect {
-                withContext(Dispatchers.Main) {
-                    _allHolidays.value = it.toPresentation(HolidayDomain::toPresentation)
-                }
-            }
-        }
-
-        viewModelScope.launch(Dispatchers.IO) {
             withContext(Dispatchers.Main) {
                 timetableUseCases.GetTimetablesByDayUseCase(
                     diaryUIState.value.date.toTimetableDate(getWeekType(diaryUIState.value.date))
                 ).collect { timetable ->
-                    timetablesByDay.value = timetable
+                    _timetablesByDay.value = timetable
+
+                    _allDaySubjects.value =
+                        _allDaySubjects.value.filter {
+                            timetable.contains(
+                                it.id
+                            )
+                        }
+
+                    if (_allDaySubjects.value.isNotEmpty())
+                        _diaryUIState.value = _diaryUIState.value.copy(
+                            curSubject = _allDaySubjects.value[0]
+                        )
+
                 }
             }
         }
@@ -224,27 +325,15 @@ class DiaryViewModel @Inject constructor(
             subjectUseCases.GetAllSubjectsUseCase().collect { subjects ->
                 withContext(Dispatchers.Main) {
                     _allDaySubjects.value = subjects.toPresentation(SubjectDomain::toPresentation)
-                }.also {
-                    _allDaySubjects.value =
-                        _allDaySubjects.value.filter {
-                            timetablesByDay.asStateFlow().value.contains(
-                                it.id
-                            )
-                        }
-                }.also {
-                    if (_allDaySubjects.value.isNotEmpty())
-                        _diaryUIState.value = _diaryUIState.value.copy(
-                            curSubject = _allDaySubjects.value[0]
-                        )
                 }
             }
         }
 
-
         viewModelScope.launch(Dispatchers.IO) {
             withContext(Dispatchers.Main) {
                 diaryUseCases.GetAllDayAbsenceUseCase(diaryUIState.value.date).collect {
-                    _allDayAbsence.value = it.toPresentation(AbsenceDomain::toPresentation)
+                    _allDayAbsence.value =
+                        it.toPresentation(AbsenceDomain::toPresentation)
                 }
             }
         }
@@ -255,6 +344,21 @@ class DiaryViewModel @Inject constructor(
                     _allDaySubjectsDismissed.value =
                         it.toPresentation(SubjectDismissedDomain::toPresentation)
                 }
+            }
+        }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            diaryUseCases.GetAllHolidaysUseCase().collect {
+                withContext(Dispatchers.Main) {
+                    _allHolidays.value =
+                        it.toPresentation(HolidayDomain::toPresentation)
+                }
+            }
+        }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            diaryUseCases.GetWeekTypesUseCase().collect {
+                _allWeekTypes.value = it.toPresentation(WeekTypeDomain::toPresentation)
             }
         }
     }

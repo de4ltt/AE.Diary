@@ -48,12 +48,16 @@ fun NavigationUI(
             MainScreen(navigator = destinationsNavigator)
         }
         composable(SettingsScreenDestination) {
-            SettingsScreen(navigator = destinationsNavigator)
+            SettingsScreen(
+                diaryViewModel = diaryViewModel,
+                navigator = destinationsNavigator
+            )
         }
         composable(SubjectsScreenDestination) {
             SubjectsScreen(
                 navigator = destinationsNavigator,
-                subjectViewModel = subjectViewModel
+                subjectViewModel = subjectViewModel,
+                diaryViewModel = diaryViewModel
             )
         }
         composable(TimetableScreenDestination) {

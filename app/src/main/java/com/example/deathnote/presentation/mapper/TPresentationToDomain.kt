@@ -68,7 +68,6 @@ fun <T: PresentationModel, V: DomainModel> T.toDomain(): V = when (this) {
     )
 
     is WeekType -> WeekTypeDomain(
-        id = id,
         type = type,
         day = day
     )

@@ -6,7 +6,6 @@ import androidx.room.PrimaryKey
 @Entity
 data class WeekTypes(
     @PrimaryKey
-    val id: Int,
+    val day: String,
     val type: String,
-    val day: String
 ): DataEntity

@@ -15,7 +15,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.SelectableDates
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -37,7 +39,10 @@ import com.example.deathnote.presentation.ui.theme.SoftGray
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 import com.example.deathnote.presentation.ui.theme.util.adjust
 import com.example.deathnote.presentation.ui.theme.util.isDarkMode
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BottomBarTextField(
     @StringRes title: Int,
@@ -50,7 +55,20 @@ fun BottomBarTextField(
     isDatePicker: Boolean = false,
     isCentered: Boolean = true,
     isStartDate: Boolean = false,
-    previousDate: String = ""
+    previousDate: String = "",
+    futureDatesSelector: SelectableDates = object : SelectableDates {
+        override fun isSelectableDate(utcTimeMillis: Long): Boolean {
+            return utcTimeMillis >= LocalDate.parse(
+                previousDate,
+                DateTimeFormatter.ofPattern("dd.MM.yyyy")
+            ).toEpochDay() && utcTimeMillis <= LocalDate.now().toEpochDay()
+        }
+    },
+    previousDateSelector: SelectableDates = object : SelectableDates {
+        override fun isSelectableDate(utcTimeMillis: Long): Boolean {
+            return utcTimeMillis <= LocalDate.now().toEpochDay()
+        }
+    }
 ) {
 
     var isDataPickerDialog by remember {
@@ -141,6 +159,8 @@ fun BottomBarTextField(
                 onValueChange(it)
                 isDataPickerDialog = false
             },
-            onDismissRequest = { isDataPickerDialog = !isDataPickerDialog }
+            onDismissRequest = { isDataPickerDialog = !isDataPickerDialog },
+            previousDateSelector = previousDateSelector,
+            futureDatesSelector = futureDatesSelector
         )
 }

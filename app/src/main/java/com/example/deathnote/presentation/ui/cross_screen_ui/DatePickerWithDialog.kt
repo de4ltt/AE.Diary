@@ -44,22 +44,14 @@ fun DatePickerWithDialog(
     curDate: String = LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")),
     onDismissRequest: () -> Unit,
     onAcceptRequest: (String) -> Unit,
+    futureDatesSelector: SelectableDates,
+    previousDateSelector: SelectableDates
 ) {
 
-    val datePickerState = rememberDatePickerState(selectableDates = if (!isPreviousDate) {
-        object : SelectableDates {
-            override fun isSelectableDate(utcTimeMillis: Long): Boolean {
-                return utcTimeMillis >= LocalDate.parse(
-                    previousDate,
-                    DateTimeFormatter.ofPattern("dd.MM.yyyy")
-                ).toEpochDay() * 86400000 && utcTimeMillis <= LocalDate.now().toEpochDay() * 86400000
-            }
-        }
-    } else object : SelectableDates {
-            override fun isSelectableDate(utcTimeMillis: Long): Boolean {
-                return utcTimeMillis <= LocalDate.now().toEpochDay() * 86400000
-            }
-        }
+    val datePickerState = rememberDatePickerState(
+        selectableDates = if (!isPreviousDate)
+            previousDateSelector
+        else futureDatesSelector
     )
 
     val dateMillis = datePickerState.selectedDateMillis

@@ -12,7 +12,7 @@ import com.example.deathnote.domain.use_case.diary.DeleteStudentAbsenceUseCase
 import com.example.deathnote.domain.use_case.diary.GetAllDayAbsenceUseCase
 import com.example.deathnote.domain.use_case.diary.GetAllDaySubjectsDismissed
 import com.example.deathnote.domain.use_case.diary.GetAllHolidaysUseCase
-import com.example.deathnote.domain.use_case.diary.GetWeekTypeByDayUseCase
+import com.example.deathnote.domain.use_case.diary.GetWeekTypesUseCase
 
 sealed interface DiaryUseCases {
 
@@ -28,5 +28,5 @@ sealed interface DiaryUseCases {
     val GetAllDayAbsenceUseCase: GetAllDayAbsenceUseCase
     val GetAllDaySubjectsDismissed: GetAllDaySubjectsDismissed
     val GetAllHolidaysUseCase: GetAllHolidaysUseCase
-    val GetWeekTypeByDayUseCase: GetWeekTypeByDayUseCase
+    val GetWeekTypesUseCase: GetWeekTypesUseCase
 }
