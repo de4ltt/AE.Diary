@@ -19,7 +19,7 @@ class HolidayRepositoryImpl @Inject constructor(
     override suspend fun addHoliday(holiday: HolidayDomain) =
         holidayDAO.addHoliday(holiday.toEntity())
 
-    override suspend fun deleteHoliday(holiday: HolidayDomain) =
-        holidayDAO.deleteHoliday(holiday.toEntity())
+    override suspend fun deleteAllHoliday() =
+        holidayDAO.deleteHoliday()
 
 }

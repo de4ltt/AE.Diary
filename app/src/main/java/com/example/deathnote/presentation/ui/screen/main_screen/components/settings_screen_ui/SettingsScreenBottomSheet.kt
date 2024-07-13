@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -172,6 +173,32 @@ fun SettingsScreenBottomSheet(
                                     }
                                 }
 
+                            }
+                            Column(
+                                modifier = Modifier
+                                    .wrapContentSize()
+                            ) {
+                                Text(
+                                    text = stringResource(id = R.string.holidays),
+                                    style = DeathNoteTheme.typography.textFieldTitle,
+                                    color = DeathNoteTheme.colors.inverse
+                                )
+
+                                LazyRow(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .wrapContentHeight(),
+                                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                                ) {
+                                    for (i in 1..7)
+                                        item {
+                                            DayBox(
+                                                day = i,
+                                                state = state,
+                                                onEvent = onEvent
+                                            )
+                                        }
+                                }
                             }
                         }
 

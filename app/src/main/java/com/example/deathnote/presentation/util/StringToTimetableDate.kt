@@ -4,8 +4,9 @@ package com.example.deathnote.presentation.util
 
 import java.time.DayOfWeek
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
-fun String.toTimetableDate(weekType: String) = weekType + when(LocalDate.parse(this).dayOfWeek) {
+fun String.toTimetableDate(weekType: String) = weekType + when(LocalDate.parse(this, DateTimeFormatter.ofPattern("dd.MM.yyyy")).dayOfWeek) {
     DayOfWeek.MONDAY -> "_1"
     DayOfWeek.TUESDAY -> "_2"
     DayOfWeek.WEDNESDAY -> "_3"

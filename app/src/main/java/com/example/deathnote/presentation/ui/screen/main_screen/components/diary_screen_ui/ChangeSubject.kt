@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.deathnote.R
@@ -54,24 +55,26 @@ fun ChangeSubject(
                 .clickable(
                     indication = null,
                     interactionSource = remember { MutableInteractionSource() },
-                    onClick = { onEvent(DiaryUIEvent.SetPreviousDaySubject) }
+                    onClick = { if (state.curSubject.name.isNotEmpty()) onEvent(DiaryUIEvent.SetPreviousDaySubject) }
                 )
                 .animateContentSize(),
             tint = DeathNoteTheme.colors.lightInverse
         )
 
         Text(
-            text = state.curSubject.name,
+            text = state.curSubject.name.ifEmpty { stringResource(id = R.string.no_sub_tod) },
             modifier = Modifier
                 .padding(horizontal = 10.dp)
                 .weight(1f)
                 .pointerInput(Unit) {
                     detectTapGestures(
                         onLongPress = {
-                            if (isSubjectDismissed)
-                                onEvent(DiaryUIEvent.UnsetDaySubjectDismissed)
-                            else
-                                onEvent(DiaryUIEvent.SetDaySubjectDismissed)
+                            if (state.curSubject.name.isNotEmpty()) {
+                                if (isSubjectDismissed)
+                                    onEvent(DiaryUIEvent.UnsetDaySubjectDismissed)
+                                else
+                                    onEvent(DiaryUIEvent.SetDaySubjectDismissed)
+                            }
                         }
                     )
                 },
@@ -92,7 +95,7 @@ fun ChangeSubject(
                 .clickable(
                     indication = null,
                     interactionSource = remember { MutableInteractionSource() },
-                    onClick = { onEvent(DiaryUIEvent.SetNextDaySubject) }
+                    onClick = { if (state.curSubject.name.isNotEmpty()) onEvent(DiaryUIEvent.SetNextDaySubject) }
                 )
                 .animateContentSize(),
             tint = DeathNoteTheme.colors.lightInverse

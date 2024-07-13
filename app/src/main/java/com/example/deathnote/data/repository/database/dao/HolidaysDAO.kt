@@ -16,6 +16,6 @@ interface HolidaysDAO {
     @Upsert
     fun addHoliday(holiday: Holidays)
 
-    @Delete
-    fun deleteHoliday(holiday: Holidays)
+    @Query("DELETE FROM holidays")
+    fun deleteHoliday()
 }

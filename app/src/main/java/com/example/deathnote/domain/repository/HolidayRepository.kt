@@ -7,6 +7,6 @@ interface HolidayRepository {
 
     suspend fun getAllHolidays(): Flow<List<HolidayDomain>>
     suspend fun addHoliday(holiday: HolidayDomain)
-    suspend fun deleteHoliday(holiday: HolidayDomain)
+    suspend fun deleteAllHoliday()
 
 }

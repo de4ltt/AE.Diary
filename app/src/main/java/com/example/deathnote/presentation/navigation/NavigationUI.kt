@@ -45,7 +45,10 @@ fun NavigationUI(
         navController = navHostController
     ) {
         composable(MainScreenDestination) {
-            MainScreen(navigator = destinationsNavigator)
+            MainScreen(
+                diaryViewModel = diaryViewModel,
+                navigator = destinationsNavigator
+            )
         }
         composable(SettingsScreenDestination) {
             SettingsScreen(

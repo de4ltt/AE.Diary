@@ -120,6 +120,6 @@ fun SubjectsScreen(
     SubjectTitledDialog(
         state = subjectDialogState,
         onEvent = subjectViewModel::onEvent,
-        refreshSubjects = { diaryViewModel.onEvent(DiaryUIEvent.RefreshSubject) }
+        refreshSubjects = { /*diaryViewModel.onEvent(DiaryUIEvent.RefreshSubject)*/ }
     )
 }

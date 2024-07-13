@@ -38,6 +38,7 @@ import com.example.deathnote.presentation.ui.cross_screen_ui.BottomBarWithTextFi
 import com.example.deathnote.presentation.ui.cross_screen_ui.DarkTopBar
 import com.example.deathnote.presentation.ui.cross_screen_ui.NothingHere
 import com.example.deathnote.presentation.ui.screen.main_screen.components.certificates_screen_ui.CertificatePane
+import com.example.deathnote.presentation.ui.screen.main_screen.components.certificates_screen_ui.CertificatesBottomBarTextField
 import com.example.deathnote.presentation.ui.screen.main_screen.components.certificates_screen_ui.SelectStudentField
 import com.example.deathnote.presentation.ui.screen.main_screen.components.certificates_screen_ui.StudentSelectMenu
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
@@ -192,7 +193,7 @@ fun CertificatesScreen(
                                 horizontalArrangement = Arrangement.spacedBy(15.dp)
                             ) {
                                 item {
-                                    BottomBarTextField(
+                                    CertificatesBottomBarTextField(
                                         title = R.string.start_date,
                                         onValueChange = {
                                             certificateViewModel.onEvent(
@@ -208,7 +209,7 @@ fun CertificatesScreen(
                                 }
 
                                 item {
-                                    BottomBarTextField(
+                                    CertificatesBottomBarTextField(
                                         title = R.string.end_date,
                                         onValueChange = {
                                             certificateViewModel.onEvent(

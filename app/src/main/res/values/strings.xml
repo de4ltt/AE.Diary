@@ -117,4 +117,7 @@
     <string name="first_week">First week type</string>
     <string name="delete_semester_period">Delete semester?</string>
     <string name="ok">Okay</string>
+    <string name="set_sem_time">Set semester period</string>
+    <string name="holidays">Holidays</string>
+    <string name="no_sub_tod">No subjects for this day</string>
 </resources>

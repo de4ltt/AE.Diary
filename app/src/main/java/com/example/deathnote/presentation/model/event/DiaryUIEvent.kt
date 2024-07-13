@@ -17,7 +17,12 @@ sealed class DiaryUIEvent {
     data object ChangeFirstWeekType: DiaryUIEvent()
     data object ChangeSetSemesterTime: DiaryUIEvent()
 
+    data object ChangeDatePickerState: DiaryUIEvent()
+    data class ChangeDate(val date: String): DiaryUIEvent()
+
     data object AddSemesterTime: DiaryUIEvent()
+    data class AddHoliday(val day: Int): DiaryUIEvent()
+    data class DeleteHoliday(val day: Int): DiaryUIEvent()
 
     data object DeleteSemester: DiaryUIEvent()
 
