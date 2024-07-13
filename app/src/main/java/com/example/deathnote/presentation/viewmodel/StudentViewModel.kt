@@ -15,10 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -117,7 +114,7 @@ class StudentViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             studentUseCases.DeleteStudentUseCase(student.toDomain())
 
-            student.id?.let {
+            student.id.let {
                 certificateUseCases.DeleteCertificatesByStudentIdUseCase(it)
             }
         }

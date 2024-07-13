@@ -7,6 +7,7 @@ import com.example.deathnote.presentation.ui.screen.destinations.CertificatesScr
 import com.example.deathnote.presentation.ui.screen.destinations.DiaryScreenDestination
 import com.example.deathnote.presentation.ui.screen.destinations.LanguageScreenDestination
 import com.example.deathnote.presentation.ui.screen.destinations.SettingsScreenDestination
+import com.example.deathnote.presentation.ui.screen.destinations.StatisticsScreenDestination
 import com.example.deathnote.presentation.ui.screen.destinations.StudentsScreenDestination
 import com.example.deathnote.presentation.ui.screen.destinations.StyleScreenDestination
 import com.example.deathnote.presentation.ui.screen.destinations.SubjectsScreenDestination
@@ -33,12 +34,12 @@ sealed interface AppDestination {
     enum class MainScreenMenusDestinations(
         destinationSpec: DirectionDestinationSpec,
         @StringRes val label: Int,
-        @DrawableRes val icon: Int
+        @DrawableRes val icon: Int?
     ): AppDestination {
 
         CERTIFICATES(CertificatesScreenDestination, R.string.certificates, R.drawable.plus),
-        DIARY(DiaryScreenDestination, R.string.diary, R.drawable.clock)
-
+        DIARY(DiaryScreenDestination, R.string.diary, R.drawable.clock),
+        STATISTICS(StatisticsScreenDestination, R.string.statistics, null)
     }
 }
 

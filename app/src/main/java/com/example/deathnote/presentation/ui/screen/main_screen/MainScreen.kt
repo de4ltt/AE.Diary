@@ -1,6 +1,5 @@
 package com.example.deathnote.presentation.ui.screen.main_screen
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,7 +20,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.deathnote.R
@@ -29,7 +27,7 @@ import com.example.deathnote.presentation.model.event.DiaryUIEvent
 import com.example.deathnote.presentation.ui.screen.destinations.CertificatesScreenDestination
 import com.example.deathnote.presentation.ui.screen.destinations.DiaryScreenDestination
 import com.example.deathnote.presentation.ui.screen.destinations.SettingsScreenDestination
-import com.example.deathnote.presentation.ui.screen.destinations.TimetableScreenDestination
+import com.example.deathnote.presentation.ui.screen.destinations.StatisticsScreenDestination
 import com.example.deathnote.presentation.ui.screen.main_screen.components.main_screen_ui.CurrentDate
 import com.example.deathnote.presentation.ui.screen.main_screen.components.main_screen_ui.CurrentSubject
 import com.example.deathnote.presentation.ui.screen.main_screen.components.main_screen_ui.MainScreenPane
@@ -143,7 +141,10 @@ fun MainScreen(
                     MainScreenPane(
                         topStartIcon = R.drawable.stats_tl,
                         middleEndIcon = R.drawable.stats_me,
-                        title = R.string.stats_bar
+                        title = R.string.stats_bar,
+                        onClick = {
+                            navigator.navigate(StatisticsScreenDestination)
+                        }
                     )
                 }
 

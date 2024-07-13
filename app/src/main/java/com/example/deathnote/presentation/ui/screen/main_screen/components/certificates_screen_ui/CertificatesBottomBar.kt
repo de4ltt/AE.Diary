@@ -96,7 +96,7 @@ fun CertificatesBottomBarTextField(
                     icon()
 
                     if (!isDatePicker) {
-                        Box() {
+                        Box {
                             if (value.isEmpty()) {
                                 Text(
                                     color = SoftGray.adjust(if (isDarkMode()) 0.6f else 1f),

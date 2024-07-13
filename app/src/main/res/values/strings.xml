@@ -5,14 +5,11 @@
     <string name="group_list">Group list</string>
     <string name="subjects">Subjects</string>
     <string name="timetable">Timetable</string>
-    <string name="add">Add</string>
-    <string name="save">Save</string>
     <string name="style">Styles</string>
     <string name="to_be_or_not_to_be">To be or not to be</string>
     <string name="the_best_in_the_app">Your doom</string>
     <string name="sorry_for_change">Sorry for another change</string>
     <string name="language_pardon">I beg deine Entschuldigung for кринж</string>
-    <string name="styles_cringe">Just ruin everything.</string>
     <string name="to_delete">DELETE</string>
     <string name="pr">PRA</string>
     <string name="lk">LEC</string>
@@ -64,10 +61,8 @@
     <string name="student">Student</string>
     <string name="start_date">Start date</string>
     <string name="end_date">End date</string>
-    <string name="name_sur_pat">Full name</string>
     <string name="sunday">Sunday</string>
     <string name="add_student">Add student</string>
-    <string name="delete_student">Delete student</string>
     <string name="edit_student">Edit student</string>
     <string name="name">Name</string>
     <string name="surname">Surname</string>
@@ -78,7 +73,6 @@
     <string name="enter_surname">Enter surname</string>
     <string name="enter_patronymic">Enter patronymic</string>
     <string name="enter_callname">Enter title</string>
-    <string name="enter_student">Choose the student</string>
     <string name="enter_start_date">Start date</string>
     <string name="enter_end_date">End date</string>
     <string name="edit_subject">Edit subject</string>
@@ -120,4 +114,8 @@
     <string name="set_sem_time">Set semester period</string>
     <string name="holidays">Holidays</string>
     <string name="no_sub_tod">No subjects for this day</string>
+    <string name="statistics">Statistics</string>
+    <string name="abs_per">A%</string>
+    <string name="absence_per">P%</string>
+    <string name="res_per">R%</string>
 </resources>

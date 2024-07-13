@@ -8,6 +8,7 @@ import com.example.deathnote.presentation.ui.screen.destinations.DiaryScreenDest
 import com.example.deathnote.presentation.ui.screen.destinations.LanguageScreenDestination
 import com.example.deathnote.presentation.ui.screen.destinations.MainScreenDestination
 import com.example.deathnote.presentation.ui.screen.destinations.SettingsScreenDestination
+import com.example.deathnote.presentation.ui.screen.destinations.StatisticsScreenDestination
 import com.example.deathnote.presentation.ui.screen.destinations.StudentsScreenDestination
 import com.example.deathnote.presentation.ui.screen.destinations.SubjectsScreenDestination
 import com.example.deathnote.presentation.ui.screen.destinations.TimetableScreenDestination
@@ -15,6 +16,7 @@ import com.example.deathnote.presentation.ui.screen.main_screen.CertificatesScre
 import com.example.deathnote.presentation.ui.screen.main_screen.DiaryScreen
 import com.example.deathnote.presentation.ui.screen.main_screen.MainScreen
 import com.example.deathnote.presentation.ui.screen.main_screen.SettingsScreen
+import com.example.deathnote.presentation.ui.screen.main_screen.StatisticsScreen
 import com.example.deathnote.presentation.ui.screen.settings.LanguageScreen
 import com.example.deathnote.presentation.ui.screen.settings.StudentsScreen
 import com.example.deathnote.presentation.ui.screen.settings.SubjectsScreen
@@ -90,6 +92,11 @@ fun NavigationUI(
             DiaryScreen(
                 studentViewModel = studentViewModel,
                 diaryViewModel = diaryViewModel,
+                navigator = destinationsNavigator
+            )
+        }
+        composable(StatisticsScreenDestination) {
+            StatisticsScreen(
                 navigator = destinationsNavigator
             )
         }
