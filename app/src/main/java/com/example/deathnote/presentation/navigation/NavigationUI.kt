@@ -23,6 +23,7 @@ import com.example.deathnote.presentation.ui.screen.settings.SubjectsScreen
 import com.example.deathnote.presentation.ui.screen.settings.TimetableScreen
 import com.example.deathnote.presentation.viewmodel.CertificateViewModel
 import com.example.deathnote.presentation.viewmodel.DiaryViewModel
+import com.example.deathnote.presentation.viewmodel.StatisticsViewModel
 import com.example.deathnote.presentation.viewmodel.StudentViewModel
 import com.example.deathnote.presentation.viewmodel.SubjectViewModel
 import com.example.deathnote.presentation.viewmodel.TimetableViewModel
@@ -37,6 +38,7 @@ fun NavigationUI(
     certificateViewModel: CertificateViewModel,
     timetableViewModel: TimetableViewModel,
     diaryViewModel: DiaryViewModel,
+    statisticsViewModel: StatisticsViewModel,
     navHostEngine: NavHostEngine,
     navHostController: NavHostController
 ) {
@@ -97,6 +99,7 @@ fun NavigationUI(
         }
         composable(StatisticsScreenDestination) {
             StatisticsScreen(
+                statisticsViewModel = statisticsViewModel,
                 navigator = destinationsNavigator
             )
         }

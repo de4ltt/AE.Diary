@@ -77,7 +77,6 @@ fun StudentSelectMenu(
             ) {
                 itemsIndexed(allStudents) { index, student ->
                     StudentMenuBar(
-                        index = index + 1,
                         student = student,
                         onSelect = onSelect
                     )

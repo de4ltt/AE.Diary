@@ -64,7 +64,9 @@ fun SubjectMenuBar(
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = stringResource(id = if (subject.type == "lk") R.string.lk else R.string.pr).uppercase(),
+                text = if (subject.type == "lk" || subject.type == "pr")
+                    stringResource(id = if (subject.type == "lk") R.string.lk else R.string.pr).uppercase()
+                else "",
                 style = DeathNoteTheme.typography.itemCardIndex,
                 color = DeathNoteTheme.colors.regular
             )
@@ -78,7 +80,8 @@ fun SubjectMenuBar(
                 if (subject.type == "lk") stringResource(
                     id = R.string.lk
                 )
-                else stringResource(id = R.string.pr)
+                else if (subject.type == "pr") stringResource(id = R.string.pr)
+                else stringResource(id = R.string.all)
             })",
             style = DeathNoteTheme.typography.itemCardTitle,
             color = DeathNoteTheme.colors.inverse

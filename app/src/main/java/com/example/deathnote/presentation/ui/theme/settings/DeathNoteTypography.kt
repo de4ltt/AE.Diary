@@ -4,7 +4,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.example.deathnote.presentation.ui.theme.Black
-import com.example.deathnote.presentation.ui.theme.SemiLightGray
 import com.example.deathnote.presentation.ui.theme.settings.font_family.InterFontFamily
 
 data class DeathNoteTypography(
@@ -33,6 +32,12 @@ data class DeathNoteTypography(
 
     val settingsScreenItemTitle: TextStyle = TextStyle(
         fontFamily = InterFontFamily.Bold,
+        fontSize = 16.sp,
+        lineHeight = 16.sp
+    ),
+
+    val statisticsScreenNumbers: TextStyle = TextStyle(
+        fontFamily = InterFontFamily.Regular,
         fontSize = 16.sp,
         lineHeight = 16.sp
     ),

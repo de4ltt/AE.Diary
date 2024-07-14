@@ -25,7 +25,6 @@ import com.example.deathnote.presentation.util.getFullName
 
 @Composable
 fun StudentMenuBar(
-    index: Int,
     student: Student,
     onSelect: (Student) -> Unit
 ) {
@@ -58,15 +57,8 @@ fun StudentMenuBar(
                 .width(28.dp)
                 .background(
                     color = DeathNoteTheme.colors.primary
-                ),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = "$index",
-                style = DeathNoteTheme.typography.itemCardIndex,
-                color = DeathNoteTheme.colors.regular
-            )
-        }
+                )
+        )
 
         Text(
             modifier = Modifier

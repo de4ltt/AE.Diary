@@ -7,4 +7,7 @@ sealed class StatisticsUIEvent {
 
     data class ChangeStudent(val student: List<Student>) : StatisticsUIEvent()
     data class ChangeSubject(val subject: List<Subject>) : StatisticsUIEvent()
+
+    data object ChangeStudentDrawerState: StatisticsUIEvent()
+    data object ChangeSubjectDrawerState: StatisticsUIEvent()
 }

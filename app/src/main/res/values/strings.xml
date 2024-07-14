@@ -118,4 +118,7 @@
     <string name="abs_per">A%</string>
     <string name="absence_per">P%</string>
     <string name="res_per">R%</string>
+    <string name="all_students">All students</string>
+    <string name="all">all</string>
+    <string name="all_subjects">All subjects</string>
 </resources>
