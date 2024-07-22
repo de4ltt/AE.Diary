@@ -4,20 +4,15 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.example.deathnote.data.model.Absences
 import com.example.deathnote.data.model.Certificates
-import com.example.deathnote.data.model.Holidays
 import com.example.deathnote.data.model.Students
 import com.example.deathnote.data.model.Subjects
-import com.example.deathnote.data.model.SubjectsDismissed
 import com.example.deathnote.data.model.Timetables
-import com.example.deathnote.data.model.WeekTypes
 import com.example.deathnote.data.repository.database.dao.AbsencesDAO
 import com.example.deathnote.data.repository.database.dao.CertificatesDAO
-import com.example.deathnote.data.repository.database.dao.HolidaysDAO
+import com.example.deathnote.data.repository.database.dao.StatisticsDAO
 import com.example.deathnote.data.repository.database.dao.StudentsDAO
 import com.example.deathnote.data.repository.database.dao.SubjectsDAO
-import com.example.deathnote.data.repository.database.dao.SubjectsDismissedDAO
 import com.example.deathnote.data.repository.database.dao.TimetablesDAO
-import com.example.deathnote.data.repository.database.dao.WeekTypesDAO
 
 @Database(
     entities = [
@@ -25,12 +20,10 @@ import com.example.deathnote.data.repository.database.dao.WeekTypesDAO
         Subjects::class,
         Timetables::class,
         Certificates::class,
-        Holidays::class,
-        WeekTypes::class,
-        SubjectsDismissed::class,
         Absences::class
     ],
-    version = 1
+    version = 2,
+    exportSchema = false
 )
 abstract class DiaryDatabase: RoomDatabase() {
 
@@ -42,12 +35,8 @@ abstract class DiaryDatabase: RoomDatabase() {
 
     abstract fun certificateDAO(): CertificatesDAO
 
-    abstract fun holidayDAO(): HolidaysDAO
-
-    abstract fun subjectDismissedDAO(): SubjectsDismissedDAO
-
-    abstract fun weekTypeDAO(): WeekTypesDAO
-
     abstract fun absenceDAO(): AbsencesDAO
+
+    abstract fun statisticsDAO(): StatisticsDAO
 
 }

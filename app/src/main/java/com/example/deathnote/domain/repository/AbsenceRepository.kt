@@ -5,8 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface AbsenceRepository {
 
-    suspend fun getAllDayAbsences(date: String): Flow<List<AbsenceDomain>>
+    suspend fun getAllAbsence(): Flow<List<AbsenceDomain>>
     suspend fun upsertAbsence(absence: AbsenceDomain)
     suspend fun deleteAbsence(absence: AbsenceDomain)
-
 }

@@ -10,8 +10,8 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface AbsencesDAO {
 
-    @Query("SELECT * FROM absences WHERE date=:date")
-    fun getAllDayAbsences(date: String): Flow<List<Absences>>
+    @Query("SELECT * FROM absences")
+    fun getAllAbsences(): Flow<List<Absences>>
 
     @Upsert
     fun upsertAbsence(absence: Absences)

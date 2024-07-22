@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class Students(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    val name: String = "",
-    val surname: String = "",
-    val patronymic: String = ""
+    val name: String,
+    val surname: String,
+    val patronymic: String
 ) : DataEntity

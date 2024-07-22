@@ -1,6 +1,5 @@
 package com.example.deathnote.presentation.model.state
 
-import com.example.deathnote.presentation.model.Holiday
 import com.example.deathnote.presentation.model.Subject
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter

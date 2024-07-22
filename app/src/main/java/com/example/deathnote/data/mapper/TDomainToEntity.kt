@@ -3,21 +3,21 @@ package com.example.deathnote.data.mapper
 import com.example.deathnote.data.model.Absences
 import com.example.deathnote.data.model.Certificates
 import com.example.deathnote.data.model.DataEntity
-import com.example.deathnote.data.model.Holidays
+import com.example.deathnote.data.model.Statistics1M
+import com.example.deathnote.data.model.StatisticsM1
+import com.example.deathnote.data.model.StatisticsMM
 import com.example.deathnote.data.model.Students
 import com.example.deathnote.data.model.Subjects
-import com.example.deathnote.data.model.SubjectsDismissed
 import com.example.deathnote.data.model.Timetables
-import com.example.deathnote.data.model.WeekTypes
 import com.example.deathnote.domain.model.AbsenceDomain
 import com.example.deathnote.domain.model.CertificateDomain
 import com.example.deathnote.domain.model.DomainModel
-import com.example.deathnote.domain.model.HolidayDomain
+import com.example.deathnote.domain.model.StatisticDomain1M
+import com.example.deathnote.domain.model.StatisticDomainM1
+import com.example.deathnote.domain.model.StatisticDomainMM
 import com.example.deathnote.domain.model.StudentDomain
-import com.example.deathnote.domain.model.SubjectDismissedDomain
 import com.example.deathnote.domain.model.SubjectDomain
 import com.example.deathnote.domain.model.TimetableDomain
-import com.example.deathnote.domain.model.WeekTypeDomain
 
 fun <T: DomainModel, V: DataEntity> T.toEntity(): V = when (this) {
 
@@ -36,10 +36,12 @@ fun <T: DomainModel, V: DataEntity> T.toEntity(): V = when (this) {
 
     is TimetableDomain -> Timetables(
         id = id,
-        dayOfWeek = dayOfWeek,
+        date = date,
         subjectId = subjectId,
         startTime = startTime,
-        endTime = endTime
+        endTime = endTime,
+        weekType = weekType,
+        isDismissed = isDismissed
     )
 
     is CertificateDomain -> Certificates(
@@ -49,10 +51,6 @@ fun <T: DomainModel, V: DataEntity> T.toEntity(): V = when (this) {
         end = end
     )
 
-    is HolidayDomain -> Holidays(
-        date = date
-    )
-
     is AbsenceDomain -> Absences(
         respectful = respectful,
         studentId = studentId,
@@ -60,14 +58,27 @@ fun <T: DomainModel, V: DataEntity> T.toEntity(): V = when (this) {
         date = date
     )
 
-    is SubjectDismissedDomain -> SubjectsDismissed(
-        day = day,
-        subjectId = subjectId
+    is StatisticDomain1M -> Statistics1M(
+        subjectId = subjectId,
+        studentId = studentId,
+        absence = absence,
+        resAbsence = resAbsence,
+        absencePercent = absencePercent
     )
 
-    is WeekTypeDomain -> WeekTypes(
-        type = type,
-        day = day
+    is StatisticDomainM1 -> StatisticsM1(
+        subjectId = subjectId,
+        studentId = studentId,
+        absence = absence,
+        resAbsence = resAbsence,
+        absencePercent = absencePercent
+    )
+
+    is StatisticDomainMM -> StatisticsMM(
+        subjectId = subjectId,
+        presencePercent = presencePercent,
+        resAbsencePercent = resAbsencePercent,
+        absencePercent = absencePercent
     )
 
     else -> throw IllegalArgumentException(
