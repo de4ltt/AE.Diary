@@ -35,8 +35,10 @@ import com.example.deathnote.R
 import com.example.deathnote.presentation.model.Subject
 import com.example.deathnote.presentation.model.event.StatisticsUIEvent
 import com.example.deathnote.presentation.model.state.StatisticsUIState
+import com.example.deathnote.presentation.model.util.StatisticsMode
 import com.example.deathnote.presentation.ui.screen.settings.components.timetable_screen_ui.SubjectMenuBar
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
+import com.example.deathnote.presentation.util.getShortName
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
@@ -74,7 +76,8 @@ fun SubjectsDrawer(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = if (curSubject.size == 1) curSubject[0].name else stringResource(id = R.string.all_subjects),
+                text = if (mode != StatisticsMode.ManyStudentsOneSubject) stringResource(id = R.string.all_subjects)
+                else curSubject.getShortName(),
                 fontSize = 15.sp,
                 color = DeathNoteTheme.colors.lightInverse,
                 modifier = Modifier
@@ -123,7 +126,7 @@ fun SubjectsDrawer(
                                     type = stringResource(id = R.string.all)
                                 ),
                                 onSelect = {
-                                    onEvent(StatisticsUIEvent.ChangeSubject(subjectList))
+                                    onEvent(StatisticsUIEvent.ChangeMode(StatisticsMode.OneStudentManySubjects))
                                     onEvent(StatisticsUIEvent.ChangeSubjectDrawerState)
                                 }
                             )
@@ -133,7 +136,7 @@ fun SubjectsDrawer(
                         SubjectMenuBar(
                             subject = subject,
                             onSelect = {
-                                onEvent(StatisticsUIEvent.ChangeSubject(listOf(subject)))
+                                onEvent(StatisticsUIEvent.ChangeSubject(subject))
                                 onEvent(StatisticsUIEvent.ChangeSubjectDrawerState)
                             }
                         )

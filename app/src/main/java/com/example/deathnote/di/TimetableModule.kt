@@ -6,7 +6,6 @@ import com.example.deathnote.domain.use_case.timetable.util.TimetableUseCases
 import com.example.deathnote.domain.use_case.timetable.util.TimetableUseCasesImpl
 import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
@@ -19,4 +18,5 @@ abstract class TimetableModule {
 
     @Binds
     abstract fun bindTimetableRepository(timetableRepositoryImpl: TimetableRepositoryImpl): TimetableRepository
+
 }

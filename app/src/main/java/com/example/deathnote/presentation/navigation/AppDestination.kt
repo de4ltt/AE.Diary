@@ -9,7 +9,6 @@ import com.example.deathnote.presentation.ui.screen.destinations.LanguageScreenD
 import com.example.deathnote.presentation.ui.screen.destinations.SettingsScreenDestination
 import com.example.deathnote.presentation.ui.screen.destinations.StatisticsScreenDestination
 import com.example.deathnote.presentation.ui.screen.destinations.StudentsScreenDestination
-import com.example.deathnote.presentation.ui.screen.destinations.StyleScreenDestination
 import com.example.deathnote.presentation.ui.screen.destinations.SubjectsScreenDestination
 import com.example.deathnote.presentation.ui.screen.destinations.TimetableScreenDestination
 import com.ramcosta.composedestinations.spec.DirectionDestinationSpec
@@ -27,7 +26,6 @@ sealed interface AppDestination {
         SUBJECTS(SubjectsScreenDestination, R.string.subjects, R.drawable.arrow_left),
         TIMETABLE(TimetableScreenDestination, R.string.timetable, R.drawable.arrow_left),
         LANGUAGE(LanguageScreenDestination, R.string.app_language, R.drawable.arrow_left),
-        STYLE(StyleScreenDestination, R.string.style, R.drawable.arrow_left),
 
     }
 

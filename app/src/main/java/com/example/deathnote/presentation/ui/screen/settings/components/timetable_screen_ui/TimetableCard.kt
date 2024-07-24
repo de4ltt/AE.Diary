@@ -20,17 +20,17 @@ import androidx.compose.ui.unit.dp
 import com.example.deathnote.presentation.model.Subject
 import com.example.deathnote.presentation.model.Timetable
 import com.example.deathnote.presentation.model.event.TimetableUIEvent
-import com.example.deathnote.presentation.util.toFormatDayOfWeek
+import com.example.deathnote.presentation.model.util.DayOfWeek
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 
 @Composable
 fun TimetableCard(
-    dayOfWeek: String,
-    timetable: List<Timetable>,
+    dayOfWeek: DayOfWeek,
+    timetables: List<Timetable>,
     getSubjectById: (Int?) -> Subject?,
     onEvent: (TimetableUIEvent) -> Unit
 ) {
-    val sortedTimetables = timetable.sortedBy { it.startTime }
+    val sortedTimetables = timetables.sortedBy { it.startTime }
 
     Column(
         modifier = Modifier
@@ -43,7 +43,7 @@ fun TimetableCard(
     ) {
         Text(
             textAlign = TextAlign.Center,
-            text = stringResource(id = dayOfWeek.toFormatDayOfWeek()).uppercase(),
+            text = stringResource(id = dayOfWeek.title).uppercase(),
             style = DeathNoteTheme.typography.timeTableCard,
             color = DeathNoteTheme.colors.inverse
         )
@@ -70,8 +70,8 @@ fun TimetableCard(
                             classTime = Pair(null, null),
                             subjectScheduled = getSubjectById(null),
                             onClick = {
-                                onEvent(TimetableUIEvent.ChangeDialogSubject(Subject()))
-                                onEvent(TimetableUIEvent.ChangeDialogState(true))
+                                onEvent(TimetableUIEvent.IdleBottomSheet(dayOfWeek))
+                                onEvent(TimetableUIEvent.ChangeBottomSheetState)
                             }
                         )
                     }

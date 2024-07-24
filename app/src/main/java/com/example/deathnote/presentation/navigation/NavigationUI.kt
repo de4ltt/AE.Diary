@@ -56,7 +56,7 @@ fun NavigationUI(
         }
         composable(SettingsScreenDestination) {
             SettingsScreen(
-                diaryViewModel = diaryViewModel,
+                timetableViewModel = timetableViewModel,
                 navigator = destinationsNavigator
             )
         }
@@ -100,6 +100,8 @@ fun NavigationUI(
         composable(StatisticsScreenDestination) {
             StatisticsScreen(
                 statisticsViewModel = statisticsViewModel,
+                studentViewModel = studentViewModel,
+                subjectViewModel = subjectViewModel,
                 navigator = destinationsNavigator
             )
         }

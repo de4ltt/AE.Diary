@@ -2,7 +2,6 @@ package com.example.deathnote.presentation.ui.screen.settings
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.Crossfade
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -28,12 +27,14 @@ import androidx.compose.ui.util.lerp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.deathnote.R
 import com.example.deathnote.presentation.model.event.TimetableUIEvent
+import com.example.deathnote.presentation.model.util.WeekType
 import com.example.deathnote.presentation.navigation.AppDestination
 import com.example.deathnote.presentation.ui.cross_screen_ui.SettingsBottomButton
 import com.example.deathnote.presentation.ui.cross_screen_ui.SettingsTopBar
 import com.example.deathnote.presentation.ui.screen.settings.components.timetable_screen_ui.TimetableCard
 import com.example.deathnote.presentation.ui.screen.settings.components.timetable_screen_ui.TimetableTitledDialog
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
+import com.example.deathnote.presentation.util.toDayOfWeek
 import com.example.deathnote.presentation.viewmodel.SubjectViewModel
 import com.example.deathnote.presentation.viewmodel.TimetableViewModel
 import com.ramcosta.composedestinations.annotation.Destination
@@ -58,17 +59,13 @@ fun TimetableScreen(
         navigator.popBackStack()
     }
 
-    val allTimetables by timetableViewModel.allTimetables.collectAsStateWithLifecycle()
-    val allSubjects by subjectViewModel.allSubjects.collectAsStateWithLifecycle()
-    val timetableState by timetableViewModel.timetableState.collectAsStateWithLifecycle()
-    val timetableDialogState by timetableViewModel.timetableDialogState.collectAsStateWithLifecycle()
-
-    val dayTimetables = allTimetables.groupBy { it.dayOfWeek }
-        .filter { it.key[0] == timetableState.weekType[0] }
-
     val pagerState = rememberPagerState(
         pageCount = { 6 },
     )
+
+    val timetableUIState by timetableViewModel.timetableUIState.collectAsStateWithLifecycle()
+    val allSubjects by subjectViewModel.allSubjects.collectAsStateWithLifecycle()
+    val allTimetables by timetableViewModel.allTimetables.collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier
@@ -127,12 +124,9 @@ fun TimetableScreen(
                 ),
                 shape = DeathNoteTheme.shapes.rounded12
             ) {
-                val dayOfWeek = timetableState.weekType[0] + "_${page + 1}"
-
                 TimetableCard(
-                    dayOfWeek = dayOfWeek,
-                    timetable = dayTimetables[dayOfWeek]
-                        ?: emptyList(),
+                    dayOfWeek = (page + 1).toDayOfWeek(),
+                    timetables = allTimetables[Pair((page + 1).toDayOfWeek(), timetableUIState.curWeekType)] ?: emptyList(),
                     getSubjectById = subjectViewModel::getSubjectById,
                     onEvent = timetableViewModel::onEvent
                 )
@@ -148,21 +142,20 @@ fun TimetableScreen(
                     end = 25.dp
                 )
         ) {
-            Crossfade(targetState = timetableState.weekType) {
+            Crossfade(targetState = timetableUIState.curWeekType) {
                 SettingsBottomButton(
-                    title = if (it == "Odd") R.string.odd_week else R.string.even_week,
+                    title = if (it == WeekType.ODD) R.string.odd_week else R.string.even_week,
                     onClickAction = {
-                        timetableViewModel.onEvent(TimetableUIEvent.ChangeWeekType)
+                        timetableViewModel.onEvent(TimetableUIEvent.ChangeCurWeekType)
                     }
                 )
             }
         }
     }
 
-    if (timetableDialogState.isShown)
-        TimetableTitledDialog(
-            allSubjects = allSubjects,
-            state = timetableDialogState,
-            onEvent = timetableViewModel::onEvent
-        )
+    TimetableTitledDialog(
+        allSubjects = allSubjects,
+        state = timetableUIState,
+        onEvent = timetableViewModel::onEvent
+    )
 }

@@ -24,10 +24,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.deathnote.R
 import com.example.deathnote.presentation.model.Subject
-import com.example.deathnote.presentation.model.Timetable
 import com.example.deathnote.presentation.model.event.TimetableUIEvent
-import com.example.deathnote.presentation.model.state.TimetableDialogState
+import com.example.deathnote.presentation.model.state.TimetableUIState
 import com.example.deathnote.presentation.model.util.DayOfWeek
+import com.example.deathnote.presentation.model.util.WeekType
 import com.example.deathnote.presentation.ui.cross_screen_ui.BottomBarTextField
 import com.example.deathnote.presentation.ui.cross_screen_ui.BottomBarWithTextFields
 import com.example.deathnote.presentation.ui.theme.Black
@@ -41,33 +41,26 @@ import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 @Composable
 fun TimetableTitledDialog(
     allSubjects: List<Subject>,
-    state: TimetableDialogState,
+    state: TimetableUIState,
     onEvent: (TimetableUIEvent) -> Unit
 ) {
     state.apply {
 
-    val timePickerState = rememberTimePickerState(
-        is24Hour = true
-    )
+        val timePickerState = rememberTimePickerState(
+            is24Hour = true
+        )
 
-        if (isShown)
+        if (bottomSheetState)
             BottomBarWithTextFields(
                 title = R.string.add_subject,
                 onAcceptRequest = {
                     onEvent(
-                        TimetableUIEvent.UpsertTimetable(
-                            Timetable(
-                                subjectId = subject.id,
-                                dayOfWeek = "${selectedWeekType}_$selectedDay",
-                                startTime = startTime,
-                                endTime = endTime
-                            )
-                        )
+                        TimetableUIEvent.UpsertTimetable
                     )
-                    onEvent(TimetableUIEvent.ChangeDialogState(false))
+                    onEvent(TimetableUIEvent.ChangeBottomSheetState)
                 },
-                onDismissRequest = { onEvent(TimetableUIEvent.ChangeDialogState(false)) },
-                isActive = subject.name.isNotEmpty(),
+                onDismissRequest = { onEvent(TimetableUIEvent.ChangeBottomSheetState) },
+                isActive = bottomSheetSubject.name.isNotEmpty(),
                 content = {
 
                     Column(
@@ -82,21 +75,21 @@ fun TimetableTitledDialog(
                                 ) {
                                     Text(
                                         text = stringResource(
-                                            id = if (subject.type == "lk") R.string.lk
+                                            id = if (bottomSheetSubject.type == "lk") R.string.lk
                                             else R.string.pr
                                         ).uppercase(),
                                         modifier = Modifier,
-                                        color = if (subject.type == "lk") DarkRed else DarkYellow,
+                                        color = if (bottomSheetSubject.type == "lk") DarkRed else DarkYellow,
                                         style = DeathNoteTheme.typography.textFieldTitle
                                     )
                                 }
                             },
-                            value = subject.name,
+                            value = bottomSheetSubject.name,
                             isCentered = false,
                             innerTitle = R.string.choose_subject,
                             isActive = false,
                             onClick = {
-                                onEvent(TimetableUIEvent.ChangeDialogSubjectPickerState(true))
+                                onEvent(TimetableUIEvent.ChangeBottomSheetSubjectPickerState)
                             }
                         )
 
@@ -110,9 +103,15 @@ fun TimetableTitledDialog(
                                 FromListPicker(
                                     list = DayOfWeek.entries.map { it.code },
                                     title = R.string.day_of_week,
-                                    value = DayOfWeek.entries[selectedDay - 1].title,
+                                    value = bottomSheetDayOfWeek.title,
                                     onEvent = {
-                                        onEvent(TimetableUIEvent.ChangeDialogDayOfWeek(it.toInt()))
+                                        onEvent(
+                                            TimetableUIEvent.ChangeBottomSheetDayOfWeek(
+                                                DayOfWeek.entries[(DayOfWeek.entries.indexOf(
+                                                    bottomSheetDayOfWeek
+                                                ) + 1) % 6]
+                                            )
+                                        )
                                     }
                                 )
                             }
@@ -120,9 +119,9 @@ fun TimetableTitledDialog(
                                 FromListPicker(
                                     list = DayOfWeek.entries.map { it.code },
                                     title = R.string.week_type,
-                                    value = if (selectedWeekType == "O") R.string.odd_week else R.string.even_week,
+                                    value = if (bottomSheetWeekType == WeekType.ODD) R.string.odd_week else R.string.even_week,
                                     onEvent = {
-                                        onEvent(TimetableUIEvent.ChangeSelectedWeekType)
+                                        onEvent(TimetableUIEvent.ChangeBottomSheetWeekType)
                                     }
                                 )
                             }
@@ -131,7 +130,7 @@ fun TimetableTitledDialog(
                                 TimeTextPicker(
                                     isStartTime = true,
                                     onEvent = onEvent,
-                                    value = state.startTime,
+                                    value = bottomSheetStartTime,
                                     title = R.string.start_time
                                 )
                             }
@@ -140,7 +139,7 @@ fun TimetableTitledDialog(
                                 TimeTextPicker(
                                     isStartTime = false,
                                     onEvent = onEvent,
-                                    value = state.endTime,
+                                    value = bottomSheetEndTime,
                                     title = R.string.end_time
                                 )
                             }
@@ -149,20 +148,20 @@ fun TimetableTitledDialog(
                 }
             )
 
-        if (isSubjectPickerShown)
+        if (bottomSheetSubjectPickerState)
             SubjectSelectMenu(
                 allSubjects = allSubjects,
-                onDismissRequest = { onEvent(TimetableUIEvent.ChangeDialogSubjectPickerState(false)) },
+                onDismissRequest = { onEvent(TimetableUIEvent.ChangeBottomSheetSubjectPickerState) },
                 onSelect = {
-                    onEvent(TimetableUIEvent.ChangeDialogSubject(it))
-                    onEvent(TimetableUIEvent.ChangeDialogSubjectPickerState(false))
+                    onEvent(TimetableUIEvent.ChangeBottomSheetSubject(it))
+                    onEvent(TimetableUIEvent.ChangeBottomSheetSubjectPickerState)
                 }
             )
 
-        if (isTimePickerShown)
+        if (bottomSheetTimePickerState)
             TimePickerDialog(
                 title = stringResource(id = R.string.select_time),
-                onDismissRequest = { onEvent(TimetableUIEvent.ChangeTimePickerState(false)) },
+                onDismissRequest = { onEvent(TimetableUIEvent.ChangeBottomSheetTimePickerState) },
                 confirmButton = {
                     Text(
                         modifier = Modifier
@@ -180,12 +179,12 @@ fun TimetableTitledDialog(
                                     val hrMin = "$hour:$minute"
 
                                     onEvent(
-                                        if (pick == "Start") {
-                                            TimetableUIEvent.ChangeDialogStartTime(hrMin)
-                                        } else TimetableUIEvent.ChangeDialogEndTime(hrMin)
+                                        if (bottomSheetTimePickerStartPick == "start") {
+                                            TimetableUIEvent.ChangeBottomSheetStartTime(hrMin)
+                                        } else TimetableUIEvent.ChangeBottomSheetEndTime(hrMin)
                                     )
 
-                                    onEvent(TimetableUIEvent.ChangeTimePickerState(false))
+                                    onEvent(TimetableUIEvent.ChangeBottomSheetTimePickerState)
                                 }
                             ),
                         text = stringResource(id = R.string.ready),
@@ -204,7 +203,7 @@ fun TimetableTitledDialog(
                                 interactionSource = remember { MutableInteractionSource() },
                                 indication = null,
                                 onClick = {
-                                    onEvent(TimetableUIEvent.ChangeTimePickerState(false))
+                                    onEvent(TimetableUIEvent.ChangeBottomSheetTimePickerState)
                                 }
                             ),
                         text = stringResource(id = R.string.cancel),

@@ -13,8 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
-import androidx.compose.material3.TimePicker
-import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -24,9 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.deathnote.R
 import com.example.deathnote.presentation.model.event.TimetableUIEvent
-import com.example.deathnote.presentation.model.state.TimetableDialogState
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -37,9 +33,6 @@ fun TimeTextPicker(
     value: String,
     @StringRes title: Int
 ) {
-    val timePickerState = rememberTimePickerState(
-        is24Hour = true
-    )
 
     Column(
         modifier = Modifier
@@ -68,11 +61,11 @@ fun TimeTextPicker(
                         indication = null,
                         onClick = {
                             if (isStartTime) {
-                                onEvent(TimetableUIEvent.ChangePick("Start"))
+                                onEvent(TimetableUIEvent.ChangeBottomSheetStartTimePicker("start"))
                             }
                             else
-                                onEvent(TimetableUIEvent.ChangePick("End"))
-                            onEvent(TimetableUIEvent.ChangeTimePickerState(true))
+                                onEvent(TimetableUIEvent.ChangeBottomSheetStartTimePicker("end"))
+                            onEvent(TimetableUIEvent.ChangeBottomSheetTimePickerState)
                         }
                     ),
                 contentAlignment = Alignment.Center

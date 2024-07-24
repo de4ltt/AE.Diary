@@ -19,7 +19,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.deathnote.R
-import com.example.deathnote.presentation.model.event.DiaryUIEvent
+import com.example.deathnote.presentation.model.event.TimetableUIEvent
 import com.example.deathnote.presentation.navigation.AppDestination
 import com.example.deathnote.presentation.ui.cross_screen_ui.SettingsTopBar
 import com.example.deathnote.presentation.ui.screen.destinations.LanguageScreenDestination
@@ -31,14 +31,14 @@ import com.example.deathnote.presentation.ui.screen.main_screen.components.setti
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 import com.example.deathnote.presentation.ui.theme.util.isDarkMode
 import com.example.deathnote.presentation.ui.theme.util.switchDarkMode
-import com.example.deathnote.presentation.viewmodel.DiaryViewModel
+import com.example.deathnote.presentation.viewmodel.TimetableViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @Destination
 @Composable
 fun SettingsScreen(
-    diaryViewModel: DiaryViewModel,
+    timetableViewModel: TimetableViewModel,
     navigator: DestinationsNavigator,
     paddingValues: PaddingValues = PaddingValues(
         top = 50.dp,
@@ -54,7 +54,7 @@ fun SettingsScreen(
         mutableStateOf(false)
     }
 
-    val diaryUIState by diaryViewModel.diaryUIState.collectAsStateWithLifecycle()
+    val timetableUIState by timetableViewModel.timetableUIState.collectAsStateWithLifecycle()
 
     val context = LocalContext.current
 
@@ -144,7 +144,7 @@ fun SettingsScreen(
                     title = R.string.semester_time,
                     subtitle = R.string.we_need,
                     onClick = {
-                        diaryViewModel.onEvent(DiaryUIEvent.ChangeSettingsScreenBottomSheetState)
+                        timetableViewModel.onEvent(TimetableUIEvent.ChangeSettingsScreenBottomSheetState)
                     }
                 )
             }
@@ -152,7 +152,7 @@ fun SettingsScreen(
     }
 
     SettingsScreenBottomSheet(
-        state = diaryUIState,
-        onEvent = diaryViewModel::onEvent
+        state = timetableUIState,
+        onEvent = timetableViewModel::onEvent
     )
 }

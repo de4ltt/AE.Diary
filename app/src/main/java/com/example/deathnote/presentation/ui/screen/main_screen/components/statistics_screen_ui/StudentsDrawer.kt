@@ -35,6 +35,7 @@ import com.example.deathnote.R
 import com.example.deathnote.presentation.model.Student
 import com.example.deathnote.presentation.model.event.StatisticsUIEvent
 import com.example.deathnote.presentation.model.state.StatisticsUIState
+import com.example.deathnote.presentation.model.util.StatisticsMode
 import com.example.deathnote.presentation.ui.screen.main_screen.components.certificates_screen_ui.StudentMenuBar
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 import com.example.deathnote.presentation.util.getShortName
@@ -75,7 +76,8 @@ fun StudentsDrawer(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = if (curStudent.size == 1) curStudent[0].getShortName() else stringResource(id = R.string.all_students),
+                text = if (mode != StatisticsMode.OneStudentManySubjects) stringResource(id = R.string.all_students)
+                else curStudent.getShortName(),
                 fontSize = 15.sp,
                 color = DeathNoteTheme.colors.lightInverse,
                 modifier = Modifier
@@ -123,7 +125,7 @@ fun StudentsDrawer(
                                     name = stringResource(id = R.string.all_students)
                                 ),
                                 onSelect = {
-                                    onEvent(StatisticsUIEvent.ChangeStudent(studentsList))
+                                    onEvent(StatisticsUIEvent.ChangeMode(StatisticsMode.ManyStudentsOneSubject))
                                     onEvent(StatisticsUIEvent.ChangeStudentDrawerState)
                                 }
                             )
@@ -133,7 +135,7 @@ fun StudentsDrawer(
                         StudentMenuBar(
                             student = student,
                             onSelect = {
-                                onEvent(StatisticsUIEvent.ChangeStudent(listOf(student)))
+                                onEvent(StatisticsUIEvent.ChangeStudent(student))
                                 onEvent(StatisticsUIEvent.ChangeStudentDrawerState)
                             }
                         )

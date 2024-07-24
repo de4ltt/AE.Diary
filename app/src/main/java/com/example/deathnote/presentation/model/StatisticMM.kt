@@ -5,4 +5,4 @@ data class StatisticMM(
     val presencePercent: Float,
     val resAbsencePercent: Float,
     val absencePercent: Float
-): PresentationModel
+): PresentationModel, StatisticModel

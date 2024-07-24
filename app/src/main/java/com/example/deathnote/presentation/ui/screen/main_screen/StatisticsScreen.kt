@@ -17,8 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.deathnote.presentation.model.Student
-import com.example.deathnote.presentation.model.Subject
+import com.example.deathnote.presentation.model.util.StatisticsMode
 import com.example.deathnote.presentation.navigation.AppDestination
 import com.example.deathnote.presentation.ui.cross_screen_ui.DarkTopBar
 import com.example.deathnote.presentation.ui.cross_screen_ui.NothingHere
@@ -29,12 +28,16 @@ import com.example.deathnote.presentation.ui.screen.main_screen.components.stati
 import com.example.deathnote.presentation.ui.screen.main_screen.components.statistics_screen_ui.SubjectsDrawer
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 import com.example.deathnote.presentation.viewmodel.StatisticsViewModel
+import com.example.deathnote.presentation.viewmodel.StudentViewModel
+import com.example.deathnote.presentation.viewmodel.SubjectViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @Destination
 @Composable
 fun StatisticsScreen(
+    studentViewModel: StudentViewModel,
+    subjectViewModel: SubjectViewModel,
     statisticsViewModel: StatisticsViewModel,
     navigator: DestinationsNavigator
 ) {
@@ -43,8 +46,13 @@ fun StatisticsScreen(
         navigator.popBackStack()
     }
 
-    val allStudents by statisticsViewModel.allStudents.collectAsStateWithLifecycle()
-    val allSubjects by statisticsViewModel.allSubjects.collectAsStateWithLifecycle()
+    val allStudents by studentViewModel.allStudents.collectAsStateWithLifecycle()
+    val allSubjects by subjectViewModel.allSubjects.collectAsStateWithLifecycle()
+
+    val allStatistic1M by statisticsViewModel.allStatistic1M.collectAsStateWithLifecycle()
+    val allStatisticM1 by statisticsViewModel.allStatisticM1.collectAsStateWithLifecycle()
+    val allStatisticMM by statisticsViewModel.allStatisticMM.collectAsStateWithLifecycle()
+
     val statisticsUIState by statisticsViewModel.statisticsUIState.collectAsStateWithLifecycle()
 
     Column(
@@ -85,43 +93,36 @@ fun StatisticsScreen(
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 when (statisticsUIState.mode) {
-                    1 -> {
-                        items(allSubjects) {
+                    StatisticsMode.OneStudentManySubjects -> {
+                        items(allStatistic1M) {
                             Stats1_M(
-                                titled = true,
-                                subject = Subject(
-                                    name = "Mathematica",
-                                ),
-                                respectfulAbsences = 10,
-                                absences = 89,
-                                absencePercent = 20
+                                titled = allStatistic1M.first() == it,
+                                subject = allSubjects.first {subject -> subject.id == it.subjectId },
+                                respectfulAbsences = it.resAbsence,
+                                absences = it.absence,
+                                absencePercent = it.absencePercent
                             )
                         }
                     }
 
-                    2 -> {
-                        items(allStudents) {
+                    StatisticsMode.ManyStudentsOneSubject -> {
+                        items(allStatisticM1) {
                             StatsM_1(
-                                student = Student(
-                                    name = "Vlad",
-                                    surname = "Vladichenko"
-                                ),
-                                respectfulAbsences = 30,
-                                absences = 54,
-                                absencePercent = 10
+                                student = allStudents.first { student -> student.id == it.studentId },
+                                respectfulAbsences = it.resAbsence,
+                                absences = it.absence,
+                                absencePercent = it.absencePercent
                             )
                         }
                     }
 
-                    3 -> {
-                        items (allSubjects) {
+                    StatisticsMode.AllStudentsAllSubjects -> {
+                        items (allStatisticMM) {
                             StatsM_M(
-                                subject = Subject(
-                                    name = "Mathematica",
-                                ),
-                                respectfulAbsencesPercent = 100,
-                                absencesPercent = 100,
-                                totAbsencePercent = 100
+                                subject = allSubjects.first { subject -> subject.id == it.subjectId },
+                                respectfulAbsencesPercent = it.resAbsencePercent,
+                                presencePercent = it.presencePercent,
+                                totAbsencePercent = it.absencePercent
                             )
                         }
                     }

@@ -1,5 +1,11 @@
 package com.example.deathnote.data.repository
 
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import com.example.deathnote.DiaryApplication.Companion.END_TIME
+import com.example.deathnote.DiaryApplication.Companion.FIRST_WEEK_TYPE
+import com.example.deathnote.DiaryApplication.Companion.START_TIME
 import com.example.deathnote.data.mapper.toDomain
 import com.example.deathnote.data.mapper.toEntity
 import com.example.deathnote.data.model.Timetables
@@ -10,8 +16,9 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class TimetableRepositoryImpl @Inject constructor(
-    private val timetableDao: TimetablesDAO
-): TimetableRepository {
+    private val timetableDao: TimetablesDAO,
+    private val dataStore: DataStore<Preferences>
+) : TimetableRepository {
 
     override suspend fun getAllTimetables(): Flow<List<TimetableDomain>> =
         timetableDao.getAllTimetables().toDomain(Timetables::toDomain)
@@ -23,8 +30,26 @@ class TimetableRepositoryImpl @Inject constructor(
         timetableDao.upsertTimetable(timetable.toEntity())
 
     override suspend fun deleteTimetable(timetable: TimetableDomain) {
-        timetableDao.deleteTimetable(timetable.toEntity())
+        timetable.apply {
+            timetableDao.deleteTimetable(
+                date = date,
+                subjectId = subjectId
+            )
+        }
     }
+
     override suspend fun deleteTimetablesBySubjectId(id: Int) =
         timetableDao.deleteTimetablesBySubjectId(id)
+
+    override suspend fun setSemesterTime(start: String, end: String, firstWeekType: String) {
+        dataStore.edit { settings ->
+            settings[START_TIME] = start
+            settings[END_TIME] = end
+            settings[FIRST_WEEK_TYPE] = firstWeekType
+        }
+    }
+
+    override suspend fun getDataStoreData(): Flow<Preferences> =
+        dataStore.data
+
 }

@@ -6,4 +6,4 @@ data class StatisticM1(
     val absence: Int,
     val resAbsence: Int,
     val absencePercent: Float
-): PresentationModel
+): PresentationModel, StatisticModel

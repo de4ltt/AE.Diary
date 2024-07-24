@@ -32,35 +32,36 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.deathnote.R
 import com.example.deathnote.presentation.model.event.DiaryUIEvent
-import com.example.deathnote.presentation.model.state.DiaryUIState
+import com.example.deathnote.presentation.model.event.TimetableUIEvent
+import com.example.deathnote.presentation.model.state.TimetableUIState
 import com.example.deathnote.presentation.ui.cross_screen_ui.BottomBarTextField
 import com.example.deathnote.presentation.ui.cross_screen_ui.BottomBarWithTextFields
 import com.example.deathnote.presentation.ui.theme.SexyGray
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 import com.example.deathnote.presentation.ui.theme.util.isDarkMode
+import com.example.deathnote.presentation.util.toDayOfWeek
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreenBottomSheet(
-    state: DiaryUIState,
-    onEvent: (DiaryUIEvent) -> Unit
+    state: TimetableUIState,
+    onEvent: (TimetableUIEvent) -> Unit
 ) {
 
     state.apply {
-        if (isSettingsBottomSheetOpen) {
-            if (!isTimeSet)
+        if (settingsBottomSheetState) {
+            if (!settingsBottomSheetIsTimeSet)
                 BottomBarWithTextFields(
                     title = R.string.choose_semester_period,
                     isActive = true,
                     onAcceptRequest = {
-                        onEvent(DiaryUIEvent.AddSemesterTime)
-                        onEvent(DiaryUIEvent.ChangeSetSemesterTime)
-                        onEvent(DiaryUIEvent.ChangeSettingsScreenBottomSheetState)
+
+                        onEvent(TimetableUIEvent.ChangeSettingsScreenBottomSheetState)
                     },
                     onDismissRequest = {
-                        onEvent(DiaryUIEvent.ChangeSettingsScreenBottomSheetState)
+                        onEvent(TimetableUIEvent.ChangeSettingsScreenBottomSheetState)
                     },
                     content = {
                         Column(
@@ -77,10 +78,10 @@ fun SettingsScreenBottomSheet(
                                     BottomBarTextField(
                                         title = R.string.start_date,
                                         onValueChange = {
-                                            onEvent(DiaryUIEvent.ChangeStartOfSemester(it))
+
                                         },
-                                        value = startOfSemester,
-                                        previousDate = startOfSemester,
+                                        value = settingsBottomSheetStartDate,
+                                        previousDate = settingsBottomSheetEndDate,
                                         isDatePicker = true,
                                         isStartDate = true,
                                         innerTitle = R.string.enter_start_date,
@@ -107,8 +108,8 @@ fun SettingsScreenBottomSheet(
                                         onValueChange = {
                                             onEvent(DiaryUIEvent.ChangeEndOfSemester(it))
                                         },
-                                        previousDate = startOfSemester,
-                                        value = endOfSemester,
+                                        previousDate = settingsBottomSheetStartDate,
+                                        value = settingsBottomSheetEndDate,
                                         isDatePicker = true,
                                         innerTitle = R.string.enter_end_date,
                                         previousDateSelector = object : SelectableDates {
@@ -193,7 +194,7 @@ fun SettingsScreenBottomSheet(
                                     for (i in 1..7)
                                         item {
                                             DayBox(
-                                                day = i,
+                                                day = i.toDayOfWeek(),
                                                 state = state,
                                                 onEvent = onEvent
                                             )

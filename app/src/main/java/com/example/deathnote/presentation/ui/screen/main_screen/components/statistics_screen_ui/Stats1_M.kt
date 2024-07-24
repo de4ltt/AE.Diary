@@ -33,7 +33,7 @@ fun Stats1_M(
     subject: Subject,
     respectfulAbsences: Int = 0,
     absences: Int = 0,
-    absencePercent: Int = 0
+    absencePercent: Float = 0f
 ) {
 
     Row(

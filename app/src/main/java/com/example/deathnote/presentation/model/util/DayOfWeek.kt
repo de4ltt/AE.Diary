@@ -13,5 +13,6 @@ enum class DayOfWeek(
     WEDNESDAY(R.string.wednesday, "3"),
     THURSDAY(R.string.thursday, "4"),
     FRIDAY(R.string.friday, "5"),
-    SATURDAY(R.string.saturday, "6")
+    SATURDAY(R.string.saturday, "6"),
+    SUNDAY(R.string.sunday, "7")
 }

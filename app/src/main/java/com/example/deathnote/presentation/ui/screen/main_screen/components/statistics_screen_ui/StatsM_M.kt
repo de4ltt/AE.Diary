@@ -31,9 +31,9 @@ import com.example.deathnote.presentation.util.getShortName
 fun StatsM_M(
     titled: Boolean = false,
     subject: Subject,
-    respectfulAbsencesPercent: Int = 0,
-    absencesPercent: Int = 0,
-    totAbsencePercent: Int = 0
+    respectfulAbsencesPercent: Float = 0f,
+    presencePercent: Float = 0f,
+    totAbsencePercent: Float = 0f
 ) {
 
     Row(
@@ -95,7 +95,7 @@ fun StatsM_M(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "$absencesPercent",
+                    text = "$presencePercent",
                     style = DeathNoteTheme.typography.statisticsScreenNumbers,
                     color = DeathNoteTheme.colors.inverse,
                     fontStyle = FontStyle.Normal,

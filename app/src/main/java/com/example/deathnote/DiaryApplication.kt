@@ -1,19 +1,24 @@
 package com.example.deathnote
 
 import android.app.Application
-import android.util.Log
+import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.room.Room
-import androidx.room.RoomDatabase
-import androidx.sqlite.db.SupportSQLiteDatabase
-import com.example.deathnote.data.model.Timetables
 import com.example.deathnote.data.repository.database.DiaryDatabase
 import dagger.hilt.android.HiltAndroidApp
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
 
 @HiltAndroidApp
 class DiaryApplication : Application() {
+
+    companion object {
+        val START_TIME = stringPreferencesKey("start_time")
+        val END_TIME = stringPreferencesKey("end_time")
+        val FIRST_WEEK_TYPE = stringPreferencesKey("odd")
+        val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+    }
 
     private lateinit var db: DiaryDatabase
 

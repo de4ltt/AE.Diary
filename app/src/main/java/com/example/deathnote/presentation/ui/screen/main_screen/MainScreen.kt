@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -23,9 +22,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.deathnote.R
-import com.example.deathnote.presentation.model.event.DiaryUIEvent
 import com.example.deathnote.presentation.ui.screen.destinations.CertificatesScreenDestination
-import com.example.deathnote.presentation.ui.screen.destinations.DiaryScreenDestination
 import com.example.deathnote.presentation.ui.screen.destinations.SettingsScreenDestination
 import com.example.deathnote.presentation.ui.screen.destinations.StatisticsScreenDestination
 import com.example.deathnote.presentation.ui.screen.main_screen.components.main_screen_ui.CurrentDate
@@ -36,7 +33,6 @@ import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 import com.example.deathnote.presentation.viewmodel.DiaryViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import kotlinx.coroutines.launch
 
 
 @Destination(start = true)
@@ -109,7 +105,7 @@ fun MainScreen(
                         middleEndIcon = R.drawable.diary_me,
                         title = R.string.diary_bar,
                         onClick = {
-                            if (!diaryUIState.isTimeSet) {
+                            /*if (!diaryUIState.isTimeSet) {
                                 navigator.navigate(SettingsScreenDestination)
                                 diaryViewModel.onEvent(DiaryUIEvent.ChangeSettingsScreenBottomSheetState)
 
@@ -121,7 +117,7 @@ fun MainScreen(
                                 }
                             }
                             else
-                                navigator.navigate(DiaryScreenDestination)
+                                navigator.navigate(DiaryScreenDestination)*/
                         }
                     )
                 }

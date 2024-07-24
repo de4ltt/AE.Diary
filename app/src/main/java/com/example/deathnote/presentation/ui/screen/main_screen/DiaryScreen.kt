@@ -1,23 +1,8 @@
 package com.example.deathnote.presentation.ui.screen.main_screen
 
-import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.deathnote.presentation.model.event.DiaryUIEvent
-import com.example.deathnote.presentation.navigation.AppDestination
-import com.example.deathnote.presentation.ui.cross_screen_ui.DarkTopBar
-import com.example.deathnote.presentation.ui.cross_screen_ui.NothingHere
-import com.example.deathnote.presentation.ui.screen.main_screen.components.diary_screen_ui.ChangeSubject
-import com.example.deathnote.presentation.ui.screen.main_screen.components.diary_screen_ui.DiaryDatePicker
-import com.example.deathnote.presentation.ui.screen.main_screen.components.diary_screen_ui.StudentCard
-import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 import com.example.deathnote.presentation.viewmodel.DiaryViewModel
 import com.example.deathnote.presentation.viewmodel.StudentViewModel
 import com.ramcosta.composedestinations.annotation.Destination
@@ -33,16 +18,15 @@ fun DiaryScreen(
         horizontal = 25.dp
     )
 ) {
-
+/*
     BackHandler {
         navigator.popBackStack()
     }
 
-    diaryUIState.apply {
+    val diaryUIState = diaryViewModel.diaryUIState.collectAsStateWithLifecycle()
+    val allStudents = studentViewModel.allStudents.collectAsStateWithLifecycle()
 
-        val isSubjectDismissed = allDismissedSubjects.any {
-            it.subjectId == curSubject.id && it.day == date
-        }
+    diaryUIState.apply {
 
         Column(
             modifier = Modifier
@@ -88,5 +72,5 @@ fun DiaryScreen(
         isSelectableDate = diaryViewModel::isItWorkDay,
         state = diaryUIState,
         onEvent = diaryViewModel::onEvent
-    )
+    )*/
 }

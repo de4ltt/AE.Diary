@@ -1,7 +1,6 @@
 package com.example.deathnote.data.repository.database.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Query
 import androidx.room.Upsert
 import com.example.deathnote.data.model.Timetables
@@ -16,12 +15,21 @@ interface TimetablesDAO {
     @Upsert
     fun upsertTimetable(timetable: Timetables)
 
-    @Delete
-    fun deleteTimetable(timetable: Timetables)
+    @Query(
+        """
+        DELETE FROM timetables 
+        WHERE rowid IN (
+            SELECT rowid FROM timetables 
+            WHERE date = :date AND subjectId = :subjectId 
+            LIMIT 1
+        )
+    """
+    )
+    fun deleteTimetable(date: String, subjectId: Int)
 
     @Query("DELETE FROM timetables WHERE subjectId=:id")
     fun deleteTimetablesBySubjectId(id: Int)
 
-    @Query("SELECT subjectId FROM timetables WHERE date=:day")
-    fun getTimetablesByDay(day: String): Flow<List<Int>>
+    @Query("SELECT subjectId FROM timetables WHERE date=:date")
+    fun getTimetablesByDay(date: String): Flow<List<Int>>
 }
