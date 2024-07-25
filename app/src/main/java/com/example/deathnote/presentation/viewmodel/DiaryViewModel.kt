@@ -24,6 +24,7 @@ class DiaryViewModel @Inject constructor(
 
     fun onEvent(event: DiaryUIEvent) = when (event) {
 
+        else -> {}
     }
 
     private fun upsertTimetable(timetable: Timetable) =

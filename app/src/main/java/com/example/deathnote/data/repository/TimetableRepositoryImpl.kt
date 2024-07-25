@@ -1,5 +1,6 @@
 package com.example.deathnote.data.repository
 
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -42,10 +43,14 @@ class TimetableRepositoryImpl @Inject constructor(
         timetableDao.deleteTimetablesBySubjectId(id)
 
     override suspend fun setSemesterTime(start: String, end: String, firstWeekType: String) {
-        dataStore.edit { settings ->
-            settings[START_TIME] = start
-            settings[END_TIME] = end
-            settings[FIRST_WEEK_TYPE] = firstWeekType
+        try {
+            dataStore.edit { settings ->
+                settings[START_TIME] = start
+                settings[END_TIME] = end
+                settings[FIRST_WEEK_TYPE] = firstWeekType
+            }
+        } catch (e: Exception) {
+            Log.e("TimetableRepository", "Error setting semester time", e)
         }
     }
 

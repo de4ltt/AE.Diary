@@ -137,6 +137,7 @@ fun SubjectsDrawer(
                             subject = subject,
                             onSelect = {
                                 onEvent(StatisticsUIEvent.ChangeSubject(subject))
+                                onEvent(StatisticsUIEvent.ChangeMode(StatisticsMode.ManyStudentsOneSubject))
                                 onEvent(StatisticsUIEvent.ChangeSubjectDrawerState)
                             }
                         )

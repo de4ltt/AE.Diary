@@ -50,7 +50,7 @@ fun StatsM_M(
         ) {
             if (titled)
                 Text(
-                    text = stringResource(id = R.string.student),
+                    text = stringResource(id = R.string.subject),
                     style = DeathNoteTheme.typography.textFieldTitle,
                     color = DeathNoteTheme.colors.inverse
                 )

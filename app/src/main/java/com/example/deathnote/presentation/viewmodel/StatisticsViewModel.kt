@@ -40,24 +40,32 @@ class StatisticsViewModel @Inject constructor(
 
     fun onEvent(event: StatisticsUIEvent) = when (event) {
         is StatisticsUIEvent.ChangeStudent ->
-            _statisticsUIState.value = _statisticsUIState.value.copy(
-                curStudent = event.student
-            )
+            viewModelScope.launch {
+                _statisticsUIState.value = _statisticsUIState.value.copy(
+                    curStudent = event.student
+                )
+            }
 
         StatisticsUIEvent.ChangeStudentDrawerState ->
-            _statisticsUIState.value = _statisticsUIState.value.copy(
-                isStudentDrawerOpen = !_statisticsUIState.value.isStudentDrawerOpen
-            )
+            viewModelScope.launch {
+                _statisticsUIState.value = _statisticsUIState.value.copy(
+                    isStudentDrawerOpen = !_statisticsUIState.value.isStudentDrawerOpen
+                )
+            }
 
         is StatisticsUIEvent.ChangeSubject ->
-            _statisticsUIState.value = _statisticsUIState.value.copy(
-                curSubject = event.subject
-            )
+            viewModelScope.launch {
+                _statisticsUIState.value = _statisticsUIState.value.copy(
+                    curSubject = event.subject
+                )
+            }
 
         StatisticsUIEvent.ChangeSubjectDrawerState ->
-            _statisticsUIState.value = _statisticsUIState.value.copy(
-                isSubjectDrawerOpen = !_statisticsUIState.value.isSubjectDrawerOpen
-            )
+            viewModelScope.launch {
+                _statisticsUIState.value = _statisticsUIState.value.copy(
+                    isSubjectDrawerOpen = !_statisticsUIState.value.isSubjectDrawerOpen
+                )
+            }
 
         is StatisticsUIEvent.ChangeMode -> {
             val curMode = statisticsUIState.value.mode
@@ -66,13 +74,17 @@ class StatisticsViewModel @Inject constructor(
                 curMode == StatisticsMode.OneStudentManySubjects && event.mode == StatisticsMode.ManyStudentsOneSubject ||
                 curMode == StatisticsMode.ManyStudentsOneSubject && event.mode == StatisticsMode.OneStudentManySubjects
             )
-                _statisticsUIState.value = _statisticsUIState.value.copy(
-                    mode = StatisticsMode.AllStudentsAllSubjects
-                )
+                viewModelScope.launch {
+                    _statisticsUIState.value = _statisticsUIState.value.copy(
+                        mode = StatisticsMode.AllStudentsAllSubjects
+                    )
+                }
             else
-                _statisticsUIState.value = _statisticsUIState.value.copy(
-                    mode = event.mode
-                )
+                viewModelScope.launch {
+                    _statisticsUIState.value = _statisticsUIState.value.copy(
+                        mode = event.mode
+                    )
+                }
         }
     }
 

@@ -8,5 +8,6 @@ fun Int.toDayOfWeek() = when (this) {
     3 -> DayOfWeek.WEDNESDAY
     4 -> DayOfWeek.THURSDAY
     5 -> DayOfWeek.FRIDAY
-    else -> DayOfWeek.SATURDAY
+    6 -> DayOfWeek.SATURDAY
+    else -> DayOfWeek.SUNDAY
 }

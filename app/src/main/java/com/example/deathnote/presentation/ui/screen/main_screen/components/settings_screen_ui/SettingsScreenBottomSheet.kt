@@ -31,9 +31,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.deathnote.R
-import com.example.deathnote.presentation.model.event.DiaryUIEvent
 import com.example.deathnote.presentation.model.event.TimetableUIEvent
 import com.example.deathnote.presentation.model.state.TimetableUIState
+import com.example.deathnote.presentation.model.util.WeekType
 import com.example.deathnote.presentation.ui.cross_screen_ui.BottomBarTextField
 import com.example.deathnote.presentation.ui.cross_screen_ui.BottomBarWithTextFields
 import com.example.deathnote.presentation.ui.theme.SexyGray
@@ -52,12 +52,12 @@ fun SettingsScreenBottomSheet(
 
     state.apply {
         if (settingsBottomSheetState) {
-            if (!settingsBottomSheetIsTimeSet)
+            if (!isSemesterTimeSet)
                 BottomBarWithTextFields(
                     title = R.string.choose_semester_period,
                     isActive = true,
                     onAcceptRequest = {
-
+                        onEvent(TimetableUIEvent.ChangeSemesterTime)
                         onEvent(TimetableUIEvent.ChangeSettingsScreenBottomSheetState)
                     },
                     onDismissRequest = {
@@ -94,7 +94,7 @@ fun SettingsScreenBottomSheet(
                                         futureDatesSelector = object : SelectableDates {
                                             override fun isSelectableDate(utcTimeMillis: Long): Boolean {
                                                 return utcTimeMillis >= LocalDate.parse(
-                                                    startOfSemester,
+                                                    settingsBottomSheetStartDate,
                                                     DateTimeFormatter.ofPattern("dd.MM.yyyy")
                                                 ).toEpochDay() * 86400000
                                             }
@@ -106,7 +106,7 @@ fun SettingsScreenBottomSheet(
                                     BottomBarTextField(
                                         title = R.string.end_date,
                                         onValueChange = {
-                                            onEvent(DiaryUIEvent.ChangeEndOfSemester(it))
+                                            onEvent(TimetableUIEvent.SettingsBottomSheetChangeSemesterEndTime(it))
                                         },
                                         previousDate = settingsBottomSheetStartDate,
                                         value = settingsBottomSheetEndDate,
@@ -121,7 +121,7 @@ fun SettingsScreenBottomSheet(
                                         futureDatesSelector = object : SelectableDates {
                                             override fun isSelectableDate(utcTimeMillis: Long): Boolean {
                                                 return utcTimeMillis >= LocalDate.parse(
-                                                    startOfSemester,
+                                                    settingsBottomSheetStartDate,
                                                     DateTimeFormatter.ofPattern("dd.MM.yyyy")
                                                 ).toEpochDay() * 86400000
                                             }
@@ -156,14 +156,14 @@ fun SettingsScreenBottomSheet(
                                             interactionSource = remember { MutableInteractionSource() },
                                             indication = null,
                                             onClick = {
-                                                onEvent(DiaryUIEvent.ChangeFirstWeekType)
+                                                onEvent(TimetableUIEvent.SettingsBottomSheetChangeFirstWeekType)
                                             }
                                         ),
                                     contentAlignment = Alignment.Center
                                 ) {
-                                    Crossfade(targetState = firstWeekType) {
+                                    Crossfade(targetState = settingsBottomSheetFirstWeekType) {
                                         Text(
-                                            text = stringResource(id = if (it == "O") R.string.odd else R.string.even).uppercase(),
+                                            text = stringResource(id = if (it == WeekType.ODD) R.string.odd else R.string.even).uppercase(),
                                             fontSize = 15.sp,
                                             color = DeathNoteTheme.colors.inverse,
                                             textAlign = TextAlign.Center,
@@ -208,7 +208,7 @@ fun SettingsScreenBottomSheet(
             else {
                 Dialog(
                     onDismissRequest = {
-                        onEvent(DiaryUIEvent.ChangeSettingsScreenBottomSheetState)
+                        onEvent(TimetableUIEvent.ChangeSettingsScreenBottomSheetState)
                     }
                 ) {
                     Column(
@@ -247,7 +247,7 @@ fun SettingsScreenBottomSheet(
                                         interactionSource = remember { MutableInteractionSource() },
                                         indication = null,
                                         onClick = {
-                                            onEvent(DiaryUIEvent.ChangeSettingsScreenBottomSheetState)
+                                            onEvent(TimetableUIEvent.ChangeSettingsScreenBottomSheetState)
                                         }
                                     ),
                                 contentAlignment = Alignment.Center
@@ -273,9 +273,8 @@ fun SettingsScreenBottomSheet(
                                         interactionSource = remember { MutableInteractionSource() },
                                         indication = null,
                                         onClick = {
-                                            onEvent(DiaryUIEvent.DeleteSemester)
-                                            onEvent(DiaryUIEvent.ChangeSetSemesterTime)
-                                            onEvent(DiaryUIEvent.ChangeSettingsScreenBottomSheetState)
+                                            onEvent(TimetableUIEvent.IdleSemesterTime)
+                                            onEvent(TimetableUIEvent.ChangeSettingsScreenBottomSheetState)
                                         }
                                     ),
                                 contentAlignment = Alignment.Center

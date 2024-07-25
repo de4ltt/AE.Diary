@@ -11,7 +11,7 @@ import com.example.deathnote.presentation.model.util.StatisticsMode
  * 2: 1+ student, 1+ subject
  */
 data class StatisticsUIState(
-    val mode: StatisticsMode = StatisticsMode.OneStudentManySubjects,
+    val mode: StatisticsMode = StatisticsMode.AllStudentsAllSubjects,
     val isSubjectDrawerOpen: Boolean = false,
     val isStudentDrawerOpen: Boolean = false,
     val curSubject: Subject = Subject(),

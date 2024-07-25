@@ -66,28 +66,34 @@ fun StatisticsScreen(
             destination = AppDestination.MainScreenMenusDestinations.STATISTICS
         )
 
-        Row(
-            modifier = Modifier.padding(horizontal = 25.dp),
-            horizontalArrangement = Arrangement.spacedBy(15.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            StudentsDrawer(
-                isActive = allStudents.size > 1,
-                studentsList = allStudents,
-                state = statisticsUIState,
-                onEvent = statisticsViewModel::onEvent,
-                modifier = Modifier.height(50.dp).weight(1f)
-            )
-            SubjectsDrawer(
-                isActive = allStudents.size > 1,
-                subjectList = allSubjects,
-                state = statisticsUIState,
-                onEvent = statisticsViewModel::onEvent,
-                modifier = Modifier.height(50.dp).weight(1f)
-            )
-        }
+        if (allStatisticMM.isNotEmpty()) {
 
-        if (allStudents.isNotEmpty() && allSubjects.isNotEmpty())
+            Row(
+                modifier = Modifier.padding(horizontal = 25.dp),
+                horizontalArrangement = Arrangement.spacedBy(15.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                StudentsDrawer(
+                    isActive = allStudents.size > 1,
+                    studentsList = allStudents,
+                    state = statisticsUIState,
+                    onEvent = statisticsViewModel::onEvent,
+                    modifier = Modifier
+                        .height(50.dp)
+                        .weight(1f)
+                )
+                SubjectsDrawer(
+                    isActive = allSubjects.size > 1,
+                    subjectList = allSubjects,
+                    state = statisticsUIState,
+                    onEvent = statisticsViewModel::onEvent,
+                    modifier = Modifier
+                        .height(50.dp)
+                        .weight(1f)
+                )
+            }
+
+
             LazyColumn(
                 contentPadding = PaddingValues(horizontal = 25.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp)
@@ -97,7 +103,7 @@ fun StatisticsScreen(
                         items(allStatistic1M) {
                             Stats1_M(
                                 titled = allStatistic1M.first() == it,
-                                subject = allSubjects.first {subject -> subject.id == it.subjectId },
+                                subject = allSubjects.first { subject -> subject.id == it.subjectId },
                                 respectfulAbsences = it.resAbsence,
                                 absences = it.absence,
                                 absencePercent = it.absencePercent
@@ -108,6 +114,7 @@ fun StatisticsScreen(
                     StatisticsMode.ManyStudentsOneSubject -> {
                         items(allStatisticM1) {
                             StatsM_1(
+                                titled = allStatisticM1.first() == it,
                                 student = allStudents.first { student -> student.id == it.studentId },
                                 respectfulAbsences = it.resAbsence,
                                 absences = it.absence,
@@ -117,8 +124,9 @@ fun StatisticsScreen(
                     }
 
                     StatisticsMode.AllStudentsAllSubjects -> {
-                        items (allStatisticMM) {
+                        items(allStatisticMM) {
                             StatsM_M(
+                                titled = allStatisticMM.first() == it,
                                 subject = allSubjects.first { subject -> subject.id == it.subjectId },
                                 respectfulAbsencesPercent = it.resAbsencePercent,
                                 presencePercent = it.presencePercent,
@@ -129,7 +137,7 @@ fun StatisticsScreen(
 
                 }
             }
-        else
+        } else
             NothingHere()
     }
 

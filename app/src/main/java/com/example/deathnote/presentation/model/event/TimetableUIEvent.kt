@@ -3,7 +3,6 @@ package com.example.deathnote.presentation.model.event
 import com.example.deathnote.presentation.model.Subject
 import com.example.deathnote.presentation.model.Timetable
 import com.example.deathnote.presentation.model.util.DayOfWeek
-import com.example.deathnote.presentation.model.util.WeekType
 
 sealed class TimetableUIEvent {
 
@@ -11,7 +10,8 @@ sealed class TimetableUIEvent {
     data object UpsertTimetable : TimetableUIEvent()
     data class DeleteTimetable(val timetable: Timetable) : TimetableUIEvent()
 
-    data class ChangeSemesterTime(val start: String, val end: String, val firstWeekType: WeekType) : TimetableUIEvent()
+    data object ChangeSemesterTime : TimetableUIEvent()
+    data object IdleSemesterTime: TimetableUIEvent()
 
     data object ChangeBottomSheetState : TimetableUIEvent()
     data class ChangeBottomSheetSubject(val subject: Subject) : TimetableUIEvent()
@@ -29,4 +29,7 @@ sealed class TimetableUIEvent {
     data object ChangeSettingsScreenBottomSheetState: TimetableUIEvent()
     data class SettingsBottomSheetAddHoliday(val dayOfWeek: DayOfWeek) : TimetableUIEvent()
     data class SettingsBottomSheetDeleteHoliday(val dayOfWeek: DayOfWeek) : TimetableUIEvent()
+    data class SettingsBottomSheetChangeSemesterStartTime(val time: String) : TimetableUIEvent()
+    data class SettingsBottomSheetChangeSemesterEndTime(val time: String) : TimetableUIEvent()
+    data object SettingsBottomSheetChangeFirstWeekType: TimetableUIEvent()
 }
