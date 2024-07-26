@@ -1,8 +1,26 @@
 package com.example.deathnote.presentation.ui.screen.main_screen
 
+import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.deathnote.presentation.model.event.DiaryUIEvent
+import com.example.deathnote.presentation.navigation.AppDestination
+import com.example.deathnote.presentation.ui.cross_screen_ui.DarkTopBar
+import com.example.deathnote.presentation.ui.cross_screen_ui.NothingHere
+import com.example.deathnote.presentation.ui.screen.main_screen.components.diary_screen_ui.ChangeSubject
+import com.example.deathnote.presentation.ui.screen.main_screen.components.diary_screen_ui.DiaryDatePicker
+import com.example.deathnote.presentation.ui.screen.main_screen.components.diary_screen_ui.StudentCard
+import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 import com.example.deathnote.presentation.viewmodel.DiaryViewModel
 import com.example.deathnote.presentation.viewmodel.StudentViewModel
 import com.ramcosta.composedestinations.annotation.Destination
@@ -18,23 +36,22 @@ fun DiaryScreen(
         horizontal = 25.dp
     )
 ) {
-/*
     BackHandler {
         navigator.popBackStack()
     }
 
-    val diaryUIState = diaryViewModel.diaryUIState.collectAsStateWithLifecycle()
-    val allStudents = studentViewModel.allStudents.collectAsStateWithLifecycle()
+    val allStudents by studentViewModel.allStudents.collectAsStateWithLifecycle()
+    val allAbsence by diaryViewModel.allAbsence.collectAsStateWithLifecycle()
+    val diaryUIState by diaryViewModel.diaryUIState.collectAsStateWithLifecycle()
+    val allDayTimetables by diaryViewModel.allDayTimetables.collectAsStateWithLifecycle()
 
-    diaryUIState.apply {
-
-        Column(
-            modifier = Modifier
-                .background(color = DeathNoteTheme.colors.baseBackground)
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(40.dp)
-        ) {
-
+    Column(
+        modifier = Modifier
+            .background(color = DeathNoteTheme.colors.baseBackground)
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(40.dp)
+    ) {
+        diaryUIState.apply {
             DarkTopBar(
                 destination = AppDestination.MainScreenMenusDestinations.DIARY,
                 onIconClick = {
@@ -42,12 +59,12 @@ fun DiaryScreen(
                 }
             )
             ChangeSubject(
-                isSubjectDismissed = isSubjectDismissed,
+                isSubjectDismissed = allDayTimetables.any { it.subjectId == curSubject.id && it.isDismissed },
                 paddingValues = paddingValues,
                 state = diaryUIState,
                 onEvent = diaryViewModel::onEvent
             )
-            if (diaryUIState.curSubject.name.isNotEmpty())
+            if (curSubject.name.isNotEmpty())
                 LazyColumn(
                     contentPadding = paddingValues,
                     verticalArrangement = Arrangement.spacedBy(10.dp)
@@ -69,8 +86,8 @@ fun DiaryScreen(
     }
 
     DiaryDatePicker(
-        isSelectableDate = diaryViewModel::isItWorkDay,
+        isSelectableDate = diaryViewModel::isItHoliday,
         state = diaryUIState,
         onEvent = diaryViewModel::onEvent
-    )*/
+    )
 }

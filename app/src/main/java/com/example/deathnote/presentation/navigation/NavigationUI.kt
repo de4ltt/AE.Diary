@@ -50,7 +50,7 @@ fun NavigationUI(
     ) {
         composable(MainScreenDestination) {
             MainScreen(
-                diaryViewModel = diaryViewModel,
+                timetableViewModel = timetableViewModel,
                 navigator = destinationsNavigator
             )
         }

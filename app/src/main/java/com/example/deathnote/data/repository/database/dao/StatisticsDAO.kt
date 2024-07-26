@@ -12,146 +12,132 @@ interface StatisticsDAO {
 
     @Query(
         """
-        WITH AllClasses AS (
-            SELECT subjectId, count(date) AS count
-            FROM Timetables
-            WHERE isDismissed = 0
-            GROUP BY subjectId
-        ),
-        
-        AllResAbsences AS (
-            SELECT studentId, subjectId, count(*) AS count
-            FROM Absences ab
-            WHERE respectful = 1
-            GROUP BY studentId, subjectId
-        ),
-        
-        AllDisresAbsences AS (
-            SELECT studentId, subjectId, count(*) AS count
-            FROM Absences ab
-            WHERE respectful = 0
-            GROUP BY studentId, subjectId
-        ),
-        
-        AllAbsences AS (
-            SELECT studentId, subjectId, count(*) AS count
-            FROM Absences ab
-            GROUP BY studentId, subjectId
-        )
-        
-        SELECT
-            ad.subjectId,
-            ad.studentId,
-            COALESCE(ad.count, 0) AS absence,
-            COALESCE(aa.count, 0) AS resAbsence,
-            COALESCE((a.count / ac.count), 0) AS absencePercent
-        FROM AllClasses ac
-        JOIN AllAbsences a ON ac.subjectId = a.subjectId
-        JOIN AllResAbsences aa ON a.studentId = aa.studentId AND a.subjectId = aa.subjectId
-        JOIN AllDisresAbsences ad ON a.studentId = ad.studentId AND a.subjectId = ad.subjectId
-        GROUP BY ad.count, aa.count, a.count, ac.count
+    WITH AllClasses AS (
+        SELECT subjectId, COUNT(date) AS count
+        FROM Timetables
+        WHERE isDismissed = 0
+        GROUP BY subjectId
+    ),
+    AllResAbsences AS (
+        SELECT studentId, subjectId, COUNT(*) AS count
+        FROM Absences
+        WHERE respectful = 1
+        GROUP BY studentId, subjectId
+    ),
+    AllDisresAbsences AS (
+        SELECT studentId, subjectId, COUNT(*) AS count
+        FROM Absences
+        WHERE respectful = 0
+        GROUP BY studentId, subjectId
+    ),
+    AllAbsences AS (
+        SELECT studentId, subjectId, COUNT(*) AS count
+        FROM Absences
+        GROUP BY studentId, subjectId
+    )
+
+    SELECT
+        s.id AS subjectId,
+        st.id AS studentId,
+        COALESCE(ad.count, 0) AS absence,
+        COALESCE(aa.count, 0) AS resAbsence,
+        COALESCE((a.count / NULLIF(ac.count, 0)), 0) AS absencePercent
+    FROM Students st
+    JOIN Subjects s
+    LEFT JOIN AllClasses ac ON s.id = ac.subjectId
+    LEFT JOIN AllAbsences a ON st.id = a.studentId AND s.id = a.subjectId
+    LEFT JOIN AllResAbsences aa ON st.id = aa.studentId AND s.id = aa.subjectId
+    LEFT JOIN AllDisresAbsences ad ON st.id = ad.studentId AND s.id = ad.subjectId
+    GROUP BY s.id
     """
     )
     fun getStatistics1M(): Flow<List<Statistics1M>>
 
     @Query(
         """
-        WITH TotalClasses AS (
-            SELECT subjectId, COUNT(date) AS totalClasses
-            FROM Timetables
-            WHERE isDismissed = 0
-            GROUP BY subjectId
-        ),
-        
-        RespectfulAbsences AS (
-            SELECT studentId, subjectId, COUNT(*) AS respectfulAbsences
-            FROM Absences
-            WHERE respectful = 1
-            GROUP BY studentId, subjectId
-        ),
-        
-        DisrespectfulAbsences AS (
-            SELECT studentId, subjectId, COUNT(*) AS disrespectfulAbsences
-            FROM Absences
-            WHERE respectful = 0
-            GROUP BY studentId, subjectId
-        ),
-        
-        TotalAbsences AS (
-            SELECT studentId, subjectId, SUM(respectfulAbsences + disrespectfulAbsences) AS totalAbsences
-            FROM (
-                SELECT
-                    studentId,
-                    subjectId,
-                    SUM(CASE WHEN respectful = 1 THEN 1 ELSE 0 END) as respectfulAbsences,
-                    SUM(CASE WHEN respectful = 0 THEN 1 ELSE 0 END) as disrespectfulAbsences
-                FROM Absences
-                GROUP BY studentId, subjectId, date
-            )
-            GROUP BY studentId, subjectId
-        )
-        
-        SELECT
-            ta.subjectId AS subjectId,
-            ta.studentId as studentId,
-            COALESCE(ra.respectfulAbsences, 0) as resAbsence,
-            COALESCE(da.disrespectfulAbsences, 0) as absence,
-            COALESCE((da.disrespectfulAbsences / ta.totalAbsences), 0) as absencePercent
-        FROM TotalClasses tc
-        LEFT JOIN RespectfulAbsences ra ON tc.subjectId = ra.subjectId
-        LEFT JOIN DisrespectfulAbsences da ON tc.subjectId = da.subjectId
-        LEFT JOIN TotalAbsences ta ON tc.subjectId = ta.subjectId
+    WITH TotalClasses AS (
+        SELECT subjectId, COUNT(date) AS totalClasses
+        FROM Timetables
+        WHERE isDismissed = 0
+        GROUP BY subjectId
+    ),
+    RespectfulAbsences AS (
+        SELECT studentId, subjectId, COUNT(*) AS respectfulAbsences
+        FROM Absences
+        WHERE respectful = 1
+        GROUP BY studentId, subjectId
+    ),
+    DisrespectfulAbsences AS (
+        SELECT studentId, subjectId, COUNT(*) AS disrespectfulAbsences
+        FROM Absences
+        WHERE respectful = 0
+        GROUP BY studentId, subjectId
+    ),
+    TotalAbsences AS (
+        SELECT studentId, subjectId, COUNT(*) AS totalAbsences
+        FROM Absences
+        GROUP BY studentId, subjectId
+    )
+
+    SELECT
+        s.id AS subjectId,
+        st.id AS studentId,
+        COALESCE(ra.respectfulAbsences, 0) AS resAbsence,
+        COALESCE(da.disrespectfulAbsences, 0) AS absence,
+        COALESCE((da.disrespectfulAbsences / NULLIF(ta.totalAbsences, 0)), 0) AS absencePercent
+    FROM Students st
+    JOIN Subjects s
+    LEFT JOIN TotalClasses tc ON s.id = tc.subjectId
+    LEFT JOIN RespectfulAbsences ra ON st.id = ra.studentId AND s.id = ra.subjectId
+    LEFT JOIN DisrespectfulAbsences da ON st.id = da.studentId AND s.id = da.subjectId
+    LEFT JOIN TotalAbsences ta ON st.id = ta.studentId AND s.id = ta.subjectId
+    GROUP BY st.id
     """
     )
     fun getStatisticsM1(): Flow<List<StatisticsM1>>
 
     @Query(
         """
-        WITH TotalClasses AS (
-            SELECT subjectId, COUNT(date) AS totalClasses
-            FROM Timetables
-            WHERE isDismissed = 0
-            GROUP BY subjectId
-        ),
-        
-        RespectfulAbsences AS (
-            SELECT studentId, subjectId, COUNT(DISTINCT date) AS respectfulAbsences
-            FROM Absences
-            WHERE respectful = 1
-            GROUP BY studentId, subjectId
-        ),
-        
-        DisrespectfulAbsences AS (
-            SELECT studentId, subjectId, COUNT(DISTINCT date) AS disrespectfulAbsences
-            FROM Absences
-            WHERE respectful = 0
-            GROUP BY studentId, subjectId),
-        
-        TotalAbsences AS (
-            SELECT studentId, subjectId, SUM(respectfulAbsences + disrespectfulAbsences) AS totalAbsences
-            FROM (
-                SELECT
-                    studentId,
-                    subjectId,
-                    SUM(CASE WHEN respectful = 1 THEN 1 ELSE 0 END) as respectfulAbsences,
-                    SUM(CASE WHEN respectful = 0 THEN 1 ELSE 0 END) as disrespectfulAbsences
-                FROM Absences
-                GROUP BY studentId, subjectId, date
-            )
-            GROUP BY studentId, subjectId
-        )
-        
-        SELECT
-            ta.subjectId AS subjectId,
-            COALESCE(((tc.totalClasses - ta.totalAbsences) / tc.totalClasses), 100) AS presencePercent,
-            COALESCE((ra.respectfulAbsences / ta.totalAbsences), 100) AS resAbsencePercent,
-            COALESCE((da.disrespectfulAbsences / ta.totalAbsences), 0) AS absencePercent
-        FROM TotalClasses tc
-        LEFT JOIN RespectfulAbsences ra ON tc.subjectId = ra.subjectId
-        LEFT JOIN DisrespectfulAbsences da ON tc.subjectId = da.subjectId
-        LEFT JOIN TotalAbsences ta ON tc.subjectId = ta.subjectId
+    WITH TotalClasses AS (
+        SELECT subjectId, COUNT(date) AS totalClasses
+        FROM Timetables
+        WHERE isDismissed = 0
+        GROUP BY subjectId
+    ),
+    RespectfulAbsences AS (
+        SELECT studentId, subjectId, COUNT(DISTINCT date) AS respectfulAbsences
+        FROM Absences
+        WHERE respectful = 1
+        GROUP BY studentId, subjectId
+    ),
+    DisrespectfulAbsences AS (
+        SELECT studentId, subjectId, COUNT(DISTINCT date) AS disrespectfulAbsences
+        FROM Absences
+        WHERE respectful = 0
+        GROUP BY studentId, subjectId
+    ),
+    TotalAbsences AS (
+        SELECT studentId, subjectId, COUNT(*) AS totalAbsences
+        FROM Absences
+        GROUP BY studentId, subjectId
+    )
+
+    SELECT
+        s.id AS subjectId,
+        COALESCE(((tc.totalClasses - COALESCE(ta.totalAbsences, 0)) / NULLIF(tc.totalClasses, 0)), 100) AS presencePercent,
+        COALESCE((ra.respectfulAbsences / NULLIF(ta.totalAbsences, 0)), 100) AS resAbsencePercent,
+        COALESCE((da.disrespectfulAbsences / NULLIF(ta.totalAbsences, 0)), 0) AS absencePercent
+    FROM Students st
+    JOIN Subjects s
+    LEFT JOIN TotalClasses tc ON s.id = tc.subjectId
+    LEFT JOIN RespectfulAbsences ra ON st.id = ra.studentId AND s.id = ra.subjectId
+    LEFT JOIN DisrespectfulAbsences da ON st.id = da.studentId AND s.id = da.subjectId
+    LEFT JOIN TotalAbsences ta ON st.id = ta.studentId AND s.id = ta.subjectId
+    GROUP BY st.id
     """
     )
     fun getStatisticsMM(): Flow<List<StatisticsMM>>
+
+
 
 }

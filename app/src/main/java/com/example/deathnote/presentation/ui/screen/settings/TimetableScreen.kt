@@ -64,8 +64,19 @@ fun TimetableScreen(
     )
 
     val timetableUIState by timetableViewModel.timetableUIState.collectAsStateWithLifecycle()
-    val allSubjects by subjectViewModel.allSubjects.collectAsStateWithLifecycle()
     val allTimetables by timetableViewModel.allTimetables.collectAsStateWithLifecycle()
+    val allSubjects = subjectViewModel.allSubjects.collectAsStateWithLifecycle().value.filter { subject ->
+        allTimetables[Pair(
+            (pagerState.currentPage + 1).toDayOfWeek(),
+            timetableUIState.curWeekType
+        )]?.let {
+            !it.map { timetable ->
+                timetable.subjectId
+            }.contains(
+                subject.id
+            )
+        } ?: true
+    }
 
     Column(
         modifier = Modifier
@@ -126,7 +137,10 @@ fun TimetableScreen(
             ) {
                 TimetableCard(
                     dayOfWeek = (page + 1).toDayOfWeek(),
-                    timetables = allTimetables[Pair((page + 1).toDayOfWeek(), timetableUIState.curWeekType)] ?: emptyList(),
+                    timetables = allTimetables[Pair(
+                        (page + 1).toDayOfWeek(),
+                        timetableUIState.curWeekType
+                    )] ?: emptyList(),
                     getSubjectById = subjectViewModel::getSubjectById,
                     onEvent = timetableViewModel::onEvent
                 )

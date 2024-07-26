@@ -1,9 +1,32 @@
 package com.example.deathnote.presentation.ui.screen.main_screen.components.diary_screen_ui
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.unit.dp
+import com.example.deathnote.R
+import com.example.deathnote.presentation.model.Absence
 import com.example.deathnote.presentation.model.Student
 import com.example.deathnote.presentation.model.event.DiaryUIEvent
 import com.example.deathnote.presentation.model.state.DiaryUIState
+import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
+import com.example.deathnote.presentation.util.getShortName
 
 @Composable
 fun StudentCard(
@@ -14,7 +37,6 @@ fun StudentCard(
     onEvent: (DiaryUIEvent) -> Unit = {},
     titled: Boolean = false
 ) {
-/*
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -73,17 +95,23 @@ fun StudentCard(
                         interactionSource = remember { MutableInteractionSource() },
                         onClick = {
                             if (isAbsRes) onEvent(
-                                DiaryUIEvent.SetDaySubjectStudentPresentRespectful(
-                                    student = student,
-                                    daySubject = state.curSubject,
-                                    date = state.date,
+                                DiaryUIEvent.DeleteStudentAbsence(
+                                    Absence(
+                                        studentId = student.id,
+                                        subjectId = state.curSubject.id,
+                                        date = state.curDate,
+                                        respectful = true
+                                    )
                                 )
                             )
                             else onEvent(
-                                DiaryUIEvent.SetDaySubjectStudentAbsentRespectful(
-                                    student = student,
-                                    daySubject = state.curSubject,
-                                    date = state.date,
+                                DiaryUIEvent.AddStudentAbsence(
+                                    Absence(
+                                        studentId = student.id,
+                                        subjectId = state.curSubject.id,
+                                        date = state.curDate,
+                                        respectful = true
+                                    )
                                 )
                             )
                         }
@@ -120,18 +148,24 @@ fun StudentCard(
                         onClick = {
                             if (isAbsent)
                                 onEvent(
-                                    DiaryUIEvent.SetDaySubjectStudentPresent(
-                                        student = student,
-                                        daySubject = state.curSubject,
-                                        date = state.date,
+                                    DiaryUIEvent.DeleteStudentAbsence(
+                                        Absence(
+                                            studentId = student.id,
+                                            subjectId = state.curSubject.id,
+                                            date = state.curDate,
+                                            respectful = false
+                                        )
                                     )
                                 )
                             else
                                 onEvent(
-                                    DiaryUIEvent.SetDaySubjectStudentAbsent(
-                                        student = student,
-                                        daySubject = state.curSubject,
-                                        date = state.date,
+                                    DiaryUIEvent.AddStudentAbsence(
+                                        Absence(
+                                            studentId = student.id,
+                                            subjectId = state.curSubject.id,
+                                            date = state.curDate,
+                                            respectful = false
+                                        )
                                     )
                                 )
                         }
@@ -146,5 +180,5 @@ fun StudentCard(
                 )
             }
         }
-    }*/
+    }
 }

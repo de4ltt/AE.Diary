@@ -11,18 +11,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.material.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.deathnote.R
+import com.example.deathnote.presentation.model.event.TimetableUIEvent
 import com.example.deathnote.presentation.ui.screen.destinations.CertificatesScreenDestination
+import com.example.deathnote.presentation.ui.screen.destinations.DiaryScreenDestination
 import com.example.deathnote.presentation.ui.screen.destinations.SettingsScreenDestination
 import com.example.deathnote.presentation.ui.screen.destinations.StatisticsScreenDestination
 import com.example.deathnote.presentation.ui.screen.main_screen.components.main_screen_ui.CurrentDate
@@ -30,25 +28,20 @@ import com.example.deathnote.presentation.ui.screen.main_screen.components.main_
 import com.example.deathnote.presentation.ui.screen.main_screen.components.main_screen_ui.MainScreenPane
 import com.example.deathnote.presentation.ui.screen.main_screen.components.main_screen_ui.ProgressBar
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
-import com.example.deathnote.presentation.viewmodel.DiaryViewModel
+import com.example.deathnote.presentation.viewmodel.TimetableViewModel
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
-
-@Destination(start = true)
+@RootNavGraph(start = true)
+@Destination
 @Composable
 fun MainScreen(
-    diaryViewModel: DiaryViewModel,
+    timetableViewModel: TimetableViewModel,
     navigator: DestinationsNavigator
 ) {
 
-    val context = LocalContext.current
-
-    val snackbarHostState = remember { SnackbarHostState() }
-
-    val scope = rememberCoroutineScope()
-
-    val diaryUIState by diaryViewModel.diaryUIState.collectAsStateWithLifecycle()
+    val timetableUIState by timetableViewModel.timetableUIState.collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier
@@ -105,19 +98,12 @@ fun MainScreen(
                         middleEndIcon = R.drawable.diary_me,
                         title = R.string.diary_bar,
                         onClick = {
-                            /*if (!diaryUIState.isTimeSet) {
+                            if (!timetableUIState.isSemesterTimeSet) {
                                 navigator.navigate(SettingsScreenDestination)
-                                diaryViewModel.onEvent(DiaryUIEvent.ChangeSettingsScreenBottomSheetState)
-
-                                scope.launch {
-                                    snackbarHostState.showSnackbar(
-                                        context.getString(R.string.set_sem_time),
-                                        duration = SnackbarDuration.Short
-                                    )
-                                }
+                                timetableViewModel.onEvent(TimetableUIEvent.ChangeSettingsScreenBottomSheetState)
                             }
                             else
-                                navigator.navigate(DiaryScreenDestination)*/
+                                navigator.navigate(DiaryScreenDestination)
                         }
                     )
                 }

@@ -66,7 +66,7 @@ fun StatsM_M(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = subject.getShortName(),
+                    text = subject.getShortName() + " (${stringResource(id = if (subject.type == "lk") R.string.lk else R.string.pr)})",
                     style = DeathNoteTheme.typography.settingsScreenItemTitle,
                     color = DeathNoteTheme.colors.inverse,
                     fontStyle = FontStyle.Normal,

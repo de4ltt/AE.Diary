@@ -1,6 +1,5 @@
 package com.example.deathnote.presentation.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.deathnote.DiaryApplication.Companion.END_TIME
@@ -126,9 +125,9 @@ class TimetableViewModel @Inject constructor(
                 _timetableUIState.value = _timetableUIState.value.copy(
                     bottomSheetSubject = Subject(),
                     bottomSheetDayOfWeek = event.dayOfWeek,
-                    bottomSheetWeekType = WeekType.ODD,
-                    bottomSheetStartTime = nowTime,
-                    bottomSheetEndTime = nowTime
+                    bottomSheetWeekType = _timetableUIState.value.curWeekType,
+                    bottomSheetStartTime = "08:00",
+                    bottomSheetEndTime = "09:20"
                 )
             }
 
@@ -195,24 +194,24 @@ class TimetableViewModel @Inject constructor(
 
     private fun upsertTimetable() = viewModelScope.launch(Dispatchers.IO) {
 
-        var curDate =
-            LocalDate.parse(
-                _semesterTime.value.first,
-                DateTimeFormatter.ofPattern("dd.MM.yyyy")
-            )
-        val endDate =
-            LocalDate.parse(
-                _semesterTime.value.second,
-                DateTimeFormatter.ofPattern("dd.MM.yyyy")
-            )
-        val pattern =
-            DateTimeFormatter.ofPattern("dd.MM.yyyy")
         val timetableUIStateValue = _timetableUIState.value
 
         findFirstMatchDay(
             timetableUIStateValue.bottomSheetDayOfWeek,
             timetableUIStateValue.bottomSheetWeekType
         )?.let {
+
+            var curDate =
+                it
+            val endDate =
+                LocalDate.parse(
+                    _semesterTime.value.second,
+                    DateTimeFormatter.ofPattern("dd.MM.yyyy")
+                )
+            val pattern =
+                DateTimeFormatter.ofPattern("dd.MM.yyyy")
+
+
             val timetable = Timetable(
                 date = it.format(pattern),
                 subjectId = timetableUIStateValue.bottomSheetSubject.id,
@@ -244,7 +243,7 @@ class TimetableViewModel @Inject constructor(
 
         var curDate =
             LocalDate.parse(
-                _semesterTime.value.first,
+                timetable.date,
                 DateTimeFormatter.ofPattern("dd.MM.yyyy")
             )
         val endDate =
@@ -256,19 +255,11 @@ class TimetableViewModel @Inject constructor(
             DateTimeFormatter.ofPattern("dd.MM.yyyy")
 
         while (curDate <= endDate) {
-            viewModelScope.launch(Dispatchers.IO) {
-                if (
-                    curDate.dayOfWeek.value == LocalDate.parse(
-                        timetable.date,
-                        pattern
-                    ).dayOfWeek.value
-                )
-                    timetableUseCases.DeleteTimetableUseCase(
-                        timetable.copy(
-                            date = curDate.format(pattern)
-                        ).toDomain()
-                    )
-            }
+            timetableUseCases.DeleteTimetableUseCase(
+                timetable.copy(
+                    date = curDate.format(pattern)
+                ).toDomain()
+            )
             curDate = curDate.plusDays(14)
         }
     }
@@ -282,13 +273,13 @@ class TimetableViewModel @Inject constructor(
         var curWeekType = semesterTimeValue.third
 
         while (
-            curDate.dayOfWeek.value != dayOfWeek.code &&
+            curDate.dayOfWeek.value != dayOfWeek.code ||
             curWeekType != weekType
         ) {
             if (curDate > endDate) return null
+            curDate = curDate.plusDays(1)
             if (curDate.dayOfWeek.value == 1)
                 curWeekType = if (curWeekType == WeekType.ODD) WeekType.EVEN else WeekType.ODD
-            curDate = curDate.plusDays(1)
         }
 
         return curDate
@@ -299,7 +290,6 @@ class TimetableViewModel @Inject constructor(
 
             launch(Dispatchers.IO) {
                 timetableUseCases.GetDataStoreDataUseCase().collectLatest {
-                    Log.e("TimetableViewModel", "DataStore data: $it")
                     it[FIRST_WEEK_TYPE]?.let { weekType ->
                         _semesterTime.value = Triple(
                             it[START_TIME] ?: nowTime,
@@ -329,14 +319,13 @@ class TimetableViewModel @Inject constructor(
                             second = timetable.weekType.toWeekType()
                         )
                     }.mapValues { list ->
-                       list.value.groupBy { entry -> entry.date }.values.first()
+                        list.value.groupBy { entry -> entry.date }.values.first()
                     }
                 }
             }
 
             launch {
                 _semesterTime.collectLatest {
-                    Log.e("TimetableViewModel", "SemesterTime: $it")
                     _timetableUIState.value = _timetableUIState.value.copy(
                         isSemesterTimeSet = it.first != it.second
                     )
