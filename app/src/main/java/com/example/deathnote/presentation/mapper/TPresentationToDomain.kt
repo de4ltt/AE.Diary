@@ -50,8 +50,7 @@ fun <T: PresentationModel, V: DomainModel> T.toDomain(): V = when (this) {
     is Absence -> AbsenceDomain(
         respectful = respectful,
         studentId = studentId,
-        subjectId = subjectId,
-        date = date
+        timetableId = timetableId
     )
 
     else -> throw IllegalArgumentException(

@@ -5,7 +5,7 @@ import androidx.room.ForeignKey
 
 @Entity(
     primaryKeys = [
-        "studentId", "subjectId", "date"
+        "studentId", "timetableId"
     ],
     foreignKeys = [
         ForeignKey(
@@ -19,22 +19,12 @@ import androidx.room.ForeignKey
             onDelete = ForeignKey.CASCADE
         ),
         ForeignKey(
-            entity = Subjects::class,
+            entity = Timetables::class,
             parentColumns = [
                 "id"
             ],
             childColumns = [
-                "subjectId"
-            ],
-            onDelete = ForeignKey.CASCADE
-        ),
-        ForeignKey(
-            entity = Timetables::class,
-            parentColumns = [
-                "subjectId", "date"
-            ],
-            childColumns = [
-                "subjectId", "date"
+                "timetableId"
             ],
             onDelete = ForeignKey.CASCADE
         )
@@ -42,7 +32,6 @@ import androidx.room.ForeignKey
 )
 data class Absences(
     val studentId: Int,
-    val subjectId: Int,
-    val date: String,
+    val timetableId: Int,
     val respectful: Boolean
 ): DataEntity

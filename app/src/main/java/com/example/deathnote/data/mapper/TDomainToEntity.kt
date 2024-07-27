@@ -48,8 +48,7 @@ fun <T: DomainModel, V: DataEntity> T.toEntity(): V = when (this) {
     is AbsenceDomain -> Absences(
         respectful = respectful,
         studentId = studentId,
-        subjectId = subjectId,
-        date = date
+        timetableId = timetableId
     )
 
     else -> throw IllegalArgumentException(

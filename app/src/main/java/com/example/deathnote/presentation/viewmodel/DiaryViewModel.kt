@@ -100,18 +100,35 @@ class DiaryViewModel @Inject constructor(
 
     private fun setNextSubject() {
         val curSubjectIndex = _allDaySubjects.value.indexOf(_diaryUIState.value.curSubject)
-        _diaryUIState.value = _diaryUIState.value.copy(
-            curSubject = if (curSubjectIndex == _allDaySubjects.value.lastIndex) _allDaySubjects.value.first()
+        val nextSubject =
+            if (curSubjectIndex == _allDaySubjects.value.lastIndex) _allDaySubjects.value.first()
             else _allDaySubjects.value[curSubjectIndex + 1]
-        )
+
+        val dayTimetablesBySubjectId =
+            _allDayTimetables.value.groupBy { it.subjectId }.mapValues { it.value[0] }
+
+        dayTimetablesBySubjectId[nextSubject.id]?.let {
+            _diaryUIState.value = _diaryUIState.value.copy(
+                curSubject = nextSubject,
+                curTimetable = it
+            )
+        }
     }
 
     private fun setPrevSubject() {
         val curSubjectIndex = _allDaySubjects.value.indexOf(_diaryUIState.value.curSubject)
-        _diaryUIState.value = _diaryUIState.value.copy(
-            curSubject = if (curSubjectIndex == 0) _allDaySubjects.value.last()
-            else _allDaySubjects.value[curSubjectIndex - 1]
-        )
+        val prevSubject = if (curSubjectIndex == 0) _allDaySubjects.value.last()
+        else _allDaySubjects.value[curSubjectIndex - 1]
+
+        val dayTimetablesBySubjectId =
+            _allDayTimetables.value.groupBy { it.subjectId }.mapValues { it.value[0] }
+
+        dayTimetablesBySubjectId[prevSubject.id]?.let {
+            _diaryUIState.value = _diaryUIState.value.copy(
+                curSubject = prevSubject,
+                curTimetable = it
+            )
+        }
     }
 
     init {
@@ -156,7 +173,8 @@ class DiaryViewModel @Inject constructor(
 
                         if (filteredSubjects.isNotEmpty()) {
                             _diaryUIState.value = _diaryUIState.value.copy(
-                                curSubject = filteredSubjects.first()
+                                curSubject = filteredSubjects.first(),
+                                curTimetable = dayTimetables.first { it.subjectId == filteredSubjects.first().id }
                             )
                         }
                     }

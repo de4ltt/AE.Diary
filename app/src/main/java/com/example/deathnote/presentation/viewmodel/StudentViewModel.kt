@@ -3,7 +3,6 @@ package com.example.deathnote.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.deathnote.domain.model.StudentDomain
-import com.example.deathnote.domain.use_case.certificate.util.CertificateUseCases
 import com.example.deathnote.domain.use_case.student.util.StudentUseCases
 import com.example.deathnote.presentation.mapper.toDomain
 import com.example.deathnote.presentation.mapper.toPresentation
@@ -20,8 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class StudentViewModel @Inject constructor(
-    private val studentUseCases: StudentUseCases,
-    private val certificateUseCases: CertificateUseCases
+    private val studentUseCases: StudentUseCases
 ) : ViewModel() {
 
     private val _allStudents: MutableStateFlow<List<Student>> = MutableStateFlow(emptyList())
@@ -113,10 +111,6 @@ class StudentViewModel @Inject constructor(
     private fun deleteStudent(student: Student) =
         viewModelScope.launch(Dispatchers.IO) {
             studentUseCases.DeleteStudentUseCase(student.toDomain())
-
-            student.id.let {
-                certificateUseCases.DeleteCertificatesByStudentIdUseCase(it)
-            }
         }
 
     fun getStudentById(id: Int?) = if (id == null) Student()

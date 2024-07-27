@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.deathnote.domain.model.SubjectDomain
 import com.example.deathnote.domain.use_case.subject.util.SubjectUseCases
-import com.example.deathnote.domain.use_case.timetable.util.TimetableUseCases
 import com.example.deathnote.presentation.mapper.toDomain
 import com.example.deathnote.presentation.mapper.toPresentation
 import com.example.deathnote.presentation.model.Subject
@@ -20,8 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SubjectViewModel @Inject constructor(
-    private val subjectUseCases: SubjectUseCases,
-    private val timetableUseCases: TimetableUseCases
+    private val subjectUseCases: SubjectUseCases
 ) : ViewModel() {
 
     private val _allSubjects: MutableStateFlow<List<Subject>> = MutableStateFlow(emptyList())
@@ -91,7 +89,6 @@ class SubjectViewModel @Inject constructor(
     private fun deleteSubject(subject: Subject) =
         viewModelScope.launch(Dispatchers.IO) {
             subjectUseCases.DeleteSubjectUseCase(subject.toDomain())
-            timetableUseCases.DeleteTimetablesBySubjectIdUseCase(subject.id)
         }
 
     private fun upsertSubject(subject: Subject) =

@@ -161,21 +161,24 @@ class StatisticsViewModel @Inject constructor(
                 _allTimetables.collectLatest { timetables ->
                     val timetablesSize: Float = getPastTimetables(timetables).toFloat()
 
+                    val allTimetablesBySubjectId = timetables
+                        .groupBy { it.subjectId }
+                        .mapValues { timetable -> timetable.value.map { it.id } }
+
                     _allAbsence.collectLatest { absences ->
                         _statisticsUIState.collectLatest { state ->
                             _allStudents.collectLatest { students ->
                                 _allSubjects.collectLatest { subjects ->
-
                                     _allStatistic1M.value = subjects.map { subject ->
                                         val studentId = state.curStudent.id
 
                                         Statistic1M(
                                             studentId = studentId,
                                             subjectId = subject.id,
-                                            absence = absences.count { it.studentId == studentId && it.subjectId == subject.id },
-                                            resAbsence = absences.count { it.studentId == studentId && it.respectful && it.subjectId == subject.id },
+                                            absence = absences.count { it.studentId == studentId },
+                                            resAbsence = absences.count { it.studentId == studentId && it.respectful },
                                             absencePercent = if (timetablesSize > 0)
-                                                (100 * (absences.count { it.studentId == studentId && !it.respectful && it.subjectId == subject.id } / timetablesSize)).roundToInt()
+                                                (100 * (absences.count { it.studentId == studentId && !it.respectful } / timetablesSize)).roundToInt()
                                             else 0
                                         )
                                     }
@@ -183,32 +186,36 @@ class StatisticsViewModel @Inject constructor(
                                     _allStatisticM1.value = students.map { student ->
                                         val subjectId = state.curSubject.id
 
+                                        val subjectTimetablesIds = allTimetablesBySubjectId[subjectId] ?: emptyList()
+
                                         StatisticM1(
                                             subjectId = subjectId,
                                             studentId = student.id,
                                             absence = absences.count { absence ->
-                                                student.id == absence.studentId && absence.subjectId == subjectId
+                                                student.id == absence.studentId && subjectTimetablesIds.contains(absence.timetableId)
                                             },
                                             resAbsence = absences.count { absence ->
-                                                student.id == absence.studentId && absence.subjectId == subjectId && absence.respectful
+                                                student.id == absence.studentId && subjectTimetablesIds.contains(absence.timetableId) && absence.respectful
                                             },
                                             absencePercent = if (timetablesSize > 0)
-                                                (100 * (absences.count { it.studentId == student.id && !it.respectful && it.subjectId == subjectId } / timetablesSize)).roundToInt()
+                                                (100 * (absences.count { it.studentId == student.id && !it.respectful && subjectTimetablesIds.contains(it.timetableId) } / timetablesSize)).roundToInt()
                                             else 0
                                         )
                                     }
 
                                     _allStatisticMM.value = subjects.map { subject ->
+                                        val subjectTimetablesIds = allTimetablesBySubjectId[subject.id] ?: emptyList()
+
                                         StatisticMM(
                                             subjectId = subject.id,
                                             presencePercent = if (timetablesSize > 0)
-                                                (100 - 100 * (absences.count { it.subjectId == subject.id } / (timetablesSize * students.size))).roundToInt()
+                                                (100 - 100 * (absences.count { subjectTimetablesIds.contains(it.timetableId) } / (timetablesSize * students.size))).roundToInt()
                                             else 100,
                                             resAbsencePercent = if (timetablesSize > 0)
-                                                (100 * (absences.count { it.subjectId == subject.id && it.respectful } / (timetablesSize * students.size))).roundToInt()
+                                                (100 * (absences.count { subjectTimetablesIds.contains(it.timetableId) && it.respectful } / (timetablesSize * students.size))).roundToInt()
                                             else 0,
                                             absencePercent = if (timetablesSize > 0)
-                                                (100 * (absences.count { it.subjectId == subject.id && !it.respectful } / (timetablesSize * students.size))).roundToInt()
+                                                (100 * (absences.count { subjectTimetablesIds.contains(it.timetableId) && !it.respectful } / (timetablesSize * students.size))).roundToInt()
                                             else 0
                                         )
                                     }

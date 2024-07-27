@@ -98,8 +98,7 @@ fun StudentCard(
                                 DiaryUIEvent.DeleteStudentAbsence(
                                     Absence(
                                         studentId = student.id,
-                                        subjectId = state.curSubject.id,
-                                        date = state.curDate,
+                                        timetableId = state.curTimetable.id,
                                         respectful = true
                                     )
                                 )
@@ -108,8 +107,7 @@ fun StudentCard(
                                 DiaryUIEvent.AddStudentAbsence(
                                     Absence(
                                         studentId = student.id,
-                                        subjectId = state.curSubject.id,
-                                        date = state.curDate,
+                                        timetableId = state.curTimetable.id,
                                         respectful = true
                                     )
                                 )
@@ -151,8 +149,7 @@ fun StudentCard(
                                     DiaryUIEvent.DeleteStudentAbsence(
                                         Absence(
                                             studentId = student.id,
-                                            subjectId = state.curSubject.id,
-                                            date = state.curDate,
+                                            timetableId = state.curTimetable.id,
                                             respectful = false
                                         )
                                     )
@@ -162,8 +159,7 @@ fun StudentCard(
                                     DiaryUIEvent.AddStudentAbsence(
                                         Absence(
                                             studentId = student.id,
-                                            subjectId = state.curSubject.id,
-                                            date = state.curDate,
+                                            timetableId = state.curTimetable.id,
                                             respectful = false
                                         )
                                     )
