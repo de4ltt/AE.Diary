@@ -28,6 +28,7 @@ import com.example.deathnote.presentation.ui.screen.main_screen.components.main_
 import com.example.deathnote.presentation.ui.screen.main_screen.components.main_screen_ui.MainScreenPane
 import com.example.deathnote.presentation.ui.screen.main_screen.components.main_screen_ui.ProgressBar
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
+import com.example.deathnote.presentation.viewmodel.MainScreenViewModel
 import com.example.deathnote.presentation.viewmodel.TimetableViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
@@ -37,10 +38,12 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 @Destination
 @Composable
 fun MainScreen(
+    mainScreenViewModel: MainScreenViewModel,
     timetableViewModel: TimetableViewModel,
     navigator: DestinationsNavigator
 ) {
 
+    val mainScreenUIState by mainScreenViewModel.mainScreenUIState.collectAsStateWithLifecycle()
     val timetableUIState by timetableViewModel.timetableUIState.collectAsStateWithLifecycle()
 
     Column(
@@ -71,9 +74,9 @@ fun MainScreen(
                 ),
                 verticalArrangement = Arrangement.spacedBy(20.dp)
             ) {
-                CurrentDate()
-                CurrentSubject()
-                ProgressBar()
+                CurrentDate(mainScreenUIState)
+                CurrentSubject(mainScreenUIState)
+                ProgressBar(mainScreenUIState)
             }
         }
 

@@ -76,11 +76,41 @@ class CertificateViewModel @Inject constructor(
 
     private fun addCertificate(certificate: Certificate) =
         viewModelScope.launch(Dispatchers.IO) {
-            certificateUseCases.AddCertificateUseCase(certificate.toDomain())
+            val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+
+            _certificateUIState.value.apply {
+                var curDate = LocalDate.parse(start, formatter)
+                val endDate = LocalDate.parse(end, formatter)
+
+                while (curDate <= endDate) {
+                    certificateUseCases.AddStudentAbsenceByDateUseCase(
+                        curDate.format(formatter),
+                        student.id
+                    )
+
+                    curDate = curDate.plusDays(1)
+                }
+
+                certificateUseCases.AddCertificateUseCase(certificate.toDomain())
+            }
         }
 
     private fun deleteCertificate(certificate: Certificate) =
         viewModelScope.launch(Dispatchers.IO) {
+            val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+
+            var curDate = LocalDate.parse(certificate.start, formatter)
+            val endDate = LocalDate.parse(certificate.end, formatter)
+
+            while (curDate <= endDate) {
+                certificateUseCases.DeleteStudentAbsenceByDateUseCase(
+                    curDate.format(formatter),
+                    certificate.studentId
+                )
+
+                curDate = curDate.plusDays(1)
+            }
+
             certificateUseCases.DeleteCertificateUseCase(certificate.toDomain())
         }
 

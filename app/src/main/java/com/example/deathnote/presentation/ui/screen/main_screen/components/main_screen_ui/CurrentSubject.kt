@@ -10,52 +10,56 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.sp
 import com.example.deathnote.R
-import com.example.deathnote.presentation.model.Subject
+import com.example.deathnote.presentation.model.state.MainScreenUIState
 import com.example.deathnote.presentation.ui.theme.DarkRedBackground
 import com.example.deathnote.presentation.ui.theme.DarkYellow
 import com.example.deathnote.presentation.ui.theme.LightGray
 import com.example.deathnote.presentation.ui.theme.SemiLightGray
 
 @Composable
-fun CurrentSubject() {
-    val subject = Subject(
-        1, "DISCRETE PROGRAMMING"
-    )
+fun CurrentSubject(
+    state: MainScreenUIState
+) {
 
-    Text(
-        text = subject.name.uppercase(),
-        style = TextStyle(
-            color = LightGray,
-            fontSize = 30.sp,
-            fontWeight = FontWeight.Bold
+    state.apply {
+
+        Text(
+            text = curSubject.name.uppercase(),
+            style = TextStyle(
+                color = LightGray,
+                fontSize = 30.sp,
+                fontWeight = FontWeight.Bold
+            )
         )
-    )
 
-    Text(
-        text = buildAnnotatedString {
-            withStyle(
-                style = SpanStyle(
-                    color = if (subject.type == "lk") DarkRedBackground
-                    else DarkYellow,
-                    fontSize = 19.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            ) {
-                append(stringResource(
-                    id = if (subject.type == "lk") R.string.lecture
-                    else R.string.practice
-                ))
-            }
+        Text(
+            text = buildAnnotatedString {
+                withStyle(
+                    style = SpanStyle(
+                        color = if (curSubject.type == "lk") DarkRedBackground
+                        else DarkYellow,
+                        fontSize = 19.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                ) {
+                    append(
+                        stringResource(
+                            id = if (curSubject.type == "lk") R.string.lecture
+                            else R.string.practice
+                        )
+                    )
+                }
 
-            withStyle(
-                style = SpanStyle(
-                    color = SemiLightGray,
-                    fontSize = 19.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            ) {
-                append("\t\t12:30-14:00")
+                withStyle(
+                    style = SpanStyle(
+                        color = SemiLightGray,
+                        fontSize = 19.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                ) {
+                    append("\t\t${curTimetable.startTime}-${curTimetable.endTime}")
+                }
             }
-        }
-    )
+        )
+    }
 }

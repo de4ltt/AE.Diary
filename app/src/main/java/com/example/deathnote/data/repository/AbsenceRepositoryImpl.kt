@@ -22,4 +22,10 @@ class AbsenceRepositoryImpl @Inject constructor(
     override suspend fun deleteAbsence(absence: AbsenceDomain) =
         absencesDAO.deleteAbsence(absence.toEntity())
 
+    override suspend fun addStudentAbsenceByDate(date: String, studentId: Int) =
+        absencesDAO.addStudentAbsenceByDate(date, studentId)
+
+    override suspend fun deleteStudentAbsenceByDate(date: String, studentId: Int) =
+        absencesDAO.deleteStudentAbsenceByDate(date, studentId)
+
 }

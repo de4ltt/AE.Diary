@@ -13,6 +13,26 @@ interface AbsencesDAO {
     @Query("SELECT * FROM absences")
     fun getAllAbsences(): Flow<List<Absences>>
 
+    @Query(
+        """
+        UPDATE Absences SET respectful = 1
+        WHERE studentId = :studentId AND timetableId IN (
+            SELECT id FROM Timetables WHERE date = :date
+        )
+        """
+    )
+    suspend fun addStudentAbsenceByDate(date: String, studentId: Int)
+
+    @Query(
+        """
+        UPDATE Absences SET respectful = 0
+        WHERE studentId = :studentId AND timetableId IN (
+            SELECT id FROM Timetables WHERE date = :date
+        )
+        """
+    )
+    suspend fun deleteStudentAbsenceByDate(date: String, studentId: Int)
+
     @Upsert
     fun upsertAbsence(absence: Absences)
 
