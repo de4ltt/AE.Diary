@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.deathnote.DiaryApplication.Companion.END_TIME
 import com.example.deathnote.DiaryApplication.Companion.FIRST_WEEK_TYPE
+import com.example.deathnote.DiaryApplication.Companion.HOLIDAYS
 import com.example.deathnote.DiaryApplication.Companion.START_TIME
 import com.example.deathnote.domain.model.TimetableDomain
 import com.example.deathnote.domain.use_case.timetable.util.TimetableUseCases
@@ -16,6 +17,7 @@ import com.example.deathnote.presentation.model.state.TimetableUIState
 import com.example.deathnote.presentation.model.util.DayOfWeek
 import com.example.deathnote.presentation.model.util.WeekType
 import com.example.deathnote.presentation.util.toDayOfWeek
+import com.example.deathnote.presentation.util.toDigitString
 import com.example.deathnote.presentation.util.toWeekType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -42,6 +44,8 @@ class TimetableViewModel @Inject constructor(
 
     private val _semesterTime: MutableStateFlow<Triple<String, String, WeekType>> =
         MutableStateFlow(Triple(nowTime, nowTime, WeekType.ODD))
+
+    private val _holidays: MutableStateFlow<List<DayOfWeek>> = MutableStateFlow(emptyList())
 
     fun onEvent(event: TimetableUIEvent) = when (event) {
         is TimetableUIEvent.ChangeBottomSheetDayOfWeek ->
@@ -136,7 +140,8 @@ class TimetableViewModel @Inject constructor(
             setSemesterTime(
                 timetableUIStateValue.settingsBottomSheetStartDate,
                 timetableUIStateValue.settingsBottomSheetEndDate,
-                timetableUIStateValue.settingsBottomSheetFirstWeekType
+                timetableUIStateValue.settingsBottomSheetFirstWeekType,
+                timetableUIStateValue.settingsBottomSheetHolidays
             )
         }
 
@@ -184,12 +189,22 @@ class TimetableViewModel @Inject constructor(
             }
 
         TimetableUIEvent.IdleSemesterTime ->
-            setSemesterTime(nowTime, nowTime, WeekType.ODD)
+            setSemesterTime(nowTime, nowTime, WeekType.ODD, emptyList())
     }
 
-    private fun setSemesterTime(start: String, end: String, firstWeekType: WeekType) =
+    private fun setSemesterTime(
+        start: String,
+        end: String,
+        firstWeekType: WeekType,
+        holidays: List<DayOfWeek>
+    ) =
         viewModelScope.launch(Dispatchers.IO) {
-            timetableUseCases.SetSemesterTimeUseCase(start, end, firstWeekType.weekType)
+            timetableUseCases.SetSemesterTimeUseCase(
+                start,
+                end,
+                firstWeekType.weekType,
+                holidays.toDigitString()
+            )
         }
 
     private fun upsertTimetable() = viewModelScope.launch(Dispatchers.IO) {
@@ -300,6 +315,13 @@ class TimetableViewModel @Inject constructor(
                         )
                     }
 
+                    _holidays.value = it[HOLIDAYS]?.let { holidays ->
+                        holidays.map { dayOfWeek ->
+                            DayOfWeek.entries.first { dayOfWeekEntry ->
+                                dayOfWeekEntry.code == dayOfWeek.digitToInt()
+                            }
+                        }
+                    } ?: emptyList()
                 }
             }
 
@@ -328,6 +350,12 @@ class TimetableViewModel @Inject constructor(
                 _semesterTime.collectLatest {
                     _timetableUIState.value = _timetableUIState.value.copy(
                         isSemesterTimeSet = it.first != it.second
+                    )
+                }
+
+                _holidays.collectLatest {
+                    _timetableUIState.value = _timetableUIState.value.copy(
+                        settingsBottomSheetHolidays = it
                     )
                 }
             }

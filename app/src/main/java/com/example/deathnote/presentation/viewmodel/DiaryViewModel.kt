@@ -17,7 +17,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -118,41 +118,47 @@ class DiaryViewModel @Inject constructor(
         viewModelScope.launch {
 
             launch(Dispatchers.IO) {
-                diaryUseCases.GetAllAbsenceUseCase().collect { absences ->
+                diaryUseCases.GetAllAbsenceUseCase().collectLatest { absences ->
                     _allAbsence.value = absences.toPresentation(AbsenceDomain::toPresentation)
                 }
             }
 
             launch(Dispatchers.IO) {
-                diaryUseCases.GetAllSubjectsUseCase().collect {
+                diaryUseCases.GetAllSubjectsUseCase().collectLatest {
                     _allSubjects.value = it.toPresentation(SubjectDomain::toPresentation)
                 }
             }
 
             launch(Dispatchers.IO) {
-                diaryUseCases.GetAllTimetablesUseCase().collect { timetables ->
-                    val receivedTimetables: List<Timetable> =
-                        timetables.toPresentation(TimetableDomain::toPresentation)
+                diaryUseCases.GetAllTimetablesUseCase().collectLatest { timetables ->
+                    _diaryUIState.collectLatest { state ->
 
-                    _allTimetables.value = receivedTimetables
+                        val receivedTimetables: List<Timetable> =
+                            timetables.toPresentation(TimetableDomain::toPresentation)
 
-                    _allDayTimetables.value = receivedTimetables.filter { timetable ->
-                        timetable.date == _diaryUIState.value.curDate
+                        _allTimetables.value = receivedTimetables
+
+                        _allDayTimetables.value = receivedTimetables.filter { timetable ->
+                            timetable.date == state.curDate
+                        }
                     }
                 }
             }
 
             launch {
-                combine(_allDayTimetables, _allSubjects) { dayTimetables, subjects ->
-                    subjects.filter { subject ->
-                        dayTimetables.any { timetable -> timetable.subjectId == subject.id }
-                    }
-                }.collect { filteredSubjects ->
-                    _allDaySubjects.value = filteredSubjects
-                    if (filteredSubjects.isNotEmpty()) {
-                        _diaryUIState.value = _diaryUIState.value.copy(
-                            curSubject = filteredSubjects.first()
-                        )
+                _allSubjects.collectLatest { subjects ->
+                    _allDayTimetables.collectLatest { dayTimetables ->
+                        val filteredSubjects = subjects.filter { subject ->
+                            dayTimetables.any { timetable -> timetable.subjectId == subject.id }
+                        }
+
+                        _allDaySubjects.value = filteredSubjects
+
+                        if (filteredSubjects.isNotEmpty()) {
+                            _diaryUIState.value = _diaryUIState.value.copy(
+                                curSubject = filteredSubjects.first()
+                            )
+                        }
                     }
                 }
             }

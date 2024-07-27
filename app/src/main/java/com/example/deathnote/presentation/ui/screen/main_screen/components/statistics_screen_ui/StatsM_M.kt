@@ -31,9 +31,9 @@ import com.example.deathnote.presentation.util.getShortName
 fun StatsM_M(
     titled: Boolean = false,
     subject: Subject,
-    respectfulAbsencesPercent: Float = 0f,
-    presencePercent: Float = 0f,
-    totAbsencePercent: Float = 0f
+    respectfulAbsencesPercent: Int = 0,
+    presencePercent: Int = 0,
+    totAbsencePercent: Int = 0
 ) {
 
     Row(

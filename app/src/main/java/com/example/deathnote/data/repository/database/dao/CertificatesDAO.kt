@@ -16,9 +16,6 @@ interface CertificatesDAO {
     @Query("SELECT * FROM certificates")
     fun getAllCertificates(): Flow<List<Certificates>>
 
-    @Query("DELETE FROM certificates WHERE studentId = :id")
-    fun deleteCertificatesByStudentId(id: Int)
-
     @Delete
     fun deleteCertificate(certificate: Certificates)
 

@@ -59,7 +59,7 @@ fun DiaryScreen(
                 }
             )
             ChangeSubject(
-                isSubjectDismissed = allDayTimetables.any { it.subjectId == curSubject.id && it.isDismissed },
+                isSubjectDismissed = allDayTimetables.any { it.subjectId == curSubject.id && it.isDismissed && it.date == curDate },
                 paddingValues = paddingValues,
                 state = diaryUIState,
                 onEvent = diaryViewModel::onEvent
@@ -74,8 +74,8 @@ fun DiaryScreen(
                             student = student,
                             state = diaryUIState,
                             titled = allStudents.indexOf(student) == 0,
-                            isAbsent = allAbsence.any { student.id == it.studentId && it.subjectId == curSubject.id && !it.respectful },
-                            isAbsRes = allAbsence.any { student.id == it.studentId && it.subjectId == curSubject.id && it.respectful },
+                            isAbsent = allAbsence.any { student.id == it.studentId && it.subjectId == curSubject.id && !it.respectful && it.date == curDate },
+                            isAbsRes = allAbsence.any { student.id == it.studentId && it.subjectId == curSubject.id && it.respectful && it.date == curDate },
                             onEvent = diaryViewModel::onEvent
                         )
                     }

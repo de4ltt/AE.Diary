@@ -5,7 +5,6 @@ import androidx.room.Room
 import com.example.deathnote.data.repository.database.DiaryDatabase
 import com.example.deathnote.data.repository.database.dao.AbsencesDAO
 import com.example.deathnote.data.repository.database.dao.CertificatesDAO
-import com.example.deathnote.data.repository.database.dao.StatisticsDAO
 import com.example.deathnote.data.repository.database.dao.StudentsDAO
 import com.example.deathnote.data.repository.database.dao.SubjectsDAO
 import com.example.deathnote.data.repository.database.dao.TimetablesDAO
@@ -49,9 +48,5 @@ object DatabaseModule {
     @Provides
     fun provideAbsenceDao(database: DiaryDatabase): AbsencesDAO =
         database.absenceDAO()
-
-    @Provides
-    fun provideStatisticsDAO(database: DiaryDatabase): StatisticsDAO =
-        database.statisticsDAO()
 
 }

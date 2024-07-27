@@ -7,6 +7,6 @@ class SetSemesterTimeUseCase @Inject constructor(
     private val timetableRepository: TimetableRepository
 ) {
 
-    suspend operator fun invoke(start: String, end: String, firstWeekType: String) =
-        timetableRepository.setSemesterTime(start, end, firstWeekType)
+    suspend operator fun invoke(start: String, end: String, firstWeekType: String, holidays: String) =
+        timetableRepository.setSemesterTime(start, end, firstWeekType, holidays)
 }

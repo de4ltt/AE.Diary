@@ -59,24 +59,32 @@ fun TimetableScreen(
         navigator.popBackStack()
     }
 
+    val timetableUIState by timetableViewModel.timetableUIState.collectAsStateWithLifecycle()
+
     val pagerState = rememberPagerState(
-        pageCount = { 6 },
+        pageCount = { 7 - timetableUIState.settingsBottomSheetHolidays.size },
     )
 
-    val timetableUIState by timetableViewModel.timetableUIState.collectAsStateWithLifecycle()
-    val allTimetables by timetableViewModel.allTimetables.collectAsStateWithLifecycle()
-    val allSubjects = subjectViewModel.allSubjects.collectAsStateWithLifecycle().value.filter { subject ->
-        allTimetables[Pair(
-            (pagerState.currentPage + 1).toDayOfWeek(),
-            timetableUIState.curWeekType
-        )]?.let {
-            !it.map { timetable ->
-                timetable.subjectId
-            }.contains(
-                subject.id
-            )
-        } ?: true
+    val daysOfWeek: List<Int> = arrayOf(1, 2, 3, 4, 5, 6, 7).filter {
+        !timetableUIState.settingsBottomSheetHolidays.contains(
+            it.toDayOfWeek()
+        )
     }
+
+    val allTimetables by timetableViewModel.allTimetables.collectAsStateWithLifecycle()
+    val allSubjects =
+        subjectViewModel.allSubjects.collectAsStateWithLifecycle().value.filter { subject ->
+            allTimetables[Pair(
+                daysOfWeek[pagerState.currentPage].toDayOfWeek(),
+                timetableUIState.curWeekType
+            )]?.let {
+                !it.map { timetable ->
+                    timetable.subjectId
+                }.contains(
+                    subject.id
+                )
+            } ?: true
+        }
 
     Column(
         modifier = Modifier
@@ -136,9 +144,9 @@ fun TimetableScreen(
                 shape = DeathNoteTheme.shapes.rounded12
             ) {
                 TimetableCard(
-                    dayOfWeek = (page + 1).toDayOfWeek(),
+                    dayOfWeek = daysOfWeek[page].toDayOfWeek(),
                     timetables = allTimetables[Pair(
-                        (page + 1).toDayOfWeek(),
+                        daysOfWeek[page].toDayOfWeek(),
                         timetableUIState.curWeekType
                     )] ?: emptyList(),
                     getSubjectById = subjectViewModel::getSubjectById,

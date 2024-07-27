@@ -1,12 +1,14 @@
 package com.example.deathnote.domain.use_case.statistic.util
 
-import com.example.deathnote.domain.use_case.statistic.GetStatistics1MUseCase
-import com.example.deathnote.domain.use_case.statistic.GetStatisticsM1UseCase
-import com.example.deathnote.domain.use_case.statistic.GetStatisticsMMUseCase
+import com.example.deathnote.domain.use_case.diary.GetAllAbsenceUseCase
+import com.example.deathnote.domain.use_case.student.GetAllStudentsUseCase
+import com.example.deathnote.domain.use_case.subject.GetAllSubjectsUseCase
+import com.example.deathnote.domain.use_case.timetable.GetAllTimetablesUseCase
 import javax.inject.Inject
 
 data class StatisticUseCasesImpl @Inject constructor(
-    override val GetStatistics1MUseCase: GetStatistics1MUseCase,
-    override val GetStatisticsM1UseCase: GetStatisticsM1UseCase,
-    override val GetStatisticsMMUseCase: GetStatisticsMMUseCase
+    override val GetAllAbsenceUseCase: GetAllAbsenceUseCase,
+    override val GetAllTimetablesUseCase: GetAllTimetablesUseCase,
+    override val GetAllSubjectsUseCase: GetAllSubjectsUseCase,
+    override val GetAllStudentsUseCase: GetAllStudentsUseCase
 ): StatisticUseCases

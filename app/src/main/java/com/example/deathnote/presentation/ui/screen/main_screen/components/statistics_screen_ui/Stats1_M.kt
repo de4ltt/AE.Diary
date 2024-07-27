@@ -33,7 +33,7 @@ fun Stats1_M(
     subject: Subject,
     respectfulAbsences: Int = 0,
     absences: Int = 0,
-    absencePercent: Float = 0f
+    absencePercent: Int = 0
 ) {
 
     Row(
@@ -50,7 +50,7 @@ fun Stats1_M(
         ) {
             if (titled)
                 Text(
-                    text = stringResource(id = R.string.student),
+                    text = stringResource(id = R.string.subject),
                     style = DeathNoteTheme.typography.textFieldTitle,
                     color = DeathNoteTheme.colors.inverse
                 )
@@ -66,7 +66,7 @@ fun Stats1_M(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = subject.getShortName(),
+                    text = subject.getShortName() + " (${stringResource(id = if (subject.type == "lk") R.string.lk else R.string.pr)})",
                     style = DeathNoteTheme.typography.settingsScreenItemTitle,
                     color = DeathNoteTheme.colors.inverse,
                     fontStyle = FontStyle.Normal,

@@ -9,7 +9,6 @@ import com.example.deathnote.data.model.Subjects
 import com.example.deathnote.data.model.Timetables
 import com.example.deathnote.data.repository.database.dao.AbsencesDAO
 import com.example.deathnote.data.repository.database.dao.CertificatesDAO
-import com.example.deathnote.data.repository.database.dao.StatisticsDAO
 import com.example.deathnote.data.repository.database.dao.StudentsDAO
 import com.example.deathnote.data.repository.database.dao.SubjectsDAO
 import com.example.deathnote.data.repository.database.dao.TimetablesDAO
@@ -22,7 +21,7 @@ import com.example.deathnote.data.repository.database.dao.TimetablesDAO
         Certificates::class,
         Absences::class
     ],
-    version = 2,
+    version = 1,
     exportSchema = false
 )
 abstract class DiaryDatabase: RoomDatabase() {
@@ -36,7 +35,5 @@ abstract class DiaryDatabase: RoomDatabase() {
     abstract fun certificateDAO(): CertificatesDAO
 
     abstract fun absenceDAO(): AbsencesDAO
-
-    abstract fun statisticsDAO(): StatisticsDAO
 
 }

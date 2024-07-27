@@ -17,6 +17,7 @@ class DiaryApplication : Application() {
         val START_TIME = stringPreferencesKey("start_time")
         val END_TIME = stringPreferencesKey("end_time")
         val FIRST_WEEK_TYPE = stringPreferencesKey("first_week_type")
+        val HOLIDAYS = stringPreferencesKey("holidays")
         val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
     }
 

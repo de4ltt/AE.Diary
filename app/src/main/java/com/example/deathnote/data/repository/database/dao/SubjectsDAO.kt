@@ -13,9 +13,6 @@ interface SubjectsDAO {
     @Query("SELECT * FROM subjects")
     fun getAllSubjects(): Flow<List<Subjects>>
 
-    @Query("SELECT * FROM subjects WHERE id=:id")
-    fun getSubjectById(id: Int): Flow<Subjects>
-
     @Upsert
     fun upsertSubject(subject: Subjects)
 

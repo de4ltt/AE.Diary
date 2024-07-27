@@ -16,14 +16,10 @@ class SubjectRepositoryImpl @Inject constructor(
     override suspend fun getAllSubjects(): Flow<List<SubjectDomain>> =
         subjectDao.getAllSubjects().toDomain(Subjects::toDomain)
 
-    override suspend fun getSubjectById(id: Int): Flow<SubjectDomain> =
-        subjectDao.getSubjectById(id).toDomain()
-
     override suspend fun upsertSubject(subject: SubjectDomain) =
         subjectDao.upsertSubject(subject.toEntity())
 
     override suspend fun deleteSubject(subject: SubjectDomain) =
         subjectDao.deleteSubject(subject.toEntity())
-
 
 }

@@ -2,28 +2,45 @@ package com.example.deathnote.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.deathnote.domain.model.StatisticDomain1M
-import com.example.deathnote.domain.model.StatisticDomainM1
-import com.example.deathnote.domain.model.StatisticDomainMM
+import com.example.deathnote.domain.model.AbsenceDomain
+import com.example.deathnote.domain.model.StudentDomain
+import com.example.deathnote.domain.model.SubjectDomain
+import com.example.deathnote.domain.model.TimetableDomain
 import com.example.deathnote.domain.use_case.statistic.util.StatisticUseCases
 import com.example.deathnote.presentation.mapper.toPresentation
-import com.example.deathnote.presentation.model.Statistic1M
-import com.example.deathnote.presentation.model.StatisticM1
-import com.example.deathnote.presentation.model.StatisticMM
+import com.example.deathnote.presentation.model.Absence
+import com.example.deathnote.presentation.model.Student
+import com.example.deathnote.presentation.model.Subject
+import com.example.deathnote.presentation.model.Timetable
 import com.example.deathnote.presentation.model.event.StatisticsUIEvent
 import com.example.deathnote.presentation.model.state.StatisticsUIState
+import com.example.deathnote.presentation.model.util.Statistic1M
+import com.example.deathnote.presentation.model.util.StatisticM1
+import com.example.deathnote.presentation.model.util.StatisticMM
 import com.example.deathnote.presentation.model.util.StatisticsMode
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
+import kotlin.math.roundToInt
 
 @HiltViewModel
 class StatisticsViewModel @Inject constructor(
     private val statisticUseCases: StatisticUseCases
 ) : ViewModel() {
+
+    private val _allSubjects: MutableStateFlow<List<Subject>> = MutableStateFlow(emptyList())
+
+    private val _allStudents: MutableStateFlow<List<Student>> = MutableStateFlow(emptyList())
+
+    private val _allAbsence: MutableStateFlow<List<Absence>> = MutableStateFlow(emptyList())
+
+    private val _allTimetables: MutableStateFlow<List<Timetable>> = MutableStateFlow(emptyList())
 
     private val _allStatistic1M: MutableStateFlow<List<Statistic1M>> = MutableStateFlow(emptyList())
     val allStatistic1M = _allStatistic1M.asStateFlow()
@@ -88,28 +105,119 @@ class StatisticsViewModel @Inject constructor(
         }
     }
 
+    private fun getPastTimetables(timetables: List<Timetable>): Int {
+        val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+        return timetables.filter { LocalDate.parse(it.date, formatter) < LocalDate.now() }.size
+    }
+
+
     init {
         viewModelScope.launch {
 
             launch(Dispatchers.IO) {
-                statisticUseCases.GetStatistics1MUseCase().collect {
-                    _allStatistic1M.value = it.toPresentation(StatisticDomain1M::toPresentation)
+                statisticUseCases.GetAllAbsenceUseCase().collectLatest { absences ->
+                    _allAbsence.value = absences.toPresentation(AbsenceDomain::toPresentation)
                 }
             }
 
             launch(Dispatchers.IO) {
-                statisticUseCases.GetStatisticsM1UseCase().collect {
-                    _allStatisticM1.value = it.toPresentation(StatisticDomainM1::toPresentation)
+                statisticUseCases.GetAllTimetablesUseCase().collectLatest { timetables ->
+                    _allTimetables.value =
+                        timetables.toPresentation(TimetableDomain::toPresentation)
                 }
             }
 
             launch(Dispatchers.IO) {
-                statisticUseCases.GetStatisticsMMUseCase().collect {
-                    _allStatisticMM.value = it.toPresentation(StatisticDomainMM::toPresentation)
+                statisticUseCases.GetAllSubjectsUseCase().collectLatest { subjects ->
+                    _allSubjects.value = subjects.toPresentation(SubjectDomain::toPresentation)
                 }
             }
 
+            launch(Dispatchers.IO) {
+                statisticUseCases.GetAllStudentsUseCase().collectLatest { students ->
+                    _allStudents.value = students.toPresentation(StudentDomain::toPresentation)
+                }
+            }
+
+            launch {
+                _statisticsUIState.collectLatest { state ->
+                    _allStudents.collectLatest { students ->
+                        _allSubjects.collectLatest { subjects ->
+                            if (state.curStudent !in students && students.isNotEmpty())
+                                _statisticsUIState.value = state.copy(
+                                    curStudent = students.first()
+                                )
+
+                            if (state.curSubject !in subjects && subjects.isNotEmpty())
+                                _statisticsUIState.value = state.copy(
+                                    curSubject = subjects.first()
+                                )
+                        }
+                    }
+                }
+            }
+
+            launch {
+                _allTimetables.collectLatest { timetables ->
+                    val timetablesSize: Float = getPastTimetables(timetables).toFloat()
+
+                    _allAbsence.collectLatest { absences ->
+                        _statisticsUIState.collectLatest { state ->
+                            _allStudents.collectLatest { students ->
+                                _allSubjects.collectLatest { subjects ->
+
+                                    _allStatistic1M.value = subjects.map { subject ->
+                                        val studentId = state.curStudent.id
+
+                                        Statistic1M(
+                                            studentId = studentId,
+                                            subjectId = subject.id,
+                                            absence = absences.count { it.studentId == studentId && it.subjectId == subject.id },
+                                            resAbsence = absences.count { it.studentId == studentId && it.respectful && it.subjectId == subject.id },
+                                            absencePercent = if (timetablesSize > 0)
+                                                (100 * (absences.count { it.studentId == studentId && !it.respectful && it.subjectId == subject.id } / timetablesSize)).roundToInt()
+                                            else 0
+                                        )
+                                    }
+
+                                    _allStatisticM1.value = students.map { student ->
+                                        val subjectId = state.curSubject.id
+
+                                        StatisticM1(
+                                            subjectId = subjectId,
+                                            studentId = student.id,
+                                            absence = absences.count { absence ->
+                                                student.id == absence.studentId && absence.subjectId == subjectId
+                                            },
+                                            resAbsence = absences.count { absence ->
+                                                student.id == absence.studentId && absence.subjectId == subjectId && absence.respectful
+                                            },
+                                            absencePercent = if (timetablesSize > 0)
+                                                (100 * (absences.count { it.studentId == student.id && !it.respectful && it.subjectId == subjectId } / timetablesSize)).roundToInt()
+                                            else 0
+                                        )
+                                    }
+
+                                    _allStatisticMM.value = subjects.map { subject ->
+                                        StatisticMM(
+                                            subjectId = subject.id,
+                                            presencePercent = if (timetablesSize > 0)
+                                                (100 - 100 * (absences.count { it.subjectId == subject.id } / (timetablesSize * students.size))).roundToInt()
+                                            else 100,
+                                            resAbsencePercent = if (timetablesSize > 0)
+                                                (100 * (absences.count { it.subjectId == subject.id && it.respectful } / (timetablesSize * students.size))).roundToInt()
+                                            else 0,
+                                            absencePercent = if (timetablesSize > 0)
+                                                (100 * (absences.count { it.subjectId == subject.id && !it.respectful } / (timetablesSize * students.size))).roundToInt()
+                                            else 0
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
-
 }

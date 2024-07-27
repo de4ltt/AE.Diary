@@ -11,5 +11,4 @@ interface CertificateRepository {
 
     suspend fun deleteCertificate(certificate: CertificateDomain)
 
-    suspend fun deleteCertificatesByStudentId(id: Int)
 }
