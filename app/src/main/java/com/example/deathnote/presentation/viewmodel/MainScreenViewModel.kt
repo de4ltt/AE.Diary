@@ -2,6 +2,8 @@ package com.example.deathnote.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.deathnote.DiaryApplication.Companion.END_TIME
+import com.example.deathnote.DiaryApplication.Companion.START_TIME
 import com.example.deathnote.domain.model.SubjectDomain
 import com.example.deathnote.domain.model.TimetableDomain
 import com.example.deathnote.domain.use_case.main_screen.util.MainScreenUseCases
@@ -17,8 +19,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
@@ -31,12 +35,66 @@ class MainScreenViewModel @Inject constructor(
 
     private val _allSubjects: MutableStateFlow<List<Subject>> = MutableStateFlow(emptyList())
 
+    private val _semesterTime: MutableStateFlow<Pair<LocalDate, LocalDate>> =
+        MutableStateFlow(Pair(nowDate, nowDate))
+
     private val _mainScreenUIState: MutableStateFlow<MainScreenUIState> =
         MutableStateFlow(MainScreenUIState())
     val mainScreenUIState = _mainScreenUIState.asStateFlow()
 
+    private fun findNextTimetable(
+        dateTime: LocalDateTime,
+        timetable: Timetable
+    ): Timetable? {
+        val sortedTimetables = _allTimetables.value
+            .groupBy { LocalDate.parse(it.date, dateFormatter) }
+            .toSortedMap()
+            .mapValues { (_, values) ->
+                values.sortedBy { LocalTime.parse(it.startTime, timeFormatter) }
+            }
+
+        val semesterEnd = _semesterTime.value.second
+
+        var curDate = dateTime.toLocalDate()
+        var curDateTimetables = sortedTimetables[curDate] ?: emptyList()
+
+        var curTimetable: Timetable? = if (timetable != Timetable()) {
+            curDateTimetables.firstOrNull { it.id == timetable.id }
+        } else {
+            null
+        }
+
+        while (curDate <= semesterEnd) {
+            if (curTimetable == null && curDateTimetables.isNotEmpty())
+                return curDateTimetables.first()
+            else {
+                val curIndex = curDateTimetables.indexOf(curTimetable)
+                if (curIndex != -1 && curIndex + 1 < curDateTimetables.size) {
+                    return curDateTimetables[curIndex + 1]
+                }
+            }
+
+            curDate = curDate.plusDays(1)
+            curDateTimetables = sortedTimetables[curDate] ?: emptyList()
+            curTimetable = null
+        }
+
+        return null
+    }
+
+
     init {
         viewModelScope.launch {
+
+            launch(Dispatchers.IO) {
+                mainScreenUseCases.GetDataStoreDataUseCase().collectLatest {
+                    _semesterTime.value = Pair(
+                        first = LocalDate.parse(it[START_TIME], dateFormatter),
+                        second = LocalDate.parse(it[END_TIME], dateFormatter)
+                    )
+                }
+            }
+
             launch {
                 curTimeFlow.collectLatest {
                     _mainScreenUIState.value = _mainScreenUIState.value.copy(
@@ -58,9 +116,6 @@ class MainScreenViewModel @Inject constructor(
             }
 
             launch {
-                val dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
-                val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
-
                 _mainScreenUIState.collectLatest { state ->
                     val curDate = state.curTime.format(dateFormatter)
 
@@ -77,8 +132,9 @@ class MainScreenViewModel @Inject constructor(
                         currentTime in startTime..endTime
                     } ?: Timetable()
 
-                    val curSubject = _allSubjects.value.firstOrNull { it.id == curTimetable.subjectId }
-                        ?: Subject()
+                    val curSubject =
+                        _allSubjects.value.firstOrNull { it.id == curTimetable.subjectId }
+                            ?: Subject()
 
                     _mainScreenUIState.value = _mainScreenUIState.value.copy(
                         curTimetable = curTimetable,
@@ -88,25 +144,48 @@ class MainScreenViewModel @Inject constructor(
             }
 
             launch {
+                var startTimeParsed: LocalDateTime = _semesterTime.value.first.atStartOfDay()
+                var endTimeParsed: LocalDateTime = _semesterTime.value.second.atStartOfDay()
+
                 _mainScreenUIState.collectLatest {
-                    val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
 
-                    val startTimeParsed = LocalTime.parse(it.curTimetable.startTime, timeFormatter).toSecondOfDay()
-                    val endTimeParsed = LocalTime.parse(it.curTimetable.endTime, timeFormatter).toSecondOfDay()
+                    val nextTimetable: Timetable = findNextTimetable(it.curTime, it.curTimetable) ?: Timetable()
 
-                    curTimeFlow.collectLatest { time ->
-                        val percentage = (time.toLocalTime().toSecondOfDay() - startTimeParsed).toFloat() / (endTimeParsed - startTimeParsed)
-                        delay(1000)
+                    val curStartTime = LocalDateTime.parse("${it.curTimetable.date}-${it.curTimetable.startTime}", dateTimeFormatter)
+                    val curEndTime = LocalDateTime.parse("${it.curTimetable.date}-${it.curTimetable.endTime}", dateTimeFormatter)
 
+                    if (it.curTime in curStartTime..curEndTime) {
+                        startTimeParsed = curStartTime
+                        endTimeParsed = curEndTime
+                    } else if (it.curTime > curEndTime && nextTimetable != Timetable()) {
                         _mainScreenUIState.value = _mainScreenUIState.value.copy(
-                            percentage = percentage
+                            curTimetable = nextTimetable,
+                            curSubject = _allSubjects.value.first { subject -> nextTimetable.subjectId == subject.id }
+                        )
+                    } else if (it.curTime < curStartTime && nextTimetable != Timetable()) {
+                        _mainScreenUIState.value = _mainScreenUIState.value.copy(
+                            curTimetable = nextTimetable,
+                            curSubject = _allSubjects.value.first { subject -> nextTimetable.subjectId == subject.id }
                         )
                     }
+
+                    val percentage =
+                        (it.curTime.toEpochSecond(ZoneOffset.UTC) - startTimeParsed.toEpochSecond(ZoneOffset.UTC)).toFloat() / (endTimeParsed.toEpochSecond(ZoneOffset.UTC) - startTimeParsed.toEpochSecond(ZoneOffset.UTC))
+                    delay(1000)
+
+                    _mainScreenUIState.value = _mainScreenUIState.value.copy(
+                        percentage = percentage
+                    )
                 }
             }
         }
     }
 }
+
+private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+private val dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+private val dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy-HH:mm")
+private val nowDate = LocalDate.now()
 
 private val curTimeFlow = flow {
     while (true) {

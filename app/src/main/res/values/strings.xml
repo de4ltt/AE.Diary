@@ -21,20 +21,20 @@
     <string name="polish" translatable="false">POLSKI</string>
     <string name="is_dark_theme" translatable="false">Dark mode</string>
     <string name="color">Color</string>
-    <string name="primary">primary</string>
-    <string name="is_on">applied </string>
-    <string name="is_off">is off </string>
+    <string name="primary" translatable="false">primary</string>
+    <string name="is_on" translatable="false">applied </string>
+    <string name="is_off" translatable="false">is off </string>
     <string name="week_type">Week type</string>
     <string name="even">even </string>
     <string name="odd">odd </string>
-    <string name="primary_background">primary background</string>
-    <string name="secondary_background">secondary background</string>
-    <string name="secondary">secondary</string>
-    <string name="inverse">inverse</string>
-    <string name="inverse_background">inverse background</string>
-    <string name="light_inverse">light inverse</string>
-    <string name="regular">regular</string>
-    <string name="regular_background">regular background</string>
+    <string name="primary_background" translatable="false">primary background</string>
+    <string name="secondary_background" translatable="false">secondary background</string>
+    <string name="secondary" translatable="false">secondary</string>
+    <string name="inverse" translatable="false">inverse</string>
+    <string name="inverse_background" translatable="false">inverse background</string>
+    <string name="light_inverse" translatable="false">light inverse</string>
+    <string name="regular" translatable="false">regular</string>
+    <string name="regular_background" translatable="false">regular background</string>
     <string name="monday">Monday</string>
     <string name="tuesday">Tuesday</string>
     <string name="wednesday">Wednesday</string>
@@ -43,10 +43,10 @@
     <string name="saturday">Saturday</string>
     <string name="lecture">LECTURE</string>
     <string name="practice">PRACTICE</string>
-    <string name="base_background">base background</string>
-    <string name="tertiary">tertiary</string>
-    <string name="primary_default">primary default</string>
-    <string name="redo">restore defaults</string>
+    <string name="base_background" translatable="false">base background</string>
+    <string name="tertiary" translatable="false">tertiary</string>
+    <string name="primary_default" translatable="false">primary default</string>
+    <string name="redo" translatable="false">restore defaults</string>
     <string name="light_theme">Light theme</string>
     <string name="dark_theme">Dark theme</string>
     <string name="dark_theme_subtitle">The Hell for the martyrs</string>
@@ -121,4 +121,7 @@
     <string name="all_students">All students</string>
     <string name="all">all</string>
     <string name="all_subjects">All subjects</string>
+    <string name="add">Add</string>
+    <string name="save">Save</string>
+    <string name="styles_cringe">Just ruin everything.</string>
 </resources>
