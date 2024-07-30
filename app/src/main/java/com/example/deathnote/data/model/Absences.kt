@@ -2,6 +2,7 @@ package com.example.deathnote.data.model
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import com.example.deathnote.data.model.interfaces.DataEntity
 
 @Entity(
     primaryKeys = [

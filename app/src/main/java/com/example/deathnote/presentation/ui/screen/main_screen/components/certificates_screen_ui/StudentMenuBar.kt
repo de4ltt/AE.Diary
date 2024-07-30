@@ -21,7 +21,6 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
 import com.example.deathnote.presentation.model.Student
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
-import com.example.deathnote.presentation.util.getFullName
 
 @Composable
 fun StudentMenuBar(

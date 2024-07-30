@@ -17,6 +17,8 @@ import com.example.deathnote.presentation.model.event.TimetableUIEvent
 import com.example.deathnote.presentation.model.state.TimetableUIState
 import com.example.deathnote.presentation.model.util.DayOfWeek
 import com.example.deathnote.presentation.model.util.WeekType
+import com.example.deathnote.presentation.util.TimeFormatter.dateFormatter
+import com.example.deathnote.presentation.util.TimeFormatter.nowDateFormatted
 import com.example.deathnote.presentation.util.toDayOfWeek
 import com.example.deathnote.presentation.util.toWeekType
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,7 +28,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 @HiltViewModel
@@ -43,7 +44,7 @@ class TimetableViewModel @Inject constructor(
     val allTimetables = _allTimetables.asStateFlow()
 
     private val _semesterTime: MutableStateFlow<Triple<String, String, WeekType>> =
-        MutableStateFlow(Triple(nowTime, nowTime, WeekType.ODD))
+        MutableStateFlow(Triple(nowDateFormatted, nowDateFormatted, WeekType.ODD))
 
     private val _holidays: MutableStateFlow<List<DayOfWeek>> = MutableStateFlow(emptyList())
 
@@ -189,7 +190,7 @@ class TimetableViewModel @Inject constructor(
             }
 
         TimetableUIEvent.IdleSemesterTime -> {
-            setSemesterTime(nowTime, nowTime, WeekType.ODD, emptyList())
+            setSemesterTime(nowDateFormatted, nowDateFormatted, WeekType.ODD, emptyList())
             deleteSemester()
         }
     }
@@ -273,15 +274,17 @@ class TimetableViewModel @Inject constructor(
                 timetableUseCases.GetDataStoreDataUseCase().collectLatest {
                     it[FIRST_WEEK_TYPE]?.let { weekType ->
                         _semesterTime.value = Triple(
-                            it[START_TIME] ?: nowTime,
-                            it[END_TIME] ?: nowTime,
+                            it[START_TIME] ?: nowDateFormatted,
+                            it[END_TIME] ?: nowDateFormatted,
                             WeekType.entries.first { weekTypeEntry -> weekTypeEntry.weekType == weekType }
                         )
                     }
 
                     it[HOLIDAYS]?.let { holidays ->
                         _holidays.value = holidays.split(",").mapNotNull { dayOfWeek ->
-                            DayOfWeek.entries.firstOrNull { dayOfWeekEntry -> dayOfWeekEntry.code == dayOfWeek.toInt() }
+                            if (dayOfWeek.isNotEmpty())
+                                DayOfWeek.entries.firstOrNull { dayOfWeekEntry -> dayOfWeekEntry.code == dayOfWeek.toInt() }
+                            else null
                         }
                     }
 
@@ -319,6 +322,3 @@ class TimetableViewModel @Inject constructor(
         }
     }
 }
-
-private val nowTime = LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
-private val dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")

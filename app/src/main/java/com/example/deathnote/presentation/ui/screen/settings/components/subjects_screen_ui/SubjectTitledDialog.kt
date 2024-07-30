@@ -21,7 +21,7 @@ import com.example.deathnote.presentation.ui.cross_screen_ui.BottomBarWithTextFi
 import com.example.deathnote.presentation.ui.theme.DarkRed
 import com.example.deathnote.presentation.ui.theme.DarkYellow
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
-import com.example.deathnote.presentation.ui.util.Validator
+import com.example.deathnote.presentation.util.Validator
 import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)

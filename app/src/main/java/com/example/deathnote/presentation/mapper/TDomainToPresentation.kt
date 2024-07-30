@@ -2,16 +2,16 @@ package com.example.deathnote.presentation.mapper
 
 import com.example.deathnote.domain.model.AbsenceDomain
 import com.example.deathnote.domain.model.CertificateDomain
-import com.example.deathnote.domain.model.DomainModel
 import com.example.deathnote.domain.model.StudentDomain
 import com.example.deathnote.domain.model.SubjectDomain
 import com.example.deathnote.domain.model.TimetableDomain
+import com.example.deathnote.domain.model.interfaces.DomainModel
 import com.example.deathnote.presentation.model.Absence
 import com.example.deathnote.presentation.model.Certificate
-import com.example.deathnote.presentation.model.PresentationModel
 import com.example.deathnote.presentation.model.Student
 import com.example.deathnote.presentation.model.Subject
 import com.example.deathnote.presentation.model.Timetable
+import com.example.deathnote.presentation.model.interfaces.PresentationModel
 
 fun <T: DomainModel, V: PresentationModel> T.toPresentation(): V = when (this) {
 

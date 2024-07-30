@@ -21,68 +21,75 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.deathnote.R
 import com.example.deathnote.presentation.model.Student
+import com.example.deathnote.presentation.model.event.CertificateUIEvent
+import com.example.deathnote.presentation.model.state.CertificateUIState
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StudentSelectMenu(
-    onSelect: (Student) -> Unit,
+    state: CertificateUIState,
+    onEvent: (CertificateUIEvent) -> Unit,
     allStudents: List<Student>,
     paddingValues: PaddingValues = PaddingValues(
         start = 25.dp,
         end = 25.dp,
         bottom = 25.dp
-    ),
-    onDismissRequest: () -> Unit
+    )
 ) {
 
-    BackHandler {
-        onDismissRequest()
-    }
+    if (state.isSelectStudentSheetShown) {
 
-    ModalBottomSheet(
-        onDismissRequest = onDismissRequest,
-        dragHandle = {}
-    ) {
-        Column(
-            modifier = Modifier
-                .clip(
-                    shape = DeathNoteTheme.shapes.rounded20_top
-                )
-                .background(color = DeathNoteTheme.colors.baseBackground)
-                .padding(paddingValues)
-                .fillMaxWidth()
-                .wrapContentHeight(),
-            verticalArrangement = Arrangement.spacedBy(40.dp)
+        BackHandler {
+            onEvent(CertificateUIEvent.ChangeStudentSheetState(false))
+        }
+
+        ModalBottomSheet(
+            onDismissRequest = { onEvent(CertificateUIEvent.ChangeStudentSheetState(false)) },
+            dragHandle = {}
         ) {
-
-            Text(
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        top = 50.dp
-                    ),
-                textAlign = TextAlign.Center,
-                text = stringResource(id = R.string.choose_student),
-                style = DeathNoteTheme.typography.topBar,
-                color = DeathNoteTheme.colors.inverse
-            )
-
-            LazyColumn(
-                modifier = Modifier
+                    .clip(
+                        shape = DeathNoteTheme.shapes.rounded20_top
+                    )
+                    .background(color = DeathNoteTheme.colors.baseBackground)
+                    .padding(paddingValues)
                     .fillMaxWidth()
                     .wrapContentHeight(),
-                verticalArrangement = Arrangement.spacedBy(10.dp),
-                contentPadding = PaddingValues(bottom = 10.dp)
+                verticalArrangement = Arrangement.spacedBy(40.dp)
             ) {
-                itemsIndexed(allStudents) { index, student ->
-                    StudentMenuBar(
-                        student = student,
-                        onSelect = onSelect
-                    )
+
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            top = 50.dp
+                        ),
+                    textAlign = TextAlign.Center,
+                    text = stringResource(id = R.string.choose_student),
+                    style = DeathNoteTheme.typography.topBar,
+                    color = DeathNoteTheme.colors.inverse
+                )
+
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight(),
+                    verticalArrangement = Arrangement.spacedBy(10.dp),
+                    contentPadding = PaddingValues(bottom = 10.dp)
+                ) {
+                    itemsIndexed(allStudents) { index, student ->
+                        StudentMenuBar(
+                            student = student,
+                            onSelect = {
+                                onEvent(CertificateUIEvent.ChangeStudent(student))
+                                onEvent(CertificateUIEvent.ChangeStudentSheetState(false))
+                            }
+                        )
+                    }
                 }
             }
         }
     }
-
 }

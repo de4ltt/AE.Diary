@@ -15,10 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -27,31 +24,18 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.deathnote.presentation.ui.theme.SoftGray
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
-import com.example.deathnote.presentation.ui.theme.util.adjust
-import com.example.deathnote.presentation.ui.theme.util.isDarkMode
 
 @Composable
-fun CertificatesBottomBarTextField(
+fun CertificatesDatePickerField(
     @StringRes title: Int,
-    onValueChange: (String) -> Unit = {},
-    onClick: () -> Unit = {},
     icon: @Composable () -> Unit = {},
-    @StringRes innerTitle: Int,
     value: String,
-    isActive: Boolean = true,
-    isDatePicker: Boolean = false,
-    isCentered: Boolean = true,
-    isStartDate: Boolean = false,
-    previousDate: String = "",
+    onValueChange: (String) -> Unit,
+    onClick: () -> Unit
 ) {
 
-    var isDataPickerDialog by remember {
-        mutableStateOf(false)
-    }
-
-    Column{
+    Column {
 
         Text(
             text = stringResource(id = title),
@@ -79,11 +63,10 @@ fun CertificatesBottomBarTextField(
                 onValueChange(it)
             },
             maxLines = 1,
-            enabled = !isDatePicker && isActive,
             textStyle = TextStyle(
                 color = DeathNoteTheme.colors.inverse,
                 fontSize = 15.sp,
-                textAlign = if (isCentered) TextAlign.Center else TextAlign.Start
+                textAlign = TextAlign.Center
             )
         ) { textField ->
             Row(
@@ -95,29 +78,8 @@ fun CertificatesBottomBarTextField(
                 content = {
                     icon()
 
-                    if (!isDatePicker) {
-                        Box {
-                            if (value.isEmpty()) {
-                                Text(
-                                    color = SoftGray.adjust(if (isDarkMode()) 0.6f else 1f),
-                                    fontSize = 15.sp,
-                                    textAlign = TextAlign.Start,
-                                    text = stringResource(id = innerTitle)
-                                )
-                            }
-                            textField()
-                        }
-                    }
-                    else Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .clickable(
-                                interactionSource = remember { MutableInteractionSource() },
-                                indication = null,
-                                onClick = {
-                                    isDataPickerDialog = !isDataPickerDialog
-                                }
-                            ),
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center,
                         content = { textField() }
                     )
@@ -125,16 +87,4 @@ fun CertificatesBottomBarTextField(
             )
         }
     }
-
-    if (isDataPickerDialog)
-            CertificatesDatePickerWithDialog(
-            isPreviousDate = isStartDate,
-            previousDate = previousDate,
-            curDate = value,
-            onAcceptRequest = {
-                onValueChange(it)
-                isDataPickerDialog = false
-            },
-            onDismissRequest = { isDataPickerDialog = !isDataPickerDialog }
-        )
 }

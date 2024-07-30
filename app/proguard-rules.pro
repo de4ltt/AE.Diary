@@ -19,3 +19,26 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+# Hilt
+
+-keep class dagger.** { *; }
+-keep class javax.inject.** { *; }
+-keep class dagger.hilt.** { *; }
+-keep @interface dagger.hilt.InstallIn
+-keep @interface dagger.Module
+
+# Room
+-keepclassmembers class * {
+    @androidx.room.* <fields>;
+    @androidx.room.* <methods>;
+}
+
+# Compose
+-keep class androidx.compose.** { *; }
+-keep class kotlinx.coroutines.** { *; }
+
+# DataStore
+-keep class androidx.datastore.** { *; }
+
+# Compose Destinations
+-keep class io.github.raamcosta.compose.** { *; }

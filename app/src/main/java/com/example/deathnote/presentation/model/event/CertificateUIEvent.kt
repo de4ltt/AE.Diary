@@ -2,6 +2,7 @@ package com.example.deathnote.presentation.model.event
 
 import com.example.deathnote.presentation.model.Certificate
 import com.example.deathnote.presentation.model.Student
+import com.example.deathnote.presentation.model.interfaces.CertificateDatePickerState
 
 sealed class CertificateUIEvent{
 
@@ -14,4 +15,6 @@ sealed class CertificateUIEvent{
 
     data class AddCertificate(val certificate: Certificate): CertificateUIEvent()
     data class DeleteCertificate(val certificate: Certificate): CertificateUIEvent()
+
+    data class ChangeCertificateDatePickerState(val state: CertificateDatePickerState) : CertificateUIEvent()
 }

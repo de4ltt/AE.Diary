@@ -1,4 +1,4 @@
-package com.example.deathnote.presentation.model.util
+package com.example.deathnote.presentation.model.interfaces
 
 sealed interface StatisticsMode {
 

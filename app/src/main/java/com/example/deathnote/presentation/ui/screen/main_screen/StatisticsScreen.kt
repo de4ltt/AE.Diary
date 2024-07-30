@@ -17,7 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.deathnote.presentation.model.util.StatisticsMode
+import com.example.deathnote.presentation.model.interfaces.StatisticsMode
 import com.example.deathnote.presentation.navigation.AppDestination
 import com.example.deathnote.presentation.ui.cross_screen_ui.DarkTopBar
 import com.example.deathnote.presentation.ui.cross_screen_ui.NothingHere

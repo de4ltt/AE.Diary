@@ -11,9 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -21,6 +18,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.deathnote.R
 import com.example.deathnote.presentation.model.event.TimetableUIEvent
 import com.example.deathnote.presentation.navigation.AppDestination
+import com.example.deathnote.presentation.ui.cross_screen_ui.DatePickerWithDialog
 import com.example.deathnote.presentation.ui.cross_screen_ui.SettingsTopBar
 import com.example.deathnote.presentation.ui.screen.destinations.LanguageScreenDestination
 import com.example.deathnote.presentation.ui.screen.destinations.StudentsScreenDestination
@@ -48,10 +46,6 @@ fun SettingsScreen(
 ) {
     BackHandler {
         navigator.popBackStack()
-    }
-
-    var isBottomSheetOpen by remember {
-        mutableStateOf(false)
     }
 
     val timetableUIState by timetableViewModel.timetableUIState.collectAsStateWithLifecycle()
@@ -152,6 +146,11 @@ fun SettingsScreen(
     }
 
     SettingsScreenBottomSheet(
+        state = timetableUIState,
+        onEvent = timetableViewModel::onEvent
+    )
+
+    DatePickerWithDialog(
         state = timetableUIState,
         onEvent = timetableViewModel::onEvent
     )

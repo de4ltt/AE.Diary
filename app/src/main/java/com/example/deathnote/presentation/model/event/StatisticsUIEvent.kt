@@ -2,7 +2,7 @@ package com.example.deathnote.presentation.model.event
 
 import com.example.deathnote.presentation.model.Student
 import com.example.deathnote.presentation.model.Subject
-import com.example.deathnote.presentation.model.util.StatisticsMode
+import com.example.deathnote.presentation.model.interfaces.StatisticsMode
 
 sealed class StatisticsUIEvent {
 

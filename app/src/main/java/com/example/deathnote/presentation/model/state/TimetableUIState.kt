@@ -1,10 +1,10 @@
 package com.example.deathnote.presentation.model.state
 
 import com.example.deathnote.presentation.model.Subject
+import com.example.deathnote.presentation.model.interfaces.SettingsDatePickerState
 import com.example.deathnote.presentation.model.util.DayOfWeek
 import com.example.deathnote.presentation.model.util.WeekType
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
+import com.example.deathnote.presentation.util.TimeFormatter.nowDateFormatted
 
 data class TimetableUIState(
     val curWeekType: WeekType = WeekType.ODD,
@@ -21,12 +21,11 @@ data class TimetableUIState(
     val bottomSheetTimePickerState: Boolean = false,
     val bottomSheetTimePickerStartPick: String = "start",
 
+    val settingBottomSheetDatePickerState: SettingsDatePickerState = SettingsDatePickerState.NONE,
     val settingsBottomSheetState: Boolean = false,
     val settingsBottomSheetIsTimeSet: Boolean = false,
     val settingsBottomSheetHolidays: List<DayOfWeek> = emptyList(),
-    val settingsBottomSheetStartDate: String = nowTime,
-    val settingsBottomSheetEndDate: String = nowTime,
+    val settingsBottomSheetStartDate: String = nowDateFormatted,
+    val settingsBottomSheetEndDate: String = nowDateFormatted,
     val settingsBottomSheetFirstWeekType: WeekType = WeekType.ODD,
 )
-
-private val nowTime: String = LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))

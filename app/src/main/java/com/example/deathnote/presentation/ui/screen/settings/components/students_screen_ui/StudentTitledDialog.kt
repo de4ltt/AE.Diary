@@ -7,7 +7,7 @@ import com.example.deathnote.presentation.model.event.StudentUIEvent
 import com.example.deathnote.presentation.model.state.StudentDialogState
 import com.example.deathnote.presentation.ui.cross_screen_ui.BottomBarTextField
 import com.example.deathnote.presentation.ui.cross_screen_ui.BottomBarWithTextFields
-import com.example.deathnote.presentation.ui.util.Validator
+import com.example.deathnote.presentation.util.Validator
 import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)

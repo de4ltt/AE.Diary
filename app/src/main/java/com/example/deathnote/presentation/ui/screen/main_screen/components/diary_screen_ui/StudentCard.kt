@@ -26,7 +26,6 @@ import com.example.deathnote.presentation.model.Student
 import com.example.deathnote.presentation.model.event.DiaryUIEvent
 import com.example.deathnote.presentation.model.state.DiaryUIState
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
-import com.example.deathnote.presentation.util.getShortName
 
 @Composable
 fun StudentCard(

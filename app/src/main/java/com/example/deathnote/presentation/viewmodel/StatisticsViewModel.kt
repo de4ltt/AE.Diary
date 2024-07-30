@@ -13,11 +13,12 @@ import com.example.deathnote.presentation.model.Student
 import com.example.deathnote.presentation.model.Subject
 import com.example.deathnote.presentation.model.Timetable
 import com.example.deathnote.presentation.model.event.StatisticsUIEvent
+import com.example.deathnote.presentation.model.interfaces.StatisticsMode
 import com.example.deathnote.presentation.model.state.StatisticsUIState
 import com.example.deathnote.presentation.model.util.Statistic1M
 import com.example.deathnote.presentation.model.util.StatisticM1
 import com.example.deathnote.presentation.model.util.StatisticMM
-import com.example.deathnote.presentation.model.util.StatisticsMode
+import com.example.deathnote.presentation.util.TimeFormatter.dateFormatter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,7 +26,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
@@ -106,8 +106,7 @@ class StatisticsViewModel @Inject constructor(
     }
 
     private fun getPastTimetables(timetables: List<Timetable>): Int {
-        val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
-        return timetables.filter { LocalDate.parse(it.date, formatter) < LocalDate.now() }.size
+        return timetables.filter { LocalDate.parse(it.date, dateFormatter) < LocalDate.now() }.size
     }
 
 

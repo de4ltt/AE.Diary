@@ -7,95 +7,95 @@ import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDefaults
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.SelectableDates
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.deathnote.R
+import com.example.deathnote.presentation.model.event.CertificateUIEvent
+import com.example.deathnote.presentation.model.interfaces.CertificateDatePickerState
+import com.example.deathnote.presentation.model.state.CertificateUIState
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
-import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.util.Date
-import java.util.Locale
+import com.example.deathnote.presentation.util.SelectableDatesUtil.createCertificateSelectableDates
+import com.example.deathnote.presentation.util.TimeFormatter.dateFormatter
+import com.example.deathnote.presentation.util.TimeFormatter.formatSelectedDate
+import com.example.deathnote.presentation.util.TimeFormatter.nowDate
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CertificatesDatePickerWithDialog(
-    isPreviousDate: Boolean = false,
-    previousDate: String,
-    curDate: String = LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")),
-    onDismissRequest: () -> Unit,
-    onAcceptRequest: (String) -> Unit
+    state: CertificateUIState,
+    onEvent: (CertificateUIEvent) -> Unit
 ) {
 
-    val datePickerState = rememberDatePickerState(
-        selectableDates = if (isPreviousDate) object : SelectableDates {
-            override fun isSelectableDate(utcTimeMillis: Long): Boolean {
-                return utcTimeMillis <= LocalDate.now().toEpochDay() * 86400000
-            }
-        }
-        else object : SelectableDates {
-            override fun isSelectableDate(utcTimeMillis: Long): Boolean {
-                return utcTimeMillis >= LocalDate.parse(
-                    previousDate,
-                    DateTimeFormatter.ofPattern("dd.MM.yyyy")
-                ).toEpochDay() * 86400000 && utcTimeMillis <= LocalDate.now().toEpochDay() * 86400000
-            }
-        }
-    )
+    state.apply {
 
-    val dateMillis = datePickerState.selectedDateMillis
+        if (bottomSheetDatePickerState != CertificateDatePickerState.NONE) {
 
-    var formattedDate by remember {
-        mutableStateOf(curDate)
-    }
+            val selectableDates =
+                createCertificateSelectableDates(bottomSheetDatePickerState, endDate)
 
+            val datePickerState = rememberDatePickerState(selectableDates = selectableDates)
 
-    DatePickerDialog(
-        onDismissRequest = onDismissRequest,
-        confirmButton = {
-            Text(
-                modifier = Modifier
-                    .padding(
-                        bottom = 20.dp,
-                        end = 15.dp
+            val dateMillis = datePickerState.selectedDateMillis
+
+            DatePickerDialog(
+                onDismissRequest = {
+                    onEvent(
+                        CertificateUIEvent.ChangeCertificateDatePickerState(
+                            CertificateDatePickerState.NONE
+                        )
                     )
-                    .clickable(
-                        interactionSource = remember { MutableInteractionSource() },
-                        indication = null,
-                        onClick = {
-                            formattedDate = if (dateMillis != null) {
-                                val date = Date(dateMillis)
-                                val format = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
-                                format.format(date)
-                            } else {
-                                curDate
-                            }
-                            onAcceptRequest(formattedDate)
-                        }
-                    ),
-                text = stringResource(id = R.string.ready),
-                style = DeathNoteTheme.typography.settingsScreenItemTitle,
-                color = DeathNoteTheme.colors.primary
-            )
-        },
-        content = {
-            DatePicker(
-                colors = DatePickerDefaults.colors(
-                    todayContentColor = DeathNoteTheme.colors.primary,
-                    selectedDayContainerColor = DeathNoteTheme.colors.primary,
-                    todayDateBorderColor = DeathNoteTheme.colors.primary
-                ),
-                state = datePickerState
+                },
+                confirmButton = {
+                    Text(
+                        modifier = Modifier
+                            .padding(bottom = 20.dp, end = 15.dp)
+                            .clickable(
+                                interactionSource = remember { MutableInteractionSource() },
+                                indication = null,
+                                onClick = {
+                                    if (bottomSheetDatePickerState == CertificateDatePickerState.START)
+                                        onEvent(
+                                            CertificateUIEvent.ChangeStartDate(
+                                                formatSelectedDate(
+                                                    dateMillis, nowDate.format(
+                                                        dateFormatter
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    else
+                                        onEvent(
+                                            CertificateUIEvent.ChangeEndDate(
+                                                formatSelectedDate(
+                                                    dateMillis, nowDate.format(
+                                                        dateFormatter
+                                                    )
+                                                )
+                                            )
+                                        )
+                                }
+                            ),
+                        text = stringResource(id = R.string.ready),
+                        style = DeathNoteTheme.typography.settingsScreenItemTitle,
+                        color = DeathNoteTheme.colors.primary
+                    )
+                },
+                content = {
+                    DatePicker(
+                        colors = DatePickerDefaults.colors(
+                            todayContentColor = DeathNoteTheme.colors.primary,
+                            selectedDayContainerColor = DeathNoteTheme.colors.primary,
+                            todayDateBorderColor = DeathNoteTheme.colors.primary
+                        ),
+                        state = datePickerState
+                    )
+                }
             )
         }
-    )
+    }
 }

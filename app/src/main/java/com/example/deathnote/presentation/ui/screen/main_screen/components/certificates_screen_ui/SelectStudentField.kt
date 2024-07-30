@@ -24,7 +24,6 @@ import com.example.deathnote.presentation.ui.theme.SoftGray
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 import com.example.deathnote.presentation.ui.theme.util.adjust
 import com.example.deathnote.presentation.ui.theme.util.isDarkMode
-import com.example.deathnote.presentation.util.getShortName
 
 @Composable
 fun SelectStudentField(

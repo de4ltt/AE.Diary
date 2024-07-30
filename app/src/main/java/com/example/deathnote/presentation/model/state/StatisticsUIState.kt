@@ -2,7 +2,7 @@ package com.example.deathnote.presentation.model.state
 
 import com.example.deathnote.presentation.model.Student
 import com.example.deathnote.presentation.model.Subject
-import com.example.deathnote.presentation.model.util.StatisticsMode
+import com.example.deathnote.presentation.model.interfaces.StatisticsMode
 
 /**
  * @param mode

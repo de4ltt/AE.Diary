@@ -2,6 +2,7 @@ package com.example.deathnote.presentation.model.event
 
 import com.example.deathnote.presentation.model.Subject
 import com.example.deathnote.presentation.model.Timetable
+import com.example.deathnote.presentation.model.interfaces.SettingsDatePickerState
 import com.example.deathnote.presentation.model.util.DayOfWeek
 
 sealed class TimetableUIEvent {
@@ -26,7 +27,7 @@ sealed class TimetableUIEvent {
 
     data class IdleBottomSheet(val dayOfWeek: DayOfWeek) : TimetableUIEvent()
 
-    data object ChangeSettingsScreenBottomSheetState: TimetableUIEvent()
+    data class ChangeSettingsScreenBottomSheetState(val state: SettingsDatePickerState): TimetableUIEvent()
     data class SettingsBottomSheetAddHoliday(val dayOfWeek: DayOfWeek) : TimetableUIEvent()
     data class SettingsBottomSheetDeleteHoliday(val dayOfWeek: DayOfWeek) : TimetableUIEvent()
     data class SettingsBottomSheetChangeSemesterStartTime(val time: String) : TimetableUIEvent()

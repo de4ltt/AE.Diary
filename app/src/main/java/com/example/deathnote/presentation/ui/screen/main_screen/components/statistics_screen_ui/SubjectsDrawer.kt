@@ -34,11 +34,10 @@ import androidx.compose.ui.unit.sp
 import com.example.deathnote.R
 import com.example.deathnote.presentation.model.Subject
 import com.example.deathnote.presentation.model.event.StatisticsUIEvent
+import com.example.deathnote.presentation.model.interfaces.StatisticsMode
 import com.example.deathnote.presentation.model.state.StatisticsUIState
-import com.example.deathnote.presentation.model.util.StatisticsMode
 import com.example.deathnote.presentation.ui.screen.settings.components.timetable_screen_ui.SubjectMenuBar
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
-import com.example.deathnote.presentation.util.getShortName
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable

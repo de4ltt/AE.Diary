@@ -9,13 +9,13 @@ import com.example.deathnote.presentation.mapper.toPresentation
 import com.example.deathnote.presentation.model.Certificate
 import com.example.deathnote.presentation.model.event.CertificateUIEvent
 import com.example.deathnote.presentation.model.state.CertificateUIState
+import com.example.deathnote.presentation.util.TimeFormatter.dateFormatter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 @HiltViewModel
@@ -45,21 +45,21 @@ class CertificateViewModel @Inject constructor(
         is CertificateUIEvent.ChangeEndDate ->
             viewModelScope.launch(Dispatchers.IO) {
                 _certificateUIState.value = _certificateUIState.value.copy(
-                    end = event.endDate
+                    endDate = event.endDate
                 )
             }
 
         is CertificateUIEvent.ChangeStartDate ->
             viewModelScope.launch(Dispatchers.IO) {
                 _certificateUIState.value = _certificateUIState.value.copy(
-                    start = event.startDate
+                    startDate = event.startDate
                 )
             }
 
         is CertificateUIEvent.ChangeStudent ->
             viewModelScope.launch(Dispatchers.IO) {
                 _certificateUIState.value = _certificateUIState.value.copy(
-                    student = event.student
+                    curStudent = event.student
                 )
             }
 
@@ -72,20 +72,26 @@ class CertificateViewModel @Inject constructor(
 
         is CertificateUIEvent.AddCertificate -> addCertificate(event.certificate)
         is CertificateUIEvent.DeleteCertificate -> deleteCertificate(event.certificate)
+
+        is CertificateUIEvent.ChangeCertificateDatePickerState ->
+            viewModelScope.launch(Dispatchers.IO) {
+                _certificateUIState.value = _certificateUIState.value.copy(
+                    bottomSheetDatePickerState = event.state
+                )
+            }
     }
 
     private fun addCertificate(certificate: Certificate) =
         viewModelScope.launch(Dispatchers.IO) {
-            val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
 
             _certificateUIState.value.apply {
-                var curDate = LocalDate.parse(start, formatter)
-                val endDate = LocalDate.parse(end, formatter)
+                var curDate = LocalDate.parse(startDate, dateFormatter)
+                val endDate = LocalDate.parse(endDate, dateFormatter)
 
                 while (curDate <= endDate) {
                     certificateUseCases.AddStudentAbsenceByDateUseCase(
-                        curDate.format(formatter),
-                        student.id
+                        curDate.format(dateFormatter),
+                        curStudent.id
                     )
 
                     curDate = curDate.plusDays(1)
@@ -97,14 +103,13 @@ class CertificateViewModel @Inject constructor(
 
     private fun deleteCertificate(certificate: Certificate) =
         viewModelScope.launch(Dispatchers.IO) {
-            val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
 
-            var curDate = LocalDate.parse(certificate.start, formatter)
-            val endDate = LocalDate.parse(certificate.end, formatter)
+            var curDate = LocalDate.parse(certificate.start, dateFormatter)
+            val endDate = LocalDate.parse(certificate.end, dateFormatter)
 
             while (curDate <= endDate) {
                 certificateUseCases.DeleteStudentAbsenceByDateUseCase(
-                    curDate.format(formatter),
+                    curDate.format(dateFormatter),
                     certificate.studentId
                 )
 
@@ -115,16 +120,15 @@ class CertificateViewModel @Inject constructor(
         }
 
     init {
-        val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
 
         viewModelScope.launch(Dispatchers.IO) {
             certificateUseCases.GetAllCertificatesUseCase().collect {
                 _allCertificates.value = it.toPresentation(CertificateDomain::toPresentation)
 
                 _orderedCertificates.value = _allCertificates.value.groupBy { item ->
-                    (LocalDate.parse(item.start, formatter).month + LocalDate.parse(
+                    (LocalDate.parse(item.start, dateFormatter).month + LocalDate.parse(
                         item.start,
-                        formatter
+                        dateFormatter
                     ).year.toLong()).toString()
                 }
             }

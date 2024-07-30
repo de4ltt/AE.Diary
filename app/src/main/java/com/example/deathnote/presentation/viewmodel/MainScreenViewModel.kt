@@ -11,19 +11,21 @@ import com.example.deathnote.presentation.mapper.toPresentation
 import com.example.deathnote.presentation.model.Subject
 import com.example.deathnote.presentation.model.Timetable
 import com.example.deathnote.presentation.model.state.MainScreenUIState
+import com.example.deathnote.presentation.util.TimeFormatter.curTimeFlow
+import com.example.deathnote.presentation.util.TimeFormatter.dateFormatter
+import com.example.deathnote.presentation.util.TimeFormatter.dateTimeFormatter
+import com.example.deathnote.presentation.util.TimeFormatter.nowDate
+import com.example.deathnote.presentation.util.TimeFormatter.timeFormatter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.ZoneOffset
-import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 @HiltViewModel
@@ -245,17 +247,5 @@ class MainScreenViewModel @Inject constructor(
                 }
             }
         }
-    }
-}
-
-private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
-private val dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
-private val dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy'T'HH:mm")
-private val nowDate = LocalDate.now()
-
-private val curTimeFlow = flow {
-    while (true) {
-        emit(LocalDateTime.now())
-        delay(1000)
     }
 }

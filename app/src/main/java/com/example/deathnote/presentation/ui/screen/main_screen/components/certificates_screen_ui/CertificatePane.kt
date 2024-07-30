@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,7 +25,6 @@ import com.example.deathnote.presentation.ui.cross_screen_ui.SwipeToDeleteContai
 import com.example.deathnote.presentation.ui.theme.SexyGray
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 import com.example.deathnote.presentation.util.getNumberOfDays
-import com.example.deathnote.presentation.util.getShortName
 
 
 @Composable
