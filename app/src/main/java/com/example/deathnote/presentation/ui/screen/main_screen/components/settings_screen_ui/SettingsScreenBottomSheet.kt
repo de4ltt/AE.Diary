@@ -213,13 +213,9 @@ fun SettingsScreenBottomSheet(
                 ) {
                     Column(
                         modifier = Modifier
-                            .padding(
-                                vertical = 30.dp,
-                                horizontal = 20.dp
-                            )
-                            .background(
-                                DeathNoteTheme.colors.baseBackground
-                            ),
+                            .clip(DeathNoteTheme.shapes.rounded12)
+                            .background(DeathNoteTheme.colors.baseBackground)
+                            .padding(20.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.spacedBy(20.dp)
                     ) {
@@ -237,12 +233,8 @@ fun SettingsScreenBottomSheet(
                                 modifier = Modifier
                                     .height(50.dp)
                                     .weight(1f)
-                                    .clip(
-                                        DeathNoteTheme.shapes.rounded12
-                                    )
-                                    .background(
-                                        color = if (isDarkMode()) DeathNoteTheme.colors.baseBackground else SexyGray
-                                    )
+                                    .clip(DeathNoteTheme.shapes.rounded12)
+                                    .background(if (isDarkMode()) DeathNoteTheme.colors.baseBackground else SexyGray)
                                     .clickable(
                                         interactionSource = remember { MutableInteractionSource() },
                                         indication = null,
@@ -263,12 +255,8 @@ fun SettingsScreenBottomSheet(
                                 modifier = Modifier
                                     .height(50.dp)
                                     .weight(1f)
-                                    .clip(
-                                        DeathNoteTheme.shapes.rounded12
-                                    )
-                                    .background(
-                                        DeathNoteTheme.colors.primary
-                                    )
+                                    .clip(DeathNoteTheme.shapes.rounded12)
+                                    .background(DeathNoteTheme.colors.primary)
                                     .clickable(
                                         interactionSource = remember { MutableInteractionSource() },
                                         indication = null,

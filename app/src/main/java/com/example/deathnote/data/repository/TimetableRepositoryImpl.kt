@@ -27,6 +27,9 @@ class TimetableRepositoryImpl @Inject constructor(
     override suspend fun upsertTimetable(timetable: TimetableDomain) =
         timetableDao.upsertTimetable(timetable.toEntity())
 
+    override suspend fun deleteAllTimetables() =
+        timetableDao.deleteAllTimetables()
+
     override suspend fun deleteTimetable(timetable: TimetableDomain) {
         timetable.apply {
             timetableDao.deleteTimetable(

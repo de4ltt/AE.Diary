@@ -1,5 +1,6 @@
 package com.example.deathnote.presentation.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.deathnote.DiaryApplication.Companion.END_TIME
@@ -17,7 +18,6 @@ import com.example.deathnote.presentation.model.state.TimetableUIState
 import com.example.deathnote.presentation.model.util.DayOfWeek
 import com.example.deathnote.presentation.model.util.WeekType
 import com.example.deathnote.presentation.util.toDayOfWeek
-import com.example.deathnote.presentation.util.toDigitString
 import com.example.deathnote.presentation.util.toWeekType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -188,8 +188,14 @@ class TimetableViewModel @Inject constructor(
                 )
             }
 
-        TimetableUIEvent.IdleSemesterTime ->
+        TimetableUIEvent.IdleSemesterTime -> {
             setSemesterTime(nowTime, nowTime, WeekType.ODD, emptyList())
+            deleteSemester()
+        }
+    }
+
+    private fun deleteSemester() = viewModelScope.launch(Dispatchers.IO) {
+        timetableUseCases.DeleteAllTimetablesUseCase()
     }
 
     private fun setSemesterTime(
@@ -203,77 +209,43 @@ class TimetableViewModel @Inject constructor(
                 start,
                 end,
                 firstWeekType.weekType,
-                holidays.toDigitString()
+                holidays.map { it.code }.joinToString(",")
             )
         }
 
     private fun upsertTimetable() = viewModelScope.launch(Dispatchers.IO) {
-
         val timetableUIStateValue = _timetableUIState.value
-
         findFirstMatchDay(
             timetableUIStateValue.bottomSheetDayOfWeek,
             timetableUIStateValue.bottomSheetWeekType
         )?.let {
-
-            var curDate =
-                it
-            val endDate =
-                LocalDate.parse(
-                    _semesterTime.value.second,
-                    DateTimeFormatter.ofPattern("dd.MM.yyyy")
-                )
-            val pattern =
-                DateTimeFormatter.ofPattern("dd.MM.yyyy")
-
-
+            var curDate = it
+            val endDate = LocalDate.parse(_semesterTime.value.second, dateFormatter)
             val timetable = Timetable(
-                date = it.format(pattern),
+                date = it.format(dateFormatter),
                 subjectId = timetableUIStateValue.bottomSheetSubject.id,
                 startTime = timetableUIStateValue.bottomSheetStartTime,
                 endTime = timetableUIStateValue.bottomSheetEndTime,
                 weekType = timetableUIStateValue.bottomSheetWeekType.weekType
             )
 
-            viewModelScope.launch(Dispatchers.IO) {
-                while (curDate <= endDate) {
-                    if (
-                        curDate.dayOfWeek.value == LocalDate.parse(
-                            timetable.date,
-                            pattern
-                        ).dayOfWeek.value
+            while (curDate <= endDate) {
+                if (curDate.dayOfWeek == LocalDate.parse(timetable.date, dateFormatter).dayOfWeek) {
+                    timetableUseCases.UpsertTimetableUseCase(
+                        timetable.copy(date = curDate.format(dateFormatter)).toDomain()
                     )
-                        timetableUseCases.UpsertTimetableUseCase(
-                            timetable.copy(
-                                date = curDate.format(pattern)
-                            ).toDomain()
-                        )
-                    curDate = curDate.plusDays(14)
                 }
+                curDate = curDate.plusDays(14)
             }
         }
     }
 
     private fun deleteTimetable(timetable: Timetable) = viewModelScope.launch(Dispatchers.IO) {
-
-        var curDate =
-            LocalDate.parse(
-                timetable.date,
-                DateTimeFormatter.ofPattern("dd.MM.yyyy")
-            )
-        val endDate =
-            LocalDate.parse(
-                _semesterTime.value.second,
-                DateTimeFormatter.ofPattern("dd.MM.yyyy")
-            )
-        val pattern =
-            DateTimeFormatter.ofPattern("dd.MM.yyyy")
-
+        var curDate = LocalDate.parse(timetable.date, dateFormatter)
+        val endDate = LocalDate.parse(_semesterTime.value.second, dateFormatter)
         while (curDate <= endDate) {
             timetableUseCases.DeleteTimetableUseCase(
-                timetable.copy(
-                    date = curDate.format(pattern)
-                ).toDomain()
+                timetable.copy(date = curDate.format(dateFormatter)).toDomain()
             )
             curDate = curDate.plusDays(14)
         }
@@ -281,68 +253,51 @@ class TimetableViewModel @Inject constructor(
 
     private fun findFirstMatchDay(dayOfWeek: DayOfWeek, weekType: WeekType): LocalDate? {
         val semesterTimeValue = _semesterTime.value
-        val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
-
-        var curDate = LocalDate.parse(semesterTimeValue.first, formatter)
-        val endDate = LocalDate.parse(semesterTimeValue.second, formatter)
+        var curDate = LocalDate.parse(semesterTimeValue.first, dateFormatter)
+        val endDate = LocalDate.parse(semesterTimeValue.second, dateFormatter)
         var curWeekType = semesterTimeValue.third
 
-        while (
-            curDate.dayOfWeek.value != dayOfWeek.code ||
-            curWeekType != weekType
-        ) {
+        while (curDate.dayOfWeek.value != dayOfWeek.code || curWeekType != weekType) {
             if (curDate > endDate) return null
             curDate = curDate.plusDays(1)
-            if (curDate.dayOfWeek.value == 1)
+            if (curDate.dayOfWeek.value == DayOfWeek.MONDAY.code) {
                 curWeekType = if (curWeekType == WeekType.ODD) WeekType.EVEN else WeekType.ODD
+            }
         }
-
         return curDate
     }
 
     init {
         viewModelScope.launch {
-
             launch(Dispatchers.IO) {
                 timetableUseCases.GetDataStoreDataUseCase().collectLatest {
                     it[FIRST_WEEK_TYPE]?.let { weekType ->
                         _semesterTime.value = Triple(
                             it[START_TIME] ?: nowTime,
                             it[END_TIME] ?: nowTime,
-                            WeekType.entries.first { weekTypeEntry ->
-                                weekTypeEntry.weekType == weekType
-                            }
+                            WeekType.entries.first { weekTypeEntry -> weekTypeEntry.weekType == weekType }
                         )
                     }
 
-                    _holidays.value = it[HOLIDAYS]?.let { holidays ->
-                        holidays.map { dayOfWeek ->
-                            DayOfWeek.entries.first { dayOfWeekEntry ->
-                                dayOfWeekEntry.code == dayOfWeek.digitToInt()
-                            }
+                    it[HOLIDAYS]?.let { holidays ->
+                        _holidays.value = holidays.split(",").mapNotNull { dayOfWeek ->
+                            DayOfWeek.entries.firstOrNull { dayOfWeekEntry -> dayOfWeekEntry.code == dayOfWeek.toInt() }
                         }
-                    } ?: emptyList()
+                    }
+
+                    Log.d("holidays", "${_holidays.value}")
                 }
             }
 
             launch(Dispatchers.IO) {
                 timetableUseCases.GetAllTimetablesUseCase().collectLatest {
-                    val timetables: List<Timetable> =
-                        it.toPresentation(TimetableDomain::toPresentation)
-
-                    val pattern = DateTimeFormatter.ofPattern("dd.MM.yyyy")
-
+                    val timetables: List<Timetable> = it.toPresentation(TimetableDomain::toPresentation)
                     _allTimetables.value = timetables.groupBy { timetable ->
                         Pair(
-                            first = LocalDate.parse(
-                                timetable.date,
-                                pattern
-                            ).dayOfWeek.value.toDayOfWeek(),
+                            first = LocalDate.parse(timetable.date, dateFormatter).dayOfWeek.value.toDayOfWeek(),
                             second = timetable.weekType.toWeekType()
                         )
-                    }.mapValues { list ->
-                        list.value.groupBy { entry -> entry.date }.values.first()
-                    }
+                    }.mapValues { list -> list.value.groupBy { entry -> entry.date }.values.first() }
                 }
             }
 
@@ -352,16 +307,18 @@ class TimetableViewModel @Inject constructor(
                         isSemesterTimeSet = it.first != it.second
                     )
                 }
+            }
 
+            launch {
                 _holidays.collectLatest {
                     _timetableUIState.value = _timetableUIState.value.copy(
                         settingsBottomSheetHolidays = it
                     )
                 }
             }
-
         }
     }
 }
 
 private val nowTime = LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+private val dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")

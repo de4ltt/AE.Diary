@@ -1,5 +1,6 @@
 package com.example.deathnote.domain.use_case.timetable.util
 
+import com.example.deathnote.domain.use_case.timetable.DeleteAllTimetablesUseCase
 import com.example.deathnote.domain.use_case.timetable.DeleteTimetableUseCase
 import com.example.deathnote.domain.use_case.timetable.GetAllTimetablesUseCase
 import com.example.deathnote.domain.use_case.timetable.GetDataStoreDataUseCase
@@ -12,5 +13,6 @@ data class TimetableUseCasesImpl @Inject constructor(
     override val UpsertTimetableUseCase: UpsertTimetableUseCase,
     override val DeleteTimetableUseCase: DeleteTimetableUseCase,
     override val SetSemesterTimeUseCase: SetSemesterTimeUseCase,
-    override val GetDataStoreDataUseCase: GetDataStoreDataUseCase
+    override val GetDataStoreDataUseCase: GetDataStoreDataUseCase,
+    override val DeleteAllTimetablesUseCase: DeleteAllTimetablesUseCase
 ): TimetableUseCases

@@ -33,8 +33,10 @@ class MainScreenViewModel @Inject constructor(
 
     private val _allTimetables: MutableStateFlow<List<Timetable>> = MutableStateFlow(emptyList())
     private val _allSubjects: MutableStateFlow<List<Subject>> = MutableStateFlow(emptyList())
-    private val _semesterTime: MutableStateFlow<Pair<LocalDate, LocalDate>> = MutableStateFlow(Pair(nowDate, nowDate))
-    private val _mainScreenUIState: MutableStateFlow<MainScreenUIState> = MutableStateFlow(MainScreenUIState())
+    private val _semesterTime: MutableStateFlow<Pair<LocalDate, LocalDate>> =
+        MutableStateFlow(Pair(nowDate, nowDate))
+    private val _mainScreenUIState: MutableStateFlow<MainScreenUIState> =
+        MutableStateFlow(MainScreenUIState())
     val mainScreenUIState = _mainScreenUIState.asStateFlow()
 
     private fun findNextTimetable(dateTime: LocalDateTime): Timetable? {
@@ -75,20 +77,30 @@ class MainScreenViewModel @Inject constructor(
     }
 
     private fun updateUIWithNextTimetable(nextTimetable: Timetable) {
-        val nextSubject = _allSubjects.value.firstOrNull { it.id == nextTimetable.subjectId } ?: Subject()
+        val nextSubject =
+            _allSubjects.value.firstOrNull { it.id == nextTimetable.subjectId } ?: Subject()
         _mainScreenUIState.value = _mainScreenUIState.value.copy(
             curTimetable = nextTimetable,
             curSubject = nextSubject
         )
     }
 
-    private fun calculatePercentage(currentTime: LocalDateTime, startTime: LocalDateTime, endTime: LocalDateTime): Float {
-        val elapsedTime = currentTime.toEpochSecond(ZoneOffset.UTC) - startTime.toEpochSecond(ZoneOffset.UTC)
-        val totalTime = endTime.toEpochSecond(ZoneOffset.UTC) - startTime.toEpochSecond(ZoneOffset.UTC)
+    private fun calculatePercentage(
+        currentTime: LocalDateTime,
+        startTime: LocalDateTime,
+        endTime: LocalDateTime
+    ): Float {
+        val elapsedTime =
+            currentTime.toEpochSecond(ZoneOffset.UTC) - startTime.toEpochSecond(ZoneOffset.UTC)
+        val totalTime =
+            endTime.toEpochSecond(ZoneOffset.UTC) - startTime.toEpochSecond(ZoneOffset.UTC)
         return if (totalTime > 0) elapsedTime.toFloat() / totalTime else 0f
     }
 
-    private fun findCurrentTimetable(timetables: List<Timetable>, currentTime: LocalDateTime): Timetable {
+    private fun findCurrentTimetable(
+        timetables: List<Timetable>,
+        currentTime: LocalDateTime
+    ): Timetable {
         return timetables.firstOrNull {
             val startDate = LocalDate.parse(it.date, dateFormatter)
             val startTime = LocalTime.parse(it.startTime, timeFormatter)
@@ -99,7 +111,8 @@ class MainScreenViewModel @Inject constructor(
 
             if (endTime.isBefore(startTime)) {
                 currentTime.isAfter(startDateTime) || currentTime.isBefore(endDateTime)
-            } else {currentTime in startDateTime..endDateTime
+            } else {
+                currentTime in startDateTime..endDateTime
             }
         } ?: Timetable()
     }
@@ -120,7 +133,8 @@ class MainScreenViewModel @Inject constructor(
         }
 
         val todayTimetables = sortedTimetables[currentDate].orEmpty()
-        val previousTodayTimetable = getPreviousTimetable(todayTimetables, currentTime.toLocalTime())
+        val previousTodayTimetable =
+            getPreviousTimetable(todayTimetables, currentTime.toLocalTime())
         if (previousTodayTimetable != null) {
             return previousTodayTimetable
         }
@@ -142,21 +156,25 @@ class MainScreenViewModel @Inject constructor(
         return semesterStartTimetable
     }
 
-
     init {
         viewModelScope.launch {
             launch(Dispatchers.IO) {
                 mainScreenUseCases.GetDataStoreDataUseCase().collectLatest { data ->
-                    _semesterTime.value = Pair(
-                        first = LocalDate.parse(data[START_TIME], dateFormatter) ?: nowDate,
-                        second = LocalDate.parse(data[END_TIME], dateFormatter) ?: nowDate
-                    )
+                    _semesterTime.value =
+                        if (data[START_TIME].isNullOrEmpty() || data[END_TIME].isNullOrEmpty())
+                            Pair(nowDate, nowDate)
+                        else
+                            Pair(
+                                first = LocalDate.parse(data[START_TIME], dateFormatter),
+                                second = LocalDate.parse(data[END_TIME], dateFormatter)
+                            )
                 }
             }
 
             launch(Dispatchers.IO) {
                 mainScreenUseCases.GetAllTimetablesUseCase().collectLatest { timetables ->
-                    _allTimetables.value = timetables.toPresentation(TimetableDomain::toPresentation)
+                    _allTimetables.value =
+                        timetables.toPresentation(TimetableDomain::toPresentation)
                 }
             }
 
@@ -173,7 +191,9 @@ class MainScreenViewModel @Inject constructor(
                     val curDate = currentTime.format(dateFormatter)
                     val curDayTimetables = _allTimetables.value.filter { it.date == curDate }
                     val curTimetable = findCurrentTimetable(curDayTimetables, currentTime)
-                    val curSubject = _allSubjects.value.firstOrNull { it.id == curTimetable.subjectId } ?: Subject()
+                    val curSubject =
+                        _allSubjects.value.firstOrNull { it.id == curTimetable.subjectId }
+                            ?: Subject()
 
                     val curStartTime = parseDateTime(curTimetable.date, curTimetable.startTime)
                     val curEndTime = parseDateTime(curTimetable.date, curTimetable.endTime)
@@ -192,14 +212,23 @@ class MainScreenViewModel @Inject constructor(
 
                         if (nextTimetable != Timetable()) {
                             updateUIWithNextTimetable(nextTimetable)
-                            val prevTimetable = findPreviousTimetable(parseDateTime(nextTimetable.date, nextTimetable.startTime))
-                            val prevEndTime = parseDateTime(prevTimetable.date, prevTimetable.startTime)
-                            val nextStartTime = parseDateTime(nextTimetable.date, nextTimetable.startTime)
-                            val percentage = calculatePercentage(currentTime, prevEndTime, nextStartTime)
+                            val prevTimetable = findPreviousTimetable(
+                                parseDateTime(
+                                    nextTimetable.date,
+                                    nextTimetable.startTime
+                                )
+                            )
+                            val prevEndTime =
+                                parseDateTime(prevTimetable.date, prevTimetable.startTime)
+                            val nextStartTime =
+                                parseDateTime(nextTimetable.date, nextTimetable.startTime)
+                            val percentage =
+                                calculatePercentage(currentTime, prevEndTime, nextStartTime)
                             _mainScreenUIState.value = currentUIState.copy(
                                 curTime = currentTime,
                                 curTimetable = nextTimetable,
-                                curSubject = _allSubjects.value.firstOrNull { it.id == nextTimetable.subjectId } ?: Subject(),
+                                curSubject = _allSubjects.value.firstOrNull { it.id == nextTimetable.subjectId }
+                                    ?: Subject(),
                                 percentage = percentage,
                                 isNextTimetableShown = true
                             )

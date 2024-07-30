@@ -10,6 +10,8 @@ interface TimetableRepository {
 
     suspend fun upsertTimetable(timetable: TimetableDomain)
 
+    suspend fun deleteAllTimetables()
+
     suspend fun deleteTimetable(timetable: TimetableDomain)
 
     suspend fun setSemesterTime(start: String, end: String, firstWeekType: String, holidays: String)

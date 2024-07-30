@@ -15,6 +15,9 @@ interface TimetablesDAO {
     @Upsert
     fun upsertTimetable(timetable: Timetables)
 
+    @Query("DELETE FROM timetables")
+    fun deleteAllTimetables()
+
     @Query(
         """
         DELETE FROM timetables 
