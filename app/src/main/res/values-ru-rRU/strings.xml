@@ -102,4 +102,7 @@
     <string name="all_students">Все студенты</string>
     <string name="all">все</string>
     <string name="all_subjects">Все предметы</string>
+    <string name="break_until">ПЕРЕРЫВ ДО</string>
+    <string name="next">СЛЕДУЮЩИЙ</string>
+    <string name="no_subjects_appoined">РАСПИСАНИЕ ОТСУТСТВУЕТ</string>
 </resources>

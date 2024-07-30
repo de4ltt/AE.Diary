@@ -102,4 +102,7 @@
     <string name="all_students">Wszyscy studenci</string>
     <string name="all">wszyscy</string>
     <string name="all_subjects">Wszystkie przedmioty</string>
+    <string name="break_until">PRZERWA DO</string>
+    <string name="next">NASTĘPNY</string>
+    <string name="no_subjects_appoined">NIE PRZYDZIELONO PRZEDMIOTÓW</string>
 </resources>

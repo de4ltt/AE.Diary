@@ -102,4 +102,7 @@
     <string name="all_students">Барлық студенттер</string>
     <string name="all">барлығы</string>
     <string name="all_subjects">Барлық пәндер</string>
+    <string name="break_until">ҮЗІЛІС</string>
+    <string name="next">КЕЛЕСІ</string>
+    <string name="no_subjects_appoined">ПӘНДЕР ТАҒАЙЫНДАЛМАҒАН</string>
 </resources>

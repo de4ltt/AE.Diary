@@ -102,4 +102,7 @@
     <string name="all_students">全学生</string>
     <string name="all">すべて</string>
     <string name="all_subjects">全科目</string>
+    <string name="break_until">休憩まで</string>
+    <string name="next">次</string>
+    <string name="no_subjects_appoined">科目が割り当てられていません</string>
 </resources>

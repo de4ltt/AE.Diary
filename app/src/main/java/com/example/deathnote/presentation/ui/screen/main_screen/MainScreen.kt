@@ -1,5 +1,6 @@
 package com.example.deathnote.presentation.ui.screen.main_screen
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,6 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.deathnote.R
+import com.example.deathnote.presentation.model.Timetable
 import com.example.deathnote.presentation.model.event.TimetableUIEvent
 import com.example.deathnote.presentation.ui.screen.destinations.CertificatesScreenDestination
 import com.example.deathnote.presentation.ui.screen.destinations.DiaryScreenDestination
@@ -62,7 +64,8 @@ fun MainScreen(
                 )
                 .background(
                     color = DeathNoteTheme.colors.inverseBackground
-                ),
+                )
+                .animateContentSize(),
             verticalArrangement = Arrangement.spacedBy(15.dp)
         ) {
             Column(
@@ -76,7 +79,9 @@ fun MainScreen(
             ) {
                 CurrentDate(mainScreenUIState)
                 CurrentSubject(mainScreenUIState)
-                ProgressBar(mainScreenUIState)
+
+                if (mainScreenUIState.curTimetable != Timetable())
+                    ProgressBar(mainScreenUIState)
             }
         }
 

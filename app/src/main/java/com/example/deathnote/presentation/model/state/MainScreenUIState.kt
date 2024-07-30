@@ -8,6 +8,7 @@ data class MainScreenUIState(
     val curTime: LocalDateTime = nowTime,
     val curSubject: Subject = Subject(),
     val curTimetable: Timetable = Timetable(),
+    val isNextTimetableShown: Boolean = false,
 
     val percentage: Float = 0f
 )

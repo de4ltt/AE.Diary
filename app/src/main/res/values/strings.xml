@@ -124,4 +124,7 @@
     <string name="add">Add</string>
     <string name="save">Save</string>
     <string name="styles_cringe">Just ruin everything.</string>
+    <string name="break_until">BREAK UNTIL</string>
+    <string name="next">NEXT</string>
+    <string name="no_subjects_appoined">NO SUBJECTS APPOINTED</string>
 </resources>
