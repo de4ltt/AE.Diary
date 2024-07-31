@@ -45,7 +45,7 @@ fun DatePickerWithDialog(
             DatePickerDialog(
                 onDismissRequest = {
                     onEvent(
-                        TimetableUIEvent.ChangeSettingsScreenBottomSheetState(
+                        TimetableUIEvent.ChangeSettingsScreenBottomSheetDatePickerState(
                             SettingsDatePickerState.NONE
                         )
                     )

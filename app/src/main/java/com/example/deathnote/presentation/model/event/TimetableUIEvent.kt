@@ -12,7 +12,7 @@ sealed class TimetableUIEvent {
     data class DeleteTimetable(val timetable: Timetable) : TimetableUIEvent()
 
     data object ChangeSemesterTime : TimetableUIEvent()
-    data object IdleSemesterTime: TimetableUIEvent()
+    data object IdleSemesterTime : TimetableUIEvent()
 
     data object ChangeBottomSheetState : TimetableUIEvent()
     data class ChangeBottomSheetSubject(val subject: Subject) : TimetableUIEvent()
@@ -21,16 +21,18 @@ sealed class TimetableUIEvent {
     data class ChangeBottomSheetStartTime(val startTime: String) : TimetableUIEvent()
     data class ChangeBottomSheetEndTime(val endTime: String) : TimetableUIEvent()
 
-    data object ChangeBottomSheetSubjectPickerState: TimetableUIEvent()
-    data object ChangeBottomSheetTimePickerState: TimetableUIEvent()
-    data class ChangeBottomSheetStartTimePicker(val pick: String): TimetableUIEvent()
+    data object ChangeBottomSheetSubjectPickerState : TimetableUIEvent()
+    data object ChangeBottomSheetTimePickerState : TimetableUIEvent()
+    data class ChangeBottomSheetStartTimePicker(val pick: String) : TimetableUIEvent()
 
     data class IdleBottomSheet(val dayOfWeek: DayOfWeek) : TimetableUIEvent()
 
-    data class ChangeSettingsScreenBottomSheetState(val state: SettingsDatePickerState): TimetableUIEvent()
+    data class ChangeSettingsScreenBottomSheetDatePickerState(val state: SettingsDatePickerState) : TimetableUIEvent()
+
+    data object ChangeSettingsScreenBottomSheetState : TimetableUIEvent()
     data class SettingsBottomSheetAddHoliday(val dayOfWeek: DayOfWeek) : TimetableUIEvent()
     data class SettingsBottomSheetDeleteHoliday(val dayOfWeek: DayOfWeek) : TimetableUIEvent()
     data class SettingsBottomSheetChangeSemesterStartTime(val time: String) : TimetableUIEvent()
     data class SettingsBottomSheetChangeSemesterEndTime(val time: String) : TimetableUIEvent()
-    data object SettingsBottomSheetChangeFirstWeekType: TimetableUIEvent()
+    data object SettingsBottomSheetChangeFirstWeekType : TimetableUIEvent()
 }

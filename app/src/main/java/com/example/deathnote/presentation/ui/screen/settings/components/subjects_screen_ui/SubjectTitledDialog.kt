@@ -28,8 +28,7 @@ import java.util.Locale
 @Composable
 fun SubjectTitledDialog(
     state: SubjectDialogState,
-    onEvent: (SubjectUIEvent) -> Unit,
-    refreshSubjects: () -> Unit
+    onEvent: (SubjectUIEvent) -> Unit
 ) {
 
     state.apply {
@@ -85,7 +84,6 @@ fun SubjectTitledDialog(
                                     Locale.getDefault()
                                 ) else it.toString()
                             }))
-                            refreshSubjects()
                         },
                         value = subject.name,
                         isCentered = false,

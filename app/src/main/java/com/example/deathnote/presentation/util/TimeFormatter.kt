@@ -27,6 +27,8 @@ object TimeFormatter {
         }
     }
 
+    fun formatToDate(date: String) = LocalDate.parse(date, dateFormatter)
+
     fun formatSelectedDate(dateMillis: Long?, curDate: String): String {
         return if (dateMillis != null) {
             LocalDate.ofEpochDay(dateMillis / 86400000).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))

@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.deathnote.R
 import com.example.deathnote.presentation.model.Subject
-import com.example.deathnote.presentation.model.event.DiaryUIEvent
 import com.example.deathnote.presentation.model.event.SubjectUIEvent
 import com.example.deathnote.presentation.navigation.AppDestination
 import com.example.deathnote.presentation.ui.cross_screen_ui.NothingHere
@@ -26,7 +25,6 @@ import com.example.deathnote.presentation.ui.cross_screen_ui.SettingsTopBar
 import com.example.deathnote.presentation.ui.screen.settings.components.subjects_screen_ui.SubjectBar
 import com.example.deathnote.presentation.ui.screen.settings.components.subjects_screen_ui.SubjectTitledDialog
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
-import com.example.deathnote.presentation.viewmodel.DiaryViewModel
 import com.example.deathnote.presentation.viewmodel.SubjectViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -36,7 +34,6 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 fun SubjectsScreen(
     navigator: DestinationsNavigator,
     subjectViewModel: SubjectViewModel,
-    diaryViewModel: DiaryViewModel,
     paddingValues: PaddingValues = PaddingValues(
         top = 50.dp,
         start = 25.dp,
@@ -119,7 +116,6 @@ fun SubjectsScreen(
 
     SubjectTitledDialog(
         state = subjectDialogState,
-        onEvent = subjectViewModel::onEvent,
-        refreshSubjects = { /*diaryViewModel.onEvent(DiaryUIEvent.RefreshSubject)*/ }
+        onEvent = subjectViewModel::onEvent
     )
 }

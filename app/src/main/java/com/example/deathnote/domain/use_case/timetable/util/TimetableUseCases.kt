@@ -1,5 +1,6 @@
 package com.example.deathnote.domain.use_case.timetable.util
 
+import com.example.deathnote.domain.use_case.subject.GetAllSubjectsUseCase
 import com.example.deathnote.domain.use_case.timetable.DeleteAllTimetablesUseCase
 import com.example.deathnote.domain.use_case.timetable.DeleteTimetableUseCase
 import com.example.deathnote.domain.use_case.timetable.GetAllTimetablesUseCase
@@ -14,4 +15,5 @@ sealed interface TimetableUseCases {
     val SetSemesterTimeUseCase: SetSemesterTimeUseCase
     val GetDataStoreDataUseCase: GetDataStoreDataUseCase
     val DeleteAllTimetablesUseCase: DeleteAllTimetablesUseCase
+    val GetAllSubjectsUseCase: GetAllSubjectsUseCase
 }

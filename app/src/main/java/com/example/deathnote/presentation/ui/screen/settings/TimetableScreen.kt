@@ -65,26 +65,9 @@ fun TimetableScreen(
         pageCount = { 7 - timetableUIState.settingsBottomSheetHolidays.size },
     )
 
-    val daysOfWeek: List<Int> = arrayOf(1, 2, 3, 4, 5, 6, 7).filter {
-        !timetableUIState.settingsBottomSheetHolidays.contains(
-            it.toDayOfWeek()
-        )
-    }
-
+    val daysOfWeek by timetableViewModel.daysOfWeek.collectAsStateWithLifecycle()
+    val allSubjects by timetableViewModel.allFilteredSubjects.collectAsStateWithLifecycle()
     val allTimetables by timetableViewModel.allTimetables.collectAsStateWithLifecycle()
-    val allSubjects =
-        subjectViewModel.allSubjects.collectAsStateWithLifecycle().value.filter { subject ->
-            allTimetables[Pair(
-                daysOfWeek[pagerState.currentPage].toDayOfWeek(),
-                timetableUIState.curWeekType
-            )]?.let {
-                !it.map { timetable ->
-                    timetable.subjectId
-                }.contains(
-                    subject.id
-                )
-            } ?: true
-        }
 
     Column(
         modifier = Modifier

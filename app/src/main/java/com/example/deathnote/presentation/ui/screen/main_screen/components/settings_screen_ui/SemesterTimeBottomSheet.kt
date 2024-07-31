@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.deathnote.R
 import com.example.deathnote.presentation.model.event.TimetableUIEvent
+import com.example.deathnote.presentation.model.interfaces.SettingsDatePickerState
 import com.example.deathnote.presentation.model.state.TimetableUIState
 import com.example.deathnote.presentation.ui.cross_screen_ui.BottomBarWithTextFields
 
@@ -32,39 +33,45 @@ fun SemesterTimeBottomSheet(
         content = {
             Column(verticalArrangement = Arrangement.spacedBy(15.dp)) {
                 LazyVerticalGrid(
-                    modifier = Modifier.fillMaxWidth().wrapContentHeight(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight(),
                     columns = GridCells.Fixed(2),
                     horizontalArrangement = Arrangement.spacedBy(15.dp)
                 ) {
                     item {
-                        DatePickerTextField(
+                        SettingsDatePickerTextField(
                             title = R.string.start_date,
                             value = state.settingsBottomSheetStartDate,
-                            onValueChange = {},
-                            datePickerSettings = DatePickerSettings(
-                                previousDate = state.settingsBottomSheetEndDate,
-                                isStartDate = true
-                            )
+                            onClick = {
+                                onEvent(
+                                    TimetableUIEvent.ChangeSettingsScreenBottomSheetDatePickerState(
+                                        SettingsDatePickerState.START
+                                    )
+                                )
+                            }
                         )
                     }
                     item {
-                        DatePickerTextField(
+                        SettingsDatePickerTextField(
                             title = R.string.end_date,
                             value = state.settingsBottomSheetEndDate,
-                            onValueChange = {
-                                onEvent(TimetableUIEvent.SettingsBottomSheetChangeSemesterEndTime(it))
-                            },
-                            datePickerSettings = DatePickerSettings(
-                                previousDate = state.settingsBottomSheetStartDate,
-                                isStartDate = false
-                            )
+                            onClick = {
+                                onEvent(
+                                    TimetableUIEvent.ChangeSettingsScreenBottomSheetDatePickerState(
+                                        SettingsDatePickerState.END
+                                    )
+                                )
+                            }
                         )
                     }
                 }
+
                 WeekTypeSelector(
                     selectedWeekType = state.settingsBottomSheetFirstWeekType,
                     onEvent = { onEvent(TimetableUIEvent.SettingsBottomSheetChangeFirstWeekType) }
                 )
+
                 HolidaySelector(
                     state = state,
                     onEvent = onEvent

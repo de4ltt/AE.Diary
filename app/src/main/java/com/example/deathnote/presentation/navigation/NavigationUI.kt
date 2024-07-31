@@ -66,8 +66,7 @@ fun NavigationUI(
         composable(SubjectsScreenDestination) {
             SubjectsScreen(
                 navigator = destinationsNavigator,
-                subjectViewModel = subjectViewModel,
-                diaryViewModel = diaryViewModel
+                subjectViewModel = subjectViewModel
             )
         }
         composable(TimetableScreenDestination) {

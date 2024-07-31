@@ -10,6 +10,8 @@ data class TimetableUIState(
     val curWeekType: WeekType = WeekType.ODD,
     val isSemesterTimeSet: Boolean = false,
 
+    val curPage: Int = 0,
+
     val bottomSheetState: Boolean = false,
     val bottomSheetSubject: Subject = Subject(),
     val bottomSheetDayOfWeek: DayOfWeek = DayOfWeek.MONDAY,

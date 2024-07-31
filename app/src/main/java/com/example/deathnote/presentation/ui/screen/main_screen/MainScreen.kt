@@ -108,7 +108,7 @@ fun MainScreen(
                         onClick = {
                             if (!timetableUIState.isSemesterTimeSet) {
                                 navigator.navigate(SettingsScreenDestination)
-                                timetableViewModel.onEvent(TimetableUIEvent.ChangeSettingsScreenBottomSheetState)
+                                timetableViewModel.onEvent(TimetableUIEvent.ChangeBottomSheetState)
                             }
                             else
                                 navigator.navigate(DiaryScreenDestination)

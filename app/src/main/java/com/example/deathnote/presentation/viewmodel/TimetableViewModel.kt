@@ -7,6 +7,7 @@ import com.example.deathnote.DiaryApplication.Companion.END_TIME
 import com.example.deathnote.DiaryApplication.Companion.FIRST_WEEK_TYPE
 import com.example.deathnote.DiaryApplication.Companion.HOLIDAYS
 import com.example.deathnote.DiaryApplication.Companion.START_TIME
+import com.example.deathnote.domain.model.SubjectDomain
 import com.example.deathnote.domain.model.TimetableDomain
 import com.example.deathnote.domain.use_case.timetable.util.TimetableUseCases
 import com.example.deathnote.presentation.mapper.toDomain
@@ -45,6 +46,13 @@ class TimetableViewModel @Inject constructor(
 
     private val _semesterTime: MutableStateFlow<Triple<String, String, WeekType>> =
         MutableStateFlow(Triple(nowDateFormatted, nowDateFormatted, WeekType.ODD))
+
+    private val _allFilteredSubjects: MutableStateFlow<List<Subject>> =
+        MutableStateFlow(emptyList())
+    val allFilteredSubjects = _allFilteredSubjects.asStateFlow()
+
+    private val _daysOfWeek: MutableStateFlow<List<Int>> = MutableStateFlow(emptyList())
+    val daysOfWeek = _daysOfWeek.asStateFlow()
 
     private val _holidays: MutableStateFlow<List<DayOfWeek>> = MutableStateFlow(emptyList())
 
@@ -112,10 +120,10 @@ class TimetableViewModel @Inject constructor(
                 )
             }
 
-        TimetableUIEvent.ChangeSettingsScreenBottomSheetState ->
+        is TimetableUIEvent.ChangeSettingsScreenBottomSheetDatePickerState ->
             viewModelScope.launch {
                 _timetableUIState.value = _timetableUIState.value.copy(
-                    settingsBottomSheetState = !_timetableUIState.value.settingsBottomSheetState
+                    settingBottomSheetDatePickerState = event.state
                 )
             }
 
@@ -193,6 +201,13 @@ class TimetableViewModel @Inject constructor(
             setSemesterTime(nowDateFormatted, nowDateFormatted, WeekType.ODD, emptyList())
             deleteSemester()
         }
+
+        TimetableUIEvent.ChangeSettingsScreenBottomSheetState ->
+            viewModelScope.launch {
+                _timetableUIState.value = _timetableUIState.value.copy(
+                    bottomSheetState = !_timetableUIState.value.bottomSheetState
+                )
+            }
     }
 
     private fun deleteSemester() = viewModelScope.launch(Dispatchers.IO) {
@@ -270,6 +285,41 @@ class TimetableViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
+
+            launch {
+                _timetableUIState.collectLatest { state ->
+                    arrayOf(1, 2, 3, 4, 5, 6, 7).filter {
+                        !state.settingsBottomSheetHolidays.contains(
+                            it.toDayOfWeek()
+                        )
+                    }
+                }
+            }
+
+            launch(Dispatchers.IO) {
+                _timetableUIState.collectLatest { state ->
+                    _daysOfWeek.collectLatest { daysOfWeek ->
+                        timetableUseCases.GetAllSubjectsUseCase().collectLatest {
+                            val collectedSubjects: List<Subject> =
+                                it.toPresentation(SubjectDomain::toPresentation)
+
+                            _allFilteredSubjects.value = collectedSubjects.filter { subject ->
+                                _allTimetables.value[Pair(
+                                    daysOfWeek[state.curPage].toDayOfWeek(),
+                                    state.curWeekType
+                                )]?.let { listTimetables ->
+                                    !listTimetables.map { timetable ->
+                                        timetable.subjectId
+                                    }.contains(
+                                        subject.id
+                                    )
+                                } ?: true
+                            }
+                        }
+                    }
+                }
+            }
+
             launch(Dispatchers.IO) {
                 timetableUseCases.GetDataStoreDataUseCase().collectLatest {
                     it[FIRST_WEEK_TYPE]?.let { weekType ->
@@ -294,13 +344,18 @@ class TimetableViewModel @Inject constructor(
 
             launch(Dispatchers.IO) {
                 timetableUseCases.GetAllTimetablesUseCase().collectLatest {
-                    val timetables: List<Timetable> = it.toPresentation(TimetableDomain::toPresentation)
+                    val timetables: List<Timetable> =
+                        it.toPresentation(TimetableDomain::toPresentation)
                     _allTimetables.value = timetables.groupBy { timetable ->
                         Pair(
-                            first = LocalDate.parse(timetable.date, dateFormatter).dayOfWeek.value.toDayOfWeek(),
+                            first = LocalDate.parse(
+                                timetable.date,
+                                dateFormatter
+                            ).dayOfWeek.value.toDayOfWeek(),
                             second = timetable.weekType.toWeekType()
                         )
-                    }.mapValues { list -> list.value.groupBy { entry -> entry.date }.values.first() }
+                    }
+                        .mapValues { list -> list.value.groupBy { entry -> entry.date }.values.first() }
                 }
             }
 
