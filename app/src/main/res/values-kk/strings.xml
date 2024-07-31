@@ -105,4 +105,5 @@
     <string name="break_until">ҮЗІЛІС</string>
     <string name="next">КЕЛЕСІ</string>
     <string name="no_subjects_appoined">ПӘНДЕР ТАҒАЙЫНДАЛМАҒАН</string>
+    <string name="no_subjects">Пәндер жоқ</string>
 </resources>

@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
@@ -21,68 +21,74 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.deathnote.R
 import com.example.deathnote.presentation.model.Subject
+import com.example.deathnote.presentation.model.event.TimetableUIEvent
+import com.example.deathnote.presentation.model.state.TimetableUIState
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SubjectSelectMenu(
-    onSelect: (Subject) -> Unit,
+    onEvent: (TimetableUIEvent) -> Unit,
+    state: TimetableUIState,
     allSubjects: List<Subject>,
     paddingValues: PaddingValues = PaddingValues(
         start = 25.dp,
         end = 25.dp,
         bottom = 25.dp
-    ),
-    onDismissRequest: () -> Unit
+    )
 ) {
 
-    BackHandler {
-        onDismissRequest()
-    }
+    if (state.bottomSheetSubjectPickerState) {
+        BackHandler {
+            onEvent(TimetableUIEvent.ChangeBottomSheetSubjectPickerState)
+        }
 
-    ModalBottomSheet(
-        onDismissRequest = onDismissRequest,
-        dragHandle = {}
-    ) {
-        Column(
-            modifier = Modifier
-                .clip(
-                    shape = DeathNoteTheme.shapes.rounded20_top
-                )
-                .background(color = DeathNoteTheme.colors.baseBackground)
-                .padding(paddingValues)
-                .fillMaxWidth()
-                .wrapContentHeight(),
-            verticalArrangement = Arrangement.spacedBy(40.dp)
+        ModalBottomSheet(
+            onDismissRequest = { onEvent(TimetableUIEvent.ChangeBottomSheetSubjectPickerState) },
+            dragHandle = {}
         ) {
-
-            Text(
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        top = 50.dp
-                    ),
-                textAlign = TextAlign.Center,
-                text = stringResource(id = R.string.choose_subject),
-                style = DeathNoteTheme.typography.topBar,
-                color = DeathNoteTheme.colors.inverse
-            )
-
-            LazyColumn(
-                modifier = Modifier
+                    .clip(
+                        shape = DeathNoteTheme.shapes.rounded20_top
+                    )
+                    .background(color = DeathNoteTheme.colors.baseBackground)
+                    .padding(paddingValues)
                     .fillMaxWidth()
                     .wrapContentHeight(),
-                verticalArrangement = Arrangement.spacedBy(10.dp),
-                contentPadding = PaddingValues(bottom = 10.dp)
+                verticalArrangement = Arrangement.spacedBy(40.dp)
             ) {
-                itemsIndexed(allSubjects) { index, subject ->
-                    SubjectMenuBar(
-                        subject = subject,
-                        onSelect = onSelect
-                    )
+
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            top = 50.dp
+                        ),
+                    textAlign = TextAlign.Center,
+                    text = stringResource(id = R.string.choose_subject),
+                    style = DeathNoteTheme.typography.topBar,
+                    color = DeathNoteTheme.colors.inverse
+                )
+
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight(),
+                    verticalArrangement = Arrangement.spacedBy(10.dp),
+                    contentPadding = PaddingValues(bottom = 10.dp)
+                ) {
+                    items(allSubjects) { subject ->
+                        SubjectMenuBar(
+                            subject = subject,
+                            onSelect = {
+                                onEvent(TimetableUIEvent.ChangeBottomSheetSubject(it))
+                                onEvent(TimetableUIEvent.ChangeBottomSheetSubjectPickerState)
+                            }
+                        )
+                    }
                 }
             }
         }
     }
-
 }

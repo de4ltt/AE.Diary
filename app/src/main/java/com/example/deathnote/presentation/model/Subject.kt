@@ -6,8 +6,9 @@ import com.example.deathnote.presentation.model.interfaces.PresentationModel
 data class Subject(
     val id: Int = 0,
     val name: String = "",
-    val type : String = ""
+    val type : String = "pr"
 ): PresentationModel, Nameable {
+
     override fun getShortName(): String {
         var res = ""
 

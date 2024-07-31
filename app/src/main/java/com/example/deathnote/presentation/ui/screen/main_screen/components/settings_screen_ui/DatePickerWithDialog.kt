@@ -1,4 +1,4 @@
-package com.example.deathnote.presentation.ui.cross_screen_ui
+package com.example.deathnote.presentation.ui.screen.main_screen.components.settings_screen_ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -66,12 +66,17 @@ fun DatePickerWithDialog(
 
                                     if (settingBottomSheetDatePickerState == SettingsDatePickerState.START)
                                         onEvent(
-                                            TimetableUIEvent.ChangeBottomSheetStartTime(
+                                            TimetableUIEvent.SettingsBottomSheetChangeSemesterStartTime(
                                                 formattedDate
                                             )
                                         )
                                     else onEvent(
-                                        TimetableUIEvent.ChangeBottomSheetEndTime(formattedDate)
+                                        TimetableUIEvent.SettingsBottomSheetChangeSemesterEndTime(formattedDate)
+                                    )
+                                    onEvent(
+                                        TimetableUIEvent.ChangeSettingsScreenBottomSheetDatePickerState(
+                                            SettingsDatePickerState.NONE
+                                        )
                                     )
                                 }
                             ),

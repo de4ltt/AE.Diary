@@ -8,16 +8,22 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.ui.Alignment
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.lifecycle.lifecycleScope
+import com.example.deathnote.activity.util.curWeekType
 import com.example.deathnote.activity.util.hideSystemUi
 import com.example.deathnote.activity.util.loadLanguagePreference
 import com.example.deathnote.activity.util.loadSchemePreference
-import com.example.deathnote.activity.util.saveSchemePreference
 import com.example.deathnote.activity.util.setDisplayCutoutMode
 import com.example.deathnote.activity.util.setLocale
 import com.example.deathnote.presentation.model.util.ColorPresentation
+import com.example.deathnote.presentation.model.util.WeekType
 import com.example.deathnote.presentation.navigation.NavigationUI
 import com.example.deathnote.presentation.ui.theme.DeathNoteTheme
+import com.example.deathnote.presentation.ui.theme.util.isEvenWeek
 import com.example.deathnote.presentation.ui.theme.util.setColorScheme
+import com.example.deathnote.presentation.ui.theme.util.switchWeekTypeScheme
+import com.example.deathnote.presentation.util.TimeFormatter.curTimeFlow
+import com.example.deathnote.presentation.util.TimeFormatter.dateFormatter
 import com.example.deathnote.presentation.viewmodel.CertificateViewModel
 import com.example.deathnote.presentation.viewmodel.DiaryViewModel
 import com.example.deathnote.presentation.viewmodel.MainScreenViewModel
@@ -28,6 +34,8 @@ import com.example.deathnote.presentation.viewmodel.TimetableViewModel
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.ramcosta.composedestinations.animations.rememberAnimatedNavHostEngine
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -53,6 +61,24 @@ class MainActivity : ComponentActivity() {
 
         loadSchemePreference(this)?.let {
             setColorScheme(ColorPresentation.ColorMode.valueOf(it))
+        }
+
+        lifecycleScope.launch {
+            curTimeFlow.collectLatest {
+                if (isEvenWeek() && curWeekType(
+                        it.format(dateFormatter),
+                        semesterTime = timetableViewModel.semesterTime.value
+                    ) == WeekType.ODD
+                )
+                    switchWeekTypeScheme(this@MainActivity)
+
+                if (!isEvenWeek() && curWeekType(
+                        it.format(dateFormatter),
+                        semesterTime = timetableViewModel.semesterTime.value
+                    ) == WeekType.EVEN
+                )
+                    switchWeekTypeScheme(this@MainActivity)
+            }
         }
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -82,12 +108,6 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-
-    fun changeLanguage(language: String) =
-        setLocale(this, language)
-
-    fun changeScheme(colorMode: ColorPresentation.ColorMode) =
-        saveSchemePreference(this, colorMode)
 }
 
 

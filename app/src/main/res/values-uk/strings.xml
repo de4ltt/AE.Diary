@@ -105,4 +105,5 @@
     <string name="break_until">ПЕРЕРВА ДО</string>
     <string name="next">НАСТУПНИЙ</string>
     <string name="no_subjects_appoined">РОЗКЛАД ВIДСУТНIЙ</string>
+    <string name="no_subjects">Немає предметiв</string>
 </resources>

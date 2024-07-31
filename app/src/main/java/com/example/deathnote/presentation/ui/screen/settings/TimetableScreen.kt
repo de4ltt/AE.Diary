@@ -29,10 +29,12 @@ import com.example.deathnote.R
 import com.example.deathnote.presentation.model.event.TimetableUIEvent
 import com.example.deathnote.presentation.model.util.WeekType
 import com.example.deathnote.presentation.navigation.AppDestination
-import com.example.deathnote.presentation.ui.cross_screen_ui.SettingsBottomButton
-import com.example.deathnote.presentation.ui.cross_screen_ui.SettingsTopBar
+import com.example.deathnote.presentation.ui.cross_screen_ui.bottom_sheet.SettingsBottomButton
+import com.example.deathnote.presentation.ui.cross_screen_ui.top_bar.SettingsTopBar
+import com.example.deathnote.presentation.ui.screen.settings.components.timetable_screen_ui.BottomSheetTimePicker
+import com.example.deathnote.presentation.ui.screen.settings.components.timetable_screen_ui.SubjectSelectMenu
+import com.example.deathnote.presentation.ui.screen.settings.components.timetable_screen_ui.TimetableBottomSheet
 import com.example.deathnote.presentation.ui.screen.settings.components.timetable_screen_ui.TimetableCard
-import com.example.deathnote.presentation.ui.screen.settings.components.timetable_screen_ui.TimetableTitledDialog
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 import com.example.deathnote.presentation.util.toDayOfWeek
 import com.example.deathnote.presentation.viewmodel.SubjectViewModel
@@ -65,9 +67,10 @@ fun TimetableScreen(
         pageCount = { 7 - timetableUIState.settingsBottomSheetHolidays.size },
     )
 
+    val allSubjectsSize = subjectViewModel.allSubjects.collectAsStateWithLifecycle().value.size
     val daysOfWeek by timetableViewModel.daysOfWeek.collectAsStateWithLifecycle()
-    val allSubjects by timetableViewModel.allFilteredSubjects.collectAsStateWithLifecycle()
     val allTimetables by timetableViewModel.allTimetables.collectAsStateWithLifecycle()
+    val availableSubjects by timetableViewModel.availableSubjects.collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier
@@ -100,6 +103,7 @@ fun TimetableScreen(
                 vertical = 5.dp
             )
         ) { page ->
+            timetableViewModel.onEvent(TimetableUIEvent.ChangeCurPage(pagerState.currentPage))
             Card(
                 Modifier
                     .wrapContentSize()
@@ -127,6 +131,7 @@ fun TimetableScreen(
                 shape = DeathNoteTheme.shapes.rounded12
             ) {
                 TimetableCard(
+                    allSubjectsSize = allSubjectsSize,
                     dayOfWeek = daysOfWeek[page].toDayOfWeek(),
                     timetables = allTimetables[Pair(
                         daysOfWeek[page].toDayOfWeek(),
@@ -158,9 +163,19 @@ fun TimetableScreen(
         }
     }
 
-    TimetableTitledDialog(
-        allSubjects = allSubjects,
+    TimetableBottomSheet(
         state = timetableUIState,
         onEvent = timetableViewModel::onEvent
+    )
+
+    BottomSheetTimePicker(
+        state = timetableUIState,
+        onEvent = timetableViewModel::onEvent
+    )
+
+    SubjectSelectMenu(
+        allSubjects = availableSubjects,
+        onEvent = timetableViewModel::onEvent,
+        state = timetableUIState
     )
 }

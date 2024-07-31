@@ -21,8 +21,8 @@ import com.example.deathnote.presentation.model.event.StudentUIEvent
 import com.example.deathnote.presentation.model.state.StudentDialogState
 import com.example.deathnote.presentation.navigation.AppDestination
 import com.example.deathnote.presentation.ui.cross_screen_ui.NothingHere
-import com.example.deathnote.presentation.ui.cross_screen_ui.SettingsBottomButton
-import com.example.deathnote.presentation.ui.cross_screen_ui.SettingsTopBar
+import com.example.deathnote.presentation.ui.cross_screen_ui.bottom_sheet.SettingsBottomButton
+import com.example.deathnote.presentation.ui.cross_screen_ui.top_bar.SettingsTopBar
 import com.example.deathnote.presentation.ui.screen.settings.components.students_screen_ui.StudentBar
 import com.example.deathnote.presentation.ui.screen.settings.components.students_screen_ui.StudentTitledDialog
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme

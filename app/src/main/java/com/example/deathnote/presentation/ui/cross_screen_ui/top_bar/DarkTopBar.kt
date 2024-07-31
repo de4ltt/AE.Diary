@@ -1,4 +1,4 @@
-package com.example.deathnote.presentation.ui.cross_screen_ui
+package com.example.deathnote.presentation.ui.cross_screen_ui.top_bar
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

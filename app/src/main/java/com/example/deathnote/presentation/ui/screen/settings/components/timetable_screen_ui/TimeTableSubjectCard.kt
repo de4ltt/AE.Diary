@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.deathnote.R
 import com.example.deathnote.presentation.model.Subject
-import com.example.deathnote.presentation.ui.cross_screen_ui.SwipeToDeleteContainer
+import com.example.deathnote.presentation.ui.cross_screen_ui.delete_container.SwipeToDeleteContainer
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 import com.example.deathnote.presentation.ui.theme.util.adjust
 import com.example.deathnote.presentation.ui.theme.util.isDarkMode
@@ -66,7 +66,6 @@ fun TimeTableSubjectCard(
                 interactionSource = remember { MutableInteractionSource() },
                 onClick = onClick
             )
-            .animateContentSize()
     ) {
         if (subjectScheduled != null) {
             subjectScheduled.apply {

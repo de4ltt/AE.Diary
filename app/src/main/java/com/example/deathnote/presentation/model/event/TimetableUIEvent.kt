@@ -7,6 +7,7 @@ import com.example.deathnote.presentation.model.util.DayOfWeek
 
 sealed class TimetableUIEvent {
 
+    data class ChangeCurPage(val page: Int) : TimetableUIEvent()
     data object ChangeCurWeekType : TimetableUIEvent()
     data object UpsertTimetable : TimetableUIEvent()
     data class DeleteTimetable(val timetable: Timetable) : TimetableUIEvent()

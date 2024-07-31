@@ -22,10 +22,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.deathnote.activity.MainActivity
+import com.example.deathnote.activity.util.changeLanguage
 import com.example.deathnote.activity.util.loadLanguagePreference
 import com.example.deathnote.presentation.model.util.Language
 import com.example.deathnote.presentation.navigation.AppDestination
-import com.example.deathnote.presentation.ui.cross_screen_ui.SettingsTopBar
+import com.example.deathnote.presentation.ui.cross_screen_ui.top_bar.SettingsTopBar
 import com.example.deathnote.presentation.ui.screen.settings.components.language_screen_ui.LanguageBar
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 import com.ramcosta.composedestinations.annotation.Destination
@@ -61,8 +62,6 @@ fun LanguageScreen(
         verticalArrangement = Arrangement.spacedBy(40.dp)
     ) {
 
-        val context: Context = LocalContext.current
-
         Crossfade(
             targetState = curSelectedOption,
             animationSpec = tween(0)
@@ -89,7 +88,7 @@ fun LanguageScreen(
                     onClick = {
                         if (curSelectedOption != language.code) {
                             curSelectedOption = language.code
-                            (context as MainActivity).changeLanguage(language.code)
+                            changeLanguage(language.code, context as MainActivity)
                         }
                     }
                 )

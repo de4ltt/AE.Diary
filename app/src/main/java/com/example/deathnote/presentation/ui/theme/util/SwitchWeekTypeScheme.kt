@@ -2,6 +2,7 @@ package com.example.deathnote.presentation.ui.theme.util
 
 import android.content.Context
 import com.example.deathnote.activity.MainActivity
+import com.example.deathnote.activity.util.changeScheme
 import com.example.deathnote.presentation.model.util.ColorPresentation
 import com.example.deathnote.presentation.ui.theme.settings.color_schemes.DefaultColorScheme
 import com.example.deathnote.presentation.ui.theme.settings.scheme
@@ -15,5 +16,5 @@ fun switchWeekTypeScheme(
         ColorPresentation.ColorMode.ODD_LIGHT -> DefaultColorScheme.LightEvenColorScheme
         ColorPresentation.ColorMode.ODD_DARK -> DefaultColorScheme.DarkEvenColorScheme
     }
-    (context as MainActivity).changeScheme(getColorSchemeType())
+    changeScheme(getColorSchemeType(), context as MainActivity)
 }

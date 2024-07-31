@@ -105,4 +105,5 @@
     <string name="break_until">PRZERWA DO</string>
     <string name="next">NASTĘPNY</string>
     <string name="no_subjects_appoined">NIE PRZYDZIELONO PRZEDMIOTÓW</string>
+    <string name="no_subjects">Brak przedmiotów</string>
 </resources>

@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Text
@@ -45,12 +46,18 @@ fun SemesterTimeDialog(
                 DialogButton(
                     text = R.string.cancel,
                     color = if (isDarkMode()) DeathNoteTheme.colors.baseBackground else SexyGray,
-                    onClick = onDismissRequest
+                    onClick = onDismissRequest,
+                    modifier = Modifier
+                        .height(50.dp)
+                        .weight(1f)
                 )
                 DialogButton(
                     text = R.string.ok,
                     color = DeathNoteTheme.colors.primary,
-                    onClick = onConfirmRequest
+                    onClick = onConfirmRequest,
+                    modifier = Modifier
+                        .height(50.dp)
+                        .weight(1f)
                 )
             }
         }

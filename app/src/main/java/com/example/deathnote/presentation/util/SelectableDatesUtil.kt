@@ -51,7 +51,7 @@ object SelectableDatesUtil {
                 return utcTimeMillis >= LocalDate.parse(
                     previousDate,
                     dateFormatter
-                ).toEpochDay() * 86400000
+                ).plusDays(14).toEpochDay() * 86400000
             }
         }
 

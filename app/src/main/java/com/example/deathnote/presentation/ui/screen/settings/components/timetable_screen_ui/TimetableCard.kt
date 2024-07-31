@@ -25,6 +25,7 @@ import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 
 @Composable
 fun TimetableCard(
+    allSubjectsSize: Int,
     dayOfWeek: DayOfWeek,
     timetables: List<Timetable>,
     getSubjectById: (Int?) -> Subject?,
@@ -64,7 +65,12 @@ fun TimetableCard(
                     )
                 }
 
-                if (it.size < 5)
+                if (allSubjectsSize == 0)
+                    item {
+                        TimetableNoSubjectsCard()
+                    }
+
+                if (it.size < 5 && it.size != allSubjectsSize)
                     item {
                         TimeTableSubjectCard(
                             classTime = Pair(null, null),

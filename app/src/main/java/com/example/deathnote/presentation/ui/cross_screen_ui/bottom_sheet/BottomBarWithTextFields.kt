@@ -1,4 +1,4 @@
-package com.example.deathnote.presentation.ui.cross_screen_ui
+package com.example.deathnote.presentation.ui.cross_screen_ui.bottom_sheet
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.example.deathnote.presentation.ui.screen.main_screen.components.settings_screen_ui.DismissAcceptButton
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -27,6 +27,8 @@ import com.example.deathnote.presentation.ui.theme.util.isDarkMode
 
 @Composable
 fun SelectStudentField(
+    isActive: Boolean = true,
+    studentNavigate: () -> Unit,
     student: Student,
     onEvent: (CertificateUIEvent) -> Unit
 ) {
@@ -52,7 +54,11 @@ fun SelectStudentField(
                 .clickable(
                     indication = null,
                     interactionSource = remember { MutableInteractionSource() },
-                    onClick = { onEvent(CertificateUIEvent.ChangeStudentSheetState(true)) }
+                    onClick = {
+                        if (isActive)
+                            onEvent(CertificateUIEvent.ChangeStudentSheetState(true))
+                        else studentNavigate()
+                    }
                 ),
             contentAlignment = Alignment.CenterStart
         ) {

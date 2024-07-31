@@ -1,4 +1,4 @@
-package com.example.deathnote.presentation.ui.cross_screen_ui
+package com.example.deathnote.presentation.ui.cross_screen_ui.delete_container
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween

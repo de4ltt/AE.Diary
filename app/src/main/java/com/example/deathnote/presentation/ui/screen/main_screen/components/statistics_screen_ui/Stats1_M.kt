@@ -24,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import com.example.deathnote.R
 import com.example.deathnote.presentation.model.Subject
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
-import com.example.deathnote.presentation.util.getShortName
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

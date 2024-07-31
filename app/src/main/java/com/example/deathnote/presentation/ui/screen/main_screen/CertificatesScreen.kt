@@ -16,8 +16,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.deathnote.presentation.model.Student
 import com.example.deathnote.presentation.model.event.CertificateUIEvent
 import com.example.deathnote.presentation.navigation.AppDestination
-import com.example.deathnote.presentation.ui.cross_screen_ui.DarkTopBar
+import com.example.deathnote.presentation.navigation.transition.GeneralTransition
 import com.example.deathnote.presentation.ui.cross_screen_ui.NothingHere
+import com.example.deathnote.presentation.ui.cross_screen_ui.top_bar.DarkTopBar
+import com.example.deathnote.presentation.ui.screen.destinations.StudentsScreenDestination
 import com.example.deathnote.presentation.ui.screen.main_screen.components.certificates_screen_ui.AddCertificateBottomSheet
 import com.example.deathnote.presentation.ui.screen.main_screen.components.certificates_screen_ui.CertificatePane
 import com.example.deathnote.presentation.ui.screen.main_screen.components.certificates_screen_ui.CertificatesDatePickerWithDialog
@@ -30,7 +32,7 @@ import com.example.deathnote.presentation.viewmodel.StudentViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
-@Destination
+@Destination(style = GeneralTransition::class)
 @Composable
 fun CertificatesScreen(
     navigator: DestinationsNavigator,
@@ -70,7 +72,7 @@ fun CertificatesScreen(
                 contentPadding = paddingValues,
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                orderedCertificates.forEach { (monthYear, items) ->
+                orderedCertificates.forEach { (_, items) ->
                     item {
                         MonthYearHeader(items)
                     }
@@ -95,8 +97,12 @@ fun CertificatesScreen(
     }
 
     AddCertificateBottomSheet(
+        isStudentFieldActive = allStudents.isNotEmpty(),
         state = certificatesUIState,
-        onEvent = certificateViewModel::onEvent
+        onEvent = certificateViewModel::onEvent,
+        studentNavigate = {
+            navigator.navigate(StudentsScreenDestination)
+        }
     )
 
     StudentSelectMenu(

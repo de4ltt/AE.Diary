@@ -16,8 +16,8 @@ import androidx.compose.ui.unit.dp
 import com.example.deathnote.R
 import com.example.deathnote.presentation.model.event.SubjectUIEvent
 import com.example.deathnote.presentation.model.state.SubjectDialogState
-import com.example.deathnote.presentation.ui.cross_screen_ui.BottomBarTextField
-import com.example.deathnote.presentation.ui.cross_screen_ui.BottomBarWithTextFields
+import com.example.deathnote.presentation.ui.cross_screen_ui.bottom_sheet.BottomBarTextField
+import com.example.deathnote.presentation.ui.cross_screen_ui.bottom_sheet.BottomBarWithTextFields
 import com.example.deathnote.presentation.ui.theme.DarkRed
 import com.example.deathnote.presentation.ui.theme.DarkYellow
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme

@@ -1,13 +1,16 @@
-package com.example.deathnote.presentation.ui.cross_screen_ui
+package com.example.deathnote.presentation.ui.cross_screen_ui.delete_container
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.DismissDirection
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.DismissState
 import androidx.compose.material.ExperimentalMaterialApi
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete

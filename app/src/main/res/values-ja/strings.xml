@@ -105,4 +105,5 @@
     <string name="break_until">休憩まで</string>
     <string name="next">次</string>
     <string name="no_subjects_appoined">科目が割り当てられていません</string>
+    <string name="no_subjects">科目なし</string>
 </resources>

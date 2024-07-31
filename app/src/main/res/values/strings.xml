@@ -127,4 +127,5 @@
     <string name="break_until">BREAK UNTIL</string>
     <string name="next">NEXT</string>
     <string name="no_subjects_appoined">NO SUBJECTS APPOINTED</string>
+    <string name="no_subjects">No subjects</string>
 </resources>

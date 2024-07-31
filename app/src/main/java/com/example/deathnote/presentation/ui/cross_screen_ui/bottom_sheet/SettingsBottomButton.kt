@@ -1,4 +1,4 @@
-package com.example.deathnote.presentation.ui.cross_screen_ui
+package com.example.deathnote.presentation.ui.cross_screen_ui.bottom_sheet
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
@@ -7,7 +7,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -16,7 +16,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.example.deathnote.R
 import com.example.deathnote.presentation.ui.theme.SexyGray
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 import com.example.deathnote.presentation.ui.theme.util.isDarkMode
@@ -36,7 +35,7 @@ fun SettingsBottomButton(
                 shape = DeathNoteTheme.shapes.rounded12
             )
             .background(
-                color = if (isActive) DeathNoteTheme.colors.primaryDefault else
+                color = if (isActive) DeathNoteTheme.colors.primary else
                     if (isDarkMode()) DeathNoteTheme.colors.baseBackground else SexyGray
             )
             .clickable(

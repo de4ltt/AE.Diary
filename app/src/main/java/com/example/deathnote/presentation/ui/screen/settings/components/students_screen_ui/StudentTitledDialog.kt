@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import com.example.deathnote.R
 import com.example.deathnote.presentation.model.event.StudentUIEvent
 import com.example.deathnote.presentation.model.state.StudentDialogState
-import com.example.deathnote.presentation.ui.cross_screen_ui.BottomBarTextField
-import com.example.deathnote.presentation.ui.cross_screen_ui.BottomBarWithTextFields
+import com.example.deathnote.presentation.ui.cross_screen_ui.bottom_sheet.BottomBarTextField
+import com.example.deathnote.presentation.ui.cross_screen_ui.bottom_sheet.BottomBarWithTextFields
 import com.example.deathnote.presentation.util.Validator
 import java.util.Locale
 

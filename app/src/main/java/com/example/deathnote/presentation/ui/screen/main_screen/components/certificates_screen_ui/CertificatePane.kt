@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.example.deathnote.presentation.model.Certificate
 import com.example.deathnote.presentation.model.Student
 import com.example.deathnote.presentation.model.event.CertificateUIEvent
-import com.example.deathnote.presentation.ui.cross_screen_ui.SwipeToDeleteContainer
+import com.example.deathnote.presentation.ui.cross_screen_ui.delete_container.SwipeToDeleteContainer
 import com.example.deathnote.presentation.ui.theme.SexyGray
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 import com.example.deathnote.presentation.util.getNumberOfDays

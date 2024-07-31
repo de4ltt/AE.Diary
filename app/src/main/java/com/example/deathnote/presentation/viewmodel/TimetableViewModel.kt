@@ -19,6 +19,7 @@ import com.example.deathnote.presentation.model.state.TimetableUIState
 import com.example.deathnote.presentation.model.util.DayOfWeek
 import com.example.deathnote.presentation.model.util.WeekType
 import com.example.deathnote.presentation.util.TimeFormatter.dateFormatter
+import com.example.deathnote.presentation.util.TimeFormatter.nowDate
 import com.example.deathnote.presentation.util.TimeFormatter.nowDateFormatted
 import com.example.deathnote.presentation.util.toDayOfWeek
 import com.example.deathnote.presentation.util.toWeekType
@@ -27,8 +28,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import java.time.LocalTime
 import javax.inject.Inject
 
 @HiltViewModel
@@ -44,12 +47,18 @@ class TimetableViewModel @Inject constructor(
         MutableStateFlow(emptyMap())
     val allTimetables = _allTimetables.asStateFlow()
 
-    private val _semesterTime: MutableStateFlow<Triple<String, String, WeekType>> =
-        MutableStateFlow(Triple(nowDateFormatted, nowDateFormatted, WeekType.ODD))
+    private val _availableSubjects: MutableStateFlow<List<Subject>> = MutableStateFlow(emptyList())
+    val availableSubjects = _availableSubjects.asStateFlow()
 
-    private val _allFilteredSubjects: MutableStateFlow<List<Subject>> =
-        MutableStateFlow(emptyList())
-    val allFilteredSubjects = _allFilteredSubjects.asStateFlow()
+    private val _semesterTime: MutableStateFlow<Triple<String, String, WeekType>> =
+        MutableStateFlow(
+            Triple(
+                nowDateFormatted,
+                nowDate.plusDays(14).format(dateFormatter),
+                WeekType.ODD
+            )
+        )
+    val semesterTime = _semesterTime.asStateFlow()
 
     private val _daysOfWeek: MutableStateFlow<List<Int>> = MutableStateFlow(emptyList())
     val daysOfWeek = _daysOfWeek.asStateFlow()
@@ -66,16 +75,34 @@ class TimetableViewModel @Inject constructor(
 
         is TimetableUIEvent.ChangeBottomSheetEndTime ->
             viewModelScope.launch {
-                _timetableUIState.value = _timetableUIState.value.copy(
-                    bottomSheetEndTime = event.endTime
-                )
+                val timetableUIStateValue = _timetableUIState.value
+
+                if (LocalTime.parse(event.endTime) < LocalTime.parse(timetableUIStateValue.bottomSheetStartTime))
+                    _timetableUIState.value = timetableUIStateValue.copy(
+                        bottomSheetStartTime = event.endTime,
+                        bottomSheetEndTime = event.endTime
+                    )
+                else
+                    _timetableUIState.value = timetableUIStateValue.copy(
+                        bottomSheetEndTime = event.endTime
+                    )
             }
 
         is TimetableUIEvent.ChangeBottomSheetStartTime ->
             viewModelScope.launch {
-                _timetableUIState.value = _timetableUIState.value.copy(
-                    bottomSheetStartTime = event.startTime
+                val timetableUIStateValue = _timetableUIState.value
+
+                if (
+                    LocalTime.parse(event.startTime) > LocalTime.parse(timetableUIStateValue.bottomSheetEndTime)
                 )
+                    _timetableUIState.value = timetableUIStateValue.copy(
+                        bottomSheetStartTime = event.startTime,
+                        bottomSheetEndTime = event.startTime
+                    )
+                else
+                    _timetableUIState.value = timetableUIStateValue.copy(
+                        bottomSheetStartTime = event.startTime
+                    )
             }
 
         TimetableUIEvent.ChangeBottomSheetState ->
@@ -192,9 +219,25 @@ class TimetableViewModel @Inject constructor(
 
         is TimetableUIEvent.SettingsBottomSheetChangeSemesterStartTime ->
             viewModelScope.launch {
-                _timetableUIState.value = _timetableUIState.value.copy(
-                    settingsBottomSheetStartDate = event.time
+                val timetableUIStateValue = _timetableUIState.value
+
+                if (
+                    LocalDate.parse(
+                        timetableUIStateValue.settingsBottomSheetEndDate,
+                        dateFormatter
+                    ) < LocalDate.parse(event.time, dateFormatter).plusDays(14)
                 )
+                    _timetableUIState.value = timetableUIStateValue.copy(
+                        settingsBottomSheetEndDate = LocalDate.parse(event.time, dateFormatter)
+                            .plusDays(14).format(
+                            dateFormatter
+                        ),
+                        settingsBottomSheetStartDate = event.time
+                    )
+                else
+                    _timetableUIState.value = timetableUIStateValue.copy(
+                        settingsBottomSheetStartDate = event.time
+                    )
             }
 
         TimetableUIEvent.IdleSemesterTime -> {
@@ -205,7 +248,14 @@ class TimetableViewModel @Inject constructor(
         TimetableUIEvent.ChangeSettingsScreenBottomSheetState ->
             viewModelScope.launch {
                 _timetableUIState.value = _timetableUIState.value.copy(
-                    bottomSheetState = !_timetableUIState.value.bottomSheetState
+                    settingsBottomSheetState = !_timetableUIState.value.settingsBottomSheetState
+                )
+            }
+
+        is TimetableUIEvent.ChangeCurPage ->
+            viewModelScope.launch {
+                _timetableUIState.value = _timetableUIState.value.copy(
+                    curPage = event.page
                 )
             }
     }
@@ -288,44 +338,37 @@ class TimetableViewModel @Inject constructor(
 
             launch {
                 _timetableUIState.collectLatest { state ->
-                    arrayOf(1, 2, 3, 4, 5, 6, 7).filter {
+                    _daysOfWeek.value = DayOfWeek.entries.filter {
                         !state.settingsBottomSheetHolidays.contains(
-                            it.toDayOfWeek()
+                            it
                         )
-                    }
+                    }.map { it.code }
                 }
             }
 
             launch(Dispatchers.IO) {
                 _timetableUIState.collectLatest { state ->
-                    _daysOfWeek.collectLatest { daysOfWeek ->
-                        timetableUseCases.GetAllSubjectsUseCase().collectLatest {
-                            val collectedSubjects: List<Subject> =
-                                it.toPresentation(SubjectDomain::toPresentation)
-
-                            _allFilteredSubjects.value = collectedSubjects.filter { subject ->
-                                _allTimetables.value[Pair(
-                                    daysOfWeek[state.curPage].toDayOfWeek(),
-                                    state.curWeekType
-                                )]?.let { listTimetables ->
-                                    !listTimetables.map { timetable ->
-                                        timetable.subjectId
-                                    }.contains(
-                                        subject.id
-                                    )
-                                } ?: true
-                            }
+                    val daysOfWeek = _daysOfWeek.first()
+                    timetableUseCases.GetAllSubjectsUseCase().collectLatest { subjects ->
+                        val collectedSubjects: List<Subject> = subjects.toPresentation(SubjectDomain::toPresentation)
+                        val filteredSubjects = collectedSubjects.filter { subject ->
+                            val dayOfWeek = daysOfWeek[state.curPage].toDayOfWeek()
+                            val weekType = state.curWeekType
+                            val listTimetables = _allTimetables.value[Pair(dayOfWeek, weekType)]
+                            listTimetables?.none { it.subjectId == subject.id } ?: true
                         }
+                        _availableSubjects.value = filteredSubjects
                     }
                 }
             }
+
 
             launch(Dispatchers.IO) {
                 timetableUseCases.GetDataStoreDataUseCase().collectLatest {
                     it[FIRST_WEEK_TYPE]?.let { weekType ->
                         _semesterTime.value = Triple(
                             it[START_TIME] ?: nowDateFormatted,
-                            it[END_TIME] ?: nowDateFormatted,
+                            it[END_TIME] ?: nowDate.plusDays(14).format(dateFormatter),
                             WeekType.entries.first { weekTypeEntry -> weekTypeEntry.weekType == weekType }
                         )
                     }
@@ -354,8 +397,9 @@ class TimetableViewModel @Inject constructor(
                             ).dayOfWeek.value.toDayOfWeek(),
                             second = timetable.weekType.toWeekType()
                         )
+                    }.mapValues { list ->
+                        list.value.groupBy { entry -> entry.date }.values.first()
                     }
-                        .mapValues { list -> list.value.groupBy { entry -> entry.date }.values.first() }
                 }
             }
 

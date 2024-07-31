@@ -14,10 +14,12 @@ import com.example.deathnote.presentation.model.Certificate
 import com.example.deathnote.presentation.model.event.CertificateUIEvent
 import com.example.deathnote.presentation.model.interfaces.CertificateDatePickerState
 import com.example.deathnote.presentation.model.state.CertificateUIState
-import com.example.deathnote.presentation.ui.cross_screen_ui.BottomBarWithTextFields
+import com.example.deathnote.presentation.ui.cross_screen_ui.bottom_sheet.BottomBarWithTextFields
 
 @Composable
 fun AddCertificateBottomSheet(
+    isStudentFieldActive: Boolean = true,
+    studentNavigate: () -> Unit,
     onEvent: (CertificateUIEvent) -> Unit,
     state: CertificateUIState
 ) {
@@ -47,8 +49,10 @@ fun AddCertificateBottomSheet(
                         verticalArrangement = Arrangement.spacedBy(15.dp)
                     ) {
                         SelectStudentField(
+                            isActive = isStudentFieldActive,
                             student = curStudent,
-                            onEvent = onEvent
+                            onEvent = onEvent,
+                            studentNavigate = studentNavigate
                         )
 
                         LazyVerticalGrid(

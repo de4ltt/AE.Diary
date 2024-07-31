@@ -10,9 +10,9 @@ object TimeFormatter {
 
     val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
 
-    val dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+    val dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
 
-    val dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy'T'HH:mm")
+    val dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy'T'HH:mm")
 
     val nowDateFormatted = LocalDate.now().format(dateFormatter)
 
@@ -27,11 +27,9 @@ object TimeFormatter {
         }
     }
 
-    fun formatToDate(date: String) = LocalDate.parse(date, dateFormatter)
-
     fun formatSelectedDate(dateMillis: Long?, curDate: String): String {
         return if (dateMillis != null) {
-            LocalDate.ofEpochDay(dateMillis / 86400000).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+            LocalDate.ofEpochDay(dateMillis / 86400000).format(dateFormatter)
         } else {
             curDate
         }

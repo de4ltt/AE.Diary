@@ -18,12 +18,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.deathnote.R
 import com.example.deathnote.presentation.model.event.TimetableUIEvent
 import com.example.deathnote.presentation.navigation.AppDestination
-import com.example.deathnote.presentation.ui.cross_screen_ui.DatePickerWithDialog
-import com.example.deathnote.presentation.ui.cross_screen_ui.SettingsTopBar
+import com.example.deathnote.presentation.ui.cross_screen_ui.top_bar.SettingsTopBar
 import com.example.deathnote.presentation.ui.screen.destinations.LanguageScreenDestination
 import com.example.deathnote.presentation.ui.screen.destinations.StudentsScreenDestination
 import com.example.deathnote.presentation.ui.screen.destinations.SubjectsScreenDestination
 import com.example.deathnote.presentation.ui.screen.destinations.TimetableScreenDestination
+import com.example.deathnote.presentation.ui.screen.main_screen.components.settings_screen_ui.DatePickerWithDialog
 import com.example.deathnote.presentation.ui.screen.main_screen.components.settings_screen_ui.SettingsOptionPane
 import com.example.deathnote.presentation.ui.screen.main_screen.components.settings_screen_ui.SettingsScreenBottomSheet
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
@@ -116,7 +116,9 @@ fun SettingsScreen(
                     title = R.string.timetable,
                     subtitle = R.string.sorry_for_change,
                     onClick = {
-                        navigator.navigate(TimetableScreenDestination, onlyIfResumed = true)
+                        if (timetableUIState.isSemesterTimeSet)
+                            navigator.navigate(TimetableScreenDestination, onlyIfResumed = true)
+                        else timetableViewModel.onEvent(TimetableUIEvent.ChangeSettingsScreenBottomSheetState)
                     }
                 )
             }
