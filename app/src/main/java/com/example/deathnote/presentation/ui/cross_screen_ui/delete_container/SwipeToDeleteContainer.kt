@@ -1,17 +1,17 @@
 package com.example.deathnote.presentation.ui.cross_screen_ui.delete_container
 
+//noinspection UsingMaterialAndMaterial3Libraries
+//noinspection UsingMaterialAndMaterial3Libraries
+//noinspection UsingMaterialAndMaterial3Libraries
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
-//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.DismissDirection
-//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.DismissValue
 import androidx.compose.material.ExperimentalMaterialApi
-//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.SwipeToDismiss
-//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.rememberDismissState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -20,6 +20,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import com.example.deathnote.R
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -28,6 +29,7 @@ fun <T> SwipeToDeleteContainer(
     item: T?,
     onDelete: () -> Unit,
     animationDuration: Int = 500,
+    icon: Int = R.drawable.rubbish_bin,
     content: @Composable (T) -> Unit
 ) {
 
@@ -63,7 +65,7 @@ fun <T> SwipeToDeleteContainer(
             SwipeToDismiss(
                 state = state,
                 background = {
-                    DeleteBackground(swipeDismissState = state)
+                    DeleteBackground(swipeDismissState = state, icon = icon)
                 },
                 dismissContent = { content(item) },
                 directions = setOf(DismissDirection.EndToStart)

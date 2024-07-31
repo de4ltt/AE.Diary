@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.deathnote.presentation.model.interfaces.StatisticsMode
 import com.example.deathnote.presentation.navigation.AppDestination
+import com.example.deathnote.presentation.navigation.transition.GeneralTransition
 import com.example.deathnote.presentation.ui.cross_screen_ui.NothingHere
 import com.example.deathnote.presentation.ui.cross_screen_ui.top_bar.DarkTopBar
 import com.example.deathnote.presentation.ui.screen.main_screen.components.statistics_screen_ui.Stats1_M
@@ -35,7 +36,7 @@ import com.example.deathnote.presentation.viewmodel.SubjectViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
-@Destination
+@Destination(style = GeneralTransition::class)
 @Composable
 fun StatisticsScreen(
     studentViewModel: StudentViewModel,

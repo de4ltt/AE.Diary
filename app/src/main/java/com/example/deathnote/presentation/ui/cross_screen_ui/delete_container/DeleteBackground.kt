@@ -1,23 +1,23 @@
 package com.example.deathnote.presentation.ui.cross_screen_ui.delete_container
 
+//noinspection UsingMaterialAndMaterial3Libraries
+//noinspection UsingMaterialAndMaterial3Libraries
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-//noinspection UsingMaterialAndMaterial3Libraries
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.DismissDirection
-//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.DismissState
 import androidx.compose.material.ExperimentalMaterialApi
-//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Icon
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.deathnote.presentation.ui.theme.DarkRed
 import com.example.deathnote.presentation.ui.theme.Transparent
@@ -25,7 +25,8 @@ import com.example.deathnote.presentation.ui.theme.Transparent
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun DeleteBackground(
-    swipeDismissState: DismissState
+    swipeDismissState: DismissState,
+    icon: Int
 ) {
     val color by animateColorAsState(
         targetValue = if (swipeDismissState.dismissDirection == DismissDirection.EndToStart) {
@@ -42,8 +43,9 @@ fun DeleteBackground(
         contentAlignment = Alignment.CenterEnd
     ) {
         Icon(
-            imageVector = Icons.Default.Delete,
-            contentDescription = null,
+            painter = painterResource(id = icon),
+            modifier = Modifier.size(20.dp),
+            contentDescription = "",
             tint = androidx.compose.ui.graphics.Color.White
         )
     }

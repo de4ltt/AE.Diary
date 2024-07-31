@@ -20,6 +20,7 @@ import com.example.deathnote.presentation.model.Student
 import com.example.deathnote.presentation.model.event.StudentUIEvent
 import com.example.deathnote.presentation.model.state.StudentDialogState
 import com.example.deathnote.presentation.navigation.AppDestination
+import com.example.deathnote.presentation.navigation.transition.GeneralTransition
 import com.example.deathnote.presentation.ui.cross_screen_ui.NothingHere
 import com.example.deathnote.presentation.ui.cross_screen_ui.bottom_sheet.SettingsBottomButton
 import com.example.deathnote.presentation.ui.cross_screen_ui.top_bar.SettingsTopBar
@@ -30,7 +31,7 @@ import com.example.deathnote.presentation.viewmodel.StudentViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
-@Destination
+@Destination(style = GeneralTransition::class)
 @Composable
 fun StudentsScreen(
     navigator: DestinationsNavigator,

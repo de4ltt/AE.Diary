@@ -29,6 +29,7 @@ import com.example.deathnote.R
 import com.example.deathnote.presentation.model.event.TimetableUIEvent
 import com.example.deathnote.presentation.model.util.WeekType
 import com.example.deathnote.presentation.navigation.AppDestination
+import com.example.deathnote.presentation.navigation.transition.GeneralTransition
 import com.example.deathnote.presentation.ui.cross_screen_ui.bottom_sheet.SettingsBottomButton
 import com.example.deathnote.presentation.ui.cross_screen_ui.top_bar.SettingsTopBar
 import com.example.deathnote.presentation.ui.screen.settings.components.timetable_screen_ui.BottomSheetTimePicker
@@ -44,7 +45,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlin.math.absoluteValue
 
 @OptIn(ExperimentalFoundationApi::class)
-@Destination
+@Destination(style = GeneralTransition::class)
 @Composable
 fun TimetableScreen(
     navigator: DestinationsNavigator,

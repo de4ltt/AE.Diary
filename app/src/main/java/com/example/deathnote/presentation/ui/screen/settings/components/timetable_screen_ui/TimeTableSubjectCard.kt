@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,7 +20,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -51,13 +51,6 @@ fun TimeTableSubjectCard(
                 min = 70.dp
             )
             .clip(DeathNoteTheme.shapes.rounded12)
-            .shadow(
-                elevation = 4.dp,
-                ambientColor = DeathNoteTheme.colors.inverseBackground
-            )
-            .background(
-                color = DeathNoteTheme.colors.regularBackground
-            )
             .animateContentSize(
                 animationSpec = tween(25)
             )
@@ -76,6 +69,8 @@ fun TimeTableSubjectCard(
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
+                            .wrapContentHeight()
+                            .heightIn(min = 70.dp)
                             .background(
                                 color = DeathNoteTheme.colors.regularBackground
                             )

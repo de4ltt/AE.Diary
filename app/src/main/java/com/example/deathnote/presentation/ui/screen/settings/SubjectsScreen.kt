@@ -19,6 +19,7 @@ import com.example.deathnote.R
 import com.example.deathnote.presentation.model.Subject
 import com.example.deathnote.presentation.model.event.SubjectUIEvent
 import com.example.deathnote.presentation.navigation.AppDestination
+import com.example.deathnote.presentation.navigation.transition.GeneralTransition
 import com.example.deathnote.presentation.ui.cross_screen_ui.NothingHere
 import com.example.deathnote.presentation.ui.cross_screen_ui.bottom_sheet.SettingsBottomButton
 import com.example.deathnote.presentation.ui.cross_screen_ui.top_bar.SettingsTopBar
@@ -29,7 +30,7 @@ import com.example.deathnote.presentation.viewmodel.SubjectViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
-@Destination
+@Destination(style = GeneralTransition::class)
 @Composable
 fun SubjectsScreen(
     navigator: DestinationsNavigator,

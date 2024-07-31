@@ -26,6 +26,7 @@ import com.example.deathnote.activity.util.changeLanguage
 import com.example.deathnote.activity.util.loadLanguagePreference
 import com.example.deathnote.presentation.model.util.Language
 import com.example.deathnote.presentation.navigation.AppDestination
+import com.example.deathnote.presentation.navigation.transition.GeneralTransition
 import com.example.deathnote.presentation.ui.cross_screen_ui.top_bar.SettingsTopBar
 import com.example.deathnote.presentation.ui.screen.settings.components.language_screen_ui.LanguageBar
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
@@ -33,7 +34,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @SuppressLint("UnusedCrossfadeTargetStateParameter")
-@Destination
+@Destination(style = GeneralTransition::class)
 @Composable
 fun LanguageScreen(
     navigator: DestinationsNavigator,

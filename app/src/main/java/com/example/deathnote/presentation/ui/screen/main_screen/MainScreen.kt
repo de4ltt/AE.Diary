@@ -21,6 +21,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.deathnote.R
 import com.example.deathnote.presentation.model.Timetable
 import com.example.deathnote.presentation.model.event.TimetableUIEvent
+import com.example.deathnote.presentation.navigation.transition.MainScreenTransition
 import com.example.deathnote.presentation.ui.screen.destinations.CertificatesScreenDestination
 import com.example.deathnote.presentation.ui.screen.destinations.DiaryScreenDestination
 import com.example.deathnote.presentation.ui.screen.destinations.SettingsScreenDestination
@@ -37,7 +38,7 @@ import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @RootNavGraph(start = true)
-@Destination
+@Destination(style = MainScreenTransition::class)
 @Composable
 fun MainScreen(
     mainScreenViewModel: MainScreenViewModel,
@@ -98,7 +99,8 @@ fun MainScreen(
                 columns = GridCells.Fixed(2),
                 contentPadding = PaddingValues(40.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp),
-                horizontalArrangement = Arrangement.spacedBy(10.dp)
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                userScrollEnabled = false
             ) {
                 item {
                     MainScreenPane(
@@ -107,10 +109,10 @@ fun MainScreen(
                         title = R.string.diary_bar,
                         onClick = {
                             if (!timetableUIState.isSemesterTimeSet) {
-                                navigator.navigate(SettingsScreenDestination)
+                                navigator.navigate(SettingsScreenDestination, onlyIfResumed = true)
                                 timetableViewModel.onEvent(TimetableUIEvent.ChangeSettingsScreenBottomSheetState)
                             } else
-                                navigator.navigate(DiaryScreenDestination)
+                                navigator.navigate(DiaryScreenDestination, onlyIfResumed = true)
                         }
                     )
                 }
@@ -121,7 +123,7 @@ fun MainScreen(
                         middleEndIcon = R.drawable.list_me,
                         title = R.string.list_bar,
                         onClick = {
-                            navigator.navigate(CertificatesScreenDestination)
+                            navigator.navigate(CertificatesScreenDestination, onlyIfResumed = true)
                         }
                     )
                 }
@@ -132,7 +134,7 @@ fun MainScreen(
                         middleEndIcon = R.drawable.stats_me,
                         title = R.string.stats_bar,
                         onClick = {
-                            navigator.navigate(StatisticsScreenDestination)
+                            navigator.navigate(StatisticsScreenDestination, onlyIfResumed = true)
                         }
                     )
                 }
@@ -143,7 +145,7 @@ fun MainScreen(
                         middleEndIcon = R.drawable.settings_me,
                         title = R.string.settings_bar,
                         onClick = {
-                            navigator.navigate(SettingsScreenDestination)
+                            navigator.navigate(SettingsScreenDestination, onlyIfResumed = true)
                         }
                     )
                 }

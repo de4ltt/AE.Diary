@@ -1,6 +1,8 @@
 package com.example.deathnote.presentation.navigation
 
+import androidx.compose.foundation.background
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.example.deathnote.presentation.ui.screen.NavGraphs
 import com.example.deathnote.presentation.ui.screen.destinations.CertificatesScreenDestination
@@ -21,6 +23,7 @@ import com.example.deathnote.presentation.ui.screen.settings.LanguageScreen
 import com.example.deathnote.presentation.ui.screen.settings.StudentsScreen
 import com.example.deathnote.presentation.ui.screen.settings.SubjectsScreen
 import com.example.deathnote.presentation.ui.screen.settings.TimetableScreen
+import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 import com.example.deathnote.presentation.viewmodel.CertificateViewModel
 import com.example.deathnote.presentation.viewmodel.DiaryViewModel
 import com.example.deathnote.presentation.viewmodel.MainScreenViewModel
@@ -46,6 +49,7 @@ fun NavigationUI(
 ) {
 
     DestinationsNavHost(
+        modifier = Modifier.background(DeathNoteTheme.colors.baseBackground),
         navGraph = NavGraphs.root,
         engine = navHostEngine,
         navController = navHostController
