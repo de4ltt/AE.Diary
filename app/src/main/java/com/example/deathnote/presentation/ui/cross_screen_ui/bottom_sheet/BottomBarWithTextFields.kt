@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -27,7 +28,12 @@ fun BottomBarWithTextFields(
     isActive: Boolean = true
 ) {
 
+    val sheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true
+    )
+
     ModalBottomSheet(
+        sheetState = sheetState,
         dragHandle = {},
         onDismissRequest = onDismissRequest,
         containerColor = DeathNoteTheme.colors.regularBackground,
@@ -43,7 +49,9 @@ fun BottomBarWithTextFields(
                 verticalArrangement = Arrangement.spacedBy(25.dp)
             ) {
                 Text(
-                    modifier = Modifier.fillMaxWidth().padding(top = 35.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 35.dp),
                     textAlign = TextAlign.Center,
                     text = stringResource(id = title),
                     style = DeathNoteTheme.typography.bottomSheetTitle,

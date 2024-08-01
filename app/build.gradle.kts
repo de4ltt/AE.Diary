@@ -90,31 +90,28 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    //Material
-    implementation("androidx.compose.material:material:1.6.8")
-
     //Pager
-    val pager_version = "0.32.0"
+    val pagerVersion = "0.34.0"
 
-    implementation("com.google.accompanist:accompanist-pager:$pager_version")
-    implementation("com.google.accompanist:accompanist-pager-indicators:$pager_version")
+    implementation("com.google.accompanist:accompanist-pager-indicators:$pagerVersion")
+    implementation("com.google.accompanist:accompanist-pager:$pagerVersion")
 
     //Room
-    val room_version = "2.6.1"
+    val roomVersion = "2.6.1"
 
-    implementation("androidx.room:room-runtime:$room_version")
-    annotationProcessor("androidx.room:room-compiler:$room_version")
-    ksp("androidx.room:room-compiler:$room_version")
-    implementation("androidx.room:room-ktx:$room_version")
+    implementation("androidx.room:room-runtime:$roomVersion")
+    annotationProcessor("androidx.room:room-compiler:$roomVersion")
+    ksp("androidx.room:room-compiler:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
 
     //Lifecycle
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.4")
 
     //Compose_Destinations
-    val destinations_version = "1.10.2"
+    val destinationsVersion = "1.10.2"
 
-    implementation("io.github.raamcosta.compose-destinations:animations-core:$destinations_version")
-    ksp("io.github.raamcosta.compose-destinations:ksp:$destinations_version")
+    implementation("io.github.raamcosta.compose-destinations:animations-core:$destinationsVersion")
+    ksp("io.github.raamcosta.compose-destinations:ksp:$destinationsVersion")
 
     //Hilt
     implementation("com.google.dagger:hilt-android:2.51.1")
