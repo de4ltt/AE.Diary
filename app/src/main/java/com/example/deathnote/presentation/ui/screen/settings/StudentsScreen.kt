@@ -74,9 +74,12 @@ fun StudentsScreen(
             LazyColumn(
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.spacedBy(10.dp),
-                contentPadding = PaddingValues(bottom = 10.dp)
+                contentPadding = PaddingValues(bottom = 10.dp),
             ) {
-                itemsIndexed(allStudents) { index, student ->
+                itemsIndexed(
+                    items = allStudents,
+                    key = { _, item -> item.id }
+                ) { index, student ->
                     StudentBar(
                         index = index + 1,
                         student = student,

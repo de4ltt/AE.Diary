@@ -75,7 +75,10 @@ fun SubjectsScreen(
                 verticalArrangement = Arrangement.spacedBy(10.dp),
                 contentPadding = PaddingValues(bottom = 10.dp)
             ) {
-                itemsIndexed(allSubjects) { index, subject ->
+                itemsIndexed(
+                    items = allSubjects,
+                    key = { _, item -> item.id }
+                ) { index, subject ->
                     SubjectBar(
                         index + 1,
                         subject,
