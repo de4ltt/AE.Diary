@@ -85,23 +85,57 @@ class StatisticsViewModel @Inject constructor(
             }
 
         is StatisticsUIEvent.ChangeMode -> {
-            val curMode = statisticsUIState.value.mode
+            val curState = statisticsUIState.value
 
-            if (
-                curMode == StatisticsMode.OneStudentManySubjects && event.mode == StatisticsMode.ManyStudentsOneSubject ||
-                curMode == StatisticsMode.ManyStudentsOneSubject && event.mode == StatisticsMode.OneStudentManySubjects
-            )
-                viewModelScope.launch {
-                    _statisticsUIState.value = _statisticsUIState.value.copy(
-                        mode = StatisticsMode.AllStudentsAllSubjects
-                    )
+
+            when (curState.mode) {
+                StatisticsMode.AllStudentsAllSubjects -> viewModelScope.launch {
+                        _statisticsUIState.value = _statisticsUIState.value.copy(
+                            mode = event.mode
+                        )
+                    }
+                StatisticsMode.ManyStudentsOneSubject -> {
+                    if (event.mode == StatisticsMode.OneStudentManySubjects && curState.isStudentDrawerOpen)
+                        viewModelScope.launch {
+                            _statisticsUIState.value = _statisticsUIState.value.copy(
+                                mode = event.mode
+                            )
+                        }
+
+                    if (event.mode == StatisticsMode.OneStudentManySubjects && curState.isSubjectDrawerOpen)
+                        viewModelScope.launch {
+                            _statisticsUIState.value = _statisticsUIState.value.copy(
+                                mode = StatisticsMode.AllStudentsAllSubjects
+                            )
+                        }
+
+                    else viewModelScope.launch {
+                        _statisticsUIState.value = _statisticsUIState.value.copy(
+                            mode = event.mode
+                        )
+                    }
                 }
-            else
-                viewModelScope.launch {
-                    _statisticsUIState.value = _statisticsUIState.value.copy(
-                        mode = event.mode
-                    )
+                StatisticsMode.OneStudentManySubjects -> {
+                    if (event.mode == StatisticsMode.ManyStudentsOneSubject && curState.isSubjectDrawerOpen)
+                        viewModelScope.launch {
+                            _statisticsUIState.value = _statisticsUIState.value.copy(
+                                mode = event.mode
+                            )
+                        }
+
+                    if (event.mode == StatisticsMode.ManyStudentsOneSubject && curState.isStudentDrawerOpen)
+                        viewModelScope.launch {
+                            _statisticsUIState.value = _statisticsUIState.value.copy(
+                                mode = StatisticsMode.AllStudentsAllSubjects
+                            )
+                        }
+                    else viewModelScope.launch {
+                        _statisticsUIState.value = _statisticsUIState.value.copy(
+                            mode = event.mode
+                        )
+                    }
                 }
+            }
         }
     }
 
