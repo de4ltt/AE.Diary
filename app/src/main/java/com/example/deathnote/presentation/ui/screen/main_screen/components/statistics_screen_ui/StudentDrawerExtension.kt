@@ -19,6 +19,7 @@ import com.example.deathnote.presentation.model.event.StatisticsUIEvent
 import com.example.deathnote.presentation.model.interfaces.StatisticsMode
 import com.example.deathnote.presentation.model.state.StatisticsUIState
 import com.example.deathnote.presentation.ui.screen.main_screen.components.certificates_screen_ui.StudentMenuBar
+import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -32,6 +33,7 @@ fun StudentDrawerExtension(
         if (isStudentDrawerOpen) {
 
             ModalBottomSheet(
+                containerColor = DeathNoteTheme.colors.regularBackground,
                 onDismissRequest = {
                     onEvent(StatisticsUIEvent.ChangeStudentDrawerState)
                 },

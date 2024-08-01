@@ -18,7 +18,6 @@ import androidx.compose.ui.window.Dialog
 import com.example.deathnote.R
 import com.example.deathnote.presentation.ui.theme.SexyGray
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
-import com.example.deathnote.presentation.ui.theme.util.isDarkMode
 
 @Composable
 fun SemesterTimeDialog(
@@ -45,7 +44,7 @@ fun SemesterTimeDialog(
             ) {
                 DialogButton(
                     text = R.string.cancel,
-                    color = if (isDarkMode()) DeathNoteTheme.colors.baseBackground else SexyGray,
+                    color = SexyGray,
                     onClick = onDismissRequest,
                     modifier = Modifier
                         .height(50.dp)

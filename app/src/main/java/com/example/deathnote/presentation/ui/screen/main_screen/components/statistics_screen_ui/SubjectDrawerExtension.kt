@@ -19,6 +19,7 @@ import com.example.deathnote.presentation.model.event.StatisticsUIEvent
 import com.example.deathnote.presentation.model.interfaces.StatisticsMode
 import com.example.deathnote.presentation.model.state.StatisticsUIState
 import com.example.deathnote.presentation.ui.screen.settings.components.timetable_screen_ui.SubjectMenuBar
+import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -31,6 +32,7 @@ fun SubjectDrawerExtension(
         if (isSubjectDrawerOpen) {
 
             ModalBottomSheet(
+                containerColor = DeathNoteTheme.colors.regularBackground,
                 onDismissRequest = {
                     onEvent(StatisticsUIEvent.ChangeSubjectDrawerState)
                 },

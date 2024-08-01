@@ -41,7 +41,9 @@ fun StudentMenuBar(
                 shape = DeathNoteTheme.shapes.rounded12,
                 ambientColor = DeathNoteTheme.colors.regularBackground
             )
-            .background(DeathNoteTheme.colors.regularBackground)
+            .background(
+                color = DeathNoteTheme.colors.baseBackground
+            )
             .clickable(
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() },
