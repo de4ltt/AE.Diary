@@ -65,11 +65,6 @@ fun AddCertificateBottomSheet(
                             item {
                                 CertificatesDatePickerField(
                                     title = R.string.start_date,
-                                    onValueChange = {
-                                        onEvent(
-                                            CertificateUIEvent.ChangeStartDate(it)
-                                        )
-                                    },
                                     value = startDate,
                                     onClick = {
                                         onEvent(
@@ -84,11 +79,6 @@ fun AddCertificateBottomSheet(
                             item {
                                 CertificatesDatePickerField(
                                     title = R.string.end_date,
-                                    onValueChange = {
-                                        onEvent(
-                                            CertificateUIEvent.ChangeEndDate(it)
-                                        )
-                                    },
                                     value = endDate,
                                     onClick = {
                                         onEvent(

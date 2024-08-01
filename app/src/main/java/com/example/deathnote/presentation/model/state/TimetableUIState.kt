@@ -4,6 +4,8 @@ import com.example.deathnote.presentation.model.Subject
 import com.example.deathnote.presentation.model.interfaces.SettingsDatePickerState
 import com.example.deathnote.presentation.model.util.DayOfWeek
 import com.example.deathnote.presentation.model.util.WeekType
+import com.example.deathnote.presentation.util.TimeFormatter.dateFormatter
+import com.example.deathnote.presentation.util.TimeFormatter.nowDate
 import com.example.deathnote.presentation.util.TimeFormatter.nowDateFormatted
 
 data class TimetableUIState(
@@ -28,6 +30,6 @@ data class TimetableUIState(
     val settingsBottomSheetIsTimeSet: Boolean = false,
     val settingsBottomSheetHolidays: List<DayOfWeek> = emptyList(),
     val settingsBottomSheetStartDate: String = nowDateFormatted,
-    val settingsBottomSheetEndDate: String = nowDateFormatted,
+    val settingsBottomSheetEndDate: String = nowDate.plusDays(14).format(dateFormatter),
     val settingsBottomSheetFirstWeekType: WeekType = WeekType.ODD,
 )

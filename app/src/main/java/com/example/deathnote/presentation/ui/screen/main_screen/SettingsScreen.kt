@@ -138,8 +138,8 @@ fun SettingsScreen(
             item {
                 SettingsOptionPane(
                     icon = R.drawable.clock,
-                    title = R.string.semester_time,
-                    subtitle = R.string.we_need,
+                    title = if(timetableUIState.isSemesterTimeSet) R.string.delete_semester else R.string.semester_time,
+                    subtitle = if(timetableUIState.isSemesterTimeSet) R.string.time_to_say_goodbye else R.string.we_need,
                     onClick = {
                         timetableViewModel.onEvent(TimetableUIEvent.ChangeSettingsScreenBottomSheetState)
                     }

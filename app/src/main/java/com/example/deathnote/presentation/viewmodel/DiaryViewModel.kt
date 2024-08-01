@@ -13,12 +13,14 @@ import com.example.deathnote.presentation.model.Subject
 import com.example.deathnote.presentation.model.Timetable
 import com.example.deathnote.presentation.model.event.DiaryUIEvent
 import com.example.deathnote.presentation.model.state.DiaryUIState
+import com.example.deathnote.presentation.util.TimeFormatter.dateFormatter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -52,7 +54,8 @@ class DiaryViewModel @Inject constructor(
         DiaryUIEvent.ChangeDatePickerState -> toggleDatePickerState()
     }
 
-    fun isItHoliday(date: String) = _allTimetables.value.any { it.date == date }
+    fun isItHoliday(date: String) =
+        _allTimetables.value.any { it.date == date } && LocalDate.parse(date, dateFormatter) <= LocalDate.now()
 
     private fun changeDate(date: String) {
         _diaryUIState.value = _diaryUIState.value.copy(curDate = date)

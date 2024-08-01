@@ -123,7 +123,14 @@ fun MainScreen(
                         middleEndIcon = R.drawable.list_me,
                         title = R.string.list_bar,
                         onClick = {
-                            navigator.navigate(CertificatesScreenDestination, onlyIfResumed = true)
+                            if (!timetableUIState.isSemesterTimeSet) {
+                                navigator.navigate(SettingsScreenDestination, onlyIfResumed = true)
+                                timetableViewModel.onEvent(TimetableUIEvent.ChangeSettingsScreenBottomSheetState)
+                            } else
+                                navigator.navigate(
+                                    CertificatesScreenDestination,
+                                    onlyIfResumed = true
+                                )
                         }
                     )
                 }

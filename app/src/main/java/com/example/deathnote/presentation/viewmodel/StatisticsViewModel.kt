@@ -106,7 +106,7 @@ class StatisticsViewModel @Inject constructor(
     }
 
     private fun getPastTimetables(timetables: List<Timetable>): Int {
-        return timetables.filter { LocalDate.parse(it.date, dateFormatter) < LocalDate.now() }.size
+        return timetables.filter { LocalDate.parse(it.date, dateFormatter) <= LocalDate.now() }.size
     }
 
 

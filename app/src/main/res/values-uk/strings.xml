@@ -106,4 +106,6 @@
     <string name="next">НАСТУПНИЙ</string>
     <string name="no_subjects_appoined">РОЗКЛАД ВIДСУТНIЙ</string>
     <string name="no_subjects">Немає предметiв</string>
+    <string name="delete_semester">Видалити семестр</string>
+    <string name="time_to_say_goodbye">Час прощатися</string>
 </resources>

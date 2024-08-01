@@ -1,6 +1,7 @@
 package com.example.deathnote.presentation.ui.screen.main_screen
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,15 +28,19 @@ import com.example.deathnote.presentation.ui.screen.main_screen.components.certi
 import com.example.deathnote.presentation.ui.screen.main_screen.components.certificates_screen_ui.MonthYearHeader
 import com.example.deathnote.presentation.ui.screen.main_screen.components.certificates_screen_ui.StudentSelectMenu
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
+import com.example.deathnote.presentation.util.TimeFormatter.dateFormatter
 import com.example.deathnote.presentation.viewmodel.CertificateViewModel
 import com.example.deathnote.presentation.viewmodel.StudentViewModel
+import com.example.deathnote.presentation.viewmodel.TimetableViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import java.time.LocalDate
 
 @Destination(style = GeneralTransition::class)
 @Composable
 fun CertificatesScreen(
     navigator: DestinationsNavigator,
+    timetableViewModel: TimetableViewModel,
     certificateViewModel: CertificateViewModel,
     studentViewModel: StudentViewModel,
     paddingValues: PaddingValues = PaddingValues(
@@ -50,6 +55,7 @@ fun CertificatesScreen(
     val orderedCertificates by certificateViewModel.orderedCertificates.collectAsStateWithLifecycle()
     val allStudents by studentViewModel.allStudents.collectAsStateWithLifecycle()
     val certificatesUIState by certificateViewModel.certificateUIState.collectAsStateWithLifecycle()
+    val semesterTime by timetableViewModel.semesterTime.collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier
@@ -65,31 +71,33 @@ fun CertificatesScreen(
             }
         )
 
-        if (orderedCertificates.isEmpty()) {
-            NothingHere()
-        } else {
-            LazyColumn(
-                contentPadding = paddingValues,
-                verticalArrangement = Arrangement.spacedBy(10.dp)
-            ) {
-                orderedCertificates.forEach { (_, items) ->
-                    item {
-                        MonthYearHeader(items)
-                    }
+        Crossfade(targetState = orderedCertificates.isEmpty(), label = "") {
+            if (it) {
+                NothingHere()
+            } else {
+                LazyColumn(
+                    contentPadding = paddingValues,
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    orderedCertificates.forEach { (_, items) ->
+                        item {
+                            MonthYearHeader(items)
+                        }
 
-                    items(
-                        items = items,
-                        key = { it.id }
-                    ) { certificate ->
-                        CertificatePane(
-                            certificate = certificate,
-                            student = studentViewModel.getStudentById(certificate.studentId),
-                            onEvent = certificateViewModel::onEvent
-                        )
-                    }
+                        items(
+                            items = items,
+                            key = { it.id }
+                        ) { certificate ->
+                            CertificatePane(
+                                certificate = certificate,
+                                student = studentViewModel.getStudentById(certificate.studentId),
+                                onEvent = certificateViewModel::onEvent
+                            )
+                        }
 
-                    item {
-                        Divider()
+                        item {
+                            Divider()
+                        }
                     }
                 }
             }
@@ -112,6 +120,10 @@ fun CertificatesScreen(
     )
 
     CertificatesDatePickerWithDialog(
+        semesterTime = Pair(
+            LocalDate.parse(semesterTime.first, dateFormatter),
+            LocalDate.parse(semesterTime.second, dateFormatter)
+        ),
         onEvent = certificateViewModel::onEvent,
         state = certificatesUIState
     )

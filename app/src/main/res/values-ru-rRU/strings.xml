@@ -106,4 +106,6 @@
     <string name="next">СЛЕДУЮЩИЙ</string>
     <string name="no_subjects_appoined">РАСПИСАНИЕ ОТСУТСТВУЕТ</string>
     <string name="no_subjects">Нет предметов</string>
+    <string name="delete_semester">Удалить семестр</string>
+    <string name="time_to_say_goodbye">Пора прощаться</string>
 </resources>

@@ -93,6 +93,7 @@ fun NavigationUI(
             CertificatesScreen(
                 studentViewModel = studentViewModel,
                 certificateViewModel = certificateViewModel,
+                timetableViewModel = timetableViewModel,
                 navigator = destinationsNavigator
             )
         }

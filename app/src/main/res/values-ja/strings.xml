@@ -42,6 +42,8 @@
     <string name="student">学生</string>
     <string name="start_date">開始日</string>
     <string name="end_date">終了日</string>
+    <string name="delete_semester">学期を削除する</string>
+    <string name="time_to_say_goodbye">さようならを言う時が来た</string>
     <string name="sunday">日曜日</string>
     <string name="add_student">学生を追加</string>
     <string name="edit_student">学生を編集</string>

@@ -12,26 +12,34 @@ import java.time.LocalDate
 object SelectableDatesUtil {
     fun createCertificateSelectableDates(
         certificateDatePickerState: CertificateDatePickerState,
-        previousDate: String
-    ): SelectableDates = when (certificateDatePickerState) {
-        CertificateDatePickerState.START -> object : SelectableDates {
-            override fun isSelectableDate(utcTimeMillis: Long): Boolean {
-                return utcTimeMillis <= nowDate.toEpochDay() * 86400000
-            }
-        }
+        previousDate: String,
+        semesterTime: Pair<LocalDate, LocalDate>
+    ): SelectableDates {
+        val semesterStart = semesterTime.first.toEpochDay() * 86400000
+        val semesterEnd = semesterTime.second.toEpochDay() * 86400000
+        val now = nowDate.toEpochDay() * 86400000
+        val previousDateEpoch = LocalDate.parse(previousDate, dateFormatter).toEpochDay() * 86400000
 
-        CertificateDatePickerState.END -> object : SelectableDates {
-            override fun isSelectableDate(utcTimeMillis: Long): Boolean {
-                val previousDateEpoch =
-                    LocalDate.parse(previousDate, dateFormatter).toEpochDay() * 86400000
-                return utcTimeMillis in previousDateEpoch..nowDate
-                    .toEpochDay() * 86400000
-            }
-        }
+        return when (certificateDatePickerState) {
 
-        CertificateDatePickerState.NONE -> object : SelectableDates {
-            override fun isSelectableDate(utcTimeMillis: Long): Boolean {
-                return false
+            CertificateDatePickerState.START -> object : SelectableDates {
+                override fun isSelectableDate(utcTimeMillis: Long): Boolean {
+                    return utcTimeMillis <= now
+                            && utcTimeMillis in semesterStart..semesterEnd
+                }
+            }
+
+            CertificateDatePickerState.END -> object : SelectableDates {
+                override fun isSelectableDate(utcTimeMillis: Long): Boolean {
+                    return utcTimeMillis in previousDateEpoch..now
+                            && utcTimeMillis in semesterStart..semesterEnd
+                }
+            }
+
+            CertificateDatePickerState.NONE -> object : SelectableDates {
+                override fun isSelectableDate(utcTimeMillis: Long): Boolean {
+                    return false
+                }
             }
         }
     }
@@ -39,25 +47,31 @@ object SelectableDatesUtil {
     fun createSettingsSelectableDates(
         settingsDatePickerState: SettingsDatePickerState,
         previousDate: String
-    ): SelectableDates = when (settingsDatePickerState) {
-        SettingsDatePickerState.START -> object : SelectableDates {
-            override fun isSelectableDate(utcTimeMillis: Long): Boolean {
-                return utcTimeMillis >= nowDate.toEpochDay() * 86400000
-            }
-        }
+    ): SelectableDates {
+        val previousDatePlus14 = LocalDate.parse(
+            previousDate,
+            dateFormatter
+        ).plusDays(14).toEpochDay() * 86400000
+        val now = nowDate.toEpochDay() * 86400000
 
-        SettingsDatePickerState.END -> object : SelectableDates {
-            override fun isSelectableDate(utcTimeMillis: Long): Boolean {
-                return utcTimeMillis >= LocalDate.parse(
-                    previousDate,
-                    dateFormatter
-                ).plusDays(14).toEpochDay() * 86400000
-            }
-        }
+        return when (settingsDatePickerState) {
 
-        SettingsDatePickerState.NONE -> object : SelectableDates {
-            override fun isSelectableDate(utcTimeMillis: Long): Boolean {
-                return false
+            SettingsDatePickerState.START -> object : SelectableDates {
+                override fun isSelectableDate(utcTimeMillis: Long): Boolean {
+                    return utcTimeMillis >= now
+                }
+            }
+
+            SettingsDatePickerState.END -> object : SelectableDates {
+                override fun isSelectableDate(utcTimeMillis: Long): Boolean {
+                    return utcTimeMillis >= previousDatePlus14
+                }
+            }
+
+            SettingsDatePickerState.NONE -> object : SelectableDates {
+                override fun isSelectableDate(utcTimeMillis: Long): Boolean {
+                    return false
+                }
             }
         }
     }

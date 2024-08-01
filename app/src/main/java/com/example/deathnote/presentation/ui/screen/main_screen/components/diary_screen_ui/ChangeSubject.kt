@@ -60,7 +60,10 @@ fun ChangeSubject(
         )
 
         Text(
-            text = state.curSubject.name.ifEmpty { stringResource(id = R.string.no_sub_tod) },
+            text = state.curSubject.name.ifEmpty { stringResource(id = R.string.no_sub_tod) } +
+                    if (state.curSubject.name.isNotEmpty())
+                        " (${stringResource(id = if (state.curSubject.type == " lk ") R.string.lk else R.string.pr)})"
+                    else "",
             modifier = Modifier
                 .padding(horizontal = 10.dp)
                 .weight(1f)

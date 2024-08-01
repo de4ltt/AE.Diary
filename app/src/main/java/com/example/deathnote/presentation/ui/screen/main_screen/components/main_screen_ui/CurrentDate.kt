@@ -52,7 +52,11 @@ fun CurrentDate(
                     )
                 }
             },
-            modifier = Modifier.basicMarquee()
+            modifier = Modifier.basicMarquee(
+                iterations = Int.MAX_VALUE,
+                initialDelayMillis = 0,
+                delayMillis = 0
+            )
         )
     }
 }

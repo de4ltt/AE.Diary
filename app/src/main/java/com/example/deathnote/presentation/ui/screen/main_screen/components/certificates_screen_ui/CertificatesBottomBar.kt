@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -31,7 +30,6 @@ fun CertificatesDatePickerField(
     @StringRes title: Int,
     icon: @Composable () -> Unit = {},
     value: String,
-    onValueChange: (String) -> Unit,
     onClick: () -> Unit
 ) {
 
@@ -43,7 +41,7 @@ fun CertificatesDatePickerField(
             color = DeathNoteTheme.colors.inverse
         )
 
-        BasicTextField(
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp)
@@ -58,17 +56,7 @@ fun CertificatesDatePickerField(
                     indication = null,
                     onClick = onClick
                 ),
-            value = value,
-            onValueChange = {
-                onValueChange(it)
-            },
-            maxLines = 1,
-            textStyle = TextStyle(
-                color = DeathNoteTheme.colors.inverse,
-                fontSize = 15.sp,
-                textAlign = TextAlign.Center
-            )
-        ) { textField ->
+        ) {
             Row(
                 modifier = Modifier
                     .fillMaxSize()
@@ -81,7 +69,16 @@ fun CertificatesDatePickerField(
                     Box(
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center,
-                        content = { textField() }
+                        content = {
+                            Text(
+                                text = value,
+                                style = TextStyle(
+                                    color = DeathNoteTheme.colors.inverse,
+                                    fontSize = 15.sp,
+                                    textAlign = TextAlign.Center
+                                )
+                            )
+                        }
                     )
                 }
             )

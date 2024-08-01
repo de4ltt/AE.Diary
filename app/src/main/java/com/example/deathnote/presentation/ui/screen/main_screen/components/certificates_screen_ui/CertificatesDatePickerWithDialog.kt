@@ -23,12 +23,14 @@ import com.example.deathnote.presentation.util.SelectableDatesUtil.createCertifi
 import com.example.deathnote.presentation.util.TimeFormatter.dateFormatter
 import com.example.deathnote.presentation.util.TimeFormatter.formatSelectedDate
 import com.example.deathnote.presentation.util.TimeFormatter.nowDate
+import java.time.LocalDate
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CertificatesDatePickerWithDialog(
     state: CertificateUIState,
-    onEvent: (CertificateUIEvent) -> Unit
+    onEvent: (CertificateUIEvent) -> Unit,
+    semesterTime: Pair<LocalDate, LocalDate>
 ) {
 
     state.apply {
@@ -36,7 +38,7 @@ fun CertificatesDatePickerWithDialog(
         if (bottomSheetDatePickerState != CertificateDatePickerState.NONE) {
 
             val selectableDates =
-                createCertificateSelectableDates(bottomSheetDatePickerState, endDate)
+                createCertificateSelectableDates(bottomSheetDatePickerState, endDate, semesterTime)
 
             val datePickerState = rememberDatePickerState(selectableDates = selectableDates)
 

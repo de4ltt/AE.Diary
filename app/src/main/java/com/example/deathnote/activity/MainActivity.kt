@@ -34,22 +34,44 @@ import com.example.deathnote.presentation.viewmodel.TimetableViewModel
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.ramcosta.composedestinations.animations.rememberAnimatedNavHostEngine
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    @OptIn(
-        ExperimentalMaterialNavigationApi::class,
-        ExperimentalMaterialNavigationApi::class, ExperimentalAnimationApi::class
-    )
+    @OptIn(ExperimentalMaterialNavigationApi::class, ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val timetableViewModel: TimetableViewModel by viewModels()
+
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO) {
+                curTimeFlow.collectLatest {
+                    if (isEvenWeek() && curWeekType(
+                            it.format(dateFormatter),
+                            semesterTime = timetableViewModel.semesterTime.value
+                        ) == WeekType.ODD
+                    ) {
+                        switchWeekTypeScheme(this@MainActivity)
+                    }
+
+                    if (!isEvenWeek() && curWeekType(
+                            it.format(dateFormatter),
+                            semesterTime = timetableViewModel.semesterTime.value
+                        ) == WeekType.EVEN
+                    ) {
+                        switchWeekTypeScheme(this@MainActivity)
+                    }
+                }
+            }
+        }
+
         val studentViewModel: StudentViewModel by viewModels()
         val subjectViewModel: SubjectViewModel by viewModels()
-        val timetableViewModel: TimetableViewModel by viewModels()
         val certificateViewModel: CertificateViewModel by viewModels()
         val diaryViewModel: DiaryViewModel by viewModels()
         val statisticsViewModel: StatisticsViewModel by viewModels()
@@ -63,35 +85,15 @@ class MainActivity : ComponentActivity() {
             setColorScheme(ColorPresentation.ColorMode.valueOf(it))
         }
 
-        lifecycleScope.launch {
-            curTimeFlow.collectLatest {
-                if (isEvenWeek() && curWeekType(
-                        it.format(dateFormatter),
-                        semesterTime = timetableViewModel.semesterTime.value
-                    ) == WeekType.ODD
-                )
-                    switchWeekTypeScheme(this@MainActivity)
-
-                if (!isEvenWeek() && curWeekType(
-                        it.format(dateFormatter),
-                        semesterTime = timetableViewModel.semesterTime.value
-                    ) == WeekType.EVEN
-                )
-                    switchWeekTypeScheme(this@MainActivity)
-            }
-        }
-
         WindowCompat.setDecorFitsSystemWindows(window, false)
         window.hideSystemUi(extraAction = {
-            systemBarsBehavior =
-                WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+            systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         })
         setDisplayCutoutMode()
 
         setContent {
             DeathNoteTheme {
-                val navHostEngine =
-                    rememberAnimatedNavHostEngine(navHostContentAlignment = Alignment.TopCenter)
+                val navHostEngine = rememberAnimatedNavHostEngine(navHostContentAlignment = Alignment.TopCenter)
                 val navHostController = navHostEngine.rememberNavController()
 
                 NavigationUI(
@@ -109,6 +111,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
 
 
 

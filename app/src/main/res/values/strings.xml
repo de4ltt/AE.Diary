@@ -128,4 +128,6 @@
     <string name="next">NEXT</string>
     <string name="no_subjects_appoined">NO SUBJECTS APPOINTED</string>
     <string name="no_subjects">No subjects</string>
+    <string name="delete_semester">Delete semester</string>
+    <string name="time_to_say_goodbye">Time to say Goodbye</string>
 </resources>

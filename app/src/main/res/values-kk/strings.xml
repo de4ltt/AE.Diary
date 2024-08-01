@@ -106,4 +106,6 @@
     <string name="next">КЕЛЕСІ</string>
     <string name="no_subjects_appoined">ПӘНДЕР ТАҒАЙЫНДАЛМАҒАН</string>
     <string name="no_subjects">Пәндер жоқ</string>
+    <string name="delete_semester">Семестрді жою</string>
+    <string name="time_to_say_goodbye">Қоштасу уақыты келді</string>
 </resources>

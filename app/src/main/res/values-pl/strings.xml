@@ -18,6 +18,8 @@
     <string name="lk">LK</string>
     <string name="color">Kolor</string>
     <string name="week_type">Typ tygodnia</string>
+    <string name="delete_semester">Usuń semestr</string>
+    <string name="time_to_say_goodbye">Czas się pożegnać</string>
     <string name="even">parzysty</string>
     <string name="odd">nieparzysty</string>
     <string name="monday">Poniedziałek</string>

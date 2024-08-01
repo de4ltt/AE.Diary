@@ -19,7 +19,6 @@ import com.example.deathnote.presentation.model.state.TimetableUIState
 import com.example.deathnote.presentation.model.util.DayOfWeek
 import com.example.deathnote.presentation.model.util.WeekType
 import com.example.deathnote.presentation.util.TimeFormatter.dateFormatter
-import com.example.deathnote.presentation.util.TimeFormatter.nowDate
 import com.example.deathnote.presentation.util.TimeFormatter.nowDateFormatted
 import com.example.deathnote.presentation.util.toDayOfWeek
 import com.example.deathnote.presentation.util.toWeekType
@@ -54,7 +53,7 @@ class TimetableViewModel @Inject constructor(
         MutableStateFlow(
             Triple(
                 nowDateFormatted,
-                nowDate.plusDays(14).format(dateFormatter),
+                nowDateFormatted,
                 WeekType.ODD
             )
         )
@@ -368,7 +367,7 @@ class TimetableViewModel @Inject constructor(
                     it[FIRST_WEEK_TYPE]?.let { weekType ->
                         _semesterTime.value = Triple(
                             it[START_TIME] ?: nowDateFormatted,
-                            it[END_TIME] ?: nowDate.plusDays(14).format(dateFormatter),
+                            it[END_TIME] ?: nowDateFormatted,
                             WeekType.entries.first { weekTypeEntry -> weekTypeEntry.weekType == weekType }
                         )
                     }
@@ -406,7 +405,7 @@ class TimetableViewModel @Inject constructor(
             launch {
                 _semesterTime.collectLatest {
                     _timetableUIState.value = _timetableUIState.value.copy(
-                        isSemesterTimeSet = it.first != it.second
+                        isSemesterTimeSet = LocalDate.parse(it.first, dateFormatter) != LocalDate.parse(it.second, dateFormatter)
                     )
                 }
             }
