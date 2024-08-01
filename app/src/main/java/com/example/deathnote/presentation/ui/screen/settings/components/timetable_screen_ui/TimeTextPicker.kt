@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -22,14 +21,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.deathnote.presentation.model.event.TimetableUIEvent
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TimeTextPicker(
-    isStartTime: Boolean,
-    onEvent: (TimetableUIEvent) -> Unit,
+    onClick: () -> Unit = {},
     value: String,
     @StringRes title: Int
 ) {
@@ -59,14 +55,7 @@ fun TimeTextPicker(
                     .clickable(
                         interactionSource = remember { MutableInteractionSource() },
                         indication = null,
-                        onClick = {
-                            if (isStartTime) {
-                                onEvent(TimetableUIEvent.ChangeBottomSheetStartTimePicker("start"))
-                            }
-                            else
-                                onEvent(TimetableUIEvent.ChangeBottomSheetStartTimePicker("end"))
-                            onEvent(TimetableUIEvent.ChangeBottomSheetTimePickerState)
-                        }
+                        onClick = onClick
                     ),
                 contentAlignment = Alignment.Center
             ) {

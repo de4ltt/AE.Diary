@@ -1,7 +1,7 @@
 package com.example.deathnote.presentation.model.state
 
 import com.example.deathnote.presentation.model.Student
-import com.example.deathnote.presentation.model.interfaces.CertificateDatePickerState
+import com.example.deathnote.presentation.model.enums.CertificateDatePickerState
 import com.example.deathnote.presentation.util.TimeFormatter.nowDateFormatted
 
 data class CertificateUIState(

@@ -1,7 +1,8 @@
 package com.example.deathnote.presentation.model.state
 
 import com.example.deathnote.presentation.model.Subject
-import com.example.deathnote.presentation.model.interfaces.SettingsDatePickerState
+import com.example.deathnote.presentation.model.enums.SettingsDatePickerState
+import com.example.deathnote.presentation.model.enums.TimetableBottomSheetTimePickerState
 import com.example.deathnote.presentation.model.util.DayOfWeek
 import com.example.deathnote.presentation.model.util.WeekType
 import com.example.deathnote.presentation.util.TimeFormatter.dateFormatter
@@ -22,8 +23,7 @@ data class TimetableUIState(
     val bottomSheetEndTime: String = "09:20",
     val bottomSheetSubjectPickerState: Boolean = false,
 
-    val bottomSheetTimePickerState: Boolean = false,
-    val bottomSheetTimePickerStartPick: String = "start",
+    val bottomSheetTimePickerState: TimetableBottomSheetTimePickerState = TimetableBottomSheetTimePickerState.NONE,
 
     val settingBottomSheetDatePickerState: SettingsDatePickerState = SettingsDatePickerState.NONE,
     val settingsBottomSheetState: Boolean = false,

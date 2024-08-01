@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.deathnote.R
+import com.example.deathnote.presentation.model.enums.TimetableBottomSheetTimePickerState
 import com.example.deathnote.presentation.model.event.TimetableUIEvent
 import com.example.deathnote.presentation.model.state.TimetableUIState
 import com.example.deathnote.presentation.ui.theme.Black
@@ -31,10 +32,16 @@ fun BottomSheetTimePicker(
         is24Hour = true
     )
 
-    if (state.bottomSheetTimePickerState)
+    if (state.bottomSheetTimePickerState != TimetableBottomSheetTimePickerState.NONE)
         TimePickerDialog(
             title = stringResource(id = R.string.select_time),
-            onDismissRequest = { onEvent(TimetableUIEvent.ChangeBottomSheetTimePickerState) },
+            onDismissRequest = {
+                onEvent(
+                    TimetableUIEvent.ChangeBottomSheetTimePickerState(
+                        TimetableBottomSheetTimePickerState.NONE
+                    )
+                )
+            },
             confirmButton = {
                 Text(
                     modifier = Modifier
@@ -52,12 +59,16 @@ fun BottomSheetTimePicker(
                                 val hrMin = "$hour:$minute"
 
                                 onEvent(
-                                    if (state.bottomSheetTimePickerStartPick == "start") {
+                                    if (state.bottomSheetTimePickerState == TimetableBottomSheetTimePickerState.START) {
                                         TimetableUIEvent.ChangeBottomSheetStartTime(hrMin)
                                     } else TimetableUIEvent.ChangeBottomSheetEndTime(hrMin)
                                 )
 
-                                onEvent(TimetableUIEvent.ChangeBottomSheetTimePickerState)
+                                onEvent(
+                                    TimetableUIEvent.ChangeBottomSheetTimePickerState(
+                                        TimetableBottomSheetTimePickerState.NONE
+                                    )
+                                )
                             }
                         ),
                     text = stringResource(id = R.string.ready),
@@ -76,7 +87,11 @@ fun BottomSheetTimePicker(
                             interactionSource = remember { MutableInteractionSource() },
                             indication = null,
                             onClick = {
-                                onEvent(TimetableUIEvent.ChangeBottomSheetTimePickerState)
+                                onEvent(
+                                    TimetableUIEvent.ChangeBottomSheetTimePickerState(
+                                        TimetableBottomSheetTimePickerState.NONE
+                                    )
+                                )
                             }
                         ),
                     text = stringResource(id = R.string.cancel),

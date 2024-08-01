@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.deathnote.R
+import com.example.deathnote.presentation.model.enums.TimetableBottomSheetTimePickerState
 import com.example.deathnote.presentation.model.event.TimetableUIEvent
 import com.example.deathnote.presentation.model.state.TimetableUIState
 import com.example.deathnote.presentation.model.util.DayOfWeek
@@ -109,8 +110,13 @@ fun TimetableBottomSheet(
 
                             item {
                                 TimeTextPicker(
-                                    isStartTime = true,
-                                    onEvent = onEvent,
+                                    onClick = {
+                                        onEvent(
+                                            TimetableUIEvent.ChangeBottomSheetTimePickerState(
+                                                TimetableBottomSheetTimePickerState.START
+                                            )
+                                        )
+                                    },
                                     value = bottomSheetStartTime,
                                     title = R.string.start_time
                                 )
@@ -118,8 +124,13 @@ fun TimetableBottomSheet(
 
                             item {
                                 TimeTextPicker(
-                                    isStartTime = false,
-                                    onEvent = onEvent,
+                                    onClick = {
+                                        onEvent(
+                                            TimetableUIEvent.ChangeBottomSheetTimePickerState(
+                                                TimetableBottomSheetTimePickerState.END
+                                            )
+                                        )
+                                    },
                                     value = bottomSheetEndTime,
                                     title = R.string.end_time
                                 )

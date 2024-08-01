@@ -15,8 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.deathnote.R
+import com.example.deathnote.presentation.model.enums.CertificateDatePickerState
 import com.example.deathnote.presentation.model.event.CertificateUIEvent
-import com.example.deathnote.presentation.model.interfaces.CertificateDatePickerState
 import com.example.deathnote.presentation.model.state.CertificateUIState
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 import com.example.deathnote.presentation.util.SelectableDatesUtil.createCertificateSelectableDates

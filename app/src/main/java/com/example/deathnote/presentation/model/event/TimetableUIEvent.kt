@@ -2,7 +2,8 @@ package com.example.deathnote.presentation.model.event
 
 import com.example.deathnote.presentation.model.Subject
 import com.example.deathnote.presentation.model.Timetable
-import com.example.deathnote.presentation.model.interfaces.SettingsDatePickerState
+import com.example.deathnote.presentation.model.enums.SettingsDatePickerState
+import com.example.deathnote.presentation.model.enums.TimetableBottomSheetTimePickerState
 import com.example.deathnote.presentation.model.util.DayOfWeek
 
 sealed class TimetableUIEvent {
@@ -23,8 +24,7 @@ sealed class TimetableUIEvent {
     data class ChangeBottomSheetEndTime(val endTime: String) : TimetableUIEvent()
 
     data object ChangeBottomSheetSubjectPickerState : TimetableUIEvent()
-    data object ChangeBottomSheetTimePickerState : TimetableUIEvent()
-    data class ChangeBottomSheetStartTimePicker(val pick: String) : TimetableUIEvent()
+    data class ChangeBottomSheetTimePickerState(val state: TimetableBottomSheetTimePickerState) : TimetableUIEvent()
 
     data class IdleBottomSheet(val dayOfWeek: DayOfWeek) : TimetableUIEvent()
 

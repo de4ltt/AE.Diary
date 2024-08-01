@@ -3,10 +3,10 @@ package com.example.deathnote.presentation.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.deathnote.DiaryApplication.Companion.END_TIME
-import com.example.deathnote.DiaryApplication.Companion.FIRST_WEEK_TYPE
-import com.example.deathnote.DiaryApplication.Companion.HOLIDAYS
-import com.example.deathnote.DiaryApplication.Companion.START_TIME
+import com.example.data.model.util.DataStorePreferenceKeys.END_TIME
+import com.example.data.model.util.DataStorePreferenceKeys.FIRST_WEEK_TYPE
+import com.example.data.model.util.DataStorePreferenceKeys.HOLIDAYS
+import com.example.data.model.util.DataStorePreferenceKeys.START_TIME
 import com.example.deathnote.domain.model.SubjectDomain
 import com.example.deathnote.domain.model.TimetableDomain
 import com.example.deathnote.domain.use_case.timetable.util.TimetableUseCases
@@ -20,6 +20,7 @@ import com.example.deathnote.presentation.model.util.DayOfWeek
 import com.example.deathnote.presentation.model.util.WeekType
 import com.example.deathnote.presentation.util.TimeFormatter.dateFormatter
 import com.example.deathnote.presentation.util.TimeFormatter.nowDateFormatted
+import com.example.deathnote.presentation.util.TimeFormatter.timeFormatter
 import com.example.deathnote.presentation.util.toDayOfWeek
 import com.example.deathnote.presentation.util.toWeekType
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -72,37 +73,42 @@ class TimetableViewModel @Inject constructor(
                 )
             }
 
-        is TimetableUIEvent.ChangeBottomSheetEndTime ->
-            viewModelScope.launch {
-                val timetableUIStateValue = _timetableUIState.value
+        is TimetableUIEvent.ChangeBottomSheetEndTime -> viewModelScope.launch {
+            val timetableUIStateValue = _timetableUIState.value
+            val parsedEndTime = LocalTime.parse(event.endTime, timeFormatter)
+            val parsedStartTime =
+                LocalTime.parse(timetableUIStateValue.bottomSheetStartTime, timeFormatter)
 
-                if (LocalTime.parse(event.endTime) < LocalTime.parse(timetableUIStateValue.bottomSheetStartTime))
-                    _timetableUIState.value = timetableUIStateValue.copy(
-                        bottomSheetStartTime = event.endTime,
-                        bottomSheetEndTime = event.endTime
-                    )
-                else
-                    _timetableUIState.value = timetableUIStateValue.copy(
-                        bottomSheetEndTime = event.endTime
-                    )
-            }
-
-        is TimetableUIEvent.ChangeBottomSheetStartTime ->
-            viewModelScope.launch {
-                val timetableUIStateValue = _timetableUIState.value
-
-                if (
-                    LocalTime.parse(event.startTime) > LocalTime.parse(timetableUIStateValue.bottomSheetEndTime)
+            if (parsedEndTime < parsedStartTime) {
+                _timetableUIState.value = timetableUIStateValue.copy(
+                    bottomSheetStartTime = event.endTime,
+                    bottomSheetEndTime = event.endTime
                 )
-                    _timetableUIState.value = timetableUIStateValue.copy(
-                        bottomSheetStartTime = event.startTime,
-                        bottomSheetEndTime = event.startTime
-                    )
-                else
-                    _timetableUIState.value = timetableUIStateValue.copy(
-                        bottomSheetStartTime = event.startTime
-                    )
+            } else {
+                _timetableUIState.value = timetableUIStateValue.copy(
+                    bottomSheetEndTime = event.endTime
+                )
             }
+        }
+
+        is TimetableUIEvent.ChangeBottomSheetStartTime -> viewModelScope.launch {
+            val timetableUIStateValue = _timetableUIState.value
+            val parsedStartTime = LocalTime.parse(event.startTime, timeFormatter)
+            val parsedEndTime =
+                LocalTime.parse(timetableUIStateValue.bottomSheetEndTime, timeFormatter)
+
+            if (parsedStartTime > parsedEndTime) {
+                _timetableUIState.value = timetableUIStateValue.copy(
+                    bottomSheetStartTime = event.startTime,
+                    bottomSheetEndTime = event.startTime
+                )
+            } else {
+                _timetableUIState.value = timetableUIStateValue.copy(
+                    bottomSheetStartTime = event.startTime
+                )
+            }
+        }
+
 
         TimetableUIEvent.ChangeBottomSheetState ->
             viewModelScope.launch {
@@ -125,10 +131,10 @@ class TimetableViewModel @Inject constructor(
                 )
             }
 
-        TimetableUIEvent.ChangeBottomSheetTimePickerState ->
+        is TimetableUIEvent.ChangeBottomSheetTimePickerState ->
             viewModelScope.launch {
                 _timetableUIState.value = _timetableUIState.value.copy(
-                    bottomSheetTimePickerState = !_timetableUIState.value.bottomSheetTimePickerState
+                    bottomSheetTimePickerState = event.state
                 )
             }
 
@@ -180,14 +186,6 @@ class TimetableViewModel @Inject constructor(
             )
         }
 
-        is TimetableUIEvent.ChangeBottomSheetStartTimePicker ->
-            viewModelScope.launch {
-                _timetableUIState.value = _timetableUIState.value.copy(
-                    bottomSheetTimePickerStartPick =
-                    if (_timetableUIState.value.bottomSheetTimePickerStartPick == "start") "end" else "start"
-                )
-            }
-
         is TimetableUIEvent.SettingsBottomSheetAddHoliday ->
             viewModelScope.launch(Dispatchers.IO) {
                 _timetableUIState.value = _timetableUIState.value.copy(
@@ -229,8 +227,8 @@ class TimetableViewModel @Inject constructor(
                     _timetableUIState.value = timetableUIStateValue.copy(
                         settingsBottomSheetEndDate = LocalDate.parse(event.time, dateFormatter)
                             .plusDays(14).format(
-                            dateFormatter
-                        ),
+                                dateFormatter
+                            ),
                         settingsBottomSheetStartDate = event.time
                     )
                 else
@@ -349,7 +347,8 @@ class TimetableViewModel @Inject constructor(
                 _timetableUIState.collectLatest { state ->
                     val daysOfWeek = _daysOfWeek.first()
                     timetableUseCases.GetAllSubjectsUseCase().collectLatest { subjects ->
-                        val collectedSubjects: List<Subject> = subjects.toPresentation(SubjectDomain::toPresentation)
+                        val collectedSubjects: List<Subject> =
+                            subjects.toPresentation(SubjectDomain::toPresentation)
                         val filteredSubjects = collectedSubjects.filter { subject ->
                             val dayOfWeek = daysOfWeek[state.curPage].toDayOfWeek()
                             val weekType = state.curWeekType
@@ -405,7 +404,10 @@ class TimetableViewModel @Inject constructor(
             launch {
                 _semesterTime.collectLatest {
                     _timetableUIState.value = _timetableUIState.value.copy(
-                        isSemesterTimeSet = LocalDate.parse(it.first, dateFormatter) != LocalDate.parse(it.second, dateFormatter)
+                        isSemesterTimeSet = LocalDate.parse(
+                            it.first,
+                            dateFormatter
+                        ) != LocalDate.parse(it.second, dateFormatter)
                     )
                 }
             }

@@ -2,7 +2,7 @@ package com.example.deathnote.presentation.model.event
 
 import com.example.deathnote.presentation.model.Certificate
 import com.example.deathnote.presentation.model.Student
-import com.example.deathnote.presentation.model.interfaces.CertificateDatePickerState
+import com.example.deathnote.presentation.model.enums.CertificateDatePickerState
 
 sealed class CertificateUIEvent{
 

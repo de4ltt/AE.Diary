@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.deathnote.activity.util
 
 import android.content.Context

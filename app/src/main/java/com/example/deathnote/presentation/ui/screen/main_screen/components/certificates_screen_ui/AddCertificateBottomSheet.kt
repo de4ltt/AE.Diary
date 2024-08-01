@@ -11,8 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.deathnote.R
 import com.example.deathnote.presentation.model.Certificate
+import com.example.deathnote.presentation.model.enums.CertificateDatePickerState
 import com.example.deathnote.presentation.model.event.CertificateUIEvent
-import com.example.deathnote.presentation.model.interfaces.CertificateDatePickerState
 import com.example.deathnote.presentation.model.state.CertificateUIState
 import com.example.deathnote.presentation.ui.cross_screen_ui.bottom_sheet.BottomBarWithTextFields
 

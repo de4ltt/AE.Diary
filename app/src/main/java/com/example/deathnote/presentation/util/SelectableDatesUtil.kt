@@ -2,8 +2,8 @@ package com.example.deathnote.presentation.util
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SelectableDates
-import com.example.deathnote.presentation.model.interfaces.CertificateDatePickerState
-import com.example.deathnote.presentation.model.interfaces.SettingsDatePickerState
+import com.example.deathnote.presentation.model.enums.CertificateDatePickerState
+import com.example.deathnote.presentation.model.enums.SettingsDatePickerState
 import com.example.deathnote.presentation.util.TimeFormatter.dateFormatter
 import com.example.deathnote.presentation.util.TimeFormatter.nowDate
 import java.time.LocalDate

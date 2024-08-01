@@ -8,4 +8,20 @@ plugins {
 
     //Hilt
     id("com.google.dagger.hilt.android") version "2.51.1" apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.jetbrains.kotlin.jvm) apply false
+}
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
 }

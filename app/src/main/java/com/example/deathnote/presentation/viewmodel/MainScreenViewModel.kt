@@ -2,8 +2,8 @@ package com.example.deathnote.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.deathnote.DiaryApplication.Companion.END_TIME
-import com.example.deathnote.DiaryApplication.Companion.START_TIME
+import com.example.data.model.util.DataStorePreferenceKeys.END_TIME
+import com.example.data.model.util.DataStorePreferenceKeys.START_TIME
 import com.example.deathnote.domain.model.SubjectDomain
 import com.example.deathnote.domain.model.TimetableDomain
 import com.example.deathnote.domain.use_case.main_screen.util.MainScreenUseCases

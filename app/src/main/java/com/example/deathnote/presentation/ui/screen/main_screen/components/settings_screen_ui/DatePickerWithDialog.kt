@@ -15,8 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.deathnote.R
+import com.example.deathnote.presentation.model.enums.SettingsDatePickerState
 import com.example.deathnote.presentation.model.event.TimetableUIEvent
-import com.example.deathnote.presentation.model.interfaces.SettingsDatePickerState
 import com.example.deathnote.presentation.model.state.TimetableUIState
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
 import com.example.deathnote.presentation.util.SelectableDatesUtil.createSettingsSelectableDates
