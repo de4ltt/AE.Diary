@@ -108,4 +108,12 @@
     <string name="next">NASTĘPNY</string>
     <string name="no_subjects_appoined">NIE PRZYDZIELONO PRZEDMIOTÓW</string>
     <string name="no_subjects">Brak przedmiotów</string>
+    <string name="mon">PN</string>
+    <string name="tue">WT</string>
+    <string name="wed">ŚR</string>
+    <string name="thu">CZ</string>
+    <string name="fri">PT</string>
+    <string name="sat">SB</string>
+    <string name="sun">ND</string>
+
 </resources>

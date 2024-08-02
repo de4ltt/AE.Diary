@@ -3,12 +3,17 @@ package com.example.deathnote.presentation.ui.cross_screen_ui.bottom_sheet
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -32,7 +37,14 @@ fun BottomBarWithTextFields(
         skipPartiallyExpanded = true
     )
 
+    val bottomPadding = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
+
     ModalBottomSheet(
+        scrimColor = BottomSheetDefaults.ScrimColor,
+        shape = BottomSheetDefaults.ExpandedShape,
+        contentColor = contentColorFor(backgroundColor = DeathNoteTheme.colors.regularBackground),
+        windowInsets = BottomSheetDefaults.windowInsets,
+        modifier = Modifier.padding(top = bottomPadding),
         sheetState = sheetState,
         dragHandle = {},
         onDismissRequest = onDismissRequest,
@@ -43,7 +55,7 @@ fun BottomBarWithTextFields(
                     .wrapContentHeight()
                     .padding(
                         start = 25.dp,
-                        bottom = 25.dp,
+                        bottom = bottomPadding + 25.dp,
                         end = 25.dp
                     ),
                 verticalArrangement = Arrangement.spacedBy(25.dp)

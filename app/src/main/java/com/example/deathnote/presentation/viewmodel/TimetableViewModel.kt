@@ -207,12 +207,21 @@ class TimetableViewModel @Inject constructor(
                 )
             }
 
-        is TimetableUIEvent.SettingsBottomSheetChangeSemesterEndTime ->
+        is TimetableUIEvent.SettingsBottomSheetChangeSemesterEndTime -> {
             viewModelScope.launch {
-                _timetableUIState.value = _timetableUIState.value.copy(
-                    settingsBottomSheetEndDate = event.time
-                )
+                val timetableUIStateValue = _timetableUIState.value
+
+                if (timetableUIStateValue.settingsBottomSheetStartDate != event.time)
+                    _timetableUIState.value = _timetableUIState.value.copy(
+                        settingsBottomSheetEndDate = event.time
+                    )
+                else {
+                    _timetableUIState.value = timetableUIStateValue.copy(
+                        settingsBottomSheetEndDate = timetableUIStateValue.settingsBottomSheetEndDate
+                    )
+                }
             }
+        }
 
         is TimetableUIEvent.SettingsBottomSheetChangeSemesterStartTime ->
             viewModelScope.launch {

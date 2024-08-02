@@ -108,4 +108,11 @@
     <string name="no_subjects">Пәндер жоқ</string>
     <string name="delete_semester">Семестрді жою</string>
     <string name="time_to_say_goodbye">Қоштасу уақыты келді</string>
+    <string name="mon">ДС</string>
+    <string name="tue">СС</string>
+    <string name="wed">СР</string>
+    <string name="thu">БС</string>
+    <string name="fri">ЖМ</string>
+    <string name="sat">СБ</string>
+    <string name="sun">ЖС</string>
 </resources>

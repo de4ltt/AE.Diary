@@ -130,4 +130,11 @@
     <string name="no_subjects">No subjects</string>
     <string name="delete_semester">Delete semester</string>
     <string name="time_to_say_goodbye">Time to say Goodbye</string>
+    <string name="mon">MO</string>
+    <string name="tue">TU</string>
+    <string name="wed">WE</string>
+    <string name="thu">TH</string>
+    <string name="fri">FR</string>
+    <string name="sat">SA</string>
+    <string name="sun">SU</string>
 </resources>

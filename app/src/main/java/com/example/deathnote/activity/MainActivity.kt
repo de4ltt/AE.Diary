@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.toArgb
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.lifecycleScope
@@ -19,6 +20,7 @@ import com.example.deathnote.presentation.model.util.ColorPresentation
 import com.example.deathnote.presentation.model.util.WeekType
 import com.example.deathnote.presentation.navigation.NavigationUI
 import com.example.deathnote.presentation.ui.theme.DeathNoteTheme
+import com.example.deathnote.presentation.ui.theme.White
 import com.example.deathnote.presentation.ui.theme.util.isEvenWeek
 import com.example.deathnote.presentation.ui.theme.util.setColorScheme
 import com.example.deathnote.presentation.ui.theme.util.switchWeekTypeScheme
@@ -95,6 +97,8 @@ class MainActivity : ComponentActivity() {
             DeathNoteTheme {
                 val navHostEngine = rememberAnimatedNavHostEngine(navHostContentAlignment = Alignment.TopCenter)
                 val navHostController = navHostEngine.rememberNavController()
+
+                window.statusBarColor = White.toArgb()
 
                 NavigationUI(
                     navHostEngine = navHostEngine,

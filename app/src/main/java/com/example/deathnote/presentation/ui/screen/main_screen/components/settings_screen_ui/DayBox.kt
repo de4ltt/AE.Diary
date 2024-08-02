@@ -16,11 +16,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.deathnote.R
 import com.example.deathnote.presentation.model.event.TimetableUIEvent
 import com.example.deathnote.presentation.model.state.TimetableUIState
 import com.example.deathnote.presentation.model.util.DayOfWeek
 import com.example.deathnote.presentation.ui.theme.settings.DeathNoteTheme
+import com.example.deathnote.presentation.util.toShortDayOfWeek
 
 @Composable
 fun DayBox(
@@ -56,17 +56,7 @@ fun DayBox(
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = stringResource(
-                    when (day) {
-                        DayOfWeek.MONDAY -> R.string.monday
-                        DayOfWeek.TUESDAY -> R.string.tuesday
-                        DayOfWeek.WEDNESDAY -> R.string.wednesday
-                        DayOfWeek.THURSDAY -> R.string.thursday
-                        DayOfWeek.FRIDAY -> R.string.friday
-                        DayOfWeek.SATURDAY -> R.string.saturday
-                        DayOfWeek.SUNDAY -> R.string.sunday
-                    }
-                ).slice(0..1).uppercase(),
+                text = stringResource(day.toShortDayOfWeek()),
                 fontSize = 15.sp,
                 color = DeathNoteTheme.colors.inverse,
                 textAlign = TextAlign.Center,

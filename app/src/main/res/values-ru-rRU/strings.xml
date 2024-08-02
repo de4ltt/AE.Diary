@@ -108,4 +108,11 @@
     <string name="no_subjects">Нет предметов</string>
     <string name="delete_semester">Удалить семестр</string>
     <string name="time_to_say_goodbye">Пора прощаться</string>
+    <string name="mon">ПН</string>
+    <string name="tue">ВТ</string>
+    <string name="wed">СР</string>
+    <string name="thu">ЧТ</string>
+    <string name="fri">ПТ</string>
+    <string name="sat">СБ</string>
+    <string name="sun">ВС</string>
 </resources>
