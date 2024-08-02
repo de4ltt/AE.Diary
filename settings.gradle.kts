@@ -13,7 +13,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "DeathNote"
+rootProject.name = "AE_Diary"
 include(":app")
 include(":data")
 include(":domain")

@@ -10,7 +10,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.deathnote"
+    namespace = "com.example.ae_diary"
     compileSdk = 34
 
     androidResources {
@@ -18,7 +18,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.deathnote"
+        applicationId = "com.example.ae_diary"
         minSdk = 30
         targetSdk = 34
         versionCode = 1
