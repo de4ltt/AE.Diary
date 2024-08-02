@@ -1,3 +1,3 @@
-package com.example.deathnote.domain.model.interfaces
+package com.example.ae_diary.domain.model.interfaces
 
 interface DomainModel

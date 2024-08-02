@@ -1,6 +1,6 @@
-package com.example.deathnote.domain.use_case.subject
+package com.example.ae_diary.domain.use_case.subject
 
-import com.example.deathnote.domain.repository.SubjectRepository
+import com.example.ae_diary.domain.repository.SubjectRepository
 import javax.inject.Inject
 
 class GetAllSubjectsUseCase @Inject constructor(

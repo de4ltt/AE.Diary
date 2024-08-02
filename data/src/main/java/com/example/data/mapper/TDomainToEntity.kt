@@ -1,17 +1,17 @@
-package com.example.deathnote.data.mapper
+package com.example.ae_diary.data.mapper
 
-import com.example.deathnote.data.model.Absences
-import com.example.deathnote.data.model.Certificates
-import com.example.deathnote.data.model.Students
-import com.example.deathnote.data.model.Subjects
-import com.example.deathnote.data.model.Timetables
-import com.example.deathnote.data.model.interfaces.DataEntity
-import com.example.deathnote.domain.model.AbsenceDomain
-import com.example.deathnote.domain.model.CertificateDomain
-import com.example.deathnote.domain.model.StudentDomain
-import com.example.deathnote.domain.model.SubjectDomain
-import com.example.deathnote.domain.model.TimetableDomain
-import com.example.deathnote.domain.model.interfaces.DomainModel
+import com.example.ae_diary.data.model.Absences
+import com.example.ae_diary.data.model.Certificates
+import com.example.ae_diary.data.model.Students
+import com.example.ae_diary.data.model.Subjects
+import com.example.ae_diary.data.model.Timetables
+import com.example.ae_diary.data.model.interfaces.DataEntity
+import com.example.ae_diary.domain.model.AbsenceDomain
+import com.example.ae_diary.domain.model.CertificateDomain
+import com.example.ae_diary.domain.model.StudentDomain
+import com.example.ae_diary.domain.model.SubjectDomain
+import com.example.ae_diary.domain.model.TimetableDomain
+import com.example.ae_diary.domain.model.interfaces.DomainModel
 
 fun <T: DomainModel, V: DataEntity> T.toEntity(): V = when (this) {
 

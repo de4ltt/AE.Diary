@@ -1,9 +1,9 @@
 package com.example.data.di
 
-import com.example.deathnote.data.repository.TimetableRepositoryImpl
-import com.example.deathnote.domain.repository.TimetableRepository
-import com.example.deathnote.domain.use_case.timetable.util.TimetableUseCases
-import com.example.deathnote.domain.use_case.timetable.util.TimetableUseCasesImpl
+import com.example.ae_diary.data.repository.TimetableRepositoryImpl
+import com.example.ae_diary.domain.repository.TimetableRepository
+import com.example.ae_diary.domain.use_case.timetable.util.TimetableUseCases
+import com.example.ae_diary.domain.use_case.timetable.util.TimetableUseCasesImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

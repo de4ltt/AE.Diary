@@ -1,12 +1,12 @@
-package com.example.deathnote.domain.use_case.timetable.util
+package com.example.ae_diary.domain.use_case.timetable.util
 
-import com.example.deathnote.domain.use_case.subject.GetAllSubjectsUseCase
-import com.example.deathnote.domain.use_case.timetable.DeleteAllTimetablesUseCase
-import com.example.deathnote.domain.use_case.timetable.DeleteTimetableUseCase
-import com.example.deathnote.domain.use_case.timetable.GetAllTimetablesUseCase
-import com.example.deathnote.domain.use_case.timetable.GetDataStoreDataUseCase
-import com.example.deathnote.domain.use_case.timetable.SetSemesterTimeUseCase
-import com.example.deathnote.domain.use_case.timetable.UpsertTimetableUseCase
+import com.example.ae_diary.domain.use_case.subject.GetAllSubjectsUseCase
+import com.example.ae_diary.domain.use_case.timetable.DeleteAllTimetablesUseCase
+import com.example.ae_diary.domain.use_case.timetable.DeleteTimetableUseCase
+import com.example.ae_diary.domain.use_case.timetable.GetAllTimetablesUseCase
+import com.example.ae_diary.domain.use_case.timetable.GetDataStoreDataUseCase
+import com.example.ae_diary.domain.use_case.timetable.SetSemesterTimeUseCase
+import com.example.ae_diary.domain.use_case.timetable.UpsertTimetableUseCase
 
 sealed interface TimetableUseCases {
     val GetAllTimetablesUseCase: GetAllTimetablesUseCase

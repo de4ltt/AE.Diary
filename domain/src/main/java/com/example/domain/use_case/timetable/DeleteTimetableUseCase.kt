@@ -1,7 +1,7 @@
-package com.example.deathnote.domain.use_case.timetable
+package com.example.ae_diary.domain.use_case.timetable
 
-import com.example.deathnote.domain.model.TimetableDomain
-import com.example.deathnote.domain.repository.TimetableRepository
+import com.example.ae_diary.domain.model.TimetableDomain
+import com.example.ae_diary.domain.repository.TimetableRepository
 import javax.inject.Inject
 
 class DeleteTimetableUseCase @Inject constructor(

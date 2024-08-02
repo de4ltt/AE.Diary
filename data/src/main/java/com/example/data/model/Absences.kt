@@ -1,8 +1,8 @@
-package com.example.deathnote.data.model
+package com.example.ae_diary.data.model
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
-import com.example.deathnote.data.model.interfaces.DataEntity
+import com.example.ae_diary.data.model.interfaces.DataEntity
 
 @Entity(
     primaryKeys = [

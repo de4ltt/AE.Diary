@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Æ.Czasopismo</string>
     <string name="diary_settings">Ustawienia dziennika</string>
     <string name="app_language">Język aplikacji</string>
     <string name="group_list">Lista grupy</string>

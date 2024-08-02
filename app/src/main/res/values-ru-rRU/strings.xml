@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Æ.Журнал</string>
     <string name="diary_settings">Настройки журнала</string>
     <string name="app_language">Язык приложения</string>
     <string name="group_list">Список группы</string>

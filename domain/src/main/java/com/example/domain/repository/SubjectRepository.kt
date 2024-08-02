@@ -1,6 +1,6 @@
-package com.example.deathnote.domain.repository
+package com.example.ae_diary.domain.repository
 
-import com.example.deathnote.domain.model.SubjectDomain
+import com.example.ae_diary.domain.model.SubjectDomain
 import kotlinx.coroutines.flow.Flow
 
 interface SubjectRepository {

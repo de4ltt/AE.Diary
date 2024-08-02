@@ -1,6 +1,6 @@
-package com.example.deathnote.domain.model
+package com.example.ae_diary.domain.model
 
-import com.example.deathnote.domain.model.interfaces.DomainModel
+import com.example.ae_diary.domain.model.interfaces.DomainModel
 
 data class AbsenceDomain(
     val studentId: Int,

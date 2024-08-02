@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">DeathNote</string>
+    <string name="app_name">Æ.Diary</string>
     <string name="diary_settings">Diary settings</string>
     <string name="app_language">App language</string>
     <string name="group_list">Group list</string>

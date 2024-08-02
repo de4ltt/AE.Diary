@@ -1,8 +1,8 @@
-package com.example.deathnote.domain.use_case.student.util
+package com.example.ae_diary.domain.use_case.student.util
 
-import com.example.deathnote.domain.use_case.student.DeleteStudentUseCase
-import com.example.deathnote.domain.use_case.student.GetAllStudentsUseCase
-import com.example.deathnote.domain.use_case.student.UpsertStudentUseCase
+import com.example.ae_diary.domain.use_case.student.DeleteStudentUseCase
+import com.example.ae_diary.domain.use_case.student.GetAllStudentsUseCase
+import com.example.ae_diary.domain.use_case.student.UpsertStudentUseCase
 import javax.inject.Inject
 
 data class StudentUseCasesImpl @Inject constructor(

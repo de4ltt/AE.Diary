@@ -1,17 +1,17 @@
-package com.example.deathnote.data.repository.database
+package com.example.ae_diary.data.repository.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.example.deathnote.data.model.Absences
-import com.example.deathnote.data.model.Certificates
-import com.example.deathnote.data.model.Students
-import com.example.deathnote.data.model.Subjects
-import com.example.deathnote.data.model.Timetables
-import com.example.deathnote.data.repository.database.dao.AbsencesDAO
-import com.example.deathnote.data.repository.database.dao.CertificatesDAO
-import com.example.deathnote.data.repository.database.dao.StudentsDAO
-import com.example.deathnote.data.repository.database.dao.SubjectsDAO
-import com.example.deathnote.data.repository.database.dao.TimetablesDAO
+import com.example.ae_diary.data.model.Absences
+import com.example.ae_diary.data.model.Certificates
+import com.example.ae_diary.data.model.Students
+import com.example.ae_diary.data.model.Subjects
+import com.example.ae_diary.data.model.Timetables
+import com.example.ae_diary.data.repository.database.dao.AbsencesDAO
+import com.example.ae_diary.data.repository.database.dao.CertificatesDAO
+import com.example.ae_diary.data.repository.database.dao.StudentsDAO
+import com.example.ae_diary.data.repository.database.dao.SubjectsDAO
+import com.example.ae_diary.data.repository.database.dao.TimetablesDAO
 
 @Database(
     entities = [

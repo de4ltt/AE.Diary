@@ -1,10 +1,10 @@
-package com.example.deathnote.data.repository.database.dao
+package com.example.ae_diary.data.repository.database.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import com.example.deathnote.data.model.Certificates
+import com.example.ae_diary.data.model.Certificates
 import kotlinx.coroutines.flow.Flow
 
 @Dao

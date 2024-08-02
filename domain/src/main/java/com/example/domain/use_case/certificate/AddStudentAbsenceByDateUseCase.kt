@@ -1,6 +1,6 @@
-package com.example.deathnote.domain.use_case.certificate
+package com.example.ae_diary.domain.use_case.certificate
 
-import com.example.deathnote.domain.repository.AbsenceRepository
+import com.example.ae_diary.domain.repository.AbsenceRepository
 import javax.inject.Inject
 
 class AddStudentAbsenceByDateUseCase @Inject constructor(

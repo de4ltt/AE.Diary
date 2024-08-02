@@ -1,7 +1,7 @@
-package com.example.deathnote.domain.repository
+package com.example.ae_diary.domain.repository
 
 import androidx.datastore.preferences.core.Preferences
-import com.example.deathnote.domain.model.TimetableDomain
+import com.example.ae_diary.domain.model.TimetableDomain
 import kotlinx.coroutines.flow.Flow
 
 interface TimetableRepository {

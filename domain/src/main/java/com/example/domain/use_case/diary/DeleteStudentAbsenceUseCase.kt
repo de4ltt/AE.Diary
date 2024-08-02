@@ -1,7 +1,7 @@
-package com.example.deathnote.domain.use_case.diary
+package com.example.ae_diary.domain.use_case.diary
 
-import com.example.deathnote.domain.model.AbsenceDomain
-import com.example.deathnote.domain.repository.AbsenceRepository
+import com.example.ae_diary.domain.model.AbsenceDomain
+import com.example.ae_diary.domain.repository.AbsenceRepository
 import javax.inject.Inject
 
 class DeleteStudentAbsenceUseCase @Inject constructor(

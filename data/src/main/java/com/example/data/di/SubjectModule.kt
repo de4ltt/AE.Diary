@@ -1,9 +1,9 @@
 package com.example.data.di
 
-import com.example.deathnote.data.repository.SubjectRepositoryImpl
-import com.example.deathnote.domain.repository.SubjectRepository
-import com.example.deathnote.domain.use_case.subject.util.SubjectUseCases
-import com.example.deathnote.domain.use_case.subject.util.SubjectUseCasesImpl
+import com.example.ae_diary.data.repository.SubjectRepositoryImpl
+import com.example.ae_diary.domain.repository.SubjectRepository
+import com.example.ae_diary.domain.use_case.subject.util.SubjectUseCases
+import com.example.ae_diary.domain.use_case.subject.util.SubjectUseCasesImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

@@ -2,12 +2,12 @@ package com.example.data.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.deathnote.data.repository.database.DiaryDatabase
-import com.example.deathnote.data.repository.database.dao.AbsencesDAO
-import com.example.deathnote.data.repository.database.dao.CertificatesDAO
-import com.example.deathnote.data.repository.database.dao.StudentsDAO
-import com.example.deathnote.data.repository.database.dao.SubjectsDAO
-import com.example.deathnote.data.repository.database.dao.TimetablesDAO
+import com.example.ae_diary.data.repository.database.DiaryDatabase
+import com.example.ae_diary.data.repository.database.dao.AbsencesDAO
+import com.example.ae_diary.data.repository.database.dao.CertificatesDAO
+import com.example.ae_diary.data.repository.database.dao.StudentsDAO
+import com.example.ae_diary.data.repository.database.dao.SubjectsDAO
+import com.example.ae_diary.data.repository.database.dao.TimetablesDAO
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

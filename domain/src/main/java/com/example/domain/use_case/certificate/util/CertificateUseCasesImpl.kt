@@ -1,10 +1,10 @@
-package com.example.deathnote.domain.use_case.certificate.util
+package com.example.ae_diary.domain.use_case.certificate.util
 
-import com.example.deathnote.domain.use_case.certificate.AddCertificateUseCase
-import com.example.deathnote.domain.use_case.certificate.AddStudentAbsenceByDateUseCase
-import com.example.deathnote.domain.use_case.certificate.DeleteCertificateUseCase
-import com.example.deathnote.domain.use_case.certificate.DeleteStudentAbsenceByDateUseCase
-import com.example.deathnote.domain.use_case.certificate.GetAllCertificatesUseCase
+import com.example.ae_diary.domain.use_case.certificate.AddCertificateUseCase
+import com.example.ae_diary.domain.use_case.certificate.AddStudentAbsenceByDateUseCase
+import com.example.ae_diary.domain.use_case.certificate.DeleteCertificateUseCase
+import com.example.ae_diary.domain.use_case.certificate.DeleteStudentAbsenceByDateUseCase
+import com.example.ae_diary.domain.use_case.certificate.GetAllCertificatesUseCase
 import javax.inject.Inject
 
 data class CertificateUseCasesImpl @Inject constructor(

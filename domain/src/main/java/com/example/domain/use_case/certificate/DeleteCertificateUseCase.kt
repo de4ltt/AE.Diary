@@ -1,7 +1,7 @@
-package com.example.deathnote.domain.use_case.certificate
+package com.example.ae_diary.domain.use_case.certificate
 
-import com.example.deathnote.domain.model.CertificateDomain
-import com.example.deathnote.domain.repository.CertificateRepository
+import com.example.ae_diary.domain.model.CertificateDomain
+import com.example.ae_diary.domain.repository.CertificateRepository
 import javax.inject.Inject
 
 class DeleteCertificateUseCase @Inject constructor(

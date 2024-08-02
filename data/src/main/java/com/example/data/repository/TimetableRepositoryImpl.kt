@@ -1,18 +1,18 @@
-package com.example.deathnote.data.repository
+package com.example.ae_diary.data.repository
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
+import com.example.ae_diary.data.mapper.toDomain
+import com.example.ae_diary.data.mapper.toEntity
+import com.example.ae_diary.data.model.Timetables
+import com.example.ae_diary.data.repository.database.dao.TimetablesDAO
+import com.example.ae_diary.domain.model.TimetableDomain
+import com.example.ae_diary.domain.repository.TimetableRepository
 import com.example.data.model.util.DataStorePreferenceKeys.END_TIME
 import com.example.data.model.util.DataStorePreferenceKeys.FIRST_WEEK_TYPE
 import com.example.data.model.util.DataStorePreferenceKeys.HOLIDAYS
 import com.example.data.model.util.DataStorePreferenceKeys.START_TIME
-import com.example.deathnote.data.mapper.toDomain
-import com.example.deathnote.data.mapper.toEntity
-import com.example.deathnote.data.model.Timetables
-import com.example.deathnote.data.repository.database.dao.TimetablesDAO
-import com.example.deathnote.domain.model.TimetableDomain
-import com.example.deathnote.domain.repository.TimetableRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

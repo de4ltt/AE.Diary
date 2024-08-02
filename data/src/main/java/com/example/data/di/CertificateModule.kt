@@ -1,9 +1,9 @@
 package com.example.data.di
 
-import com.example.deathnote.data.repository.CertificateRepositoryImpl
-import com.example.deathnote.domain.repository.CertificateRepository
-import com.example.deathnote.domain.use_case.certificate.util.CertificateUseCases
-import com.example.deathnote.domain.use_case.certificate.util.CertificateUseCasesImpl
+import com.example.ae_diary.data.repository.CertificateRepositoryImpl
+import com.example.ae_diary.domain.repository.CertificateRepository
+import com.example.ae_diary.domain.use_case.certificate.util.CertificateUseCases
+import com.example.ae_diary.domain.use_case.certificate.util.CertificateUseCasesImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
