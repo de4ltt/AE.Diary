@@ -8,22 +8,22 @@ import java.time.format.DateTimeFormatter
 
 object TimeFormatter {
 
-    val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+    val timeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
 
-    val dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+    val dateFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
 
-    val dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy'T'HH:mm")
+    val dateTimeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy'T'HH:mm")
 
-    val nowDateFormatted = LocalDate.now().format(dateFormatter)
+    val nowDateFormatted: String = LocalDate.now().format(dateFormatter)
 
-    val nowDate = LocalDate.now()
+    val nowDate: LocalDate = LocalDate.now()
 
-    val nowDateTime = LocalDateTime.now()
+    val nowDateTime: LocalDateTime = LocalDateTime.now()
 
     val curTimeFlow = flow {
         while (true) {
             emit(LocalDateTime.now())
-            delay(1000)
+            delay(100)
         }
     }
 
