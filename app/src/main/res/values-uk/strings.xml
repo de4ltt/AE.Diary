@@ -116,4 +116,5 @@
     <string name="fri">ПТ</string>
     <string name="sat">СБ</string>
     <string name="sun">НД</string>
+    <string name="semester_time_unset">Встановить час семестру</string>
 </resources>

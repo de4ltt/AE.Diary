@@ -116,4 +116,5 @@
     <string name="fri">金</string>
     <string name="sat">土</string>
     <string name="sun">日</string>
+    <string name="semester_time_unset">"学期の時間を設定する "</string>
 </resources>

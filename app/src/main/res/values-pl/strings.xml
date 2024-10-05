@@ -116,5 +116,6 @@
     <string name="fri">PT</string>
     <string name="sat">SB</string>
     <string name="sun">ND</string>
+    <string name="semester_time_unset">Ustaw czas semestru</string>
 
 </resources>

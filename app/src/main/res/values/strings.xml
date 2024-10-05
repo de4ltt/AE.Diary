@@ -137,4 +137,5 @@
     <string name="fri">FR</string>
     <string name="sat">SA</string>
     <string name="sun">SU</string>
+    <string name="semester_time_unset">Set the semester time</string>
 </resources>
