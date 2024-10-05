@@ -1,4 +1,4 @@
-package com.example.ae_diary.presentation.ui.cross_screen_ui.bottom_sheet
+package com.example.ae_diary.presentation.ui.common.bottom_sheet
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
@@ -16,6 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.ae_diary.presentation.ui.common.bounceClick
 import com.example.ae_diary.presentation.ui.theme.SexyGray
 import com.example.ae_diary.presentation.ui.theme.settings.DeathNoteTheme
 import com.example.ae_diary.presentation.ui.theme.util.isDarkMode
@@ -29,6 +30,7 @@ fun SettingsBottomButton(
 
     Box(
         modifier = Modifier
+            .bounceClick()
             .fillMaxWidth()
             .height(50.dp)
             .clip(

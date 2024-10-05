@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import com.example.ae_diary.R
 import com.example.ae_diary.presentation.model.event.StudentUIEvent
 import com.example.ae_diary.presentation.model.state.StudentDialogState
-import com.example.ae_diary.presentation.ui.cross_screen_ui.bottom_sheet.BottomBarTextField
-import com.example.ae_diary.presentation.ui.cross_screen_ui.bottom_sheet.BottomBarWithTextFields
+import com.example.ae_diary.presentation.ui.common.bottom_sheet.BottomBarTextField
+import com.example.ae_diary.presentation.ui.common.bottom_sheet.BottomBarWithTextFields
 import com.example.ae_diary.presentation.util.Validator
 import java.util.Locale
 
@@ -33,20 +33,6 @@ fun StudentTitledDialog(
                 content = {
 
                     BottomBarTextField(
-                        title = R.string.name,
-                        onValueChange = {
-                            onEvent(StudentUIEvent.ChangeStudentName(it.replaceFirstChar {
-                                if (it.isLowerCase()) it.titlecase(
-                                    Locale.getDefault()
-                                ) else it.toString()
-                            }))
-                        },
-                        value = student.name,
-                        isCentered = false,
-                        innerTitle = R.string.enter_name
-                    )
-
-                    BottomBarTextField(
                         title = R.string.surname,
                         onValueChange = {
                             onEvent(StudentUIEvent.ChangeStudentSurname(it.replaceFirstChar {
@@ -58,6 +44,20 @@ fun StudentTitledDialog(
                         value = student.surname,
                         isCentered = false,
                         innerTitle = R.string.enter_surname
+                    )
+
+                    BottomBarTextField(
+                        title = R.string.name,
+                        onValueChange = {
+                            onEvent(StudentUIEvent.ChangeStudentName(it.replaceFirstChar {
+                                if (it.isLowerCase()) it.titlecase(
+                                    Locale.getDefault()
+                                ) else it.toString()
+                            }))
+                        },
+                        value = student.name,
+                        isCentered = false,
+                        innerTitle = R.string.enter_name
                     )
 
                     BottomBarTextField(

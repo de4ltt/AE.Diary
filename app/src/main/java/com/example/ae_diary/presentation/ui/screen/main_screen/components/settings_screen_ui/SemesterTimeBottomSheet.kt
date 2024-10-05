@@ -13,7 +13,7 @@ import com.example.ae_diary.R
 import com.example.ae_diary.presentation.model.enums.SettingsDatePickerState
 import com.example.ae_diary.presentation.model.event.TimetableUIEvent
 import com.example.ae_diary.presentation.model.state.TimetableUIState
-import com.example.ae_diary.presentation.ui.cross_screen_ui.bottom_sheet.BottomBarWithTextFields
+import com.example.ae_diary.presentation.ui.common.bottom_sheet.BottomBarWithTextFields
 
 @Composable
 fun SemesterTimeBottomSheet(

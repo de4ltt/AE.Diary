@@ -16,8 +16,8 @@ import androidx.compose.ui.unit.dp
 import com.example.ae_diary.R
 import com.example.ae_diary.presentation.model.event.SubjectUIEvent
 import com.example.ae_diary.presentation.model.state.SubjectDialogState
-import com.example.ae_diary.presentation.ui.cross_screen_ui.bottom_sheet.BottomBarTextField
-import com.example.ae_diary.presentation.ui.cross_screen_ui.bottom_sheet.BottomBarWithTextFields
+import com.example.ae_diary.presentation.ui.common.bottom_sheet.BottomBarTextField
+import com.example.ae_diary.presentation.ui.common.bottom_sheet.BottomBarWithTextFields
 import com.example.ae_diary.presentation.ui.theme.DarkRed
 import com.example.ae_diary.presentation.ui.theme.DarkYellow
 import com.example.ae_diary.presentation.ui.theme.settings.DeathNoteTheme
