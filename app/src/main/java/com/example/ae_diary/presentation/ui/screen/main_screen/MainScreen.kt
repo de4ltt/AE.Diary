@@ -1,5 +1,6 @@
 package com.example.ae_diary.presentation.ui.screen.main_screen
 
+import android.widget.Toast
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -13,12 +14,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.ae_diary.R
 import com.example.ae_diary.presentation.model.Timetable
-import com.example.ae_diary.presentation.model.event.TimetableUIEvent
 import com.example.ae_diary.presentation.navigation.transition.MainScreenTransition
 import com.example.ae_diary.presentation.ui.common.ItemGrid
 import com.example.ae_diary.presentation.ui.screen.destinations.CertificatesScreenDestination
@@ -49,6 +50,8 @@ fun MainScreen(
     val timetableUIState by timetableViewModel.timetableUIState.collectAsStateWithLifecycle()
 
     val localHeight = LocalView.current.height
+
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -106,11 +109,7 @@ fun MainScreen(
                             title = R.string.diary_bar,
                             onClick = {
                                 if (!timetableUIState.isSemesterTimeSet) {
-                                    navigator.navigate(
-                                        SettingsScreenDestination,
-                                        onlyIfResumed = true
-                                    )
-                                    timetableViewModel.onEvent(TimetableUIEvent.ChangeSettingsScreenBottomSheetState)
+                                    Toast.makeText(context, R.string.semester_time_unset, Toast.LENGTH_SHORT).show()
                                 } else
                                     navigator.navigate(DiaryScreenDestination, onlyIfResumed = true)
                             },
@@ -129,11 +128,7 @@ fun MainScreen(
                             title = R.string.list_bar,
                             onClick = {
                                 if (!timetableUIState.isSemesterTimeSet) {
-                                    navigator.navigate(
-                                        SettingsScreenDestination,
-                                        onlyIfResumed = true
-                                    )
-                                    timetableViewModel.onEvent(TimetableUIEvent.ChangeSettingsScreenBottomSheetState)
+                                    Toast.makeText(context, R.string.semester_time_unset, Toast.LENGTH_SHORT).show()
                                 } else
                                     navigator.navigate(
                                         CertificatesScreenDestination,

@@ -19,7 +19,7 @@ import com.example.ae_diary.presentation.model.enums.SettingsDatePickerState
 import com.example.ae_diary.presentation.model.event.TimetableUIEvent
 import com.example.ae_diary.presentation.model.state.TimetableUIState
 import com.example.ae_diary.presentation.ui.theme.settings.DeathNoteTheme
-import com.example.ae_diary.presentation.util.SelectableDatesUtil.createSettingsSelectableDates
+import com.example.ae_diary.presentation.util.SelectableDates.createSettingsSelectableDates
 import com.example.ae_diary.presentation.util.TimeFormatter.formatSelectedDate
 import com.example.ae_diary.presentation.util.TimeFormatter.nowDateFormatted
 

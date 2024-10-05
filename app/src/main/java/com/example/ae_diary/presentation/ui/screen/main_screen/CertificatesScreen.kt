@@ -44,7 +44,8 @@ fun CertificatesScreen(
     studentViewModel: StudentViewModel,
     paddingValues: PaddingValues = PaddingValues(
         start = 25.dp,
-        end = 25.dp
+        end = 25.dp,
+        bottom = 25.dp
     )
 ) {
     BackHandler {

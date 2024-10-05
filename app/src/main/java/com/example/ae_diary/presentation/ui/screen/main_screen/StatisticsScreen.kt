@@ -71,74 +71,83 @@ fun StatisticsScreen(
 
         NothingHere(
             modifier = Modifier.weight(1f),
-            targetState = allStatisticMM.isNotEmpty()
+            targetState = allStatisticMM.isEmpty()
         ) {
 
-            Row(
-                modifier = Modifier.padding(horizontal = 25.dp),
-                horizontalArrangement = Arrangement.spacedBy(15.dp),
-                verticalAlignment = Alignment.CenterVertically
+            Column(
+                verticalArrangement = Arrangement.spacedBy(25.dp)
             ) {
-                StudentsDrawer(
-                    isActive = allStudents.size > 1,
-                    state = statisticsUIState,
-                    onEvent = statisticsViewModel::onEvent,
-                    modifier = Modifier
-                        .height(50.dp)
-                        .weight(1f)
-                )
-                SubjectsDrawer(
-                    isActive = allSubjects.size > 1,
-                    state = statisticsUIState,
-                    onEvent = statisticsViewModel::onEvent,
-                    modifier = Modifier
-                        .height(50.dp)
-                        .weight(1f)
-                )
-            }
+
+                Row(
+                    modifier = Modifier.padding(horizontal = 25.dp),
+                    horizontalArrangement = Arrangement.spacedBy(15.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    StudentsDrawer(
+                        isActive = allStudents.size > 1,
+                        state = statisticsUIState,
+                        onEvent = statisticsViewModel::onEvent,
+                        modifier = Modifier
+                            .height(50.dp)
+                            .weight(1f)
+                    )
+                    SubjectsDrawer(
+                        isActive = allSubjects.size > 1,
+                        state = statisticsUIState,
+                        onEvent = statisticsViewModel::onEvent,
+                        modifier = Modifier
+                            .height(50.dp)
+                            .weight(1f)
+                    )
+                }
 
 
-            LazyColumn(
-                contentPadding = PaddingValues(horizontal = 25.dp),
-                verticalArrangement = Arrangement.spacedBy(10.dp)
-            ) {
-                when (statisticsUIState.mode) {
-                    StatisticsMode.OneStudentManySubjects -> {
-                        items(allStatistic1M) {
-                            Stats1_M(
-                                titled = allStatistic1M.first() == it,
-                                subject = allSubjects.first { subject -> subject.id == it.subjectId },
-                                respectfulAbsences = it.resAbsence,
-                                absences = it.absence,
-                                absencePercent = it.absencePercent
-                            )
+                LazyColumn(
+                    contentPadding = PaddingValues(
+                        start = 25.dp,
+                        end = 25.dp,
+                        bottom = 25.dp
+                    ),
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    when (statisticsUIState.mode) {
+                        StatisticsMode.OneStudentManySubjects -> {
+                            items(allStatistic1M) {
+                                Stats1_M(
+                                    titled = allStatistic1M.first() == it,
+                                    subject = allSubjects.first { subject -> subject.id == it.subjectId },
+                                    respectfulAbsences = it.resAbsence,
+                                    absences = it.absence,
+                                    absencePercent = it.absencePercent
+                                )
+                            }
                         }
-                    }
 
-                    StatisticsMode.ManyStudentsOneSubject -> {
-                        items(allStatisticM1) {
-                            StatsM_1(
-                                titled = allStatisticM1.first() == it,
-                                student = allStudents.first { student -> student.id == it.studentId },
-                                respectfulAbsences = it.resAbsence,
-                                absences = it.absence,
-                                absencePercent = it.absencePercent
-                            )
+                        StatisticsMode.ManyStudentsOneSubject -> {
+                            items(allStatisticM1) {
+                                StatsM_1(
+                                    titled = allStatisticM1.first() == it,
+                                    student = allStudents.first { student -> student.id == it.studentId },
+                                    respectfulAbsences = it.resAbsence,
+                                    absences = it.absence,
+                                    absencePercent = it.absencePercent
+                                )
+                            }
                         }
-                    }
 
-                    StatisticsMode.AllStudentsAllSubjects -> {
-                        items(allStatisticMM) {
-                            StatsM_M(
-                                titled = allStatisticMM.first() == it,
-                                subject = allSubjects.first { subject -> subject.id == it.subjectId },
-                                respectfulAbsencesPercent = it.resAbsencePercent,
-                                presencePercent = it.presencePercent,
-                                totAbsencePercent = it.absencePercent
-                            )
+                        StatisticsMode.AllStudentsAllSubjects -> {
+                            items(allStatisticMM) {
+                                StatsM_M(
+                                    titled = allStatisticMM.first() == it,
+                                    subject = allSubjects.first { subject -> subject.id == it.subjectId },
+                                    respectfulAbsencesPercent = it.resAbsencePercent,
+                                    presencePercent = it.presencePercent,
+                                    totAbsencePercent = it.absencePercent
+                                )
+                            }
                         }
-                    }
 
+                    }
                 }
             }
         }

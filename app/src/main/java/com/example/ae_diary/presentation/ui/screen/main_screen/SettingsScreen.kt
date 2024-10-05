@@ -1,5 +1,6 @@
 package com.example.ae_diary.presentation.ui.screen.main_screen
 
+import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
@@ -119,7 +120,7 @@ fun SettingsScreen(
                     onClick = {
                         if (timetableUIState.isSemesterTimeSet)
                             navigator.navigate(TimetableScreenDestination, onlyIfResumed = true)
-                        else timetableViewModel.onEvent(TimetableUIEvent.ChangeSettingsScreenBottomSheetState)
+                        else Toast.makeText(context, R.string.semester_time_unset, Toast.LENGTH_SHORT).show()
                     }
                 )
             }
@@ -138,7 +139,7 @@ fun SettingsScreen(
             item {
                 SettingsOptionPane(
                     icon = R.drawable.clock,
-                    title = if(timetableUIState.isSemesterTimeSet) R.string.delete_semester else R.string.semester_time,
+                    title = if(timetableUIState.isSemesterTimeSet) R.string.delete_semester else R.string.choose_semester_period,
                     subtitle = if(timetableUIState.isSemesterTimeSet) R.string.time_to_say_goodbye else R.string.we_need,
                     onClick = {
                         timetableViewModel.onEvent(TimetableUIEvent.ChangeSettingsScreenBottomSheetState)

@@ -204,12 +204,13 @@ class StatisticsViewModel @Inject constructor(
                                 _allSubjects.collectLatest { subjects ->
                                     _allStatistic1M.value = subjects.map { subject ->
                                         val studentId = state.curStudent.id
+                                        val subjectTimetablesIds = allTimetablesBySubjectId[subject.id] ?: emptyList()
 
                                         Statistic1M(
                                             studentId = studentId,
                                             subjectId = subject.id,
-                                            absence = absences.count { it.studentId == studentId },
-                                            resAbsence = absences.count { it.studentId == studentId && it.respectful },
+                                            absence = absences.count { it.studentId == studentId && subjectTimetablesIds.contains(it.timetableId) },
+                                            resAbsence = absences.count { it.studentId == studentId && it.respectful && subjectTimetablesIds.contains(it.timetableId) },
                                             absencePercent = if (timetablesSize > 0)
                                                 (100 * (absences.count { it.studentId == studentId && !it.respectful } / timetablesSize)).roundToInt()
                                             else 0

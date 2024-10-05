@@ -68,7 +68,7 @@ fun DiaryScreen(
 
             NothingHere(
                 modifier = Modifier.weight(1f),
-                targetState = curSubject.name.isNotEmpty()
+                targetState = curSubject.name.isEmpty()
             ) {
                 LazyColumn(
                     contentPadding = paddingValues,

@@ -19,7 +19,7 @@ import com.example.ae_diary.presentation.model.enums.CertificateDatePickerState
 import com.example.ae_diary.presentation.model.event.CertificateUIEvent
 import com.example.ae_diary.presentation.model.state.CertificateUIState
 import com.example.ae_diary.presentation.ui.theme.settings.DeathNoteTheme
-import com.example.ae_diary.presentation.util.SelectableDatesUtil.createCertificateSelectableDates
+import com.example.ae_diary.presentation.util.SelectableDates.createCertificateSelectableDates
 import com.example.ae_diary.presentation.util.TimeFormatter.dateFormatter
 import com.example.ae_diary.presentation.util.TimeFormatter.formatSelectedDate
 import com.example.ae_diary.presentation.util.TimeFormatter.nowDate
