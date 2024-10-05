@@ -41,6 +41,12 @@ class MainScreenViewModel @Inject constructor(
         MutableStateFlow(MainScreenUIState())
     val mainScreenUIState = _mainScreenUIState.asStateFlow()
 
+    fun updateSizeReduceState(state: Boolean) = viewModelScope.launch {
+        _mainScreenUIState.value = _mainScreenUIState.value.copy(
+            isSizeReducedPane = state
+        )
+    }
+
     private fun findNextTimetable(dateTime: LocalDateTime): Timetable? {
         val sortedTimetables = _allTimetables.value
             .groupBy { LocalDate.parse(it.date, dateFormatter) }

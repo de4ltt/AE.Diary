@@ -11,5 +11,7 @@ data class MainScreenUIState(
     val curTimetable: Timetable = Timetable(),
     val isNextTimetableShown: Boolean = false,
 
+    val isSizeReducedPane: Boolean = false,
+
     val percentage: Float = 0f
 )
