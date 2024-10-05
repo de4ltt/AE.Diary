@@ -14,6 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -119,7 +120,7 @@ class StudentViewModel @Inject constructor(
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            studentUseCases.GetAllStudentsUseCase().collect {
+            studentUseCases.GetAllStudentsUseCase().collectLatest {
                 _allStudents.value = it.toPresentation(StudentDomain::toPresentation)
             }
         }

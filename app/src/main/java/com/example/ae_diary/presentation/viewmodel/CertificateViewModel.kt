@@ -7,6 +7,8 @@ import com.example.ae_diary.domain.use_case.certificate.util.CertificateUseCases
 import com.example.ae_diary.presentation.mapper.toDomain
 import com.example.ae_diary.presentation.mapper.toPresentation
 import com.example.ae_diary.presentation.model.Certificate
+import com.example.ae_diary.presentation.model.Student
+import com.example.ae_diary.presentation.model.enums.CertificateDatePickerState
 import com.example.ae_diary.presentation.model.event.CertificateUIEvent
 import com.example.ae_diary.presentation.model.state.CertificateUIState
 import com.example.ae_diary.presentation.util.TimeFormatter.dateFormatter
@@ -35,51 +37,57 @@ class CertificateViewModel @Inject constructor(
     val certificateUIState = _certificateUIState.asStateFlow()
 
     fun onEvent(event: CertificateUIEvent) = when (event) {
-        is CertificateUIEvent.ChangeDialogState ->
-            viewModelScope.launch(Dispatchers.IO) {
-                _certificateUIState.value = _certificateUIState.value.copy(
-                    isBottomSheetShown = event.state
-                )
-            }
-
-        is CertificateUIEvent.ChangeEndDate ->
-            viewModelScope.launch(Dispatchers.IO) {
-                _certificateUIState.value = _certificateUIState.value.copy(
-                    endDate = event.endDate
-                )
-            }
-
-        is CertificateUIEvent.ChangeStartDate ->
-            viewModelScope.launch(Dispatchers.IO) {
-                _certificateUIState.value = _certificateUIState.value.copy(
-                    startDate = event.startDate
-                )
-            }
-
-        is CertificateUIEvent.ChangeStudent ->
-            viewModelScope.launch(Dispatchers.IO) {
-                _certificateUIState.value = _certificateUIState.value.copy(
-                    curStudent = event.student
-                )
-            }
-
-        is CertificateUIEvent.ChangeStudentSheetState ->
-            viewModelScope.launch(Dispatchers.IO) {
-                _certificateUIState.value = _certificateUIState.value.copy(
-                    isSelectStudentSheetShown = event.state
-                )
-            }
-
+        is CertificateUIEvent.ChangeDialogState -> changeDialogState(event.state)
+        is CertificateUIEvent.ChangeEndDate -> changeEndDate(event.endDate)
+        is CertificateUIEvent.ChangeStartDate -> changeStartDate(event.startDate)
+        is CertificateUIEvent.ChangeStudent -> changeStudent(event.student)
+        is CertificateUIEvent.ChangeStudentSheetState ->changeStudentSheetState(event.state)
         is CertificateUIEvent.AddCertificate -> addCertificate(event.certificate)
         is CertificateUIEvent.DeleteCertificate -> deleteCertificate(event.certificate)
-
-        is CertificateUIEvent.ChangeCertificateDatePickerState ->
-            viewModelScope.launch(Dispatchers.IO) {
-                _certificateUIState.value = _certificateUIState.value.copy(
-                    bottomSheetDatePickerState = event.state
-                )
-            }
+        is CertificateUIEvent.ChangeCertificateDatePickerState -> changeCertificateDatePickerState(event.state)
     }
+
+    private fun changeDialogState(state: Boolean) =
+        viewModelScope.launch(Dispatchers.IO) {
+            _certificateUIState.value = _certificateUIState.value.copy(
+                isBottomSheetShown = state
+            )
+        }
+
+    private fun changeEndDate(date: String) =
+        viewModelScope.launch(Dispatchers.IO) {
+            _certificateUIState.value = _certificateUIState.value.copy(
+                endDate = date
+            )
+        }
+
+    private fun changeStartDate(date: String) =
+        viewModelScope.launch(Dispatchers.IO) {
+            _certificateUIState.value = _certificateUIState.value.copy(
+                startDate = date
+            )
+        }
+
+    private fun changeStudent(student: Student) =
+        viewModelScope.launch(Dispatchers.IO) {
+            _certificateUIState.value = _certificateUIState.value.copy(
+                curStudent = student
+            )
+        }
+
+    private fun changeStudentSheetState(state: Boolean) =
+        viewModelScope.launch(Dispatchers.IO) {
+            _certificateUIState.value = _certificateUIState.value.copy(
+                isSelectStudentSheetShown = state
+            )
+        }
+
+    private fun changeCertificateDatePickerState(state: CertificateDatePickerState) =
+        viewModelScope.launch(Dispatchers.IO) {
+            _certificateUIState.value = _certificateUIState.value.copy(
+                bottomSheetDatePickerState = state
+            )
+        }
 
     private fun addCertificate(certificate: Certificate) =
         viewModelScope.launch(Dispatchers.IO) {
@@ -122,6 +130,7 @@ class CertificateViewModel @Inject constructor(
     init {
 
         viewModelScope.launch(Dispatchers.IO) {
+
             certificateUseCases.GetAllCertificatesUseCase().collect {
                 _allCertificates.value = it.toPresentation(CertificateDomain::toPresentation)
 
