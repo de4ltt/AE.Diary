@@ -313,8 +313,10 @@ class TimetableViewModel @Inject constructor(
     }
 
     private fun deleteTimetable(timetable: Timetable) = viewModelScope.launch(Dispatchers.IO) {
+
         var curDate = LocalDate.parse(timetable.date, dateFormatter)
         val endDate = LocalDate.parse(_semesterTime.value.second, dateFormatter)
+
         while (curDate <= endDate) {
             timetableUseCases.DeleteTimetableUseCase(
                 timetable.copy(date = curDate.format(dateFormatter)).toDomain()
@@ -324,6 +326,7 @@ class TimetableViewModel @Inject constructor(
     }
 
     private fun findFirstMatchDay(dayOfWeek: DayOfWeek, weekType: WeekType): LocalDate? {
+
         val semesterTimeValue = _semesterTime.value
         var curDate = LocalDate.parse(semesterTimeValue.first, dateFormatter)
         val endDate = LocalDate.parse(semesterTimeValue.second, dateFormatter)
@@ -336,6 +339,7 @@ class TimetableViewModel @Inject constructor(
                 curWeekType = if (curWeekType == WeekType.ODD) WeekType.EVEN else WeekType.ODD
             }
         }
+
         return curDate
     }
 
@@ -359,9 +363,11 @@ class TimetableViewModel @Inject constructor(
                         val collectedSubjects: List<Subject> =
                             subjects.toPresentation(SubjectDomain::toPresentation)
                         val filteredSubjects = collectedSubjects.filter { subject ->
-                            val dayOfWeek = daysOfWeek[state.curPage].toDayOfWeek()
+
+                            val dayOfWeek = daysOfWeek.getOrNull(state.curPage)?.toDayOfWeek() ?: DayOfWeek.MONDAY
                             val weekType = state.curWeekType
                             val listTimetables = _allTimetables.value[Pair(dayOfWeek, weekType)]
+
                             listTimetables?.none { it.subjectId == subject.id } ?: true
                         }
                         _availableSubjects.value = filteredSubjects
