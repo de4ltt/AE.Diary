@@ -27,7 +27,7 @@ import com.example.ae_diary.activity.util.loadLanguagePreference
 import com.example.ae_diary.presentation.model.util.Language
 import com.example.ae_diary.presentation.navigation.AppDestination
 import com.example.ae_diary.presentation.navigation.transition.GeneralTransition
-import com.example.ae_diary.presentation.ui.cross_screen_ui.top_bar.SettingsTopBar
+import com.example.ae_diary.presentation.ui.common.top_bar.SettingsTopBar
 import com.example.ae_diary.presentation.ui.screen.settings.components.language_screen_ui.LanguageBar
 import com.example.ae_diary.presentation.ui.theme.settings.DeathNoteTheme
 import com.ramcosta.composedestinations.annotation.Destination

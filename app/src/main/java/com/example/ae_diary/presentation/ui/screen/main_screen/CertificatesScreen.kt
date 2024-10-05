@@ -1,7 +1,6 @@
 package com.example.ae_diary.presentation.ui.screen.main_screen
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,8 +17,8 @@ import com.example.ae_diary.presentation.model.Student
 import com.example.ae_diary.presentation.model.event.CertificateUIEvent
 import com.example.ae_diary.presentation.navigation.AppDestination
 import com.example.ae_diary.presentation.navigation.transition.GeneralTransition
-import com.example.ae_diary.presentation.ui.cross_screen_ui.NothingHere
-import com.example.ae_diary.presentation.ui.cross_screen_ui.top_bar.DarkTopBar
+import com.example.ae_diary.presentation.ui.common.NothingHere
+import com.example.ae_diary.presentation.ui.common.top_bar.DarkTopBar
 import com.example.ae_diary.presentation.ui.screen.destinations.StudentsScreenDestination
 import com.example.ae_diary.presentation.ui.screen.main_screen.components.certificates_screen_ui.AddCertificateBottomSheet
 import com.example.ae_diary.presentation.ui.screen.main_screen.components.certificates_screen_ui.CertificatePane
@@ -71,33 +70,34 @@ fun CertificatesScreen(
             }
         )
 
-        Crossfade(targetState = orderedCertificates.isEmpty(), label = "") {
-            if (it) {
-                NothingHere()
-            } else {
-                LazyColumn(
-                    contentPadding = paddingValues,
-                    verticalArrangement = Arrangement.spacedBy(10.dp)
-                ) {
-                    orderedCertificates.forEach { (_, items) ->
-                        item {
-                            MonthYearHeader(items)
-                        }
+        NothingHere(
+            modifier = Modifier.weight(1f),
+            targetState = orderedCertificates.isEmpty()
+        ) {
 
-                        items(
-                            items = items,
-                            key = { it.id }
-                        ) { certificate ->
-                            CertificatePane(
-                                certificate = certificate,
-                                student = studentViewModel.getStudentById(certificate.studentId),
-                                onEvent = certificateViewModel::onEvent
-                            )
-                        }
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = paddingValues,
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                orderedCertificates.forEach { (_, items) ->
+                    item {
+                        MonthYearHeader(items)
+                    }
 
-                        item {
-                            Divider()
-                        }
+                    items(
+                        items = items,
+                        key = { it.id }
+                    ) { certificate ->
+                        CertificatePane(
+                            certificate = certificate,
+                            student = studentViewModel.getStudentById(certificate.studentId),
+                            onEvent = certificateViewModel::onEvent
+                        )
+                    }
+
+                    item {
+                        Divider()
                     }
                 }
             }

@@ -1,6 +1,8 @@
-package com.example.ae_diary.presentation.ui.cross_screen_ui.bottom_sheet
+package com.example.ae_diary.presentation.ui.common.bottom_sheet
 
 import androidx.annotation.StringRes
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -8,10 +10,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -52,7 +54,8 @@ fun BottomBarTextField(
         BasicTextField(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(50.dp)
+                .wrapContentHeight()
+                .heightIn(min = 50.dp)
                 .clip(
                     shape = DeathNoteTheme.shapes.rounded12
                 )
@@ -68,7 +71,6 @@ fun BottomBarTextField(
             onValueChange = {
                 onValueChange(it)
             },
-            maxLines = 1,
             enabled = isActive,
             textStyle = TextStyle(
                 color = DeathNoteTheme.colors.inverse,
@@ -78,8 +80,10 @@ fun BottomBarTextField(
         ) { textField ->
             Row(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 15.dp),
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .padding(horizontal = 15.dp, vertical = 15.dp)
+                    .animateContentSize(tween(300)),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(15.dp),
                 content = {

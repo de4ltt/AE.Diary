@@ -15,12 +15,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -32,11 +34,15 @@ import com.example.ae_diary.presentation.ui.theme.DarkYellow
 import com.example.ae_diary.presentation.ui.theme.LightGray
 import com.example.ae_diary.presentation.ui.theme.SemiLightGray
 import java.time.format.DateTimeFormatter
+import kotlin.math.roundToInt
 
 @Composable
 fun CurrentSubject(
+    screenHeight: Int,
     state: MainScreenUIState
 ) {
+
+    val maxLines = with(LocalDensity.current) { (screenHeight.toDp() / 30.sp.toDp()) * 0.3 }.roundToInt()
 
     Column {
         state.apply {
@@ -86,7 +92,9 @@ fun CurrentSubject(
                             color = LightGray,
                             fontSize = 30.sp,
                             fontWeight = FontWeight.Bold
-                        )
+                        ),
+                        maxLines = maxLines,
+                        overflow = TextOverflow.Ellipsis
                     )
             }
 

@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.example.ae_diary.presentation.model.Certificate
 import com.example.ae_diary.presentation.model.Student
 import com.example.ae_diary.presentation.model.event.CertificateUIEvent
-import com.example.ae_diary.presentation.ui.cross_screen_ui.delete_container.SwipeToDeleteContainer
+import com.example.ae_diary.presentation.ui.common.delete_container.SwipeToDeleteContainer
 import com.example.ae_diary.presentation.ui.theme.SexyGray
 import com.example.ae_diary.presentation.ui.theme.settings.DeathNoteTheme
 import com.example.ae_diary.presentation.util.getNumberOfDays

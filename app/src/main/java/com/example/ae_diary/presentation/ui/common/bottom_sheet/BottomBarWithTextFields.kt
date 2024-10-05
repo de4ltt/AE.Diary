@@ -1,4 +1,4 @@
-package com.example.ae_diary.presentation.ui.cross_screen_ui.bottom_sheet
+package com.example.ae_diary.presentation.ui.common.bottom_sheet
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
