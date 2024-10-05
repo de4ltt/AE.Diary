@@ -120,3 +120,7 @@ dependencies {
     //Datastore
     implementation("androidx.datastore:datastore-preferences:1.1.1")
 }
+
+ksp {
+    arg("compose-destinations.codeGenPackageName", "com.example.ae_diary.presentation.ui.screen")
+}
