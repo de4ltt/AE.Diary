@@ -3,7 +3,6 @@ package com.example.ae_diary.presentation.ui.screen.settings
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,9 +19,9 @@ import com.example.ae_diary.presentation.model.Subject
 import com.example.ae_diary.presentation.model.event.SubjectUIEvent
 import com.example.ae_diary.presentation.navigation.AppDestination
 import com.example.ae_diary.presentation.navigation.transition.GeneralTransition
-import com.example.ae_diary.presentation.ui.cross_screen_ui.NothingHere
-import com.example.ae_diary.presentation.ui.cross_screen_ui.bottom_sheet.SettingsBottomButton
-import com.example.ae_diary.presentation.ui.cross_screen_ui.top_bar.SettingsTopBar
+import com.example.ae_diary.presentation.ui.common.NothingHere
+import com.example.ae_diary.presentation.ui.common.bottom_sheet.SettingsBottomButton
+import com.example.ae_diary.presentation.ui.common.top_bar.SettingsTopBar
 import com.example.ae_diary.presentation.ui.screen.settings.components.subjects_screen_ui.SubjectBar
 import com.example.ae_diary.presentation.ui.screen.settings.components.subjects_screen_ui.SubjectTitledDialog
 import com.example.ae_diary.presentation.ui.theme.settings.DeathNoteTheme
@@ -65,11 +64,10 @@ fun SubjectsScreen(
             }
         )
 
-        if (allSubjects.isEmpty())
-            Box(modifier = Modifier.weight(1f)) {
-                NothingHere()
-            }
-        else
+        NothingHere(
+            modifier = Modifier.weight(1f),
+            targetState = allSubjects.isEmpty()
+        ) {
             LazyColumn(
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.spacedBy(10.dp),
@@ -86,40 +84,41 @@ fun SubjectsScreen(
                     )
                 }
             }
+        }
 
-        SettingsBottomButton(
-            title = R.string.add_subject,
-            onClickAction = {
-                subjectViewModel.apply {
-                    onEvent(SubjectUIEvent.IdleSubject)
-                    onEvent(SubjectUIEvent.ChangeDialogContent(
-                        subject = Subject(),
-                        title = R.string.add_subject,
-                        onAcceptRequest = {
-                            onEvent(
-                                SubjectUIEvent.UpsertSubject(subjectDialogState.subject)
-                            )
-                            onEvent(
-                                SubjectUIEvent.ChangeDialogState(false)
-                            )
-                        },
-                        onDismissRequest = {
-                            onEvent(
-                                SubjectUIEvent.ChangeDialogState(false)
-                            )
-                        }
-                    ))
-                    onEvent(
-                        SubjectUIEvent.ChangeDialogState(true)
-                    )
+            SettingsBottomButton(
+                title = R.string.add_subject,
+                onClickAction = {
+                    subjectViewModel.apply {
+                        onEvent(SubjectUIEvent.IdleSubject)
+                        onEvent(SubjectUIEvent.ChangeDialogContent(
+                            subject = Subject(),
+                            title = R.string.add_subject,
+                            onAcceptRequest = {
+                                onEvent(
+                                    SubjectUIEvent.UpsertSubject(subjectDialogState.subject)
+                                )
+                                onEvent(
+                                    SubjectUIEvent.ChangeDialogState(false)
+                                )
+                            },
+                            onDismissRequest = {
+                                onEvent(
+                                    SubjectUIEvent.ChangeDialogState(false)
+                                )
+                            }
+                        ))
+                        onEvent(
+                            SubjectUIEvent.ChangeDialogState(true)
+                        )
+                    }
+
                 }
+            )
+        }
 
-            }
+        SubjectTitledDialog(
+            state = subjectDialogState,
+            onEvent = subjectViewModel::onEvent
         )
     }
-
-    SubjectTitledDialog(
-        state = subjectDialogState,
-        onEvent = subjectViewModel::onEvent
-    )
-}

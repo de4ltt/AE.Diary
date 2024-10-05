@@ -19,7 +19,7 @@ import com.example.ae_diary.R
 import com.example.ae_diary.presentation.model.event.TimetableUIEvent
 import com.example.ae_diary.presentation.navigation.AppDestination
 import com.example.ae_diary.presentation.navigation.transition.GeneralTransition
-import com.example.ae_diary.presentation.ui.cross_screen_ui.top_bar.SettingsTopBar
+import com.example.ae_diary.presentation.ui.common.top_bar.SettingsTopBar
 import com.example.ae_diary.presentation.ui.screen.destinations.LanguageScreenDestination
 import com.example.ae_diary.presentation.ui.screen.destinations.StudentsScreenDestination
 import com.example.ae_diary.presentation.ui.screen.destinations.SubjectsScreenDestination

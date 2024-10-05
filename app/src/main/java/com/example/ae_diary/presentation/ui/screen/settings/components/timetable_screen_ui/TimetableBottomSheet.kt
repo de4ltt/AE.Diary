@@ -19,8 +19,8 @@ import com.example.ae_diary.presentation.model.event.TimetableUIEvent
 import com.example.ae_diary.presentation.model.state.TimetableUIState
 import com.example.ae_diary.presentation.model.util.DayOfWeek
 import com.example.ae_diary.presentation.model.util.WeekType
-import com.example.ae_diary.presentation.ui.cross_screen_ui.bottom_sheet.BottomBarTextField
-import com.example.ae_diary.presentation.ui.cross_screen_ui.bottom_sheet.BottomBarWithTextFields
+import com.example.ae_diary.presentation.ui.common.bottom_sheet.BottomBarTextField
+import com.example.ae_diary.presentation.ui.common.bottom_sheet.BottomBarWithTextFields
 import com.example.ae_diary.presentation.ui.theme.DarkRed
 import com.example.ae_diary.presentation.ui.theme.DarkYellow
 import com.example.ae_diary.presentation.ui.theme.settings.DeathNoteTheme

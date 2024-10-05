@@ -30,8 +30,8 @@ import com.example.ae_diary.presentation.model.event.TimetableUIEvent
 import com.example.ae_diary.presentation.model.util.WeekType
 import com.example.ae_diary.presentation.navigation.AppDestination
 import com.example.ae_diary.presentation.navigation.transition.GeneralTransition
-import com.example.ae_diary.presentation.ui.cross_screen_ui.bottom_sheet.SettingsBottomButton
-import com.example.ae_diary.presentation.ui.cross_screen_ui.top_bar.SettingsTopBar
+import com.example.ae_diary.presentation.ui.common.bottom_sheet.SettingsBottomButton
+import com.example.ae_diary.presentation.ui.common.top_bar.SettingsTopBar
 import com.example.ae_diary.presentation.ui.screen.settings.components.timetable_screen_ui.BottomSheetTimePicker
 import com.example.ae_diary.presentation.ui.screen.settings.components.timetable_screen_ui.SubjectSelectMenu
 import com.example.ae_diary.presentation.ui.screen.settings.components.timetable_screen_ui.TimetableBottomSheet

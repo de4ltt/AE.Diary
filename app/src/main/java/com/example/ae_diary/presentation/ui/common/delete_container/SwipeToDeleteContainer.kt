@@ -1,4 +1,4 @@
-package com.example.ae_diary.presentation.ui.cross_screen_ui.delete_container
+package com.example.ae_diary.presentation.ui.common.delete_container
 
 //noinspection UsingMaterialAndMaterial3Libraries
 //noinspection UsingMaterialAndMaterial3Libraries

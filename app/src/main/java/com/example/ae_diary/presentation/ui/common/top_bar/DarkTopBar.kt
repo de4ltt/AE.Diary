@@ -1,4 +1,4 @@
-package com.example.ae_diary.presentation.ui.cross_screen_ui.top_bar
+package com.example.ae_diary.presentation.ui.common.top_bar
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

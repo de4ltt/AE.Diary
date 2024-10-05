@@ -20,8 +20,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.ae_diary.presentation.model.interfaces.StatisticsMode
 import com.example.ae_diary.presentation.navigation.AppDestination
 import com.example.ae_diary.presentation.navigation.transition.GeneralTransition
-import com.example.ae_diary.presentation.ui.cross_screen_ui.NothingHere
-import com.example.ae_diary.presentation.ui.cross_screen_ui.top_bar.DarkTopBar
+import com.example.ae_diary.presentation.ui.common.NothingHere
+import com.example.ae_diary.presentation.ui.common.top_bar.DarkTopBar
 import com.example.ae_diary.presentation.ui.screen.main_screen.components.statistics_screen_ui.Stats1_M
 import com.example.ae_diary.presentation.ui.screen.main_screen.components.statistics_screen_ui.StatsM_1
 import com.example.ae_diary.presentation.ui.screen.main_screen.components.statistics_screen_ui.StatsM_M
@@ -69,7 +69,10 @@ fun StatisticsScreen(
             destination = AppDestination.MainScreenMenusDestinations.STATISTICS
         )
 
-        if (allStatisticMM.isNotEmpty()) {
+        NothingHere(
+            modifier = Modifier.weight(1f),
+            targetState = allStatisticMM.isNotEmpty()
+        ) {
 
             Row(
                 modifier = Modifier.padding(horizontal = 25.dp),
@@ -138,8 +141,7 @@ fun StatisticsScreen(
 
                 }
             }
-        } else
-            NothingHere()
+        }
     }
 
     StudentDrawerExtension(

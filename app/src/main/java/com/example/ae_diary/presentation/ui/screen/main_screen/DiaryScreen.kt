@@ -16,8 +16,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.ae_diary.presentation.model.event.DiaryUIEvent
 import com.example.ae_diary.presentation.navigation.AppDestination
 import com.example.ae_diary.presentation.navigation.transition.GeneralTransition
-import com.example.ae_diary.presentation.ui.cross_screen_ui.NothingHere
-import com.example.ae_diary.presentation.ui.cross_screen_ui.top_bar.DarkTopBar
+import com.example.ae_diary.presentation.ui.common.NothingHere
+import com.example.ae_diary.presentation.ui.common.top_bar.DarkTopBar
 import com.example.ae_diary.presentation.ui.screen.main_screen.components.diary_screen_ui.ChangeSubject
 import com.example.ae_diary.presentation.ui.screen.main_screen.components.diary_screen_ui.DiaryDatePicker
 import com.example.ae_diary.presentation.ui.screen.main_screen.components.diary_screen_ui.StudentCard
@@ -65,7 +65,11 @@ fun DiaryScreen(
                 state = diaryUIState,
                 onEvent = diaryViewModel::onEvent
             )
-            if (curSubject.name.isNotEmpty())
+
+            NothingHere(
+                modifier = Modifier.weight(1f),
+                targetState = curSubject.name.isNotEmpty()
+            ) {
                 LazyColumn(
                     contentPadding = paddingValues,
                     verticalArrangement = Arrangement.spacedBy(10.dp)
@@ -81,8 +85,7 @@ fun DiaryScreen(
                         )
                     }
                 }
-            else
-                NothingHere()
+            }
         }
     }
 

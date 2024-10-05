@@ -14,7 +14,7 @@ import com.example.ae_diary.presentation.model.Certificate
 import com.example.ae_diary.presentation.model.enums.CertificateDatePickerState
 import com.example.ae_diary.presentation.model.event.CertificateUIEvent
 import com.example.ae_diary.presentation.model.state.CertificateUIState
-import com.example.ae_diary.presentation.ui.cross_screen_ui.bottom_sheet.BottomBarWithTextFields
+import com.example.ae_diary.presentation.ui.common.bottom_sheet.BottomBarWithTextFields
 
 @Composable
 fun AddCertificateBottomSheet(

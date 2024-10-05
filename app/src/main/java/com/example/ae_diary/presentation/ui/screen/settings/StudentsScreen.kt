@@ -3,7 +3,6 @@ package com.example.ae_diary.presentation.ui.screen.settings
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,9 +20,9 @@ import com.example.ae_diary.presentation.model.event.StudentUIEvent
 import com.example.ae_diary.presentation.model.state.StudentDialogState
 import com.example.ae_diary.presentation.navigation.AppDestination
 import com.example.ae_diary.presentation.navigation.transition.GeneralTransition
-import com.example.ae_diary.presentation.ui.cross_screen_ui.NothingHere
-import com.example.ae_diary.presentation.ui.cross_screen_ui.bottom_sheet.SettingsBottomButton
-import com.example.ae_diary.presentation.ui.cross_screen_ui.top_bar.SettingsTopBar
+import com.example.ae_diary.presentation.ui.common.NothingHere
+import com.example.ae_diary.presentation.ui.common.bottom_sheet.SettingsBottomButton
+import com.example.ae_diary.presentation.ui.common.top_bar.SettingsTopBar
 import com.example.ae_diary.presentation.ui.screen.settings.components.students_screen_ui.StudentBar
 import com.example.ae_diary.presentation.ui.screen.settings.components.students_screen_ui.StudentTitledDialog
 import com.example.ae_diary.presentation.ui.theme.settings.DeathNoteTheme
@@ -66,11 +65,11 @@ fun StudentsScreen(
             }
         )
 
-        if (allStudents.isEmpty())
-            Box(modifier = Modifier.weight(1f)) {
-                NothingHere()
-            }
-        else
+
+        NothingHere(
+            modifier = Modifier.weight(1f),
+            targetState = allStudents.isEmpty(),
+        ) {
             LazyColumn(
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.spacedBy(10.dp),
@@ -87,6 +86,7 @@ fun StudentsScreen(
                     )
                 }
             }
+        }
 
         SettingsBottomButton(
             title = R.string.add_student,
