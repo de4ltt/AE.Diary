@@ -20,6 +20,7 @@ import com.example.ae_diary.presentation.navigation.NavigationUI
 import com.example.ae_diary.presentation.ui.theme.DeathNoteTheme
 import com.example.ae_diary.presentation.ui.theme.util.setColorScheme
 import com.example.ae_diary.presentation.viewmodel.CertificateViewModel
+import com.example.ae_diary.presentation.viewmodel.DatabaseSettingsViewModel
 import com.example.ae_diary.presentation.viewmodel.DiaryViewModel
 import com.example.ae_diary.presentation.viewmodel.MainScreenViewModel
 import com.example.ae_diary.presentation.viewmodel.StatisticsViewModel
@@ -44,6 +45,7 @@ class MainActivity : ComponentActivity() {
         val diaryViewModel: DiaryViewModel by viewModels()
         val statisticsViewModel: StatisticsViewModel by viewModels()
         val mainScreenViewModel: MainScreenViewModel by viewModels()
+        val databaseSettingsViewModel: DatabaseSettingsViewModel by viewModels()
 
         switchWeekTypeSchemeAccordingly(
             lifecycleScope = lifecycleScope,
@@ -79,7 +81,8 @@ class MainActivity : ComponentActivity() {
                     certificateViewModel = certificateViewModel,
                     diaryViewModel = diaryViewModel,
                     statisticsViewModel = statisticsViewModel,
-                    mainScreenViewModel = mainScreenViewModel
+                    mainScreenViewModel = mainScreenViewModel,
+                    databaseSettingsViewModel = databaseSettingsViewModel
                 )
             }
         }

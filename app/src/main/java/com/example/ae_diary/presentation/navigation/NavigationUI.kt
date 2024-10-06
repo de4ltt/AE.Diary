@@ -19,12 +19,14 @@ import com.example.ae_diary.presentation.ui.screen.main_screen.DiaryScreen
 import com.example.ae_diary.presentation.ui.screen.main_screen.MainScreen
 import com.example.ae_diary.presentation.ui.screen.main_screen.SettingsScreen
 import com.example.ae_diary.presentation.ui.screen.main_screen.StatisticsScreen
+import com.example.ae_diary.presentation.ui.screen.settings.DatabaseSettingsScreen
 import com.example.ae_diary.presentation.ui.screen.settings.LanguageScreen
 import com.example.ae_diary.presentation.ui.screen.settings.StudentsScreen
 import com.example.ae_diary.presentation.ui.screen.settings.SubjectsScreen
 import com.example.ae_diary.presentation.ui.screen.settings.TimetableScreen
 import com.example.ae_diary.presentation.ui.theme.settings.DeathNoteTheme
 import com.example.ae_diary.presentation.viewmodel.CertificateViewModel
+import com.example.ae_diary.presentation.viewmodel.DatabaseSettingsViewModel
 import com.example.ae_diary.presentation.viewmodel.DiaryViewModel
 import com.example.ae_diary.presentation.viewmodel.MainScreenViewModel
 import com.example.ae_diary.presentation.viewmodel.StatisticsViewModel
@@ -44,6 +46,7 @@ fun NavigationUI(
     diaryViewModel: DiaryViewModel,
     statisticsViewModel: StatisticsViewModel,
     mainScreenViewModel: MainScreenViewModel,
+    databaseSettingsViewModel: DatabaseSettingsViewModel,
     navHostEngine: NavHostEngine,
     navHostController: NavHostController
 ) {
@@ -110,6 +113,12 @@ fun NavigationUI(
                 studentViewModel = studentViewModel,
                 subjectViewModel = subjectViewModel,
                 navigator = destinationsNavigator
+            )
+        }
+        composable(DatabaseSettingsScreenDestination) {
+            DatabaseSettingsScreen(
+                navigator = destinationsNavigator,
+                databaseSettingsViewModel = databaseSettingsViewModel
             )
         }
     }
