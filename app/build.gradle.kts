@@ -1,6 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.org.jetbrains.kotlin.android)
+
+    //ComposeCompiler
+    alias(libs.plugins.compose.compiler)
 
     //ksp
     id("com.google.devtools.ksp")
@@ -10,7 +13,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.ae_diary"
+    namespace = "com.ae_diary"
     compileSdk = 34
 
     androidResources {
@@ -18,7 +21,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.ae_diary"
+        applicationId = "com.ae_diary"
         minSdk = 30
         targetSdk = 34
         versionCode = 1
@@ -122,5 +125,5 @@ dependencies {
 }
 
 ksp {
-    arg("compose-destinations.codeGenPackageName", "com.example.ae_diary.presentation.ui.screen")
+    arg("compose-destinations.codeGenPackageName", "com.ae_diary.presentation.ui.screen")
 }

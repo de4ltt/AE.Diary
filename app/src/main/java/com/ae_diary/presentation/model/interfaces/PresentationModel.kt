@@ -1,0 +1,3 @@
+package com.ae_diary.presentation.model.interfaces
+
+interface PresentationModel

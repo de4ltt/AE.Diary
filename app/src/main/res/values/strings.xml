@@ -138,4 +138,8 @@
     <string name="sat">SA</string>
     <string name="sun">SU</string>
     <string name="semester_time_unset">Set the semester time</string>
+    <string name="data_export">Export data</string>
+    <string name="data_import">Import data</string>
+    <string name="data_io">Data</string>
+    <string name="remember_me">Remember me...</string>
 </resources>

@@ -1,12 +1,12 @@
 plugins {
     alias(libs.plugins.android.library)
-    alias(libs.plugins.jetbrains.kotlin.android)
-    id("com.google.devtools.ksp") version "1.9.24-1.0.20"
+    alias(libs.plugins.org.jetbrains.kotlin.android)
+    id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
 }
 
 android {
-    namespace = "com.example.data"
+    namespace = "com.ae_diary.data"
     compileSdk = 34
 
     defaultConfig {
