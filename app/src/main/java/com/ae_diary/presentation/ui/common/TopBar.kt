@@ -2,6 +2,8 @@ package com.ae_diary.presentation.ui.common
 
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.animateColorAsState
@@ -38,8 +40,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ae_diary.presentation.navigation.AppDestination
-import com.ae_diary.presentation.navigation.getSettingsTopBarIcon
-import com.ae_diary.presentation.navigation.getSettingsTopBarLabel
+import com.ae_diary.presentation.navigation.topBarIcon
+import com.ae_diary.presentation.navigation.topBarLabel
 import com.ae_diary.presentation.ui.theme.SexyGray
 import com.ae_diary.presentation.ui.theme.SoftGray
 import com.ae_diary.presentation.ui.theme.settings.DeathNoteTheme
@@ -53,8 +55,8 @@ fun TopBar(
     @StringRes onConstrictedLabelId: Int
 ) {
 
-    val icon = destination.getSettingsTopBarIcon()
-    val label = destination.getSettingsTopBarLabel()
+    val icon = destination.topBarIcon
+    val label = destination.topBarLabel
 
     val columnColor by animateColorAsState(
         targetValue = DeathNoteTheme.colors.baseBackground,
@@ -90,7 +92,7 @@ fun TopBar(
 
             val transitionSpec = fadeIn(tween(500)).togetherWith(fadeOut(tween(500)))
 
-            label?.let { labelId ->
+            label.let { labelId ->
 
                 AnimatedContent(
                     targetState = isConstricted,
@@ -133,8 +135,8 @@ fun TopBar(
     isConstricted: Boolean = false,
 ) {
 
-    val icon = destination.getSettingsTopBarIcon()
-    val label = destination.getSettingsTopBarLabel()
+    val icon = destination.topBarIcon
+    val label = destination.topBarLabel
 
     val columnColor by animateColorAsState(
         targetValue = DeathNoteTheme.colors.baseBackground,
@@ -165,9 +167,9 @@ fun TopBar(
 
         SharedTransitionLayout {
 
-            val transitionSpec = fadeIn(tween(500)).togetherWith(fadeOut(tween(500)))
+            val transitionSpec = EnterTransition.None.togetherWith(ExitTransition.None)
 
-            label?.let { labelId ->
+            label.let { labelId ->
 
                 AnimatedContent(
                     targetState = isConstricted,
@@ -240,7 +242,7 @@ fun TopBar(
             verticalAlignment = Alignment.CenterVertically
         ) {
 
-            destination.getSettingsTopBarLabel()?.let {
+            destination.topBarLabel.let {
                 Text(
                     text = stringResource(id = it),
                     style = DeathNoteTheme.typography.topBar,
@@ -248,7 +250,7 @@ fun TopBar(
                 )
             }
 
-            destination.getSettingsTopBarIcon()?.let {
+            destination.topBarIcon?.let {
                 Icon(
                     painter = painterResource(id = it),
                     contentDescription = "icon",

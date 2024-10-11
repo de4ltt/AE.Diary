@@ -54,7 +54,7 @@ fun DiaryScreen(
     ) {
         diaryUIState.apply {
             TopBar(
-                destination = AppDestination.MainScreenMenusDestinations.DIARY,
+                destination = AppDestination.MainScreenDestinations.DIARY,
                 onIconClick = {
                     diaryViewModel.onEvent(DiaryUIEvent.ChangeDatePickerState)
                 }

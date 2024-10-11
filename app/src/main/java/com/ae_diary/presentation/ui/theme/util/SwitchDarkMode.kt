@@ -7,9 +7,8 @@ import com.ae_diary.presentation.model.util.ColorPresentation
 import com.ae_diary.presentation.ui.theme.settings.color_schemes.DefaultColorScheme
 import com.ae_diary.presentation.ui.theme.settings.scheme
 
-fun switchDarkMode(
-    context: Context
-) {
+fun switchDarkMode(context: Context) {
+
     scheme = when (getColorSchemeType()) {
         ColorPresentation.ColorMode.EVEN_LIGHT -> DefaultColorScheme.DarkEvenColorScheme
         ColorPresentation.ColorMode.EVEN_DARK -> DefaultColorScheme.LightEvenColorScheme

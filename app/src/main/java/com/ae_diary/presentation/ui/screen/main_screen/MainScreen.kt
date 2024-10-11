@@ -1,6 +1,5 @@
 package com.ae_diary.presentation.ui.screen.main_screen
 
-import android.widget.Toast
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -18,19 +17,16 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.ae_diary.R
 import com.ae_diary.presentation.model.Timetable
+import com.ae_diary.presentation.navigation.AppDestination
 import com.ae_diary.presentation.navigation.transition.MainScreenTransition
 import com.ae_diary.presentation.ui.common.ItemGrid
-import com.ae_diary.presentation.ui.screen.destinations.CertificatesScreenDestination
-import com.ae_diary.presentation.ui.screen.destinations.DiaryScreenDestination
-import com.ae_diary.presentation.ui.screen.destinations.SettingsScreenDestination
-import com.ae_diary.presentation.ui.screen.destinations.StatisticsScreenDestination
 import com.ae_diary.presentation.ui.screen.main_screen.components.main_screen_ui.CurrentDate
 import com.ae_diary.presentation.ui.screen.main_screen.components.main_screen_ui.CurrentSubject
 import com.ae_diary.presentation.ui.screen.main_screen.components.main_screen_ui.MainScreenPane
 import com.ae_diary.presentation.ui.screen.main_screen.components.main_screen_ui.ProgressBar
 import com.ae_diary.presentation.ui.theme.settings.DeathNoteTheme
+import com.ae_diary.presentation.util.checkDestinationForAvailability
 import com.ae_diary.presentation.viewmodel.MainScreenViewModel
 import com.ae_diary.presentation.viewmodel.TimetableViewModel
 import com.ramcosta.composedestinations.annotation.Destination
@@ -52,6 +48,8 @@ fun MainScreen(
     val localHeight = LocalView.current.height
 
     val context = LocalContext.current
+
+    val mainScreenDestinations = AppDestination.MainScreenDestinations.entries
 
     Column(
         modifier = Modifier
@@ -101,69 +99,33 @@ fun MainScreen(
                     .fillMaxSize()
                     .clip(shape = DeathNoteTheme.shapes.rounded_top_end)
                     .background(color = DeathNoteTheme.colors.baseBackground),
-                items = listOf(
+                items = mainScreenDestinations.map { option ->
                     {
-                        MainScreenPane(
-                            topStartIcon = R.drawable.diary_tl,
-                            middleEndIcon = R.drawable.diary_me,
-                            title = R.string.diary_bar,
-                            onClick = {
-                                if (!timetableUIState.isSemesterTimeSet) {
-                                    Toast.makeText(context, R.string.semester_time_unset, Toast.LENGTH_SHORT).show()
-                                } else
-                                    navigator.navigate(DiaryScreenDestination, onlyIfResumed = true)
-                            },
-                            onSizeChange = {
-                                mainScreenViewModel.updateSizeReduceState(
-                                    it
-                                )
-                            },
-                            isReduced = mainScreenUIState.isSizeReducedPane
-                        )
-                    },
-                    {
-                        MainScreenPane(
-                            topStartIcon = R.drawable.list_tl,
-                            middleEndIcon = R.drawable.list_me,
-                            title = R.string.list_bar,
-                            onClick = {
-                                if (!timetableUIState.isSemesterTimeSet) {
-                                    Toast.makeText(context, R.string.semester_time_unset, Toast.LENGTH_SHORT).show()
-                                } else
-                                    navigator.navigate(
-                                        CertificatesScreenDestination,
-                                        onlyIfResumed = true
+                        option.apply {
+                            MainScreenPane(
+                                topStartIcon = indicationIcon,
+                                middleEndIcon = expansionIcon,
+                                title = shortTitle,
+                                onClick = {
+                                    if (checkDestinationForAvailability(
+                                            destination = destination,
+                                            semesterState = timetableUIState.isSemesterTimeSet,
+                                            context = context
+                                        )
                                     )
-                            },
-                            isReduced = mainScreenUIState.isSizeReducedPane
-                        )
-                    },
-                    {
-                        MainScreenPane(
-                            topStartIcon = R.drawable.stats_tl,
-                            middleEndIcon = R.drawable.stats_me,
-                            title = R.string.stats_bar,
-                            onClick = {
-                                navigator.navigate(
-                                    StatisticsScreenDestination,
-                                    onlyIfResumed = true
-                                )
-                            },
-                            isReduced = mainScreenUIState.isSizeReducedPane
-                        )
-                    },
-                    {
-                        MainScreenPane(
-                            topStartIcon = R.drawable.settings_tl,
-                            middleEndIcon = R.drawable.settings_me,
-                            title = R.string.settings_bar,
-                            onClick = {
-                                navigator.navigate(SettingsScreenDestination, onlyIfResumed = true)
-                            },
-                            isReduced = mainScreenUIState.isSizeReducedPane
-                        )
+                                        navigator.navigate(
+                                            direction = destination,
+                                            onlyIfResumed = true
+                                        )
+                                },
+                                onSizeChange = {
+                                    mainScreenViewModel.updateSizeReduceState(it)
+                                },
+                                isReduced = mainScreenUIState.isSizeReducedPane
+                            )
+                        }
                     }
-                )
+                }
             )
         }
     }

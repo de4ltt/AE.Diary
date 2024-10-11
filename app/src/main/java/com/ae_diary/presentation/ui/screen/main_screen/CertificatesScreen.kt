@@ -64,7 +64,7 @@ fun CertificatesScreen(
         verticalArrangement = Arrangement.spacedBy(40.dp)
     ) {
         TopBar(
-            destination = AppDestination.MainScreenMenusDestinations.CERTIFICATES,
+            destination = AppDestination.MainScreenDestinations.CERTIFICATES,
             onIconClick = {
                 certificateViewModel.onEvent(CertificateUIEvent.ChangeStudent(Student()))
                 certificateViewModel.onEvent(CertificateUIEvent.ChangeDialogState(true))

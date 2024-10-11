@@ -66,7 +66,7 @@ fun StatisticsScreen(
     ) {
 
         TopBar(
-            destination = AppDestination.MainScreenMenusDestinations.STATISTICS
+            destination = AppDestination.MainScreenDestinations.STATISTICS
         )
 
         NothingHere(

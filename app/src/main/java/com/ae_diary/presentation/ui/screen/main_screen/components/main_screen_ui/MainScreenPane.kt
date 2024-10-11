@@ -1,6 +1,5 @@
 package com.ae_diary.presentation.ui.screen.main_screen.components.main_screen_ui
 
-import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedContent
@@ -92,8 +91,6 @@ fun MainScreenPane(
             )
             .onSizeChanged {
                 onSizeChange(it.toSize().height < 5 * iconSizeFloat || isTextOverflow)
-
-                Log.d("HEIGHT", "${it.toSize().height}\n$iconSizeFloat\n$isTextOverflow")
             }
     ) {
         AnimatedContent(
@@ -158,7 +155,7 @@ fun MainScreenPane(
                     )
 
                     Text(
-                        text = stringResource(id = title),
+                        text = stringResource(id = title).lowercase(),
                         color = innerColor,
                         fontSize = 19.sp,
                         fontStyle = FontStyle.Italic,

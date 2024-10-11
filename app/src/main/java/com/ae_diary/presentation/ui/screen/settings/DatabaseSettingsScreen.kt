@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -47,6 +48,8 @@ fun DatabaseSettingsScreen(
         }
     }
 
+    val databaseDestinations = AppDestination.SettingsDatabaseDestinations.entries
+
     BackHandler {
         if (databaseUIState.mode == DatabaseScreenMode.DEFAULT)
             navigator.popBackStack()
@@ -81,37 +84,20 @@ fun DatabaseSettingsScreen(
                 .background(DeathNoteTheme.colors.baseBackground),
             verticalArrangement = Arrangement.spacedBy(10.dp),
             contentPadding = PaddingValues(bottom = 10.dp),
-
-            ) {
-
-            item {
-                DatabaseSettingsScreenPane(
-                    titleId = R.string.data_export,
-                    iconId = R.drawable.data_export,
-                    onClick = {
-                        databaseSettingsViewModel.onEvent(
-                            DatabaseUIEvent.ChangeDatabaseScreenMode(
-                                DatabaseScreenMode.EXPORT
+        ) {
+            items(databaseDestinations) { option ->
+                option.apply {
+                    DatabaseSettingsScreenPane(
+                        titleId = title,
+                        iconId = icon,
+                        onClick = {
+                            databaseSettingsViewModel.onEvent(
+                                DatabaseUIEvent.ChangeDatabaseScreenMode(screenMode)
                             )
-                        )
-                    }
-                )
-            }
-
-            item {
-                DatabaseSettingsScreenPane(
-                    titleId = R.string.data_import,
-                    iconId = R.drawable.data_import,
-                    onClick = {
-                        databaseSettingsViewModel.onEvent(
-                            DatabaseUIEvent.ChangeDatabaseScreenMode(
-                                DatabaseScreenMode.IMPORT
-                            )
-                        )
-                    }
-                )
+                        }
+                    )
+                }
             }
         }
-
     }
 }

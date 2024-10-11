@@ -25,7 +25,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -36,14 +35,14 @@ import com.ae_diary.presentation.ui.theme.settings.DeathNoteTheme
 
 @Composable
 fun SettingsOptionPane(
-    onClick: () -> Unit = { },
-    color: Color = animateColorAsState(targetValue = DeathNoteTheme.colors.regularBackground).value ,
-    isDarkThemePane: Boolean = false,
     @DrawableRes icon: Int,
     @StringRes title: Int,
-    @StringRes subtitle: Int
+    @StringRes description: Int,
+    isDarkThemePane: Boolean = false,
+    onClick: () -> Unit = { }
 ) {
 
+    val color by animateColorAsState(targetValue = if (isDarkThemePane) DeathNoteTheme.colors.inverseBackground else DeathNoteTheme.colors.regularBackground)
     val backgroundColor by animateColorAsState(targetValue = DeathNoteTheme.colors.primaryBackground)
 
     Row(
@@ -98,7 +97,7 @@ fun SettingsOptionPane(
             )
 
             Text(
-                text = stringResource(id = subtitle),
+                text = stringResource(id = description),
                 style = DeathNoteTheme.typography.settingsScreenItemSubtitle,
                 color = if (isDarkThemePane) SemiLightGray else DeathNoteTheme.colors.lightInverse
             )

@@ -43,7 +43,7 @@ fun DatabaseSettingsScreenPane(
                 ambientColor = DeathNoteTheme.colors.regularBackground
             )
             .background(
-                color = DeathNoteTheme.colors.baseBackground,
+                color = DeathNoteTheme.colors.regularBackground,
                 shape = DeathNoteTheme.shapes.rounded12
             ),
         verticalAlignment = Alignment.CenterVertically
